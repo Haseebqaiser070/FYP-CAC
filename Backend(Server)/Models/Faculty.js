@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+
 var FacultySchema = new mongoose.Schema({
     
     FirstName: {
@@ -11,15 +12,17 @@ var FacultySchema = new mongoose.Schema({
     },
     Email:{
     	type:String,
-      required: true
+      required: true,
+      unique:true
     },
     Password:{
       type:String,
       required: true  
     },
     Course:{
-      Type:mongoose.Types.ObjectId,
-      ref:"Course"
+      type:mongoose.Types.ObjectId,
+      ref:"Course",
+      required: true  
     }
 });
 

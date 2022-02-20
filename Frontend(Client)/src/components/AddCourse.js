@@ -17,13 +17,24 @@ export default function AddCourse() {
   const [LectureHoursWeek, setLectureHoursWeek] = useState("");
   const [LabHoursWeek, setLabHoursWeek] = useState("");
   const [PreRequisites, setPreRequisites] = useState("");
+  const[upId,setupId] = useState('')
+  
   const togglePopup = () => {
     setIsOpen(!isOpen);
   };
-
+  const handleCloseX =()=>{
+    setCode("");
+    setName("");
+    setCredit("");
+    setLectureHoursWeek("");
+    setLabHoursWeek("");
+    setPreRequisites("");
+    setUpdate(false)
+    togglePopup()
+  }
   useEffect(() => {
     getCourse();
-  }, [update]);
+  }, []);
 
   const getCourse = async () => {
     const response = await axios.get("http://localhost:4000/Course/show");
@@ -32,33 +43,69 @@ export default function AddCourse() {
 
   const AddCourse = async (e) => {
     e.preventDefault();
-    console.log("here1");
-    if (Code != "" && Name != "" && Credit != "") {
-      console.log("herebefore");
-      await axios.post("http://localhost:4000/Course/add", {
+    if(update==true)
+    {console.log("update")
+      await axios.put(`http://localhost:4000/Course/${upId}`, {
         Code,
         Name,
         Credit,
         LectureHoursWeek,
         LabHoursWeek,
         PreRequisites,
-      });
+        });
       setCode("");
       setName("");
       setCredit("");
-      console.log("here2");
+      setLectureHoursWeek("");
+      setLabHoursWeek("");
+      setPreRequisites("");
       getCourse();
+      setUpdate(false)
       togglePopup();
-    } else {
-      alert("empty values");
+    }
+    else{
+      if (Code != "" && Name != "" && Credit != "" && LectureHoursWeek !="" && LabHoursWeek != "" && PreRequisites != "") {
+        await axios.post("http://localhost:4000/Course/add", {
+          Code,
+          Name,
+          Credit,
+          LectureHoursWeek,
+          LabHoursWeek,
+          PreRequisites,
+        });
+        setCode("");
+        setName("");
+        setCredit("");
+        setLectureHoursWeek("");
+        setLabHoursWeek("");
+        setPreRequisites("");
+        getCourse();
+        togglePopup();
+      } else {
+        alert("empty values");
+      }
     }
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:4000/Course/delete/${id}`);
-
-    setUpdate(!update);
+    await axios.delete(`http://localhost:4000/Course/${id}`);
+    getCourse();
   };
+  const handleUpdate=async (id)=>{
+    setUpdate(true)
+    const  response = await axios.get(`http://localhost:4000/Course/${id}`);
+    const updating= await response.data
+    
+    setupId(updating._id)
+    setCode(updating.Code)
+    setName(updating.Name)
+    setCredit(updating.Credit)
+    setLectureHoursWeek(updating.LectureHoursWeek)
+    setLabHoursWeek(updating.LabHoursWeek)
+    setPreRequisites(updating.PreRequisites)
+    
+    togglePopup()  
+  }
 
   return (
     <div class="container" style={{ height: 700, width: "100%", padding: 20 }}>
@@ -92,6 +139,7 @@ export default function AddCourse() {
                           type="text"
                           class="form-control"
                           id="course-code"
+                          value={Code}
                           onChange={(e) => setCode(e.target.value)}
                         />
                       </div>
@@ -104,6 +152,7 @@ export default function AddCourse() {
                           type="text"
                           class="form-control"
                           id="course-name"
+                          value={Name}
                           onChange={(e) => setName(e.target.value)}
                         />
                       </div>
@@ -117,6 +166,7 @@ export default function AddCourse() {
                           class="form-control"
                           id="credit-hour"
                           max="4"
+                          value={Credit}
                           onChange={(e) => setCredit(e.target.value)}
                         />
                       </div>
@@ -131,6 +181,7 @@ export default function AddCourse() {
                           type="number"
                           class="form-control"
                           id="LectureHoursWeek"
+                          value={LectureHoursWeek}
                           onChange={(e) => setLectureHoursWeek(e.target.value)}
                         />
                       </div>
@@ -142,6 +193,7 @@ export default function AddCourse() {
                           type="number"
                           class="form-control"
                           id="LabHoursWeek"
+                          value={LabHoursWeek}
                           onChange={(e) => setLabHoursWeek(e.target.value)}
                         />
                       </div>
@@ -156,6 +208,7 @@ export default function AddCourse() {
                           type="text"
                           class="form-control"
                           id="PreRequisites"
+                          value={PreRequisites}
                           onChange={(e) => setPreRequisites(e.target.value)}
                         />
                       </div>
@@ -170,7 +223,7 @@ export default function AddCourse() {
                   </form>
                 </>
               }
-              handleClose={togglePopup}
+              handleClose={handleCloseX}
             />
           )}
         </div>
@@ -207,6 +260,7 @@ export default function AddCourse() {
                       color="primary"
                       size="small"
                       style={{ marginLeft: 16 }}
+                      onClick={()=>handleUpdate(cor._id)}
                     >
                       <AiFillEdit style={{ marginRight: 10 }} />
                       Edit

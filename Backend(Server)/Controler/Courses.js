@@ -37,3 +37,12 @@ module.exports.Delete = async (req, res, next) => {
     console.log(err);
   }
 };
+module.exports.Update = async (req, res, next) => {
+  try {
+    const course = await coursedoc.findOneAndUpdate({ _id: req.params.id },req.body);
+    console.log("all courses", course);
+    await res.json(course);
+  } catch (err) {
+    console.log(err);
+  }
+};
