@@ -38,25 +38,38 @@ export default function Register() {
                     </div>
                   </div>
                 </div>
-                <div class="form-floating mb-3">
-                  <input
-                    class="form-control"
-                    id="inputEmail"
-                    type="email"
-                    placeholder="name@example.com"
-                  />
-                  <label for="inputEmail">Email address</label>
+
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3 mb-md-0">
+                      <select class="form-select" aria-label="Degree Level">
+                        <option selected>Select Degree Level</option>
+                        <option>MS</option>
+                        <option>BS</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3 mb-md-0">
+                      <select class="form-select" aria-label="Degree Level">
+                        <option selected>Allocate Course</option>
+                        <option>Intro to Ict</option>
+                        <option>Programming Fundamentals</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
+
                 <div class="row mb-3">
                   <div class="col-md-6">
                     <div class="form-floating mb-3 mb-md-0">
                       <input
                         class="form-control"
-                        id="inputPassword"
-                        type="password"
-                        placeholder="Create a password"
+                        id="inputEmail"
+                        type="email"
+                        placeholder="name@example.com"
                       />
-                      <label for="inputPassword">Password</label>
+                      <label for="inputEmail">Email address</label>
                     </div>
                   </div>
                   <div class="col-md-6">

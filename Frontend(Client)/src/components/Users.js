@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import "./css/styles.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { AiFillEye } from "react-icons/ai";
+import Button from "@mui/material/Button";
+import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
 
 export default function Users() {
   return (
-    <div class="container">
+    <div class="container" style={{ height: 700, width: "100%", padding: 20 }}>
       <h1 class="mt-4 mb-4">Faculty Members</h1>
       <table class="table" id="list">
         <thead>
@@ -21,26 +22,25 @@ export default function Users() {
             <td class="col-4">Sir Tanveer</td>
             <td class="col-4"> tanvir@comsats.edu.pk</td>
             <td class="col-4">
-              <span class="ms-auto me-0 me-md-3 my-2 my-md-0">
-                <a href="#">
-                  <AiFillEye size={30} color="#0d6efd" />
-                </a>
-              </span>
-
-              <button
-                class="btn btn-primary ms-auto me-0 me-md-3 my-2 my-md-0"
-                type="button"
-                id="sos-btn"
+              <Button
+                variant="contained"
+                color="primary"
+                size="small"
+                style={{ marginLeft: 16 }}
               >
+                <AiFillEdit style={{ marginRight: 10 }} />
                 Edit
-              </button>
-              <button
-                class="btn btn-primary ms-auto me-0 me-md-3 my-2 my-md-0"
-                type="button"
-                id="sos-btn"
+              </Button>
+
+              <Button
+                variant="contained"
+                color="primary"
+                size="small"
+                style={{ marginLeft: 16 }}
               >
+                <AiFillDelete style={{ marginRight: 10 }} />
                 Delete
-              </button>
+              </Button>
             </td>
           </tr>
         </tbody>

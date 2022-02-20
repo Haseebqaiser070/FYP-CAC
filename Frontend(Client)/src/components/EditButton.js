@@ -2,8 +2,11 @@ import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import Button from "@mui/material/Button";
 import { AiFillEye, AiFillEdit, AiOutlineCloudDownload } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
-export default function EditButton() {
+export default function EditButton({ row }) {
+  const navigate = useNavigate();
+
   return (
     <div>
       {" "}
@@ -12,10 +15,10 @@ export default function EditButton() {
         color="primary"
         size="small"
         style={{ marginLeft: 16 }}
-        onClick={null}
+        onClick={() => navigate(`/admin/SchemeofStudies/${row._id}`)}
       >
         <AiFillEdit style={{ marginRight: 10 }} />
-        Edit
+        Create CDF
       </Button>
       <Button
         variant="contained"

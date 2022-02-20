@@ -12092,5 +12092,26 @@ body {
   color: #fff;
 }
 .sidenavtext:active {
+  color: #fff !important;
+}
+
+textarea {
+  width: 100%;
+}
+.cd {
+  border: 1px solid #000;
+}
+
+.nav-link:visited {
   color: #fff;
+}
+
+.cdf-header {
+  background-color: #000;
+  color: #fff;
+}
+
+.tablecourse {
+  border-collapse: separate;
+  border-spacing: 0 20px;
 }

@@ -10,12 +10,12 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 
 import {
-  BsFillBookFill,
   BsFillPersonPlusFill,
   BsFiles,
   BsBuilding,
   BsFillGearFill,
   BsFillPeopleFill,
+  BsFillBookFill,
 } from "react-icons/bs";
 
 export default function Navigation() {
@@ -79,7 +79,7 @@ export default function Navigation() {
           <nav class="sb-sidenav accordion bg" id="sidenavAccordion">
             <div class="sb-sidenav-menu">
               <div class="nav">
-                <div class="sb-sidenav-menu-heading">Core</div>
+                <div class="sb-sidenav-menu-heading"></div>
                 <Link class="nav-link sidenavtext " to="Dashboard">
                   <div class="sb-nav-link-icon">
                     <BsBuilding color="#fff" />
@@ -115,11 +115,11 @@ export default function Navigation() {
                   Faculty Members
                 </Link>
 
-                <Link class="nav-link sidenavtext" to="SchemeofStudies">
+                <Link class="nav-link sidenavtext" to="CourseFolder">
                   <div class="sb-nav-link-icon">
-                    <BsFillGearFill color="#fff" />
+                    <BsFillBookFill color="#fff" />
                   </div>
-                  Settings
+                  Course Folder
                 </Link>
               </div>
             </div>
