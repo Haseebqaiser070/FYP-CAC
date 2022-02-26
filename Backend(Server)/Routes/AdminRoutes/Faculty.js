@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-var Faculty = require("../Controler/Faculty");
+var Faculty = require("../../Controler/AdminControllers/Faculty");
 
 router.route("/add").post(Faculty.Add);
 router.route("/show").get(Faculty.Showall);

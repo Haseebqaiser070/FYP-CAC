@@ -14,30 +14,44 @@ import CourseLearningOutcomes from "./components/CourseLearningOutcomes";
 import CourseFolder from "./components/CourseFolder";
 import CourseDescription from "./components/CreateCDF";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { AuthProvider } from "./Context/AuthProvider";
+import ProtectedRouteAdmin from "./components/ProtectedRoutes/ProtectedRouteAdmin";
+import ProtectedRouteFaculty from "./components/ProtectedRoutes/ProtectedRouteFaculty";
+import FacultyNavigation from "./components/FacultyRoutes/FacultyNavigation";
+import FacultyDashboard from "./components/FacultyRoutes/FacultyDashboard";
 
 function App() {
   return (
     <React.Fragment>
       <Router>
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/forgotpassword" element={<Forgot />} />
-          <Route path="/admin/" element={<Navigation />}>
-            <Route path="/admin/Dashboard" element={<Dashboard />} />
-            <Route path="/admin/Register" element={<Register />} />
-            <Route path="/admin/AddCourse" element={<AddCourse />} />
-            <Route path="/admin/SchemeofStudies">
-              <Route path=":id" element={<CourseDescription />} />
-              <Route index element={<SchemeofStudies />} />
+        <AuthProvider>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/forgotpassword" element={<Forgot />} />
+            <Route element={<ProtectedRouteAdmin />}>
+              <Route path="/admin/" element={<Navigation />}>
+                <Route path="/admin/Dashboard" element={<Dashboard />} />
+                <Route path="/admin/Register" element={<Register />} />
+                <Route path="/admin/AddCourse" element={<AddCourse />} />
+                <Route path="/admin/SchemeofStudies">
+                  <Route path=":id" element={<CourseDescription />} />
+                  <Route index element={<SchemeofStudies />} />
+                </Route>
+                <Route
+                  path="/admin/CourseLearningOutcomes"
+                  element={<CourseLearningOutcomes />}
+                />
+                <Route path="/admin/Users" element={<Users />} />
+                <Route path="/admin/CourseFolder/" element={<CourseFolder />} />
+              </Route>
             </Route>
-            <Route
-              path="/admin/CourseLearningOutcomes"
-              element={<CourseLearningOutcomes />}
-            />
-            <Route path="/admin/Users" element={<Users />} />
-            <Route path="/admin/CourseFolder/" element={<CourseFolder />} />
-          </Route>
-        </Routes>
+            <Route element={<ProtectedRouteFaculty />}>
+              <Route path="/Faculty/" element={<FacultyNavigation />}>
+                <Route path="/Faculty/Dashboard" element={<FacultyDashboard />} />
+              </Route>
+            </Route>
+          </Routes>
+        </AuthProvider>
       </Router>
     </React.Fragment>
   );

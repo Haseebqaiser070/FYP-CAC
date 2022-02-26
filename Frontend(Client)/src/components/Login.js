@@ -3,19 +3,45 @@ import React, { useState } from 'react';
 import './css/styles.css';
 import {Link} from "react-router-dom"
 import { useNavigate } from "react-router-dom";
-
+import axios from 'axios';
+import useAuth from '../MyHooks/useAuth';
 function Login() {
+    axios.defaults.withCredentials = true;
     const[Email,setEmail]=useState('')
     const[Password,setPassword]=useState('')
     const navigate = useNavigate()
-    const handleSubmit=(e)=>{
+    const {setAdmin,setFaculty}=useAuth()
+    const handleSubmit=async(e)=>{
         e.preventDefault();
-        console.log(Email)
-        console.log(Password)
-        setEmail('')
-        setPassword('')
-        navigate("/admin/Dashboard", { replace: true });
-
+        
+        if(Email!=''&&Password!=''){
+            try{
+                const response= await axios.post("http://localhost:4000/Auth/login",{Email,Password},  
+                )
+                const data = response.data
+                console.log(data)
+                if(data=='Logged in as Admin'){
+                    setAdmin(true)
+                    setEmail('')
+                    setPassword('')
+                    navigate("/admin/Dashboard", { replace: true });
+                }
+                else if(data=='Logged in as Faculty'){
+                    setFaculty(true)
+                    setEmail('')
+                    setPassword('')
+                    navigate("/faculty/Dashboard", { replace: true });
+                }
+                else{
+                    alert("Wrong credentials")
+                }
+            }catch(err){
+                console.log(err);
+            }
+        }
+        else{
+            alert('Fill all the fields')
+        }
     }
   return (
     <div className="container">
