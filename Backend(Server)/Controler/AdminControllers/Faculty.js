@@ -4,33 +4,41 @@ var bcrypt = require("bcrypt");
 
 module.exports.Add = async (req, res) => {
   try {
-    if(!req.user)return await res.json("Timed Out")
-    const {FirstName,SecondName,Email,Password,Allocated,Degree}=req.body
-    const cor = await coursedoc.findOne({Allocated})
-    if (!cor) return res.status('400').json('no course')
+    if (!req.user) return await res.json("Timed Out");
+    const { FirstName, SecondName, Email, Password, Allocated, Role, Degree } =
+      req.body;
+    const cor = await coursedoc.findOne({ Allocated });
+    if (!cor) return res.status("400").json("no course");
     newPassword = await bcrypt.hash(Password, 12);
-    const faculty = await facultydoc.create({FirstName,SecondName,Email,Password:newPassword,Course:cor._id});
+    const faculty = await facultydoc.create({
+      FirstName,
+      SecondName,
+      Email,
+      Password: newPassword,
+      Course: cor._id,
+      Role,
+    });
     console.log("faculty added", faculty);
     await res.json(faculty);
   } catch (err) {
     console.log(err);
   }
-}
+};
 module.exports.Showall = async (req, res) => {
   try {
-    if(!req.user)return await res.json("Timed Out")
-    console.log('insiede')
+    if (!req.user) return await res.json("Timed Out");
+    console.log("insiede");
     const faculty = await facultydoc.find({}).populate("Course");
     console.log("all faculty", faculty);
     await res.json(faculty);
   } catch (err) {
     console.log(err);
   }
-}
+};
 
 module.exports.Delete = async (req, res) => {
   try {
-    if(!req.user)return await res.json("Timed Out")
+    if (!req.user) return await res.json("Timed Out");
     const faculty = await facultydoc.deleteOne({ _id: req.params.id });
     console.log("all faulty", faculty);
     await res.json(faculty);

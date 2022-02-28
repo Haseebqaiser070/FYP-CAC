@@ -1,44 +1,55 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./css/styles.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function Register() {
-const[FirstName,setFirstName]=useState("")
-const[SecondName,setSecondName]=useState("")
-const[Email,setEmail]=useState("")
-const[Password,setPassword]=useState("")
-const[Degree,setDegree]=useState("")
-const[Allocated,setAllocated]=useState("")
-const[Courses,setCourses]=useState([])
-useEffect(()=>{
-  getCourse()  
-},[])
-const getCourse=async()=>{
-  const response=await axios.get("http://localhost:4000/Course/show")
-  setCourses(response.data)
-}
-const hanleSubmit=async(e)=>{
-  e.preventDefault()
-  setAllocated(Allocated.split(" ")[0])
-  if (FirstName != "" && SecondName != "" && Email != "" && Password !="" && Degree != "" && Allocated != "") {
-  await axios.post("http://localhost:4000/Faculty/add",{
-    FirstName,
-    SecondName,
-    Email,
-    Password,
-    Degree,
-    Allocated
-  })
-  setFirstName("")
-  setSecondName("")
-  setEmail("")
-  setPassword("")
-  setDegree("")
-  setAllocated("")
-  }
-}
+  const [FirstName, setFirstName] = useState("");
+  const [SecondName, setSecondName] = useState("");
+  const [Email, setEmail] = useState("");
+  const [Password, setPassword] = useState("");
+  const [Degree, setDegree] = useState("");
+  const [Role, setRole] = useState("");
+  const [Allocated, setAllocated] = useState("");
+  const [Courses, setCourses] = useState([]);
+  useEffect(() => {
+    getCourse();
+  }, []);
+  const getCourse = async () => {
+    const response = await axios.get("http://localhost:4000/Course/show");
+    setCourses(response.data);
+  };
+  const hanleSubmit = async (e) => {
+    e.preventDefault();
+    setAllocated(Allocated.split(" ")[0]);
+    if (
+      FirstName != "" &&
+      SecondName != "" &&
+      Email != "" &&
+      Password != "" &&
+      Degree != "" &&
+      Role != "" &&
+      Allocated != ""
+    ) {
+      await axios.post("http://localhost:4000/Faculty/add", {
+        FirstName,
+        SecondName,
+        Email,
+        Password,
+        Degree,
+        Allocated,
+        Role,
+      });
+      setFirstName("");
+      setSecondName("");
+      setEmail("");
+      setPassword("");
+      setDegree("");
+      setRole("");
+      setAllocated("");
+    }
+  };
   return (
     <div class="container">
       <div class="row ">
@@ -58,7 +69,7 @@ const hanleSubmit=async(e)=>{
                         type="text"
                         placeholder="Enter your firstNameFirstName name"
                         value={FirstName}
-                        onChange={(e)=>setFirstName(e.target.value)}       
+                        onChange={(e) => setFirstName(e.target.value)}
                       />
                       <label for="inputFirstNameName">FirstName name</label>
                     </div>
@@ -71,7 +82,7 @@ const hanleSubmit=async(e)=>{
                         type="text"
                         placeholder="Enter your last name"
                         value={SecondName}
-                        onChange={(e)=>setSecondName(e.target.value)}
+                        onChange={(e) => setSecondName(e.target.value)}
                       />
                       <label for="inputLastName">Last name</label>
                     </div>
@@ -81,8 +92,12 @@ const hanleSubmit=async(e)=>{
                 <div class="row mb-3">
                   <div class="col-md-6">
                     <div class="form-floating mb-3 mb-md-0">
-                      <select class="form-select" aria-label="Degree Level" onChange={(e) => setDegree(e.target.value)}>
-                        <option selected >Select Degree Level</option>
+                      <select
+                        class="form-select"
+                        aria-label="Degree Level"
+                        onChange={(e) => setDegree(e.target.value)}
+                      >
+                        <option selected>Select Degree Level</option>
                         <option>MS</option>
                         <option>BS</option>
                       </select>
@@ -90,49 +105,67 @@ const hanleSubmit=async(e)=>{
                   </div>
                   <div class="col-md-6">
                     <div class="form-floating mb-3 mb-md-0">
-                      <select class="form-select" aria-label="Degree Level"onChange={(e) => setAllocated(e.target.value)}>
-                      <option selected>Allocate Course</option>
-                        
-                        {Courses.map((course)=>{
-                            return(
-                              <option key={course._id}>{course.Code}{"  "}{course.Name}</option>
-                            )
-                       })
-                        }
-                     
+                      <select
+                        class="form-select"
+                        aria-label="Select Role"
+                        onChange={(e) => setRole(e.target.value)}
+                      >
+                        <option selected>Select Role</option>
+                        <option>Faculty</option>
+                        <option>Faculty Course Folder</option>
                       </select>
                     </div>
                   </div>
-                </div>
-
-                <div class="row mb-3">
-                  <div class="col-md-6">
-                    <div class="form-floating mb-3 mb-md-0">
+                  <div class="col-md-12">
+                    <div class="form-floating mb-3 mt-3 mb-md-0">
                       <input
                         class="form-control"
                         id="inputEmail"
                         type="email"
                         placeholder="name@example.com"
                         value={Email}
-                        onChange={(e)=>setEmail(e.target.value)}
+                        onChange={(e) => setEmail(e.target.value)}
                       />
                       <label for="inputEmail">Email address</label>
                     </div>
                   </div>
                   <div class="col-md-6">
-                    <div class="form-floating mb-3 mb-md-0">
+                    <div class="form-floating mb-3 mb-md-0 mt-3">
+                      <select
+                        class="form-select"
+                        aria-label="Degree Level"
+                        onChange={(e) => setAllocated(e.target.value)}
+                      >
+                        <option selected>Allocate Course</option>
+
+                        {Courses.map((course) => {
+                          return (
+                            <option key={course._id}>
+                              {course.Code}
+                              {"  "}
+                              {course.Name}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-floating mb-3 mb-md-0 mt-3">
                       <input
                         class="form-control"
                         id="inputPasswordConfirm"
                         type="password"
                         placeholder="Confirm password"
                         value={Password}
-                        onChange={(e)=>setPassword(e.target.value)}
+                        onChange={(e) => setPassword(e.target.value)}
                       />
                       <label for="inputPasswordConfirm">Confirm Password</label>
                     </div>
                   </div>
                 </div>
+
+                <div class="row mb-3"></div>
                 <div class="mt-4 mb-0">
                   <div class="d-grid">
                     <input

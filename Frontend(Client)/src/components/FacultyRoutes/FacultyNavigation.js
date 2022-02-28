@@ -17,9 +17,18 @@ import {
   BsFillPeopleFill,
   BsFillBookFill,
 } from "react-icons/bs";
+import useAuth from "../../MyHooks/useAuth";
 
 export default function FacultyNavigation() {
   const [isOpen, setIsOpen] = React.useState(false);
+  const { setAdmin, setFaculty, Admin, Faculty } = useAuth();
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    console.log("s");
+    console.log(Admin);
+    console.log(Faculty);
+  };
 
   const togglePopup = () => {
     setIsOpen(!isOpen);
@@ -69,7 +78,9 @@ export default function FacultyNavigation() {
               <Link to="Dashboard">
                 <MenuItem value={10}>Profile</MenuItem>
               </Link>
-              <MenuItem value={20}>Logout</MenuItem>
+              <MenuItem value={20} onClick={handleLogout}>
+                Logout
+              </MenuItem>
             </Select>
           </FormControl>
         </nav>
@@ -87,13 +98,6 @@ export default function FacultyNavigation() {
                   Dashboard
                 </Link>
 
-                <Link class="nav-link sidenavtext" to="AddCourse">
-                  <div class="sb-nav-link-icon">
-                    <BsFillBookFill color="#fff" />
-                  </div>
-                  Courses
-                </Link>
-
                 <Link class="nav-link sidenavtext" to="SchemeofStudies">
                   <div class="sb-nav-link-icon">
                     <BsFiles color="#fff" />
@@ -106,20 +110,6 @@ export default function FacultyNavigation() {
                     <BsFiles color="#fff" />
                   </div>
                   Course Learning Outcomes
-                </Link>
-
-                <Link class="nav-link sidenavtext" to="Users">
-                  <div class="sb-nav-link-icon">
-                    <BsFillPeopleFill color="#fff" />
-                  </div>
-                  Faculty Members
-                </Link>
-
-                <Link class="nav-link sidenavtext" to="CourseFolder">
-                  <div class="sb-nav-link-icon">
-                    <BsFillBookFill color="#fff" />
-                  </div>
-                  Course Folder
                 </Link>
               </div>
             </div>

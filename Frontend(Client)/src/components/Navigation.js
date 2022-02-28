@@ -17,9 +17,16 @@ import {
   BsFillPeopleFill,
   BsFillBookFill,
 } from "react-icons/bs";
+import useAuth from "../MyHooks/useAuth";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = React.useState(false);
+  const { setAdmin, setFaculty, Admin, Faculty } = useAuth();
+
+  const handleLogout = (e) => {
+    setAdmin(false);
+    setFaculty(false);
+  };
 
   const togglePopup = () => {
     setIsOpen(!isOpen);
@@ -69,7 +76,9 @@ export default function Navigation() {
               <Link to="Dashboard">
                 <MenuItem value={10}>Profile</MenuItem>
               </Link>
-              <MenuItem value={20}>Logout</MenuItem>
+              <MenuItem value={20} onClick={handleLogout}>
+                Logout
+              </MenuItem>
             </Select>
           </FormControl>
         </nav>
@@ -92,20 +101,6 @@ export default function Navigation() {
                     <BsFillBookFill color="#fff" />
                   </div>
                   Courses
-                </Link>
-
-                <Link class="nav-link sidenavtext" to="SchemeofStudies">
-                  <div class="sb-nav-link-icon">
-                    <BsFiles color="#fff" />
-                  </div>
-                  Scheme of Studies
-                </Link>
-
-                <Link class="nav-link sidenavtext" to="CourseLearningOutcomes">
-                  <div class="sb-nav-link-icon">
-                    <BsFiles color="#fff" />
-                  </div>
-                  Course Learning Outcomes
                 </Link>
 
                 <Link class="nav-link sidenavtext" to="Users">

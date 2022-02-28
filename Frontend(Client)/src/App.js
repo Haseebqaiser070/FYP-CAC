@@ -47,7 +47,18 @@ function App() {
             </Route>
             <Route element={<ProtectedRouteFaculty />}>
               <Route path="/Faculty/" element={<FacultyNavigation />}>
-                <Route path="/Faculty/Dashboard" element={<FacultyDashboard />} />
+                <Route
+                  path="/Faculty/Dashboard"
+                  element={<FacultyDashboard />}
+                />
+                <Route path="/Faculty/SchemeofStudies">
+                  <Route path=":id" element={<CourseDescription />} />
+                  <Route index element={<SchemeofStudies />} />
+                </Route>
+                <Route
+                  path="/Faculty/CourseLearningOutcomes"
+                  element={<CourseLearningOutcomes />}
+                />
               </Route>
             </Route>
           </Routes>
