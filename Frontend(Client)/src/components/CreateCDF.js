@@ -15,7 +15,7 @@ export default function CourseDescription() {
   }, [id]);
 
   const getCourse = async () => {
-    const response = await axios.get(`http://localhost:4000/Course/show/${id}`);
+    const response = await axios.get(`http://localhost:4000/Course/${id}`);
     console.log(response.data);
     setCourse(response.data);
     setLoading(false);

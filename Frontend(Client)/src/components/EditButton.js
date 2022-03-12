@@ -25,6 +25,16 @@ export default function EditButton({ row }) {
         color="primary"
         size="small"
         style={{ marginLeft: 16 }}
+        onClick={() => navigate(`/admin/SchemeofStudies/${row._id}`)}
+      >
+        <AiFillEdit style={{ marginRight: 10 }} />
+        Create Syllabus
+      </Button>
+      <Button
+        variant="contained"
+        color="primary"
+        size="small"
+        style={{ marginLeft: 16 }}
         onClick={null}
       >
         <AiOutlineCloudDownload style={{ marginRight: 10 }} />
