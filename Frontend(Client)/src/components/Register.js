@@ -51,33 +51,33 @@ export default function Register() {
     }
   };
   return (
-    <div class="container">
-      <div class="row ">
-        <div class="col-lg-12">
-          <div class=" border-0  mt-3">
+    <div className="container">
+      <div className="row ">
+        <div className="col-lg-12">
+          <div className=" border-0  mt-3">
             <div>
-              <h3 class="text-center font-weight-bold my-4">Add Faculty</h3>
+              <h3 className="text-center font-weight-bold my-4">Add Faculty</h3>
             </div>
             <div>
               <form onSubmit={hanleSubmit}>
-                <div class="row mb-3">
-                  <div class="col-md-6">
-                    <div class="form-floating mb-3 mb-md-0">
+                <div className="row mb-3">
+                  <div className="col-md-6">
+                    <div className="form-floating mb-3 mb-md-0">
                       <input
-                        class="form-control"
+                        className="form-control"
                         id="inputFirstNameName"
                         type="text"
-                        placeholder="Enter your firstNameFirstName name"
+                        placeholder="Enter your first name "
                         value={FirstName}
                         onChange={(e) => setFirstName(e.target.value)}
                       />
-                      <label for="inputFirstNameName">FirstName name</label>
+                      <label for="inputFirstName">FirstName</label>
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <div class="form-floating">
+                  <div className="col-md-6">
+                    <div className="form-floating">
                       <input
-                        class="form-control"
+                        className="form-control"
                         id="inputLastName"
                         type="text"
                         placeholder="Enter your last name"
@@ -89,11 +89,11 @@ export default function Register() {
                   </div>
                 </div>
 
-                <div class="row mb-3">
-                  <div class="col-md-6">
-                    <div class="form-floating mb-3 mb-md-0">
+                <div className="row mb-3">
+                  <div className="col-md-6">
+                    <div className="form-floating mb-3 mb-md-0">
                       <select
-                        class="form-select"
+                        className="form-select"
                         aria-label="Degree Level"
                         onChange={(e) => setDegree(e.target.value)}
                       >
@@ -103,23 +103,23 @@ export default function Register() {
                       </select>
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <div class="form-floating mb-3 mb-md-0">
+                  <div className="col-md-6">
+                    <div className="form-floating mb-3 mb-md-0">
                       <select
-                        class="form-select"
+                        className="form-select"
                         aria-label="Select Role"
                         onChange={(e) => setRole(e.target.value)}
                       >
                         <option selected>Select Role</option>
+                        <option>CAC Member</option>
                         <option>Faculty</option>
-                        <option>Faculty Course Folder</option>
                       </select>
                     </div>
                   </div>
-                  <div class="col-md-12">
-                    <div class="form-floating mb-3 mt-3 mb-md-0">
+                  <div className="col-md-12">
+                    <div className="form-floating mb-3 mt-3 mb-md-0">
                       <input
-                        class="form-control"
+                        className="form-control"
                         id="inputEmail"
                         type="email"
                         placeholder="name@example.com"
@@ -129,10 +129,10 @@ export default function Register() {
                       <label for="inputEmail">Email address</label>
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <div class="form-floating mb-3 mb-md-0 mt-3">
+                  <div className="col-md-6">
+                    <div className="form-floating mb-3 mb-md-0 mt-3">
                       <select
-                        class="form-select"
+                        className="form-select"
                         aria-label="Degree Level"
                         onChange={(e) => setAllocated(e.target.value)}
                       >
@@ -150,29 +150,29 @@ export default function Register() {
                       </select>
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <div class="form-floating mb-3 mb-md-0 mt-3">
+                  <div className="col-md-6">
+                    <div className="form-floating mb-3 mb-md-0 mt-3">
                       <input
-                        class="form-control"
+                        className="form-control"
                         id="inputPasswordConfirm"
                         type="password"
-                        placeholder="Confirm password"
+                        placeholder="Enter password"
                         value={Password}
                         onChange={(e) => setPassword(e.target.value)}
                       />
-                      <label for="inputPasswordConfirm">Confirm Password</label>
+                      <label for="inputPasswordConfirm">Password</label>
                     </div>
                   </div>
                 </div>
 
-                <div class="row mb-3"></div>
-                <div class="mt-4 mb-0">
-                  <div class="d-grid">
+                <div className="row mb-3"></div>
+                <div className="mt-4 mb-0">
+                  <div className="d-grid">
                     <input
                       type="submit"
                       name="submit"
                       value="Submit"
-                      class="button btn btn-primary ms-auto me-0 me-md-3 my-2 my-md-0"
+                      className="button btn btn-primary ms-auto me-0 me-md-3 my-2 my-md-0"
                     />
                   </div>
                 </div>

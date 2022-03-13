@@ -8,7 +8,6 @@ import Dashboard from "./components/Dashboard";
 import Register from "./components/Register";
 import AddCourse from "./components/AddCourse";
 import Users from "./components/Users";
-import Tables from "./components/Tables";
 import SchemeofStudies from "./components/SchemeofStudies";
 import CourseLearningOutcomes from "./components/CourseLearningOutcomes";
 import CourseFolder from "./components/CourseFolder";
@@ -19,6 +18,7 @@ import ProtectedRouteAdmin from "./components/ProtectedRoutes/ProtectedRouteAdmi
 import ProtectedRouteFaculty from "./components/ProtectedRoutes/ProtectedRouteFaculty";
 import FacultyNavigation from "./components/FacultyRoutes/FacultyNavigation";
 import FacultyDashboard from "./components/FacultyRoutes/FacultyDashboard";
+import AddNewCourse from "./components/AddNewCourse";
 
 function App() {
   return (
@@ -32,6 +32,7 @@ function App() {
               <Route path="/admin/" element={<Navigation />}>
                 <Route path="/admin/Dashboard" element={<Dashboard />} />
                 <Route path="/admin/Register" element={<Register />} />
+                <Route path="/admin/AddNewCourse" element={<AddNewCourse />} />
                 <Route path="/admin/AddCourse" element={<AddCourse />} />
                 <Route path="/admin/SchemeofStudies">
                   <Route path=":id" element={<CourseDescription />} />

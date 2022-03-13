@@ -33,22 +33,22 @@ export default function Navigation() {
   };
   return (
     <React.Fragment>
-      <div class="bg">
-        <nav class="sb-topnav navbar navbar-expand navbar-dark ">
-          <a class="navbar-brand ps-3" to="/Dashboard">
+      <div className="bg">
+        <nav className="sb-topnav navbar navbar-expand navbar-dark ">
+          <a className="navbar-brand ps-3" to="/Dashboard">
             <b>CAC PANEL</b>
           </a>
           <button
-            class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
+            className="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
             id="sidebarToggle"
             to="#!"
           >
-            <i class="fas fa-bars"></i>
+            <i className="fas fa-bars"></i>
           </button>
-          <div class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-            <div class="input-group">
+          <div className="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div className="input-group">
               <button
-                class="btn btn-primary"
+                className="btn btn-primary"
                 id="btnNavbarSearch"
                 type="button"
                 onClick={togglePopup}
@@ -83,42 +83,50 @@ export default function Navigation() {
           </FormControl>
         </nav>
       </div>
+
       <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
-          <nav class="sb-sidenav accordion bg" id="sidenavAccordion">
-            <div class="sb-sidenav-menu">
-              <div class="nav">
-                <div class="sb-sidenav-menu-heading"></div>
-                <Link class="nav-link sidenavtext " to="Dashboard">
-                  <div class="sb-nav-link-icon">
+          <nav className="sb-sidenav accordion bg" id="sidenavAccordion">
+            <div className="sb-sidenav-menu">
+              <div className="nav">
+                <div className="sb-sidenav-menu-heading"></div>
+                <Link className="nav-link sidenavtext " to="Dashboard">
+                  <div className="sb-nav-link-icon">
                     <BsBuilding color="#fff" />
                   </div>
                   Dashboard
                 </Link>
 
-                <Link class="nav-link sidenavtext" to="AddCourse">
-                  <div class="sb-nav-link-icon">
+                <Link className="nav-link sidenavtext" to="AddNewCourse">
+                  <div className="sb-nav-link-icon">
+                    <BsFillBookFill color="#fff" />
+                  </div>
+                  Add New Courses
+                </Link>
+
+                <Link className="nav-link sidenavtext" to="AddCourse">
+                  <div className="sb-nav-link-icon">
                     <BsFillBookFill color="#fff" />
                   </div>
                   Courses
                 </Link>
 
-                <Link class="nav-link sidenavtext" to="Users">
-                  <div class="sb-nav-link-icon">
+                <Link className="nav-link sidenavtext" to="Users">
+                  <div className="sb-nav-link-icon">
                     <BsFillPeopleFill color="#fff" />
                   </div>
                   Faculty Members
                 </Link>
 
-                <Link class="nav-link sidenavtext" to="CourseFolder">
-                  <div class="sb-nav-link-icon">
+                <Link className="nav-link sidenavtext" to="CourseFolder">
+                  <div className="sb-nav-link-icon">
                     <BsFillBookFill color="#fff" />
                   </div>
                   Course Folder
                 </Link>
               </div>
             </div>
-            <div class="sb-sidenav-footer sidenavtext">
+            <div className="sb-sidenav-footer sidenavtext">
               Comsats University Islamabad
             </div>
           </nav>

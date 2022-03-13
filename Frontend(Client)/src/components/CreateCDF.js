@@ -30,10 +30,10 @@ export default function CourseDescription() {
   return loading ? (
     <CircularProgress />
   ) : (
-    <div class="container" style={{ padding: 20 }}>
-      <table class="table">
+    <div className="container" style={{ padding: 20 }}>
+      <table className="table">
         <thead>
-          <tr class="cdf-header">
+          <tr className="cdf-header">
             <th colspan="2">Cource Information</th>
           </tr>
         </thead>
@@ -67,10 +67,10 @@ export default function CourseDescription() {
 
       <div style={{ marginBottom: 20, marginTop: 20 }}>
         <form>
-          <div class="row">
-            <div class="col-9">
+          <div className="row">
+            <div className="col-9">
               <input
-                class="form-control"
+                className="form-control"
                 id="maintopic"
                 type="text"
                 placeholder="Add Main Topic"
@@ -78,10 +78,10 @@ export default function CourseDescription() {
                 onChange={(e) => setmainTopic(e.target.value)}
               ></input>
             </div>
-            <div class="col-3 d-grid gap-2">
+            <div className="col-3 d-grid gap-2">
               <button
                 type="submit"
-                class="btn btn-primary btn-block"
+                className="btn btn-primary btn-block"
                 onClick={handleAdd}
               >
                 ADD
@@ -91,14 +91,14 @@ export default function CourseDescription() {
         </form>
       </div>
 
-      <table class="table table-responsive">
+      <table className="table table-responsive">
         <thead>
-          <tr class="cdf-header">
+          <tr className="cdf-header">
             <th>Catalogue Description</th>
           </tr>
         </thead>
         <tbody>
-          <tr class="cd">
+          <tr className="cd">
             <td>{catalogue}</td>
           </tr>
         </tbody>
@@ -106,10 +106,10 @@ export default function CourseDescription() {
 
       <div style={{ marginBottom: 20, marginTop: 20 }}>
         <form>
-          <div class="row">
-            <div class="col-2">
+          <div className="row">
+            <div className="col-2">
               <input
-                class="form-control"
+                className="form-control"
                 id="unit"
                 type="text"
                 placeholder="Add Unit"
@@ -118,9 +118,9 @@ export default function CourseDescription() {
               ></input>
             </div>
 
-            <div class="col-4">
+            <div className="col-4">
               <input
-                class="form-control"
+                className="form-control"
                 id="subtopics"
                 type="text"
                 placeholder="Add Sub Topics"
@@ -129,9 +129,9 @@ export default function CourseDescription() {
               ></input>
             </div>
 
-            <div class="col-3">
+            <div className="col-3">
               <input
-                class="form-control"
+                className="form-control"
                 id="teachingHours"
                 type="text"
                 placeholder="Add No. of Teaching Hours"
@@ -140,10 +140,10 @@ export default function CourseDescription() {
               ></input>
             </div>
 
-            <div class="col-3 d-grid gap-2">
+            <div className="col-3 d-grid gap-2">
               <button
                 type="submit"
-                class="btn btn-primary btn-block"
+                className="btn btn-primary btn-block"
                 onClick={handleAdd}
               >
                 ADD
@@ -152,30 +152,30 @@ export default function CourseDescription() {
           </div>
         </form>
       </div>
-      <table class="table table-bordered">
+      <table className="table table-bordered">
         <thead>
-          <tr class="cdf-header">
+          <tr className="cdf-header">
             <th scope="col" colspan="3">
               Unit wise Major Topics
             </th>
           </tr>
           <tr style={{ textAlign: "center" }}>
-            <th class="col-3" scope="col">
+            <th className="col-3" scope="col">
               Unit
             </th>
-            <th class="col-6" scope="col">
+            <th className="col-6" scope="col">
               Topic
             </th>
-            <th class="col-3" scope="col">
+            <th className="col-3" scope="col">
               No. of Teaching Hours
             </th>
           </tr>
         </thead>
         <tbody style={{ textAlign: "center" }}>
           <tr>
-            <td class="col-3">1</td>
-            <td class="col-6">1</td>
-            <td class="col-3">1</td>
+            <td className="col-3">1</td>
+            <td className="col-6">1</td>
+            <td className="col-3">1</td>
           </tr>
 
           <tr>

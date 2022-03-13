@@ -22,7 +22,7 @@ export default function DataGridDemo() {
   return (
     <div style={{ height: 700, width: "100%", padding: 20 }}>
       <h2 style={{ padding: 20 }}>Scheme of Studies</h2>
-      <div style={{ padding: 10 }} class="d-flex justify-content-end">
+      <div style={{ padding: 10 }} className="d-flex justify-content-end">
         <Button
           variant="contained"
           color="primary"

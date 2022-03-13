@@ -12111,7 +12111,29 @@ textarea {
   color: #fff;
 }
 
+.cdf {
+  background-color: #0d6efd;
+  color: #fff;
+}
+
 .tablecourse {
   border-collapse: separate;
   border-spacing: 0 20px;
+}
+
+.notification {
+  background-color: "#ddeeff";
+  padding: 20px;
+}
+
+.block {
+  display: block;
+  width: 100%;
+  cursor: pointer;
+  text-align: center;
+}
+.header {
+  display: block;
+  background-color: "#0054a6";
+  width: 100%;
 }

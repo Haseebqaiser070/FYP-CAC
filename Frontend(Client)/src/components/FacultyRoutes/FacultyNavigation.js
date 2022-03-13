@@ -24,10 +24,8 @@ export default function FacultyNavigation() {
   const { setAdmin, setFaculty, Admin, Faculty } = useAuth();
 
   const handleLogout = (e) => {
-    e.preventDefault();
-    console.log("s");
-    console.log(Admin);
-    console.log(Faculty);
+    setAdmin(false);
+    setFaculty(false);
   };
 
   const togglePopup = () => {
@@ -47,42 +45,18 @@ export default function FacultyNavigation() {
           >
             <i class="fas fa-bars"></i>
           </button>
-          <div class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-            <div class="input-group">
-              <button
-                class="btn btn-primary"
-                id="btnNavbarSearch"
-                type="button"
-                onClick={togglePopup}
-              >
-                <span style={{ marginRight: 10 }}>
-                  <BsFillPersonPlusFill />
-                </span>
-                Add Faculty
-              </button>
-
-              {isOpen && (
-                <Popup
-                  content={
-                    <>
-                      <Register />
-                    </>
-                  }
-                  handleClose={togglePopup}
-                />
-              )}
-            </div>
+          <div className="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <FormControl>
+              <Select style={{ color: "#fff", border: "none" }}>
+                <Link to="Dashboard">
+                  <MenuItem value={10}>Profile</MenuItem>
+                </Link>
+                <MenuItem value={20} onClick={handleLogout}>
+                  Logout
+                </MenuItem>
+              </Select>
+            </FormControl>
           </div>
-          <FormControl>
-            <Select style={{ color: "#fff", border: "none" }}>
-              <Link to="Dashboard">
-                <MenuItem value={10}>Profile</MenuItem>
-              </Link>
-              <MenuItem value={20} onClick={handleLogout}>
-                Logout
-              </MenuItem>
-            </Select>
-          </FormControl>
         </nav>
       </div>
       <div id="layoutSidenav">
