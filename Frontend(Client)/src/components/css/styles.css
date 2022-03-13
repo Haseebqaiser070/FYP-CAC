@@ -12137,3 +12137,18 @@ textarea {
   background-color: "#0054a6";
   width: 100%;
 }
+
+header {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("./comsats.jpg");
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+}
+.hero-textbox {
+  position: absolute;
+  width: 1140px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

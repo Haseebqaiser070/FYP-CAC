@@ -19,6 +19,7 @@ import ProtectedRouteFaculty from "./components/ProtectedRoutes/ProtectedRouteFa
 import FacultyNavigation from "./components/FacultyRoutes/FacultyNavigation";
 import FacultyDashboard from "./components/FacultyRoutes/FacultyDashboard";
 import AddNewCourse from "./components/AddNewCourse";
+import Home from "./components/Home";
 
 function App() {
   return (
@@ -26,7 +27,7 @@ function App() {
       <Router>
         <AuthProvider>
           <Routes>
-            <Route path="/" element={<Login />} />
+            <Route path="/" element={<Home />} />
             <Route path="/forgotpassword" element={<Forgot />} />
             <Route element={<ProtectedRouteAdmin />}>
               <Route path="/admin/" element={<Navigation />}>
