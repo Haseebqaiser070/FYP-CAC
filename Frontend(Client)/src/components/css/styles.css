@@ -12139,9 +12139,9 @@ textarea {
 }
 
 header {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.6)),
     url("./comsats.jpg");
-  height: 100vh;
+  height: 70vh;
   background-size: cover;
   background-position: center;
 }
@@ -12151,4 +12151,13 @@ header {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  color: #fff;
+}
+
+.section {
+  padding: 50px;
+  font-size: 18px;
+}
+.home_notification {
+  background-color: "#0054a6";
 }
