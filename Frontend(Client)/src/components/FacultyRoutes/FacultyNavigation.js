@@ -85,6 +85,12 @@ export default function FacultyNavigation() {
                   </div>
                   Course Learning Outcomes
                 </Link>
+                <Link class="nav-link sidenavtext" to="FacultyMeeting">
+                  <div class="sb-nav-link-icon">
+                    <BsFiles color="#fff" />
+                  </div>
+                  Meetings
+                </Link>
               </div>
             </div>
             <div class="sb-sidenav-footer sidenavtext">

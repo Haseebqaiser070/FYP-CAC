@@ -77,17 +77,6 @@ export default function Home() {
                   </span>
                   Login
                 </button>
-
-                {isOpen && (
-                  <Popup
-                    content={
-                      <>
-                        <Login />
-                      </>
-                    }
-                    handleClose={togglePopup}
-                  />
-                )}
               </div>
             </div>
           </div>
@@ -98,6 +87,17 @@ export default function Home() {
           <h1>WELCOME TO COMSATS CATALOG PORTAL</h1>
         </div>
       </header>
+
+      {isOpen && (
+        <Popup
+          content={
+            <>
+              <Login />
+            </>
+          }
+          handleClose={togglePopup}
+        />
+      )}
 
       <div className="row section">
         <div className="col-8">
@@ -151,7 +151,7 @@ export default function Home() {
           <button className="btn btn-primary">VIEW SCHEME OF STUDIES</button>
         </div>
         <div
-          style={{ backgroundColor: "##0054a6" }}
+          style={{ backgroundColor: "#0054a6" }}
           className="col-4 home_notification"
         >
           <h5>

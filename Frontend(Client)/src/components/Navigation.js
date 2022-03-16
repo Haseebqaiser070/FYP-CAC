@@ -118,6 +118,13 @@ export default function Navigation() {
                   Faculty Members
                 </Link>
 
+                <Link className="nav-link sidenavtext" to="Meeting">
+                  <div className="sb-nav-link-icon">
+                    <BsFillPeopleFill color="#fff" />
+                  </div>
+                  Meeting
+                </Link>
+
                 <Link className="nav-link sidenavtext" to="CourseFolder">
                   <div className="sb-nav-link-icon">
                     <BsFillBookFill color="#fff" />

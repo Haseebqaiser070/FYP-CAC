@@ -20,6 +20,8 @@ import FacultyNavigation from "./components/FacultyRoutes/FacultyNavigation";
 import FacultyDashboard from "./components/FacultyRoutes/FacultyDashboard";
 import AddNewCourse from "./components/AddNewCourse";
 import Home from "./components/Home";
+import Meeting from "./components/Meeting";
+import FacultyMeeting from "./components/FacultyMeeting";
 
 function App() {
   return (
@@ -35,6 +37,7 @@ function App() {
                 <Route path="/admin/Register" element={<Register />} />
                 <Route path="/admin/AddNewCourse" element={<AddNewCourse />} />
                 <Route path="/admin/AddCourse" element={<AddCourse />} />
+                <Route path="/admin/Meeting" element={<Meeting />} />
                 <Route path="/admin/SchemeofStudies">
                   <Route path=":id" element={<CourseDescription />} />
                   <Route index element={<SchemeofStudies />} />
@@ -56,6 +59,10 @@ function App() {
                 <Route path="/Faculty/SchemeofStudies">
                   <Route path=":id" element={<CourseDescription />} />
                   <Route index element={<SchemeofStudies />} />
+                </Route>
+                <Route path="/Faculty/FacultyMeeting">
+                  <Route path=":id" element={<FacultyMeeting />} />
+                  <Route index element={<FacultyMeeting />} />
                 </Route>
                 <Route
                   path="/Faculty/CourseLearningOutcomes"
