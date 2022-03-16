@@ -16,7 +16,7 @@ export default function MeetingForm({ onOpen, id }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { res } = await axios.put("http://localhost:4000/Meeting/create", {
+    const { res } = await axios.put("http://localhost:4000/Meeting/update", {
       ...data,
       id,
     });

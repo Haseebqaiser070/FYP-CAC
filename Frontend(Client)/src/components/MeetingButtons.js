@@ -5,6 +5,7 @@ import { AiFillEye, AiFillEdit, AiOutlineCloudDownload } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import MeetingForm from "./MeetingForm";
 import Popup from "./AddCourceForm";
+import axios from "axios";
 
 export default function MeetingButton(props) {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -12,14 +13,22 @@ export default function MeetingButton(props) {
   const togglePopup = () => {
     setIsOpen(!isOpen);
   };
+  const handleDelete = async (e) => {
+    const id = props.id;
+    const { res } = await axios.delete(
+      `http://localhost:4000/Meeting/delete/${id}`
+    );
+    console.log(res);
+  };
   return (
     <div>
       <Button
+        type="button"
         variant="contained"
         color="primary"
         size="small"
         style={{ marginLeft: 16 }}
-        onClick={null}
+        onClick={handleDelete}
       >
         <AiFillEdit style={{ marginRight: 10 }} />
         Cancel
