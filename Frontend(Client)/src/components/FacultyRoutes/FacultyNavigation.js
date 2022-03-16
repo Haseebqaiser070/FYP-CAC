@@ -8,6 +8,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
+import axios from "axios";
 
 import {
   BsFillPersonPlusFill,
@@ -22,8 +23,9 @@ import useAuth from "../../MyHooks/useAuth";
 export default function FacultyNavigation() {
   const [isOpen, setIsOpen] = React.useState(false);
   const { setAdmin, setFaculty, Admin, Faculty } = useAuth();
-
-  const handleLogout = (e) => {
+  axios.defaults.withCredentials = true;
+  const handleLogout = async(e) => {
+    await axios.post("http://localhost:4000/Auth/logout")
     setAdmin(false);
     setFaculty(false);
   };
