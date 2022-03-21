@@ -101,7 +101,7 @@ export default function AddCourse() {
         </thead>
         <tbody>
           {Course &&
-            Course.map((cor) => {
+            Course?.map((cor) => {
               return (
                 <tr scope="row" key={cor._id}>
                   <td>{cor.Code}</td>

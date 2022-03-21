@@ -9,6 +9,26 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import { DataGrid } from "@mui/x-data-grid";
+import { AiFillEye, AiFillEdit, AiOutlineCloudDownload } from "react-icons/ai";
+import { v4 as uuidv4 } from "uuid";
+
+// function RemoveButton() {
+//   return (
+//     <div>
+//       <Button
+//         type="button"
+//         variant="contained"
+//         color="primary"
+//         size="small"
+//         style={{ marginLeft: 16 }}
+//         onClick={null}
+//       >
+//         <AiFillEdit style={{ marginRight: 10 }} />
+//         Remove
+//       </Button>
+//     </div>
+//   );
+// }
 
 export default function AddNewCourse() {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,10 +47,46 @@ export default function AddNewCourse() {
 
   const [objective, setobjective] = useState("");
 
+  const [objectiveList, setObjectiveList] = useState([]);
+  const columns = [
+    {
+      field: "title",
+      headerName: "Title",
+      flex: 2,
+    },
+    {
+      field: "Action",
+      headerName: "Action",
+      flex: 1,
+      renderCell: (props) => (
+        <Button
+          type="button"
+          variant="contained"
+          color="primary"
+          size="small"
+          style={{ marginLeft: 16 }}
+          onClick={() => {
+            var data = objectiveList.filter((obj) => obj.id !== props.row.id);
+
+            setObjectiveList(data);
+          }}
+        >
+          <AiFillEdit style={{ marginRight: 10 }} />
+          Remove
+        </Button>
+      ),
+    },
+  ];
+
   const handleAdd = (e) => {
     e.preventDefault();
     setCatalogue(`${catalogue} ${mainTopic}; `);
     setmainTopic("");
+  };
+  const handleObjective = (e) => {
+    e.preventDefault();
+    setObjectiveList([...objectiveList, { id: uuidv4(), title: objective }]);
+    setobjective("");
   };
 
   const AddCourse = async (e) => {
@@ -235,7 +291,7 @@ export default function AddNewCourse() {
                   <button
                     type="submit"
                     className="btn btn-primary btn-block"
-                    onClick={null}
+                    onClick={handleObjective}
                   >
                     ADD
                   </button>
@@ -245,11 +301,10 @@ export default function AddNewCourse() {
           </div>
           <div style={{ height: 400, width: "100%" }}>
             <DataGrid
-              rows={rows}
+              rows={objectiveList}
               columns={columns}
               pageSize={5}
               rowsPerPageOptions={[5]}
-              checkboxSelection
               disableSelectionOnClick
             />
           </div>
@@ -282,29 +337,8 @@ const top100Films = [
   { title: "Lawrence of Arabia", year: 1962 },
   { title: "Double Indemnity", year: 1944 },
 ];
-const columns = [
-  { field: "id", headerName: "ID", width: 90 },
-  {
-    field: "firstName",
-    headerName: "First name",
-    width: 150,
-    editable: true,
-  },
-  {
-    field: "lastName",
-    headerName: "Last name",
-    width: 150,
-    editable: true,
-  },
-  {
-    field: "age",
-    headerName: "Age",
-    type: "number",
-    width: 110,
-    editable: true,
-  },
-];
-const rows = [
-  { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
-  { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
-];
+
+// const rows = [
+//   { id: 1, title: "Snow" },
+//   { id: 2, title: "Lannister" },
+// ];
