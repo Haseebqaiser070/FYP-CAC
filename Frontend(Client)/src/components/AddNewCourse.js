@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "./css/styles.css";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import Popup from "./AddCourceForm";
 import axios from "axios";
 import Button from "@mui/material/Button";
-import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
+import Chip from "@mui/material/Chip";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
+import Stack from "@mui/material/Stack";
+import { DataGrid } from "@mui/x-data-grid";
 
 export default function AddNewCourse() {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,6 +24,8 @@ export default function AddNewCourse() {
 
   const [mainTopic, setmainTopic] = useState("");
   const [catalogue, setCatalogue] = useState("");
+
+  const [objective, setobjective] = useState("");
 
   const handleAdd = (e) => {
     e.preventDefault();
@@ -129,58 +134,47 @@ export default function AddNewCourse() {
 
           <div className="mb-3 col-2">
             <label for="credit-hour" className="form-label">
+              Course Categories
+            </label>
+            <select class="form-select">
+              <option>Computing Course</option>
+              <option>CYC</option>
+              <option>AIC</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col mb-3">
+            <label for="credit-hour" className="form-label">
               Credit Hour
             </label>
-            <input
-              type="number"
-              className="form-control"
-              id="credit-hour"
-              max="4"
-              value={Credit}
-              onChange={(e) => setCredit(e.target.value)}
-            />
+            <select class="form-select">
+              <option>4(0,4)</option>
+              <option>4(3,1)</option>
+              <option>3(3,0)</option>
+              <option>3(2,1)</option>
+              <option>2(0,2)</option>
+            </select>
           </div>
-        </div>
-
-        <div className="row">
-          <div className="mb-3 col-6">
-            <label for="	LectureHoursWeek" className="form-label">
-              Lecture Hours/Week
-            </label>
-            <input
-              type="number"
-              className="form-control"
-              id="LectureHoursWeek"
-              value={LectureHoursWeek}
-              onChange={(e) => setLectureHoursWeek(e.target.value)}
-            />
-          </div>
-          <div className="mb-3 col-6">
-            <label for="LabHoursWeek" className="form-label">
-              Lab Hours/Week
-            </label>
-            <input
-              type="number"
-              className="form-control"
-              id="LabHoursWeek"
-              value={LabHoursWeek}
-              onChange={(e) => setLabHoursWeek(e.target.value)}
-            />
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="mb-3">
-            <label for="PreRequisites" className="form-label">
-              Pre-Requisites
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="PreRequisites"
-              value={PreRequisites}
-              onChange={(e) => setPreRequisites(e.target.value)}
-            />
+          <div class="col">
+            <Stack spacing={3} sx={{ width: 500 }}>
+              <Autocomplete
+                multiple
+                id="tags-standard"
+                options={top100Films}
+                getOptionLabel={(option) => option.title}
+                defaultValue={[top100Films[3]]}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="standard"
+                    label="Pre-Requisites"
+                    placeholder="Pre-Requisites"
+                  />
+                )}
+              />
+            </Stack>
           </div>
         </div>
 
@@ -209,8 +203,8 @@ export default function AddNewCourse() {
             </div>
           </form>
         </div>
-        <div>
-          <table className="table table-responsive">
+        <div className="mb-3">
+          <table className="table table-responsive ">
             <thead>
               <tr className="cdf">
                 <th>Catalogue Description</th>
@@ -223,6 +217,44 @@ export default function AddNewCourse() {
             </tbody>
           </table>
         </div>
+        <div>
+          <div style={{ marginBottom: 20, marginTop: 20 }}>
+            <form>
+              <div className="row">
+                <div className="col-9">
+                  <input
+                    className="form-control"
+                    id="objective"
+                    type="text"
+                    placeholder="Objective"
+                    value={objective}
+                    onChange={(e) => setobjective(e.target.value)}
+                  ></input>
+                </div>
+                <div className="col-3 d-grid gap-2">
+                  <button
+                    type="submit"
+                    className="btn btn-primary btn-block"
+                    onClick={null}
+                  >
+                    ADD
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div style={{ height: 400, width: "100%" }}>
+            <DataGrid
+              rows={rows}
+              columns={columns}
+              pageSize={5}
+              rowsPerPageOptions={[5]}
+              checkboxSelection
+              disableSelectionOnClick
+            />
+          </div>
+        </div>
+
         <input
           type="submit"
           name="submit"
@@ -233,3 +265,46 @@ export default function AddNewCourse() {
     </div>
   );
 }
+
+// Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
+const top100Films = [
+  { title: "WALL·E", year: 2008 },
+  { title: "American Beauty", year: 1999 },
+  { title: "The Dark Knight Rises", year: 2012 },
+  { title: "Reservoir Dogs", year: 1992 },
+  { title: "Braveheart", year: 1995 },
+  { title: "M", year: 1931 },
+  { title: "Requiem for a Dream", year: 2000 },
+  { title: "Amélie", year: 2001 },
+  { title: "A Clockwork Orange", year: 1971 },
+  { title: "Like Stars on Earth", year: 2007 },
+  { title: "Taxi Driver", year: 1976 },
+  { title: "Lawrence of Arabia", year: 1962 },
+  { title: "Double Indemnity", year: 1944 },
+];
+const columns = [
+  { field: "id", headerName: "ID", width: 90 },
+  {
+    field: "firstName",
+    headerName: "First name",
+    width: 150,
+    editable: true,
+  },
+  {
+    field: "lastName",
+    headerName: "Last name",
+    width: 150,
+    editable: true,
+  },
+  {
+    field: "age",
+    headerName: "Age",
+    type: "number",
+    width: 110,
+    editable: true,
+  },
+];
+const rows = [
+  { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
+  { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
+];

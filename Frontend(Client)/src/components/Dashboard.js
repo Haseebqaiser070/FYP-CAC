@@ -3,7 +3,10 @@ import "./css/styles.css";
 
 export default function Dashboard() {
   return (
-    <div className="container-fluid px-4">
+    <div
+      className="container-fluid px-4"
+      style={{ height: 700, width: "100%", padding: 20 }}
+    >
       <h1 className="mt-4">Dashboard</h1>
       <ol className="breadcrumb mb-4">
         <li className="breadcrumb-item active">Dashboard</li>
