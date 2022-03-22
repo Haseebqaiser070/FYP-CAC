@@ -9,7 +9,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import { DataGrid } from "@mui/x-data-grid";
-import { AiFillEye, AiFillEdit, AiOutlineCloudDownload } from "react-icons/ai";
+import { AiFillDelete } from "react-icons/ai";
 import { v4 as uuidv4 } from "uuid";
 
 // function RemoveButton() {
@@ -71,7 +71,7 @@ export default function AddNewCourse() {
             setObjectiveList(data);
           }}
         >
-          <AiFillEdit style={{ marginRight: 10 }} />
+          <AiFillDelete style={{ marginRight: 10 }} />
           Remove
         </Button>
       ),
@@ -299,7 +299,7 @@ export default function AddNewCourse() {
               </div>
             </form>
           </div>
-          <div style={{ height: 400, width: "100%" }}>
+          <div style={{ height: 300, width: "100%" }}>
             <DataGrid
               rows={objectiveList}
               columns={columns}

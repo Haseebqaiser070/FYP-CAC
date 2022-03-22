@@ -32,13 +32,18 @@ export default function AddCourse() {
     setUpdate(false);
     togglePopup();
   };
-  useEffect(() => {
-    getCourse();
+  useEffect(async () => {
+    await getCourse();
   }, []);
 
   const getCourse = async () => {
-    const response = await axios.get("http://localhost:4000/Course/show");
-    setCourse(response.data);
+    try {
+      const response = await axios.get("http://localhost:4000/Course/show");
+      setCourse(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleDelete = async (id) => {
@@ -68,8 +73,15 @@ export default function AddCourse() {
     >
       <h1 className="mt-4">Add Cources</h1>
 
-      <div className="row cource">
-        <div className="col d-flex justify-content-end">
+      <div className="row cource mb-4 mt-4 d-flex justify-content-end">
+        <div className="d-flex col-9 ">
+          <select class="form-select ">
+            <option>Computing Course</option>
+            <option>CYC</option>
+            <option>AIC</option>
+          </select>
+        </div>
+        <div className="d-flex col-3 ">
           <Link to="AddNewCourse">
             <button
               className="btn btn-primary ms-auto me-0 me-md-3 my-2 my-md-0"
