@@ -12158,6 +12158,8 @@ header {
   padding: 50px;
   font-size: 18px;
 }
-.home_notification {
-  background-color: "#0054a6";
+
+.notification_list li {
+  font-size: 15px;
+  margin-bottom: 10px;
 }

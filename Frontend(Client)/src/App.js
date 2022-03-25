@@ -8,8 +8,7 @@ import Dashboard from "./components/Dashboard";
 import Register from "./components/Register";
 import AddCourse from "./components/AddCourse";
 import Users from "./components/Users";
-import SchemeofStudies from "./components/SchemeofStudies";
-import CourseLearningOutcomes from "./components/CourseLearningOutcomes";
+import CdfandSyllabus from "./components/CdfandSyllabus";
 import CourseFolder from "./components/CourseFolder";
 import CourseDescription from "./components/CreateCDF";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -22,6 +21,7 @@ import AddNewCourse from "./components/AddNewCourse";
 import Home from "./components/Home";
 import Meeting from "./components/Meeting";
 import FacultyMeeting from "./components/FacultyMeeting";
+import AllSchemeofStudies from "./components/AllSchemeofStudies";
 
 function App() {
   return (
@@ -38,14 +38,14 @@ function App() {
                 <Route path="/admin/AddNewCourse" element={<AddNewCourse />} />
                 <Route path="/admin/AddCourse" element={<AddCourse />} />
                 <Route path="/admin/Meeting" element={<Meeting />} />
-                <Route path="/admin/SchemeofStudies">
-                  <Route path=":id" element={<CourseDescription />} />
-                  <Route index element={<SchemeofStudies />} />
-                </Route>
                 <Route
-                  path="/admin/CourseLearningOutcomes"
-                  element={<CourseLearningOutcomes />}
+                  path="/admin/AllSchemeofStudies"
+                  element={<AllSchemeofStudies />}
                 />
+                <Route path="/admin/CdfandSyllabus">
+                  <Route path=":id" element={<CourseDescription />} />
+                  <Route index element={<CdfandSyllabus />} />
+                </Route>
                 <Route path="/admin/Users" element={<Users />} />
                 <Route path="/admin/CourseFolder/" element={<CourseFolder />} />
               </Route>
@@ -56,18 +56,14 @@ function App() {
                   path="/Faculty/Dashboard"
                   element={<FacultyDashboard />}
                 />
-                <Route path="/Faculty/SchemeofStudies">
+                <Route path="/Faculty/CdfandSyllabus">
                   <Route path=":id" element={<CourseDescription />} />
-                  <Route index element={<SchemeofStudies />} />
+                  <Route index element={<CdfandSyllabus />} />
                 </Route>
                 <Route path="/Faculty/FacultyMeeting">
                   <Route path=":id" element={<FacultyMeeting />} />
                   <Route index element={<FacultyMeeting />} />
                 </Route>
-                <Route
-                  path="/Faculty/CourseLearningOutcomes"
-                  element={<CourseLearningOutcomes />}
-                />
               </Route>
             </Route>
           </Routes>

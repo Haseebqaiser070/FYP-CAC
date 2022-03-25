@@ -24,8 +24,8 @@ export default function FacultyNavigation() {
   const [isOpen, setIsOpen] = React.useState(false);
   const { setAdmin, setFaculty, Admin, Faculty } = useAuth();
   axios.defaults.withCredentials = true;
-  const handleLogout = async(e) => {
-    await axios.post("http://localhost:4000/Auth/logout")
+  const handleLogout = async (e) => {
+    await axios.post("http://localhost:4000/Auth/logout");
     setAdmin(false);
     setFaculty(false);
   };
@@ -74,19 +74,13 @@ export default function FacultyNavigation() {
                   Dashboard
                 </Link>
 
-                <Link class="nav-link sidenavtext" to="SchemeofStudies">
+                <Link class="nav-link sidenavtext" to="CdfandSyllabus">
                   <div class="sb-nav-link-icon">
                     <BsFiles color="#fff" />
                   </div>
-                  Scheme of Studies
+                  Cdf & Syllabus
                 </Link>
 
-                <Link class="nav-link sidenavtext" to="CourseLearningOutcomes">
-                  <div class="sb-nav-link-icon">
-                    <BsFiles color="#fff" />
-                  </div>
-                  Course Learning Outcomes
-                </Link>
                 <Link class="nav-link sidenavtext" to="FacultyMeeting">
                   <div class="sb-nav-link-icon">
                     <BsFiles color="#fff" />

@@ -129,6 +129,7 @@ export default function Home() {
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">Year</InputLabel>
               <Select
+                className="mb-4"
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 label="Year"
@@ -138,7 +139,7 @@ export default function Home() {
               </Select>
             </FormControl>
             <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Department</InputLabel>
+              <InputLabel id="demo-simple-select-label">Program</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
@@ -151,13 +152,13 @@ export default function Home() {
           <button className="btn btn-primary">VIEW SCHEME OF STUDIES</button>
         </div>
         <div
-          style={{ backgroundColor: "#0054a6" }}
+          style={{ backgroundColor: "#0054a6", color: "#fff", padding: 30 }}
           className="col-4 home_notification"
         >
-          <h5>
+          <h5 className="mb-4">
             <b>Notifications</b>
           </h5>
-          <ul>
+          <ul className="notification_list">
             <li>
               2-Day Hands-on Training Workshop on Next Generation Sequencing
               Data Analysis

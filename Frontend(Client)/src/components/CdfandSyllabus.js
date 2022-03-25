@@ -1,14 +1,28 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { DataGrid } from "@mui/x-data-grid";
+import axios from "axios";
+
 import Button from "@mui/material/Button";
 import { AiFillEye, AiFillEdit, AiOutlineCloudDownload } from "react-icons/ai";
 import EditButton from "./EditButton";
 
 export default function DataGridDemo() {
+  const [Course, setCourse] = useState([]);
+
+  useEffect(() => {
+    getCourse();
+  }, []);
+
+  const getCourse = async () => {
+    const response = await axios.get("http://localhost:4000/Course/show");
+    console.log(response.data);
+    setCourse(response.data);
+  };
+
   return (
     <div style={{ height: 700, width: "100%", padding: 20 }}>
-      <h2 style={{ padding: 20 }}>Course Learning Outcomes</h2>
-      <div style={{ padding: 10 }} class="d-flex justify-content-end">
+      <h2 style={{ padding: 20 }}>Scheme of Studies</h2>
+      <div style={{ padding: 10 }} className="d-flex justify-content-end">
         <Button
           variant="contained"
           color="primary"
@@ -22,7 +36,8 @@ export default function DataGridDemo() {
       </div>
 
       <DataGrid
-        rows={rows}
+        getRowId={(row) => row._id}
+        rows={Course}
         columns={columns}
         pageSize={5}
         rowsPerPageOptions={[5]}
@@ -34,34 +49,24 @@ export default function DataGridDemo() {
 }
 
 const columns = [
-  { field: "id", headerName: "ID", width: 90 },
+  // { field: "id", headerName: "ID", width: 90 },
   {
-    field: "CourseCode",
+    field: "Code",
     headerName: "Course Code",
-    width: 150,
     editable: true,
+    width: 100,
   },
   {
-    field: "CourseName",
+    field: "Name",
     headerName: "Course Name",
-    width: 350,
+    width: 250,
     editable: true,
   },
   {
     field: "Action",
     headerName: "Action",
-    width: 400,
-    editable: true,
+    width: 600,
+    editable: false,
     renderCell: EditButton,
-  },
-];
-
-const rows = [
-  { id: 1, CourseCode: "CSC-101", CourseName: "Programming Fundamentals" },
-  { id: 2, CourseCode: "CSC-101", CourseName: "Programming Fundamentals" },
-  {
-    id: 3,
-    CourseCode: "CSC-101",
-    CourseName: "Programming Fundamentals",
   },
 ];

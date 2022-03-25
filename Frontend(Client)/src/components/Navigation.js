@@ -8,7 +8,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
-import axios from 'axios'
+import axios from "axios";
 import {
   BsFillPersonPlusFill,
   BsFiles,
@@ -23,8 +23,8 @@ export default function Navigation() {
   const [isOpen, setIsOpen] = React.useState(false);
   const { setAdmin, setFaculty } = useAuth();
   axios.defaults.withCredentials = true;
-  const handleLogout = async(e) => {
-    await axios.post("http://localhost:4000/Auth/logout")
+  const handleLogout = async (e) => {
+    await axios.post("http://localhost:4000/Auth/logout");
     setAdmin(false);
     setFaculty(false);
   };
@@ -110,6 +110,13 @@ export default function Navigation() {
                     <BsFillBookFill color="#fff" />
                   </div>
                   Courses
+                </Link>
+
+                <Link className="nav-link sidenavtext" to="AllSchemeofStudies">
+                  <div className="sb-nav-link-icon">
+                    <BsFillBookFill color="#fff" />
+                  </div>
+                  All Scheme of Studies
                 </Link>
 
                 <Link className="nav-link sidenavtext" to="Users">
