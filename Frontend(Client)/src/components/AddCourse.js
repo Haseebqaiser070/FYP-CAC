@@ -8,30 +8,8 @@ import Button from "@mui/material/Button";
 import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
 
 export default function AddCourse() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [Code, setCode] = useState("");
-  const [Name, setName] = useState("");
-  const [Credit, setCredit] = useState("");
   const [Course, setCourse] = useState([]);
-  const [update, setUpdate] = useState(false);
-  const [LectureHoursWeek, setLectureHoursWeek] = useState("");
-  const [LabHoursWeek, setLabHoursWeek] = useState("");
-  const [PreRequisites, setPreRequisites] = useState("");
-  const [upId, setupId] = useState("");
-
-  const togglePopup = () => {
-    setIsOpen(!isOpen);
-  };
-  const handleCloseX = () => {
-    setCode("");
-    setName("");
-    setCredit("");
-    setLectureHoursWeek("");
-    setLabHoursWeek("");
-    setPreRequisites("");
-    setUpdate(false);
-    togglePopup();
-  };
+  const navigate = useNavigate();
   useEffect(async () => {
     await getCourse();
   }, []);
@@ -50,20 +28,13 @@ export default function AddCourse() {
     await axios.delete(`http://localhost:4000/Course/${id}`);
     getCourse();
   };
-  const handleUpdate = async (id) => {
-    setUpdate(true);
+  const handleUpdate =  (id) => {
+    navigate(`/admin/EditCourse/${id}`, { replace: true })
+    
+    /* 
     const response = await axios.get(`http://localhost:4000/Course/${id}`);
     const updating = await response.data;
-
-    setupId(updating._id);
-    setCode(updating.Code);
-    setName(updating.Name);
-    setCredit(updating.Credit);
-    setLectureHoursWeek(updating.LectureHoursWeek);
-    setLabHoursWeek(updating.LabHoursWeek);
-    setPreRequisites(updating.PreRequisites);
-
-    togglePopup();
+    */
   };
 
   return (

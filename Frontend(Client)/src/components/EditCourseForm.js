@@ -11,9 +11,9 @@ import Stack from "@mui/material/Stack";
 import { DataGrid } from "@mui/x-data-grid";
 import { AiFillDelete } from "react-icons/ai";
 import { v4 as uuidv4 } from "uuid";
-import { padding } from "@mui/system";
+import { useNavigate, useParams } from 'react-router-dom';
 
-export default function AddNewCourse() {
+export default function EditCourseForm() {
   const [PreCode, setPreCode] = useState("");
   const [SufCode, setSufCode] = useState("");
   const [Name, setName] = useState("");
@@ -25,6 +25,8 @@ export default function AddNewCourse() {
   const [objective, setobjective] = useState("");
   const [objectiveList, setObjectiveList] = useState([]);
   const [Courses,setCourse] = useState([])
+  const{id}=useParams()
+
   const columns = [
     {
       field: "title",
@@ -70,9 +72,21 @@ export default function AddNewCourse() {
   const getData=async()=>{
     const res = await axios.get("http://localhost:4000/Course/show")
     const data = await res.data
-    setCourse([{Name:"none"},...data])
-  }
-  const AddCourse = async(e) => {
+    const response = await axios.get(`http://localhost:4000/Course/${id}`);
+    const up = await response.data;
+    console.log(up)
+    const newarr= data.filter(x=>{if(x.Name!=up.Name)return x})
+    setCourse([{Name:"none"},...newarr])
+    setName(up.Name)
+    setPreCode(up.Code.split("-")[0])
+    setSufCode(up.Code.split("-")[1])
+    setCategory(up.Category)
+    setCatalogue(up.catalogue)
+    setObjectiveList(up.objectiveList)
+    setPreRequisites(up.PreRequisites)
+    
+}
+  const EditCourse = async(e) => {
     e.preventDefault();
     const Code = PreCode+"-"+SufCode
     const LectureHoursWeek = allCredit.slice(2,3)
@@ -93,7 +107,7 @@ export default function AddNewCourse() {
         objectiveList!=[]
         ) 
        {
-         await axios.post("http://localhost:4000/Course/add", {
+         await axios.put(`http://localhost:4000/Course/${id}`, {
           Code,
           Name,
           Credit,
@@ -109,18 +123,16 @@ export default function AddNewCourse() {
         setPreRequisites([]) 
         setCatalogue("")
         setObjectiveList([])
-        getData()
-      } else {
+        navigate("/admin/AddCourse", { replace: true })
+    } else {
         alert("empty values");
       }
     
   };
   return (
     <div style={{ padding: 30 }} className="row">
-      <h3 style={{ textAlign: "center", marginBottom: 30 }}>
-        <b>Add New Cource</b>
-      </h3>
-      <form onSubmit={AddCourse}>
+      <h4 style={{ textAlign: "center", marginBottom: 30 }}>Add New Cource</h4>
+      <form onSubmit={EditCourse}>
         <div className="row">
           <div className="mb-3 col-4">
             <label for="course-code" className="form-label">
@@ -128,8 +140,8 @@ export default function AddNewCourse() {
             </label>
             <div className="row">
               <div className="col">
-                <select class="form-select" onChange={(e)=>setPreCode(e.target.value)}>
-                <option value="" selected disabled hidden>select</option>
+                <select class="form-select" onChange={(e)=>setPreCode(e.target.value)} defaultValue={PreCode}>
+                <option value="" selected disabled hidden>{PreCode}</option>
                   <option>MTH</option>
                   <option>CSC</option>
                   <option>HUM</option>
@@ -172,8 +184,8 @@ export default function AddNewCourse() {
             <label for="credit-hour" className="form-label">
               Course Categories
             </label>
-            <select class="form-select" onChange={(e)=>setCategory(e.target.value)}>
-            <option value="" selected disabled hidden>select</option>
+            <select class="form-select" value={Category} onChange={(e)=>setCategory(e.target.value)}>
+            <option value="" selected disabled hidden>={Category}</option>
               <option>Computing Course</option>
               <option>CYC</option>
               <option>AIC</option>
@@ -202,7 +214,7 @@ export default function AddNewCourse() {
                 id="tags-standard"
                 value={PreRequisites}
                 options={Courses}
-                getOptionLabel={(option) => option.Name}
+                getOptionLabel={(option) => option._id}
                 defaultValue={[top100Films[3]]}
                 onChange={(e,val)=>setPreRequisites(val)}
                 renderInput={(params) => (
@@ -218,12 +230,9 @@ export default function AddNewCourse() {
           </div>
         </div>
 
-        <div style={{ marginBottom: 20, marginTop: 50 }}>
+        <div style={{ marginBottom: 20, marginTop: 20 }}>
           <form>
-            <div
-              style={{ backgroundColor: "#e8f0f7", padding: 20 }}
-              className="row"
-            >
+            <div className="row">
               <div className="col-9">
                 <input
                   className="form-control"
@@ -261,12 +270,9 @@ export default function AddNewCourse() {
           </table>
         </div>
         <div>
-          <div style={{ marginBottom: 20, marginTop: 50 }}>
+          <div style={{ marginBottom: 20, marginTop: 20 }}>
             <form>
-              <div
-                style={{ backgroundColor: "#e8f0f7", padding: 20 }}
-                className="row"
-              >
+              <div className="row">
                 <div className="col-9">
                   <input
                     className="form-control"
@@ -289,7 +295,7 @@ export default function AddNewCourse() {
               </div>
             </form>
           </div>
-          <div style={{ height: 200, width: "100%" }}>
+          <div style={{ height: 300, width: "100%" }}>
             <DataGrid
               rows={objectiveList}
               columns={columns}
@@ -303,7 +309,7 @@ export default function AddNewCourse() {
         <input
           type="submit"
           name="submit"
-          value="Submit"
+          value="Update"
           className="button btn btn-primary ms-auto me-0 me-md-3 my-2 my-md-0"
         />
       </form>
