@@ -2,7 +2,16 @@ import {  Navigate, Outlet } from "react-router-dom";
 import useAuth from "../../MyHooks/useAuth";
 
 const ProtectedRouteFaculty = () => {
-    const {Faculty} = useAuth();
+    const {Faculty,setFaculty} = useAuth();
+    useEffect(()=>{
+        getRole()
+    },[])
+
+    const getRole =async()=>{
+        const res = await axios.get("http://localhost:4000/Auth/check")
+        const data= await res.data
+        if(data=="is Faculty") setFaculty(true)
+    }
     
 
     return (

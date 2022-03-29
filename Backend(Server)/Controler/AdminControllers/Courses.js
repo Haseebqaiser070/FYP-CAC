@@ -12,6 +12,7 @@ module.exports.Add = async (req, res) => {
 };
 module.exports.Showall = async (req, res) => {
   try {
+    console.log(req.user)
     if (!req.user) return await res.json("Timed Out");
     const course = await coursedoc.find({});
     console.log("all courses", course);
@@ -24,7 +25,7 @@ module.exports.Showall = async (req, res) => {
 module.exports.ShowOne = async (req, res) => {
   try {
     if (!req.user) return await res.json("Timed Out");
-    const course = await coursedoc.findById(req.params.id);
+    const course = await coursedoc.findById(req.params.id).populate('PreRequisites.PreId');
     res.json(course);
   } catch (err) {
     console.log(err);

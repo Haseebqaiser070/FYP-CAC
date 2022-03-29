@@ -49,6 +49,15 @@ module.exports.Login = async (req, res) => {
     res.status("400").json(err);
   }
 };
+module.exports.Check = async (req,res) =>{
+  user=req.user
+  if(user==null) return res.json("none")
+  const isAdmin = await Admin.findOne({Email:user.Email});
+  if(isAdmin) return res.json("is Admin")
+  const isFaculty = await Faculty.findOne({Email:user.Email});
+  if(isFaculty) return res.json("is Faculty")
+  
+}
 module.exports.Logout = async (req, res) => {
   res.cookie("AccessTokens", "", {
     MaxAge: 0,

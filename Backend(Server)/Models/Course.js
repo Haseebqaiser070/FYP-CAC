@@ -21,13 +21,35 @@ var CourseSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  Category:{
+    type:String,
+    required:true
+  },
   PreRequisites: {
-    type: String,
-    required: true,
+    type: [{
+      PreId:{
+          type: mongoose.Types.ObjectId,
+          ref:"Course"
+        }
+      }
+    ],
+    default:"none",
   },
-  CatalogueDescription: {
-    type: Array,
+  catalogue: {
+    type:String,
   },
+  objectiveList: {
+    type:[{
+      id:{
+        type:String
+      },
+      title:{
+          type:String
+        }
+    }],
+    required:true
+  }
+  
 });
 
 module.exports = mongoose.model("Course", CourseSchema);
