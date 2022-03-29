@@ -11,6 +11,7 @@ import Stack from "@mui/material/Stack";
 import { DataGrid } from "@mui/x-data-grid";
 import { AiFillDelete } from "react-icons/ai";
 import { v4 as uuidv4 } from "uuid";
+import { padding } from "@mui/system";
 
 export default function AddNewCourse() {
   const [PreCode, setPreCode] = useState("");
@@ -116,7 +117,9 @@ export default function AddNewCourse() {
   };
   return (
     <div style={{ padding: 30 }} className="row">
-      <h4 style={{ textAlign: "center", marginBottom: 30 }}>Add New Cource</h4>
+      <h3 style={{ textAlign: "center", marginBottom: 30 }}>
+        <b>Add New Cource</b>
+      </h3>
       <form onSubmit={AddCourse}>
         <div className="row">
           <div className="mb-3 col-4">
@@ -215,9 +218,12 @@ export default function AddNewCourse() {
           </div>
         </div>
 
-        <div style={{ marginBottom: 20, marginTop: 20 }}>
+        <div style={{ marginBottom: 20, marginTop: 50 }}>
           <form>
-            <div className="row">
+            <div
+              style={{ backgroundColor: "#e8f0f7", padding: 20 }}
+              className="row"
+            >
               <div className="col-9">
                 <input
                   className="form-control"
@@ -255,9 +261,12 @@ export default function AddNewCourse() {
           </table>
         </div>
         <div>
-          <div style={{ marginBottom: 20, marginTop: 20 }}>
+          <div style={{ marginBottom: 20, marginTop: 50 }}>
             <form>
-              <div className="row">
+              <div
+                style={{ backgroundColor: "#e8f0f7", padding: 20 }}
+                className="row"
+              >
                 <div className="col-9">
                   <input
                     className="form-control"
@@ -280,7 +289,7 @@ export default function AddNewCourse() {
               </div>
             </form>
           </div>
-          <div style={{ height: 300, width: "100%" }}>
+          <div style={{ height: 200, width: "100%" }}>
             <DataGrid
               rows={objectiveList}
               columns={columns}
