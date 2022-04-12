@@ -21,11 +21,11 @@ import AddNewCourse from "./components/AddNewCourse";
 import Home from "./components/Home";
 import Meeting from "./components/Meeting";
 import FacultyMeeting from "./components/FacultyMeeting";
+import AllCategories from "./components/AllCategories";
 
-import EditCourseForm from './components/EditCourseForm'
+import EditCourseForm from "./components/EditCourseForm";
 
 import AllSchemeofStudies from "./components/AllSchemeofStudies";
-
 
 function App() {
   return (
@@ -39,9 +39,16 @@ function App() {
               <Route path="/admin/" element={<Navigation />}>
                 <Route path="/admin/Dashboard" element={<Dashboard />} />
                 <Route path="/admin/Register" element={<Register />} />
+                <Route
+                  path="/admin/AllCategories"
+                  element={<AllCategories />}
+                />
                 <Route path="/admin/AddNewCourse" element={<AddNewCourse />} />
                 <Route path="/admin/AddCourse" element={<AddCourse />} />
-                <Route path="/admin/EditCourse/:id" element={<EditCourseForm />} />
+                <Route
+                  path="/admin/EditCourse/:id"
+                  element={<EditCourseForm />}
+                />
                 <Route path="/admin/Meeting" element={<Meeting />} />
                 <Route
                   path="/admin/AllSchemeofStudies"

@@ -105,6 +105,13 @@ export default function Navigation() {
                   Add New Courses
                 </Link>
 
+                <Link className="nav-link sidenavtext" to="AllCategories">
+                  <div className="sb-nav-link-icon">
+                    <BsFillBookFill color="#fff" />
+                  </div>
+                  All Course Categories
+                </Link>
+
                 <Link className="nav-link sidenavtext" to="AddCourse">
                   <div className="sb-nav-link-icon">
                     <BsFillBookFill color="#fff" />

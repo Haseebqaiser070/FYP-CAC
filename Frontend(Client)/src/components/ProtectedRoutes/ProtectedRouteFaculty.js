@@ -1,22 +1,20 @@
-import {  Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import useAuth from "../../MyHooks/useAuth";
+import React, { useState, useEffect } from "react";
 
 const ProtectedRouteFaculty = () => {
-    const {Faculty,setFaculty} = useAuth();
-    useEffect(()=>{
-        getRole()
-    },[])
+  const { Faculty, setFaculty } = useAuth();
+  useEffect(() => {
+    getRole();
+  }, []);
 
-    const getRole =async()=>{
-        const res = await axios.get("http://localhost:4000/Auth/check")
-        const data= await res.data
-        if(data=="is Faculty") setFaculty(true)
-    }
-    
+  const getRole = async () => {
+    const res = await axios.get("http://localhost:4000/Auth/check");
+    const data = await res.data;
+    if (data == "is Faculty") setFaculty(true);
+  };
 
-    return (
-        Faculty?<Outlet />: <Navigate to="/" replace />
-    );
-}
+  return Faculty ? <Outlet /> : <Navigate to="/" replace />;
+};
 
 export default ProtectedRouteFaculty;

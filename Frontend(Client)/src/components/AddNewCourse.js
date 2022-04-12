@@ -18,13 +18,13 @@ export default function AddNewCourse() {
   const [SufCode, setSufCode] = useState("");
   const [Name, setName] = useState("");
   const [allCredit, setAllCredit] = useState("");
-  const [Category,setCategory] = useState("");
+  const [Category, setCategory] = useState("");
   const [PreRequisites, setPreRequisites] = useState([]);
   const [mainTopic, setmainTopic] = useState("");
   const [catalogue, setCatalogue] = useState("");
   const [objective, setobjective] = useState("");
   const [objectiveList, setObjectiveList] = useState([]);
-  const [Courses,setCourse] = useState([])
+  const [Courses, setCourse] = useState([]);
   const columns = [
     {
       field: "title",
@@ -64,56 +64,54 @@ export default function AddNewCourse() {
     setObjectiveList([...objectiveList, { id: uuidv4(), title: objective }]);
     setobjective("");
   };
-  useEffect(()=>{
-    getData()
-  },[])
-  const getData=async()=>{
-    const res = await axios.get("http://localhost:4000/Course/show")
-    const data = await res.data
-    setCourse([{Name:"none"},...data])
-  }
-  const AddCourse = async(e) => {
+  useEffect(() => {
+    getData();
+  }, []);
+  const getData = async () => {
+    const res = await axios.get("http://localhost:4000/Course/show");
+    const data = await res.data;
+    setCourse([{ Name: "none" }, ...data]);
+  };
+  const AddCourse = async (e) => {
     e.preventDefault();
-    const Code = PreCode+"-"+SufCode
-    const LectureHoursWeek = allCredit.slice(2,3)
-    const LabHoursWeek = allCredit.slice(4,5)
-    const Credit = allCredit.slice(0,1)
-    console.log(Code,LectureHoursWeek,LabHoursWeek,Credit,objectiveList)
-    console.log("cat: ",Category)
-    console.log("catlog: ",catalogue)
-    console.log("pre: ",PreRequisites)
+    const Code = PreCode + "-" + SufCode;
+    const LectureHoursWeek = allCredit.slice(2, 3);
+    const LabHoursWeek = allCredit.slice(4, 5);
+    const Credit = allCredit.slice(0, 1);
+    console.log(Code, LectureHoursWeek, LabHoursWeek, Credit, objectiveList);
+    console.log("cat: ", Category);
+    console.log("catlog: ", catalogue);
+    console.log("pre: ", PreRequisites);
     if (
-        PreCode != "" &&
-        SufCode != "" &&
-        Name != "" &&
-        allCredit != "" &&
-        PreRequisites != [] &&
-        catalogue!="" &&
-        Category!=""&&
-        objectiveList!=[]
-        ) 
-       {
-         await axios.post("http://localhost:4000/Course/add", {
-          Code,
-          Name,
-          Credit,
-          LectureHoursWeek,
-          LabHoursWeek,
-          Category,
-          PreRequisites,
-          catalogue,
-          objectiveList
-        });
-        setSufCode("") 
-        setName("") 
-        setPreRequisites([]) 
-        setCatalogue("")
-        setObjectiveList([])
-        getData()
-      } else {
-        alert("empty values");
-      }
-    
+      PreCode != "" &&
+      SufCode != "" &&
+      Name != "" &&
+      allCredit != "" &&
+      PreRequisites != [] &&
+      catalogue != "" &&
+      Category != "" &&
+      objectiveList != []
+    ) {
+      await axios.post("http://localhost:4000/Course/add", {
+        Code,
+        Name,
+        Credit,
+        LectureHoursWeek,
+        LabHoursWeek,
+        Category,
+        PreRequisites,
+        catalogue,
+        objectiveList,
+      });
+      setSufCode("");
+      setName("");
+      setPreRequisites([]);
+      setCatalogue("");
+      setObjectiveList([]);
+      getData();
+    } else {
+      alert("empty values");
+    }
   };
   return (
     <div style={{ padding: 30 }} className="row">
@@ -128,8 +126,13 @@ export default function AddNewCourse() {
             </label>
             <div className="row">
               <div className="col">
-                <select class="form-select" onChange={(e)=>setPreCode(e.target.value)}>
-                <option value="" selected disabled hidden>select</option>
+                <select
+                  class="form-select"
+                  onChange={(e) => setPreCode(e.target.value)}
+                >
+                  <option value="" selected disabled hidden>
+                    select
+                  </option>
                   <option>MTH</option>
                   <option>CSC</option>
                   <option>HUM</option>
@@ -172,8 +175,13 @@ export default function AddNewCourse() {
             <label for="credit-hour" className="form-label">
               Course Categories
             </label>
-            <select class="form-select" onChange={(e)=>setCategory(e.target.value)}>
-            <option value="" selected disabled hidden>select</option>
+            <select
+              class="form-select"
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value="" selected disabled hidden>
+                select
+              </option>
               <option>Computing Course</option>
               <option>CYC</option>
               <option>AIC</option>
@@ -186,8 +194,13 @@ export default function AddNewCourse() {
             <label for="credit-hour" className="form-label">
               Credit Hour
             </label>
-            <select class="form-select" onChange={(e)=>setAllCredit(e.target.value)}>
-              <option value="" selected disabled hidden>Select Credits</option>
+            <select
+              class="form-select"
+              onChange={(e) => setAllCredit(e.target.value)}
+            >
+              <option value="" selected disabled hidden>
+                Select Credits
+              </option>
               <option>4(0,4)</option>
               <option>4(3,1)</option>
               <option>3(3,0)</option>
@@ -203,8 +216,8 @@ export default function AddNewCourse() {
                 value={PreRequisites}
                 options={Courses}
                 getOptionLabel={(option) => option.Name}
-                defaultValue={[top100Films[3]]}
-                onChange={(e,val)=>setPreRequisites(val)}
+                defaultValue={null}
+                onChange={(e, val) => setPreRequisites(val)}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -247,6 +260,7 @@ export default function AddNewCourse() {
           </form>
         </div>
         <div className="mb-3">
+          <textarea value={catalogue}></textarea>
           <table className="table table-responsive ">
             <thead>
               <tr className="cdf">
