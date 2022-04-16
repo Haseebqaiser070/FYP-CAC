@@ -26,6 +26,34 @@ const style = {
   p: 4,
 };
 
+function ActionButton() {
+  return (
+    <div>
+      <Button
+        variant="contained"
+        color="primary"
+        size="small"
+        style={{ marginLeft: 16 }}
+        // onClick={togglePopup}
+      >
+        <AiFillEdit style={{ marginRight: 10 }} />
+        Edit
+      </Button>
+
+      <Button
+        variant="contained"
+        color="primary"
+        size="small"
+        style={{ marginLeft: 16 }}
+        // onClick={togglePopup}
+      >
+        <AiFillEdit style={{ marginRight: 10 }} />
+        Delete
+      </Button>
+    </div>
+  );
+}
+
 export default function AllCategories() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -56,7 +84,7 @@ export default function AllCategories() {
       headerName: "Action",
       flex: 1,
       editable: false,
-      renderCell: null,
+      renderCell: ActionButton,
     },
   ];
   const rows = [
