@@ -25,16 +25,8 @@ var CourseSchema = new mongoose.Schema({
     type:String,
     required:true
   },
-  PreRequisites: {
-    type: [{
-      PreId:{
-          type: mongoose.Types.ObjectId,
-          ref:"Course"
-        }
-      }
-    ],
-    default:"none",
-  },
+  PreRequisites:[{ type: mongoose.Schema.ObjectId, ref: 'Course',default:'none' }],
+
   catalogue: {
     type:String,
   },

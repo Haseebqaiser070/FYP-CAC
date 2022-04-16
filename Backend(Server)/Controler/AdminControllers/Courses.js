@@ -25,7 +25,8 @@ module.exports.Showall = async (req, res) => {
 module.exports.ShowOne = async (req, res) => {
   try {
     if (!req.user) return await res.json("Timed Out");
-    const course = await coursedoc.findById(req.params.id).populate('PreRequisites.PreId');
+    const course = await coursedoc.findById(req.params.id).populate('PreRequisites');
+    console.log(course)
     res.json(course);
   } catch (err) {
     console.log(err);

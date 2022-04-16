@@ -25,6 +25,7 @@ export default function EditCourseForm() {
   const [objective, setobjective] = useState("");
   const [objectiveList, setObjectiveList] = useState([]);
   const [Courses,setCourse] = useState([])
+ 
   const{id}=useParams()
 
   const columns = [
@@ -83,7 +84,10 @@ export default function EditCourseForm() {
     setCategory(up.Category)
     setCatalogue(up.catalogue)
     setObjectiveList(up.objectiveList)
-    setPreRequisites(up.PreRequisites)
+    setPreRequisites([...up.PreRequisites])
+    const sum  = parseInt(up.LectureHoursWeek)+parseInt(up.LabHoursWeek)
+    setAllCredit(sum+"("+up.LectureHoursWeek+","+up.LabHoursWeek+")")
+
     
 }
   const EditCourse = async(e) => {
@@ -199,7 +203,7 @@ export default function EditCourseForm() {
               Credit Hour
             </label>
             <select class="form-select" onChange={(e)=>setAllCredit(e.target.value)}>
-              <option value="" selected disabled hidden>Select Credits</option>
+              <option value="" selected disabled hidden>{allCredit}</option>
               <option>4(0,4)</option>
               <option>4(3,1)</option>
               <option>3(3,0)</option>
@@ -214,8 +218,8 @@ export default function EditCourseForm() {
                 id="tags-standard"
                 value={PreRequisites}
                 options={Courses}
-                getOptionLabel={(option) => option._id}
-                defaultValue={[top100Films[3]]}
+                getOptionLabel={(option) => option.Name}
+                defaultValue={null}
                 onChange={(e,val)=>setPreRequisites(val)}
                 renderInput={(params) => (
                   <TextField
@@ -310,6 +314,7 @@ export default function EditCourseForm() {
           type="submit"
           name="submit"
           value="Update"
+          
           className="button btn btn-primary ms-auto me-0 me-md-3 my-2 my-md-0"
         />
       </form>

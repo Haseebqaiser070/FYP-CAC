@@ -184,7 +184,6 @@ export default function AllCategories() {
           rows={rows}
           pageSize={10}
           rowsPerPageOptions={[5]}
-          checkboxSelection
           disableSelectionOnClick
         />
       </div>
