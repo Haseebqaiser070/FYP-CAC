@@ -9,6 +9,7 @@ import MeetingButton from "./MeetingButtons";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import SosFrontend from "./SosFrontend";
 
 const style = {
   position: "absolute",
@@ -175,6 +176,7 @@ export default function AllSchemeofStudies() {
           disableSelectionOnClick
         />
       </div>
+      <SosFrontend />
     </div>
   );
 }
