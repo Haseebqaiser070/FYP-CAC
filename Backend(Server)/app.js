@@ -1,19 +1,18 @@
 var createError = require("http-errors");
 var express = require("express");
 var cookieParser = require("cookie-parser");
-var logger = require("morgan");
 var mongoose = require("mongoose");
 var cors = require("cors");
 var AuthRouter = require("./Routes/AuthRoutes/Auth");
 var CourseRouter = require("./Routes/AdminRoutes/Courses");
 var FacultyRouter = require("./Routes/AdminRoutes/Faculty");
 var MeetingRouter = require("./Routes/MeetingRoute/MeetingRoute");
+var CategoryRouter = require("./Routes/AdminRoutes/Category")
 var { getUser } = require("./Middleware/User");
 
 var app = express();
 
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
-app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -22,16 +21,7 @@ app.use("/Auth", AuthRouter);
 app.use("/Course", getUser, CourseRouter);
 app.use("/Faculty", getUser, FacultyRouter);
 app.use("/Meeting", getUser, MeetingRouter);
-
-app.use(function (req, res, next) {
-  next(createError(404));
-});
-app.use(function (err, req, res, next) {
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
-  res.status(err.status || 500);
-  res.render("error");
-});
+app.use("/Category", getUser, CategoryRouter);
 
 const start = async () => {
   try {
