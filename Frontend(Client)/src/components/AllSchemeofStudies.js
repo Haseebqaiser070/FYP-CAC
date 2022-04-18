@@ -9,8 +9,7 @@ import MeetingButton from "./MeetingButtons";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import SosFrontend from "./SosFrontend";
-
+import SosCreation from "./SosCreation";
 const style = {
   position: "absolute",
   top: "50%",
@@ -37,6 +36,16 @@ function Mbutton() {
         <AiFillEdit style={{ marginRight: 10 }} />
         Edit
       </Button>
+      <Button
+        variant="contained"
+        color="primary"
+        size="small"
+        style={{ marginLeft: 16 }}
+        // onClick={togglePopup}
+      >
+        <AiFillEdit style={{ marginRight: 10 }} />
+        Download
+      </Button>
     </div>
   );
 }
@@ -56,7 +65,7 @@ export default function AllSchemeofStudies() {
     {
       field: "program",
       headerName: "Program",
-      flex: 2,
+      flex: 1,
     },
     {
       field: "Action",
@@ -176,7 +185,7 @@ export default function AllSchemeofStudies() {
           disableSelectionOnClick
         />
       </div>
-      <SosFrontend />
+      <SosCreation />
     </div>
   );
 }

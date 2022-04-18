@@ -26,6 +26,7 @@ import AllCategories from "./components/AllCategories";
 import EditCourseForm from "./components/EditCourseForm";
 
 import AllSchemeofStudies from "./components/AllSchemeofStudies";
+import SosCreation from "./components/SosCreation";
 
 function App() {
   return (
@@ -54,6 +55,7 @@ function App() {
                   path="/admin/AllSchemeofStudies"
                   element={<AllSchemeofStudies />}
                 />
+                <Route path="/admin/SosCreation" element={<SosCreation />} />
                 <Route path="/admin/CdfandSyllabus">
                   <Route path=":id" element={<CourseDescription />} />
                   <Route index element={<CdfandSyllabus />} />
