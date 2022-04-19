@@ -27,6 +27,7 @@ import EditCourseForm from "./components/EditCourseForm";
 
 import AllSchemeofStudies from "./components/AllSchemeofStudies";
 import SosCreation from "./components/SosCreation";
+import Sos from "./components/PdfTemplates/Sos";
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
                 />
                 <Route path="/admin/AddNewCourse" element={<AddNewCourse />} />
                 <Route path="/admin/AddCourse" element={<AddCourse />} />
+
                 <Route
                   path="/admin/EditCourse/:id"
                   element={<EditCourseForm />}
@@ -55,6 +57,8 @@ function App() {
                   path="/admin/AllSchemeofStudies"
                   element={<AllSchemeofStudies />}
                 />
+                <Route path="/admin/Sos" element={<Sos />} />
+
                 <Route path="/admin/SosCreation" element={<SosCreation />} />
                 <Route path="/admin/CdfandSyllabus">
                   <Route path=":id" element={<CourseDescription />} />

@@ -9,6 +9,13 @@ import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import axios from "axios";
+
+import ListSubheader from "@mui/material/ListSubheader";
+import List from "@mui/material/List";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Collapse from "@mui/material/Collapse";
 import {
   BsFillPersonPlusFill,
   BsFiles,
@@ -22,7 +29,13 @@ import useAuth from "../MyHooks/useAuth";
 export default function Navigation() {
   const [isOpen, setIsOpen] = React.useState(false);
   const { setAdmin, setFaculty } = useAuth();
+  const [open, setOpen] = React.useState(true);
+
+  const handleClick = () => {
+    setOpen(!open);
+  };
   axios.defaults.withCredentials = true;
+
   const handleLogout = async (e) => {
     await axios.post("http://localhost:4000/Auth/logout");
     setAdmin(false);
@@ -32,6 +45,7 @@ export default function Navigation() {
   const togglePopup = () => {
     setIsOpen(!isOpen);
   };
+
   return (
     <React.Fragment>
       <div className="bg">
