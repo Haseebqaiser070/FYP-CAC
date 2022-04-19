@@ -8,6 +8,8 @@ var CourseRouter = require("./Routes/AdminRoutes/Courses");
 var FacultyRouter = require("./Routes/AdminRoutes/Faculty");
 var MeetingRouter = require("./Routes/MeetingRoute/MeetingRoute");
 var CategoryRouter = require("./Routes/AdminRoutes/Category")
+var SOSRouter = require("./Routes/DocumentRoutes/SOS")
+
 var { getUser } = require("./Middleware/User");
 
 var app = express();
@@ -22,6 +24,7 @@ app.use("/Course", getUser, CourseRouter);
 app.use("/Faculty", getUser, FacultyRouter);
 app.use("/Meeting", getUser, MeetingRouter);
 app.use("/Category", getUser, CategoryRouter);
+app.use("/SOS", getUser, SOSRouter);
 
 const start = async () => {
   try {

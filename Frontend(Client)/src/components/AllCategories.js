@@ -180,11 +180,11 @@ export default function AllCategories() {
                         <option value={Degree} selected disabled hidden>
                           {Degree}
                         </option>
-                        <option>BCS</option>
-                        <option>BSE</option>
-                        <option>BAI</option>
-                        <option>BDS</option>
-                        <option>BCY</option>
+                        <option>Computer Science</option>
+                        <option>Software Engineering</option>
+                        <option>Artificial Intelligence</option>
+                        <option>Cyber Security</option>
+                        <option>Data Science</option>
                       </select>
                     </div>
 

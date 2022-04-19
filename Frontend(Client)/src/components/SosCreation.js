@@ -6,13 +6,72 @@ import Button from "@mui/material/Button";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
-import { useState } from "react";
+import { useState,useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 export default function SosCreation() {
-  const [Courses, setCourse] = useState([]);
-  const [PreRequisites, setPreRequisites] = useState([]);
+  const [Selected, setSelected] = useState([]);
+  const [Categories, setCategories] = useState([{CategoryName:"None"}]);
+  const [Notification, setNotification] = useState("");
+  const [Meeting, setMeeting] = useState("");
+  const [MeetDate, setMeetDate] = useState("");
+  const [Registrar, setRegistrar] = useState("");
+  const {state} = useLocation();
+  const {Start,End,Program} = state;
+  console.log(Start+End+Program)
+  
+  useEffect(() => {
+    getCat()
+  }, []);
+  
+  const getCat = async () => {
+    const res = await axios.get("http://localhost:4000/Category/show");
+    const data = await res.data;
+    console.log(data)
+    setCategories([...data]);
+    const arr = data.filter((i) => {
+      if (i.Degree == Program) {
+        return i;
+      }
+    })
+    console.log(arr)
+    setSelected(arr)
+  };
+  
+  const addtoSOS = async (e) => {
+    e.preventDefault();
+    if(Notification== ""&&
+    Meeting==""&&
+    MeetDate==""&&
+    Registrar==""&&
+    Selected.length==0
+    ){
+      alert("Fill all the fields");
+
+    }
+    else{
+      await axios.post("http://localhost:4000/SOS/add",{
+        Start,
+        End,
+        Program,  
+        Notification,
+        Meeting,
+        MeetDate,
+        Registrar,  
+        Selected
+      })
+      setNotification("")
+      setMeeting("")
+      setMeetDate("")
+      setRegistrar("")
+      setSelected([])
+    }
+
+  }
+
+
   return (
-    <div>
+    <div className="container" style={{ height:"100%", width: "100%", padding: 20 }}>
       <div className="container">
         <div className="row card justify-content-center">
           <div className="card-header">
@@ -25,13 +84,14 @@ export default function SosCreation() {
               <b>Enter Details</b>
             </h5>
 
-            <form>
+            <form onSubmit={addtoSOS}>
               <div className="form-floating mb-3">
                 <input
                   className="form-control"
                   id="inputName"
                   type="date"
-                  onChange={null}
+                  value={Notification}
+                  onChange={e=>setNotification(e.target.value)}
                   required
                 />
                 <label htmlFor="Date" className="form-label">
@@ -43,7 +103,8 @@ export default function SosCreation() {
                   className="form-control"
                   id="inputName"
                   type="text"
-                  onChange={null}
+                  value={Meeting}
+                  onChange={e=>setMeeting(e.target.value)}
                   required
                 />
                 <label htmlFor="name" className="form-label">
@@ -55,7 +116,8 @@ export default function SosCreation() {
                   className="form-control"
                   id="inputName"
                   type="date"
-                  onChange={null}
+                  value={MeetDate}
+                  onChange={e=>setMeetDate(e.target.value)}
                   required
                 />
                 <label htmlFor="MDate" className="form-label">
@@ -67,15 +129,15 @@ export default function SosCreation() {
                   className="form-control"
                   id="inputName"
                   type="text"
-                  onChange={null}
+                  value={Registrar}
+                  onChange={e=>setRegistrar(e.target.value)}
                   required
                 />
                 <label htmlFor="name" className="form-label">
                   Registrar Name
                 </label>
               </div>
-            </form>
-          </div>
+           
           <div>
             <h5 className="my-4">
               <b>Select Courses Corresponding to Categories</b>
@@ -91,17 +153,17 @@ export default function SosCreation() {
                   <Autocomplete
                     multiple
                     id="tags-standard"
-                    value={PreRequisites}
-                    options={Courses}
-                    getOptionLabel={(option) => option.Name}
+                    value={Selected}
+                    options={Categories}
+                    getOptionLabel={(option) => option.CategoryName}
                     defaultValue={null}
-                    onChange={(e, val) => setPreRequisites(val)}
+                    onChange={(e, val) => setSelected(val)}
                     renderInput={(params) => (
                       <TextField
                         {...params}
                         variant="standard"
-                        label="Select Courses"
-                        placeholder="Select Courses"
+                        label="Select Categories"
+                        placeholder="Select Categories"
                       />
                     )}
                   />
@@ -113,11 +175,13 @@ export default function SosCreation() {
                 variant="contained"
                 color="primary"
                 size="medium"
-                onClick={null}
+                type="Submit"               
               >
                 Create Scheme of Studies
               </Button>
             </div>
+          </div>
+          </form>
           </div>
         </div>
       </div>

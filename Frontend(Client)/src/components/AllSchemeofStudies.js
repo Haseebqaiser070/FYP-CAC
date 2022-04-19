@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import "./css/styles.css";
 import axios from "axios";
 import { useParams } from "react-router-dom";
@@ -10,6 +10,9 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import SosCreation from "./SosCreation";
+import { useNavigate } from "react-router-dom";
+
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -51,19 +54,38 @@ function Mbutton() {
 }
 
 export default function AllSchemeofStudies() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const [Start, setStart] = useState("");
+  const [End, setEnd] = useState("");
+  const [Rows,setRows] = useState([]);
+  const [Program, setProgram] = useState("Select Program");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
+ 
+  useEffect(() => {
+    getSOS()
+  }, []);
+  
+  const getSOS = async () => {
+    const res = await axios.get("http://localhost:4000/SOS/show");
+    const data = await res.data;
+    setRows([...data]);
+  }
+ 
   const columns = [
-    { field: "id", headerName: "ID" },
     {
-      field: "year",
-      headerName: "Year",
+      field: "Start",
+      headerName: "Start Year",
       flex: 1,
     },
     {
-      field: "program",
+      field: "End",
+      headerName: "End Year",
+      flex: 1,
+    },
+    {
+      field: "Program",
       headerName: "Program",
       flex: 1,
     },
@@ -75,11 +97,19 @@ export default function AllSchemeofStudies() {
       renderCell: Mbutton,
     },
   ];
-  const rows = [
-    { id: 1, year: "2014-2018", program: "Computer Science" },
-    { id: 2, year: "2014-2018", program: "Cyber Security" },
-    { id: 3, year: "2014-2018", program: "Artificial Intilligence" },
-  ];
+  //const rows = [
+    //{ id: 1, year: "2014-2018", program: "Computer Science" },
+    //{ id: 2, year: "2014-2018", program: "Cyber Security" },
+    //{ id: 3, year: "2014-2018", program: "Artificial Intilligence" },
+  //];
+
+  const onsubmit =(e)=>{
+    e.preventDefault()
+    
+    if(Start!=""&&End!=""&&Program!="Select Program"){
+      navigate('/admin/SosCreation', { state: { Start,End,Program } })
+    }
+  }
   return (
     <div
       className="container"
@@ -115,18 +145,19 @@ export default function AllSchemeofStudies() {
                   </h3>
                 </div>
                 <div className="card-body">
-                  <form onSubmit={null}>
+                  <form onSubmit={onsubmit}>
                     <div className="row">
                       <div className="col">
                         <div className="form-floating mb-3">
                           <input
                             className="form-control"
-                            id="inputName"
+                            id="inputStart"
                             type="number"
-                            onChange={null}
+                            value={Start}
+                            onChange={e=>setStart(e.target.value)}
                             required
                           />
-                          <label htmlFor="Email" className="form-label">
+                          <label htmlFor="start" className="form-label">
                             Start Year
                           </label>
                         </div>
@@ -135,12 +166,13 @@ export default function AllSchemeofStudies() {
                         <div className="form-floating mb-3">
                           <input
                             className="form-control"
-                            id="inputName"
+                            id="inputEnd"
                             type="number"
-                            onChange={null}
+                            value={End}
+                            onChange={e=>setEnd(e.target.value)}
                             required
                           />
-                          <label htmlFor="Email" className="form-label">
+                          <label htmlFor="end" className="form-label">
                             End Year
                           </label>
                         </div>
@@ -148,7 +180,10 @@ export default function AllSchemeofStudies() {
                     </div>
 
                     <div className="form-floating mb-3">
-                      <select className="form-select" required>
+                      <select className="form-select" onChange={e=>setProgram(e.target.value)} required>
+                        <option value={Program} selected disabled hidden>
+                        {Program}
+                        </option>
                         <option>Computer Science</option>
                         <option>Software Engineering</option>
                         <option>Artificial Intelligence</option>
@@ -178,14 +213,13 @@ export default function AllSchemeofStudies() {
         <DataGrid
           style={{ height: 400, width: "100%" }}
           columns={columns}
-          rows={rows}
+          getRowId={(Rows)=>Rows._id}
+          rows={Rows}
           pageSize={10}
           rowsPerPageOptions={[5]}
-          checkboxSelection
           disableSelectionOnClick
         />
       </div>
-      <SosCreation />
     </div>
   );
 }
