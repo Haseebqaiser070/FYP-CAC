@@ -28,6 +28,8 @@ import EditCourseForm from "./components/EditCourseForm";
 import AllSchemeofStudies from "./components/AllSchemeofStudies";
 import SosCreation from "./components/SosCreation";
 import Sos from "./components/PdfTemplates/Sos";
+import CreateTasks from "./components/CreateTasks";
+import Tasks from "./components/Tasks";
 
 function App() {
   return (
@@ -41,10 +43,7 @@ function App() {
               <Route path="/admin/" element={<Navigation />}>
                 <Route path="/admin/Dashboard" element={<Dashboard />} />
                 <Route path="/admin/Register" element={<Register />} />
-                <Route
-                  path="/admin/AllCategories"
-                  element={<AllCategories />}
-                />
+                <Route path="/admin/AllCategories" element={<Tasks />} />
                 <Route path="/admin/AddNewCourse" element={<AddNewCourse />} />
                 <Route path="/admin/AddCourse" element={<AddCourse />} />
 

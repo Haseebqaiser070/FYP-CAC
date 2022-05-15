@@ -52,32 +52,32 @@ export default function Sos() {
           </Button>
         </div>
         <div ref={componentRef} className="main">
-          <div>
+          {/* <div>
             <h1>COMSATS University Islamabad</h1>
             <h3>Registrar Secretariat, Academic Unit (PS)</h3>
             <p style={{ textAlign: "center" }}>*****</p>
-          </div>
+          </div> */}
 
-          <div className=" row">
+          {/* <div className=" row">
             <div className="col">
               <p>No. CUI-Reg/Notif- /21/ </p>
             </div>
             <div className="d-flex col justify-content-end">
               <p> Date: {sos.Notification}</p>
             </div>
-          </div>
+          </div> */}
           <div>
-            <h2>NOTIFICATION</h2>
+            {/* <h2>NOTIFICATION</h2> */}
             <h2>
               <u>Bachelor of Science in {sos.Program} </u>
             </h2>
-            <p>
+            {/* <p>
               Academic Council in its {sos.Meeting} held on {sos.MeetDate}, on
               recommendations of 28th meeting of Board of Faculty of Information
               Sciences and Technology approved following revised Scheme of
               Studies of Bachelor of Science in {sos.Program} effective from{" "}
               {sos.Start}
-            </p>
+            </p> */}
           </div>
           <div>
             <h4>Nomenclature: Bachelor of Science in {sos.Program}</h4>

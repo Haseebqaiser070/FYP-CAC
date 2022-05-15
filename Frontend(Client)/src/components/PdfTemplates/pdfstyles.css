@@ -20,7 +20,7 @@ h3{
     text-align: center;
 
 }
-h4, h5, h6{
+h4, h5{
     font-weight: bold;
 
 }
@@ -29,6 +29,11 @@ h4{
 }
 h5{
     font-size: 11pt;
+}
+
+h6{
+    font-size: 11pt;
+    font-weight: normal;
 }
 
 p{

@@ -25,6 +25,44 @@ export default function AddNewCourse() {
   const [objective, setobjective] = useState("");
   const [objectiveList, setObjectiveList] = useState([]);
   const [Courses, setCourse] = useState([]);
+  const recommended_books = [
+    {
+      field: "book",
+      headerName: "Book Names",
+      flex: 2,
+    },
+    {
+      field: "writer",
+      headerName: "Writers Names",
+      flex: 2,
+    },
+    {
+      field: "year",
+      headerName: "Year",
+      flex: 2,
+    },
+    {
+      field: "Action",
+      headerName: "Action",
+      flex: 1,
+      renderCell: (props) => (
+        <Button
+          type="button"
+          variant="contained"
+          color="primary"
+          size="small"
+          style={{ marginLeft: 16 }}
+          onClick={() => {
+            var data = objectiveList.filter((obj) => obj.id !== props.row.id);
+            setObjectiveList(data);
+          }}
+        >
+          <AiFillDelete style={{ marginRight: 10 }} />
+          Remove
+        </Button>
+      ),
+    },
+  ];
   const columns = [
     {
       field: "title",
@@ -114,7 +152,7 @@ export default function AddNewCourse() {
     }
   };
   return (
-    <div style={{ padding: 30 }} className="row">
+    <div className="row" style={{ padding: 30 }}>
       <h3 style={{ textAlign: "center", marginBottom: 30 }}>
         <b>Add New Cource</b>
       </h3>
@@ -313,6 +351,65 @@ export default function AddNewCourse() {
             />
           </div>
         </div>
+        <div>
+          <div style={{ marginBottom: 20, marginTop: 50 }}>
+            <form>
+              <div
+                style={{ backgroundColor: "#e8f0f7", padding: 20 }}
+                className="row"
+              >
+                <div className="col">
+                  <input
+                    className="form-control"
+                    id="objective"
+                    type="text"
+                    placeholder="Book Names"
+                    value={null}
+                    onChange={null}
+                  ></input>
+                </div>
+                <div className="col">
+                  <input
+                    className="form-control"
+                    id="writers"
+                    type="text"
+                    placeholder="Writers"
+                    value={null}
+                    onChange={null}
+                  ></input>
+                </div>
+                <div className="col">
+                  <input
+                    className="form-control"
+                    id="year"
+                    type="number"
+                    placeholder="Year"
+                    value={null}
+                    onChange={null}
+                  ></input>
+                </div>
+                <div className="col-3 d-grid gap-2">
+                  <button
+                    type="submit"
+                    className="btn btn-primary btn-block"
+                    onClick={handleObjective}
+                  >
+                    ADD
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div style={{ height: 200, width: "100%" }}>
+            <DataGrid
+              rows={objectiveList}
+              columns={recommended_books}
+              pageSize={5}
+              rowsPerPageOptions={[5]}
+              disableSelectionOnClick
+            />
+          </div>
+        </div>
 
         <input
           type="submit"
@@ -324,25 +421,3 @@ export default function AddNewCourse() {
     </div>
   );
 }
-
-// Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
-const top100Films = [
-  { title: "WALL·E", year: 2008 },
-  { title: "American Beauty", year: 1999 },
-  { title: "The Dark Knight Rises", year: 2012 },
-  { title: "Reservoir Dogs", year: 1992 },
-  { title: "Braveheart", year: 1995 },
-  { title: "M", year: 1931 },
-  { title: "Requiem for a Dream", year: 2000 },
-  { title: "Amélie", year: 2001 },
-  { title: "A Clockwork Orange", year: 1971 },
-  { title: "Like Stars on Earth", year: 2007 },
-  { title: "Taxi Driver", year: 1976 },
-  { title: "Lawrence of Arabia", year: 1962 },
-  { title: "Double Indemnity", year: 1944 },
-];
-
-// const rows = [
-//   { id: 1, title: "Snow" },
-//   { id: 2, title: "Lannister" },
-// ];
