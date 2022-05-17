@@ -247,7 +247,7 @@ export default function AddNewCourse() {
             </select>
           </div>
           <div class="col">
-            <Stack spacing={3} sx={{ width: 500 }}>
+            <Stack>
               <Autocomplete
                 multiple
                 id="tags-standard"
@@ -259,7 +259,7 @@ export default function AddNewCourse() {
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    variant="standard"
+                    variant="outlined"
                     label="Pre-Requisites"
                     placeholder="Pre-Requisites"
                   />

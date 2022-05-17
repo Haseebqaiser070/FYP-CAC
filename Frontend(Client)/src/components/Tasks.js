@@ -126,15 +126,8 @@ export default function Tasks() {
         >
           <Box sx={style}>
             <div className="container">
-              <div className="row card justify-content-center">
-                <div className="card-header">
-                  <h3 className="text-center font-weight-light my-4">
-                    Create a Task
-                  </h3>
-                </div>
-                <div className="card-body">
-                  <CreateTasks />
-                </div>
+              <div>
+                <CreateTasks />
               </div>
             </div>
           </Box>

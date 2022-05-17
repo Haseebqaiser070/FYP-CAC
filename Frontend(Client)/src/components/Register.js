@@ -3,6 +3,9 @@ import "./css/styles.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
+import Stack from "@mui/material/Stack";
 
 export default function Register() {
   const [FirstName, setFirstName] = useState("");
@@ -71,7 +74,7 @@ export default function Register() {
                         value={FirstName}
                         onChange={(e) => setFirstName(e.target.value)}
                       />
-                      <label for="inputFirstName">FirstName</label>
+                      <label for="inputFirstName">First Name</label>
                     </div>
                   </div>
                   <div className="col-md-6">
@@ -84,7 +87,7 @@ export default function Register() {
                         value={SecondName}
                         onChange={(e) => setSecondName(e.target.value)}
                       />
-                      <label for="inputLastName">Last name</label>
+                      <label for="inputLastName">Last Name</label>
                     </div>
                   </div>
                 </div>
@@ -92,29 +95,33 @@ export default function Register() {
                 <div className="row mb-3">
                   <div className="col-md-6">
                     <div className="form-floating mb-3 mb-md-0">
-                      <select
-                        className="form-select"
-                        aria-label="Degree Level"
-                        onChange={(e) => setDegree(e.target.value)}
-                      >
-                        <option selected>Select Degree Level</option>
-                        <option>MS</option>
-                        <option>BS</option>
-                      </select>
+                      <input
+                        className="form-control"
+                        id="inputPhoneNo"
+                        type="number"
+                        placeholder="Enter your phone nmber"
+                        value={null}
+                        onChange={null}
+                      />
+                      <label for="inputLastName">Phone Number</label>
                     </div>
                   </div>
                   <div className="col-md-6">
-                    <div className="form-floating mb-3 mb-md-0">
-                      <select
-                        className="form-select"
-                        aria-label="Select Role"
-                        onChange={(e) => setRole(e.target.value)}
-                      >
-                        <option selected>Select Role</option>
-                        <option>CAC Member</option>
-                        <option>Faculty</option>
-                      </select>
-                    </div>
+                    <Autocomplete
+                      multiple
+                      id="tags-standard"
+                      options={userRole}
+                      getOptionLabel={(option) => option.title}
+                      defaultValue={[userRole]}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          variant="outlined"
+                          label="Select User Role"
+                          placeholder="User Roles"
+                        />
+                      )}
+                    />
                   </div>
                   <div className="col-md-12">
                     <div className="form-floating mb-3 mt-3 mb-md-0">
@@ -184,3 +191,10 @@ export default function Register() {
     </div>
   );
 }
+
+const userRole = [
+  { title: "Admin" },
+  { title: "CAC Member" },
+  { title: "Faculty" },
+  { title: "Evaluator" },
+];

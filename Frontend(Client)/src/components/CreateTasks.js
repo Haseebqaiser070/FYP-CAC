@@ -17,17 +17,43 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
 
+function TaskDetails() {
+  return (
+    <div>
+      <h2>Create Task</h2>
+      <TextField
+        label="Course Name"
+        variant="outlined"
+        size="small"
+      ></TextField>
+      <TextField
+        label="Course Description"
+        variant="outlined"
+        size="small"
+      ></TextField>
+      <InputLabel id="taskType">Assign Course</InputLabel>
+      <Select
+        className="mb-4"
+        labelId="courseAssign"
+        id="courseAssign"
+        //   value={age}
+        label="Assign Teacher"
+        //   onChange={null}
+        autoWidth
+      >
+        <MenuItem value={"Programming Fundamentals"}>
+          Programming Fundamentals
+        </MenuItem>
+      </Select>
+    </div>
+  );
+}
+
 export default function CreateTasks() {
   return (
-    <div
-      className="container"
-      style={{ height: 700, width: "100%", padding: 20 }}
-    >
-      <h1 className="py-4">
-        <b>Task Management</b>
-      </h1>
+    <div className="container" style={{ width: "100%", padding: 20 }}>
       <Card variant="outlined">
-        <Box className="row card p-3" sx={{ minWidth: 275 }}>
+        <Box className="row  p-3" sx={{ minWidth: 275 }}>
           <h2>Create Task</h2>
           <CardContent>
             <div className="col">
@@ -70,6 +96,15 @@ export default function CreateTasks() {
                 </Select>
               </FormControl>
             </div>
+
+            <div>
+              <label>Deadline</label>
+              <input
+                style={{ width: "100%" }}
+                type="datetime-local"
+                placeholder="Deadline"
+              ></input>
+            </div>
           </CardContent>
 
           <div className="col">
@@ -79,7 +114,9 @@ export default function CreateTasks() {
                   variant="contained"
                   color="primary"
                   size="medium"
-                  // onClick={null}
+                  onClick={() => {
+                    TaskDetails;
+                  }}
                 >
                   Create Task
                 </Button>
