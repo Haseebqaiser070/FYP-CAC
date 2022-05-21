@@ -6,6 +6,8 @@ var cors = require("cors");
 var AuthRouter = require("./Routes/AuthRoutes/Auth");
 var CourseRouter = require("./Routes/AdminRoutes/Courses");
 var FacultyRouter = require("./Routes/AdminRoutes/Faculty");
+var UserRouter = require("./Routes/AdminRoutes/User");
+
 var MeetingRouter = require("./Routes/MeetingRoute/MeetingRoute");
 var CategoryRouter = require("./Routes/AdminRoutes/Category")
 var SOSRouter = require("./Routes/DocumentRoutes/SOS")
@@ -21,6 +23,8 @@ app.use(cookieParser());
 
 app.use("/Auth", AuthRouter);
 app.use("/Course", getUser, CourseRouter);
+app.use("/User", getUser, UserRouter);
+
 app.use("/Faculty", getUser, FacultyRouter);
 app.use("/Meeting", getUser, MeetingRouter);
 app.use("/Category", getUser, CategoryRouter);

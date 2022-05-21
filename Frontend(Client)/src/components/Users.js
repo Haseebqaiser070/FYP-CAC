@@ -10,17 +10,19 @@ import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 
 export default function Users() {
-  const [faculty, setfaculty] = useState([]);
+  const [User, setUser] = useState([]);
   const [AssignCources, setAssignCourse] = useState([]);
   const [Courses, setCourse] = useState([]);
+  axios.defaults.withCredentials = true;
 
   useEffect(() => {
     getData();
     getCources();
   }, []);
   const getData = async () => {
-    const response = await axios.get("http://localhost:4000/Faculty/show");
-    setfaculty(response.data);
+    const response = await axios.get("http://localhost:4000/User/show");
+    setUser(response.data);
+    console.log(response.data)
   };
   const getCources = async () => {
     const res = await axios.get("http://localhost:4000/Course/show");
@@ -28,7 +30,7 @@ export default function Users() {
     setCourse([{ Name: "none" }, ...data]);
   };
   const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:4000/Faculty/${id}`);
+    await axios.delete(`http://localhost:4000/User/${id}`);
     getData();
   };
 
@@ -37,7 +39,7 @@ export default function Users() {
       className="container"
       style={{ height: 700, width: "100%", padding: 20 }}
     >
-      <h1 className="mt-4 mb-4">Faculty Members</h1>
+      <h1 className="mt-4 mb-4">User Members</h1>
       <table className="table" id="list">
         <thead>
           <tr className="d-flex">
@@ -48,13 +50,13 @@ export default function Users() {
           </tr>
         </thead>
         <tbody>
-          {faculty.map((facultymember) => {
+          {User.map((Usermember) => {
             return (
-              <tr className="d-flex" scope="row" key={facultymember._id}>
+              <tr className="d-flex" scope="row" key={Usermember._id}>
                 <td className="col-2">
-                  {facultymember.FirstName} {facultymember.SecondName}
+                  {Usermember.FirstName} {Usermember.SecondName}
                 </td>
-                <td className="col-2">{facultymember.Email}</td>
+                <td className="col-2">{Usermember.Email}</td>
                 <td className="col-5">
                   <div className="row">
                     <div className="col">
@@ -63,7 +65,7 @@ export default function Users() {
                         id="tags-standard"
                         options={userRole}
                         getOptionLabel={(option) => option.title}
-                        defaultValue={[userRole]}
+                        defaultValue={[null]}
                         renderInput={(params) => (
                           <TextField
                             {...params}
@@ -116,7 +118,7 @@ export default function Users() {
                     color="primary"
                     size="small"
                     style={{ marginLeft: 16 }}
-                    onClick={() => handleDelete(facultymember._id)}
+                    onClick={() => handleDelete(Usermember._id)}
                   >
                     <AiFillDelete style={{ marginRight: 10 }} />
                     Delete
@@ -133,6 +135,6 @@ export default function Users() {
 const userRole = [
   { title: "Admin" },
   { title: "CAC Member" },
-  { title: "Faculty" },
+  { title: "User" },
   { title: "Evaluator" },
 ];

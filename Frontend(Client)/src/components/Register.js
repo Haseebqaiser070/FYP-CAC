@@ -12,45 +12,37 @@ export default function Register() {
   const [SecondName, setSecondName] = useState("");
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
-  const [Degree, setDegree] = useState("");
-  const [Role, setRole] = useState("");
-  const [Allocated, setAllocated] = useState("");
-  const [Courses, setCourses] = useState([]);
-  useEffect(() => {
-    getCourse();
-  }, []);
-  const getCourse = async () => {
-    const response = await axios.get("http://localhost:4000/Course/show");
-    setCourses(response.data);
-  };
+  const [Phone, setPhone] = useState("");
+  const [Roles, setRoles] = useState([]);
+  axios.defaults.withCredentials = true;
+
   const hanleSubmit = async (e) => {
     e.preventDefault();
-    setAllocated(Allocated.split(" ")[0]);
     if (
       FirstName != "" &&
       SecondName != "" &&
       Email != "" &&
       Password != "" &&
-      Degree != "" &&
-      Role != "" &&
-      Allocated != ""
-    ) {
-      await axios.post("http://localhost:4000/Faculty/add", {
-        FirstName,
-        SecondName,
+      Roles != "" &&
+      Phone !=""
+      ) {
+        console.log(Roles)
+      const Name = FirstName+" "+SecondName 
+      const res = await axios.post("http://localhost:4000/User/add", {
+        Name,
         Email,
         Password,
-        Degree,
-        Allocated,
-        Role,
+        Phone,
+        Roles,
       });
+      console.log("1here")
+
       setFirstName("");
       setSecondName("");
       setEmail("");
+      setPhone("");
       setPassword("");
-      setDegree("");
-      setRole("");
-      setAllocated("");
+      setRoles("");
     }
   };
   return (
@@ -100,8 +92,8 @@ export default function Register() {
                         id="inputPhoneNo"
                         type="number"
                         placeholder="Enter your phone nmber"
-                        value={null}
-                        onChange={null}
+                        value={Phone}
+                        onChange={(e)=>setPhone(e.target.value)}
                       />
                       <label for="inputLastName">Phone Number</label>
                     </div>
@@ -110,15 +102,16 @@ export default function Register() {
                     <Autocomplete
                       multiple
                       id="tags-standard"
-                      options={userRole}
-                      getOptionLabel={(option) => option.title}
-                      defaultValue={[userRole]}
+                      options={userRoles}
+                      getOptionLabel={(option) => option}
+                      defaultValue={[...Roles]}
+                      onChange ={(e,val)=>setRoles(val)}
                       renderInput={(params) => (
                         <TextField
                           {...params}
                           variant="outlined"
-                          label="Select User Role"
-                          placeholder="User Roles"
+                          label="Select User Roles"
+                          placeholder="User Roless"
                         />
                       )}
                     />
@@ -136,27 +129,7 @@ export default function Register() {
                       <label for="inputEmail">Email address</label>
                     </div>
                   </div>
-                  <div className="col-md-6">
-                    <div className="form-floating mb-3 mb-md-0 mt-3">
-                      <select
-                        className="form-select"
-                        aria-label="Degree Level"
-                        onChange={(e) => setAllocated(e.target.value)}
-                      >
-                        <option selected>Allocate Course</option>
-
-                        {Courses.map((course) => {
-                          return (
-                            <option key={course._id}>
-                              {course.Code}
-                              {"  "}
-                              {course.Name}
-                            </option>
-                          );
-                        })}
-                      </select>
-                    </div>
-                  </div>
+                 
                   <div className="col-md-6">
                     <div className="form-floating mb-3 mb-md-0 mt-3">
                       <input
@@ -192,9 +165,4 @@ export default function Register() {
   );
 }
 
-const userRole = [
-  { title: "Admin" },
-  { title: "CAC Member" },
-  { title: "Faculty" },
-  { title: "Evaluator" },
-];
+const userRoles = ["Admin","CAC","Faculty","Evaluator" ];

@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import "./css/styles.css";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import useAuth from "../MyHooks/useAuth";
 import Popup from "./AddCourceForm";
@@ -22,11 +20,16 @@ import {
   BsFillBookFill,
 } from "react-icons/bs";
 import { Button } from "@mui/material";
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 export default function Home() {
   const [isOpen, setIsOpen] = React.useState(false);
   const togglePopup = () => {
     setIsOpen(!isOpen);
   };
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
+
   return (
     <div>
       <nav class="navbar navbar-expand-lg navbar-dark bg-light">

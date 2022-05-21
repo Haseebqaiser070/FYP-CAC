@@ -1,4 +1,4 @@
-import * as React from "react";
+import React,{useState,useEffect}  from "react";
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
@@ -8,16 +8,33 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import PersonIcon from "@mui/icons-material/Person";
 import Logout from "@mui/icons-material/Logout";
+import axios from "axios"
+import { useNavigate } from "react-router-dom";
 
 export default function AccountMenu() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const [Roles,setRoles] = useState([])
+  const navigate = useNavigate();
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
+useEffect(()=>{
+  getRoles()
+})
+
+const navigator = (role)=>{
+  navigate(`/${role}/Dashboard`, { replace: true });
+}
+  
+const getRoles=async()=>{
+  const response = await axios.get("http://localhost:4000/Auth/check",{withCredentials:true})
+  setRoles(await response.data.Roles)
+}
+
   return (
     <React.Fragment>
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
@@ -74,6 +91,14 @@ export default function AccountMenu() {
         <MenuItem>
           <Avatar /> Profile
         </MenuItem>
+        {
+          Roles.map((role=>{
+            return(
+            <MenuItem onClick={(role)=>{navigator(role)}}>
+             {role}
+          </MenuItem>)
+          }))
+        }
         <MenuItem>
           <ListItemIcon>
             <Logout fontSize="small" />

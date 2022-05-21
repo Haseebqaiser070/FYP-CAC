@@ -2,9 +2,9 @@ const {createjwts,verifyjwts} = require ("../Utils/JWTs")
 
 module.exports.getUser=(req ,res,next)=>{
     const {AccessTokens,RefreshTokens}=req.cookies
-    if(!AccessTokens) return next()
-   const user = verifyjwts(AccessTokens,"Access key")
-   if(user){
+    if(!AccessTokens&&!RefreshTokens) return next()
+    const user = verifyjwts(AccessTokens,"Access key")
+    if(user){
     req.user = user 
     return next()
    }

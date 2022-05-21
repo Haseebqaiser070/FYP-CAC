@@ -1,6 +1,7 @@
 var jwt=require("jsonwebtoken")
 module.exports.createjwts = (user,key,time) => {
-    const Token = jwt.sign({_id:user._id,Email:user.Email,Password:user.Password}, key, {expiresIn: time})
+    const Token = jwt.sign({_id:user._id,Name:user.Name,Email:user.Email,
+         Password:user.Password,Roles:user.Roles }, key, {expiresIn: time})
     return Token
 };
 module.exports.verifyjwts = (token,key) => {
