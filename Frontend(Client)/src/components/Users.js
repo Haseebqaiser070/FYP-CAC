@@ -54,7 +54,7 @@ export default function Users() {
             return (
               <tr className="d-flex" scope="row" key={Usermember._id}>
                 <td className="col-2">
-                  {Usermember.FirstName} {Usermember.SecondName}
+                  {Usermember.Name}
                 </td>
                 <td className="col-2">{Usermember.Email}</td>
                 <td className="col-5">
@@ -64,8 +64,8 @@ export default function Users() {
                         multiple
                         id="tags-standard"
                         options={userRole}
-                        getOptionLabel={(option) => option.title}
-                        defaultValue={[null]}
+                        getOptionLabel={(option) => option}
+                        defaultValue={[...Usermember.Roles]}
                         renderInput={(params) => (
                           <TextField
                             {...params}
@@ -76,28 +76,6 @@ export default function Users() {
                           />
                         )}
                       />
-                    </div>
-                    <div className="col">
-                      <Stack>
-                        <Autocomplete
-                          multiple
-                          id="tags-standard"
-                          value={AssignCources}
-                          options={Courses}
-                          getOptionLabel={(option) => option.Name}
-                          defaultValue={null}
-                          onChange={(e, val) => setAssignCourse(val)}
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              variant="outlined"
-                              label="Assign Cources"
-                              placeholder="Assign Cources"
-                              size="small"
-                            />
-                          )}
-                        />
-                      </Stack>
                     </div>
                   </div>
                 </td>
@@ -132,9 +110,4 @@ export default function Users() {
     </div>
   );
 }
-const userRole = [
-  { title: "Admin" },
-  { title: "CAC Member" },
-  { title: "User" },
-  { title: "Evaluator" },
-];
+const userRole = ["Admin","CAC Member","User","Evaluator"];

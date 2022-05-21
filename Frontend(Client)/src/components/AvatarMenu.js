@@ -27,9 +27,15 @@ useEffect(()=>{
 })
 
 const navigator = (role)=>{
-  navigate(`/${role}/Dashboard`, { replace: true });
+  console.log(role)
+ navigate(`/${role}/Dashboard`, { replace: true });
 }
-  
+
+const handleLogout = async () => {
+  await axios.post("http://localhost:4000/Auth/logout");
+  setAdmin(false);
+  setFaculty(false);
+};  
 const getRoles=async()=>{
   const response = await axios.get("http://localhost:4000/Auth/check",{withCredentials:true})
   setRoles(await response.data.Roles)
@@ -94,12 +100,12 @@ const getRoles=async()=>{
         {
           Roles.map((role=>{
             return(
-            <MenuItem onClick={(role)=>{navigator(role)}}>
+            <MenuItem  value={role} onClick={(e)=>{navigator(e.nativeEvent.target.outerText)}}>
              {role}
           </MenuItem>)
           }))
         }
-        <MenuItem>
+        <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>

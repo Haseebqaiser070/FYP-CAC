@@ -27,11 +27,10 @@ function Login() {
         setAuth({ Email, Roles });
         setEmail('');
         setPassword('');
-        if(Roles.includes("Admin")) navigate("/admin/Dashboard", { replace: true });
-        /*
+        if(Roles.includes("Admin")) navigate("/Admin/Dashboard", { replace: true });
         else if(Roles.includes("CAC")) navigate("/CAC/Dashboard", { replace: true });
         else if(Roles.includes("Faculty")) navigate("/Faculty/Dashboard", { replace: true });
-        else if(Roles.includes("Eveluator")) navigate("/Eveluator/Dashboard", { replace: true });*/
+        else if(Roles.includes("Eveluator")) navigate("/Eveluator/Dashboard", { replace: true });
         } catch (err) {
             if (!err?.response) {
                 console.log('No Server Response');
