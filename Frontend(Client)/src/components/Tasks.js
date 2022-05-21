@@ -37,7 +37,7 @@ function Mbutton(props) {
         color="primary"
         size="small"
         style={{ marginLeft: 16 }}
-        // onClick={togglePopup}
+        // onClick={}
       >
         <AiFillEdit style={{ marginRight: 10 }} />
         Edit
@@ -51,7 +51,7 @@ function Mbutton(props) {
         // onClick={null}
       >
         <AiFillEdit style={{ marginRight: 10 }} />
-        Edit
+        Delete
       </Button>
     </div>
   );

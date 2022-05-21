@@ -50,6 +50,9 @@ function TaskDetails() {
 }
 
 export default function CreateTasks() {
+  const [taskType, settaskType] = useState("");
+  const [teacher, setTeacher] = useState("");
+  const [deadline, setDeadline] = useState("");
   return (
     <div className="container" style={{ width: "100%", padding: 20 }}>
       <Card variant="outlined">

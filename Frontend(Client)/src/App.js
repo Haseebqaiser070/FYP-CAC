@@ -30,6 +30,7 @@ import SosCreation from "./components/SosCreation";
 import Sos from "./components/PdfTemplates/Sos";
 import CreateTasks from "./components/CreateTasks";
 import Tasks from "./components/Tasks";
+import OngoingTasks from "./components/OngoingTasks";
 
 function App() {
   return (
@@ -43,7 +44,10 @@ function App() {
               <Route path="/admin/" element={<Navigation />}>
                 <Route path="/admin/Dashboard" element={<Dashboard />} />
                 <Route path="/admin/Register" element={<Register />} />
-                <Route path="/admin/AllCategories" element={<Tasks />} />
+                <Route
+                  path="/admin/AllCategories"
+                  element={<AllCategories />}
+                />
                 <Route path="/admin/AddNewCourse" element={<AddNewCourse />} />
                 <Route path="/admin/AddCourse" element={<AddCourse />} />
 
@@ -65,6 +69,8 @@ function App() {
                 </Route>
                 <Route path="/admin/Users" element={<Users />} />
                 <Route path="/admin/CourseFolder/" element={<CourseFolder />} />
+                <Route path="/admin/Tasks/" element={<Tasks />} />
+                <Route path="/admin/OngoingTasks/" element={<OngoingTasks />} />
               </Route>
             </Route>
             <Route element={<ProtectedRouteFaculty />}>

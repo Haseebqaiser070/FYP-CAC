@@ -9,6 +9,9 @@ import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import axios from "axios";
+import Avatar from "@mui/material/Avatar";
+import AvatarMenu from "./AvatarMenu";
+import Stack from "@mui/material/Stack";
 
 import ListSubheader from "@mui/material/ListSubheader";
 import List from "@mui/material/List";
@@ -23,6 +26,7 @@ import {
   BsFillGearFill,
   BsFillPeopleFill,
   BsFillBookFill,
+  BsPersonCircle,
 } from "react-icons/bs";
 import useAuth from "../MyHooks/useAuth";
 
@@ -86,16 +90,7 @@ export default function Navigation() {
               )}
             </div>
           </div>
-          <FormControl>
-            <Select style={{ color: "#fff", border: "none" }}>
-              <Link to="Dashboard">
-                <MenuItem value={10}>Profile</MenuItem>
-              </Link>
-              <MenuItem value={20} onClick={handleLogout}>
-                Logout
-              </MenuItem>
-            </Select>
-          </FormControl>
+          <AvatarMenu />
         </nav>
       </div>
 
@@ -138,6 +133,19 @@ export default function Navigation() {
                     <BsFillBookFill color="#fff" />
                   </div>
                   All Scheme of Studies
+                </Link>
+
+                <Link className="nav-link sidenavtext" to="Tasks">
+                  <div className="sb-nav-link-icon">
+                    <BsFillPeopleFill color="#fff" />
+                  </div>
+                  Create Tasks
+                </Link>
+                <Link className="nav-link sidenavtext" to="OngoingTasks">
+                  <div className="sb-nav-link-icon">
+                    <BsFillPeopleFill color="#fff" />
+                  </div>
+                  Ongoing Tasks
                 </Link>
 
                 <Link className="nav-link sidenavtext" to="Users">
