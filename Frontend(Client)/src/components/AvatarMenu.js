@@ -10,12 +10,15 @@ import PersonIcon from "@mui/icons-material/Person";
 import Logout from "@mui/icons-material/Logout";
 import axios from "axios"
 import { useNavigate } from "react-router-dom";
+import useAuth from "../MyHooks/useAuth";
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const [Roles,setRoles] = useState([])
   const navigate = useNavigate();
+  const { setAuth } = useAuth();
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -33,8 +36,8 @@ const navigator = (role)=>{
 
 const handleLogout = async () => {
   await axios.post("http://localhost:4000/Auth/logout");
-  setAdmin(false);
-  setFaculty(false);
+  setAuth({});
+  
 };  
 const getRoles=async()=>{
   const response = await axios.get("http://localhost:4000/Auth/check",{withCredentials:true})

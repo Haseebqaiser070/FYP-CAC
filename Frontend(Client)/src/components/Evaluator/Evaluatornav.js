@@ -9,6 +9,7 @@ import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import axios from "axios";
+import AvatarMenu from "../AvatarMenu";
 
 import {
   BsFillPersonPlusFill,
@@ -21,24 +22,13 @@ import {
 import useAuth from "../../MyHooks/useAuth";
 
 export default function FacultyNavigation() {
-  const [isOpen, setIsOpen] = React.useState(false);
-  const { setAdmin, setFaculty, Admin, Faculty } = useAuth();
-  axios.defaults.withCredentials = true;
-  const handleLogout = async (e) => {
-    await axios.post("http://localhost:4000/Auth/logout");
-    setAdmin(false);
-    setFaculty(false);
-  };
 
-  const togglePopup = () => {
-    setIsOpen(!isOpen);
-  };
   return (
     <React.Fragment>
       <div class="bg">
         <nav class="sb-topnav navbar navbar-expand navbar-dark ">
           <a class="navbar-brand ps-3" to="/Dashboard">
-            <b>CAC PANEL</b>
+            <b>Evaluator</b>
           </a>
           <button
             class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"
@@ -47,18 +37,8 @@ export default function FacultyNavigation() {
           >
             <i class="fas fa-bars"></i>
           </button>
-          <div className="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-            <FormControl>
-              <Select style={{ color: "#fff", border: "none" }}>
-                <Link to="Dashboard">
-                  <MenuItem value={10}>Profile</MenuItem>
-                </Link>
-                <MenuItem value={20} onClick={handleLogout}>
-                  Logout
-                </MenuItem>
-              </Select>
-            </FormControl>
-          </div>
+          <AvatarMenu />
+
         </nav>
       </div>
       <div id="layoutSidenav">
@@ -74,19 +54,7 @@ export default function FacultyNavigation() {
                   Dashboard
                 </Link>
 
-                <Link class="nav-link sidenavtext" to="CdfandSyllabus">
-                  <div class="sb-nav-link-icon">
-                    <BsFiles color="#fff" />
-                  </div>
-                  Cdf & Syllabus
-                </Link>
-
-                <Link class="nav-link sidenavtext" to="FacultyMeeting">
-                  <div class="sb-nav-link-icon">
-                    <BsFiles color="#fff" />
-                  </div>
-                  Meetings
-                </Link>
+                
               </div>
             </div>
             <div class="sb-sidenav-footer sidenavtext">

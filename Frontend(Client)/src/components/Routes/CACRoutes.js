@@ -1,8 +1,4 @@
-import FacultyNavigation from "../FacultyRoutes/FacultyNavigation";
-import FacultyDashboard from "../FacultyRoutes/FacultyDashboard";
-import CdfandSyllabus from "../CdfandSyllabus";
-import CourseFolder from "../CourseFolder";
-import CourseDescription from "../CreateCDF";
+
 import FacultyMeeting from "../FacultyMeeting";
 import { Route, Routes } from "react-router-dom";
 import CACDashboard from "../CACMember/CACDashboard";

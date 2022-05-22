@@ -108,4 +108,4 @@ export default function Users() {
     </div>
   );
 }
-const userRole = ["Admin", "CAC Member", "User", "Evaluator"];
+const userRole = ["Admin", "CAC", "User", "Evaluator"];

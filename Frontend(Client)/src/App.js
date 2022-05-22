@@ -9,7 +9,8 @@ import Home from "./components/Home";
 import AdminRoutes from "./components/Routes/AdminRoutes";
 import ProtrctedRoutes from "./components/ProtectedRoutes/ProtectedRoutes";
 import PersistLogin from "./components/ProtectedRoutes/PersistLogin";
-
+import FacultyRoutes from "./components/Routes/FacultyRoutes";
+import EvaluatorRoutes from "./components/Routes/EvaluatorRoutes";
 function App() {
   return (
     <React.Fragment>
@@ -24,6 +25,12 @@ function App() {
               </Route>        
               <Route  element={<ProtrctedRoutes allowedRoles={"CAC"}/>}>
                 <Route path= "/CAC/*"element={ <CACRoutes/>}/>
+              </Route>
+              <Route  element={<ProtrctedRoutes allowedRoles={"Faculty"}/>}>
+                <Route path= "/Faculty/*"element={ <FacultyRoutes/>}/>
+              </Route>
+              <Route  element={<ProtrctedRoutes allowedRoles={"Evaluator"}/>}>
+                <Route path= "/Evaluator/*"element={ <EvaluatorRoutes/>}/>
               </Route>
             </Route>
           </Routes>
