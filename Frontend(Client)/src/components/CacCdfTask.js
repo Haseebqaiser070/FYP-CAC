@@ -4,6 +4,8 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
 
 function ActionButtons(props) {
   const navigate = useNavigate();
@@ -40,63 +42,13 @@ function ActionButtons(props) {
         // onClick={null}
       >
         <AiFillEdit style={{ marginRight: 10 }} />
-        Update Status
+        Submit
       </Button>
     </div>
   );
 }
 
-function UpdateStatus() {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
-  return (
-    <div>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <div className="container">
-            <div className="col">
-              <FormControl fullWidth size="small">
-                <InputLabel id="Status">Update Status</InputLabel>
-                <Select
-                  className="mb-4"
-                  labelId="Status"
-                  id="Status"
-                  //   value={age}
-                  label="Update Status"
-                  //   onChange={null}
-                  autoWidth
-                >
-                  <MenuItem value={"In Progress"}>In Progress</MenuItem>
-                  <MenuItem value={"Delievered"}>Delievered</MenuItem>
-                </Select>
-              </FormControl>
-            </div>
-
-            <Button
-              variant="contained"
-              color="primary"
-              size="small"
-              style={{ marginLeft: 16 }}
-              // onClick={null}
-            >
-              <AiFillEdit style={{ marginRight: 10 }} />
-              Update Status
-            </Button>
-          </div>
-        </Box>
-      </Modal>
-    </div>
-  );
-}
-
-export default function CacAllTasks() {
+export default function CacCdfTask() {
   const [Rows, setRows] = useState([]);
   const columns = [
     {
@@ -123,17 +75,11 @@ export default function CacAllTasks() {
       renderCell: ActionButtons,
     },
   ];
-
   return (
-    <div
-      className="container"
-      style={{ height: 700, width: "100%", padding: 20 }}
-    >
-      <div className="py-4">
-        <h1>
-          <b>All Tasks Assigned</b>
-        </h1>
-      </div>
+    <div className="container" style={{ width: "100%", padding: 20 }}>
+      <h1 className="py-4">
+        <b>CDF Assigned</b>
+      </h1>
       <div>
         <DataGrid
           style={{ height: 400, width: "100%" }}

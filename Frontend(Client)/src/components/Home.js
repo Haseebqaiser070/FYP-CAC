@@ -4,7 +4,7 @@ import axios from "axios";
 import useAuth from "../MyHooks/useAuth";
 import Popup from "./AddCourceForm";
 import Login from "./Login";
-import logo from "./FacultyRoutes/comsats_logo.png";
+// import logo from "./FacultyRoutes/comsats_logo.png";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -20,7 +20,7 @@ import {
   BsFillBookFill,
 } from "react-icons/bs";
 import { Button } from "@mui/material";
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from "react-router-dom";
 export default function Home() {
   const [isOpen, setIsOpen] = React.useState(false);
   const togglePopup = () => {
@@ -28,7 +28,6 @@ export default function Home() {
   };
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
-
 
   return (
     <div>
@@ -43,13 +42,13 @@ export default function Home() {
         >
           <div class="container-fluid">
             <a class="navbar-brand " href="#">
-              <img
+              {/* <img
                 src={logo}
                 alt="Comsats Logo"
                 width="80"
                 height="80"
                 class="d-inline-block align-text-center"
-              ></img>
+              ></img> */}
               <b style={{ marginLeft: 15 }}>Comsats University Islamabad</b>
             </a>
           </div>

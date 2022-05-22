@@ -26,7 +26,9 @@ export default function CACnav() {
           >
             <i class="fas fa-bars"></i>
           </button>
-          <AvatarMenu />
+          <div className="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <AvatarMenu />
+          </div>
         </nav>
       </div>
       <div id="layoutSidenav">
@@ -42,11 +44,25 @@ export default function CACnav() {
                   Dashboard
                 </Link>
 
+                <Link class="nav-link sidenavtext" to="CacAllTasks">
+                  <div class="sb-nav-link-icon">
+                    <BsFiles color="#fff" />
+                  </div>
+                  All Ongoing Tasks
+                </Link>
+
                 <Link class="nav-link sidenavtext" to="CacCourseTask">
                   <div class="sb-nav-link-icon">
                     <BsFiles color="#fff" />
                   </div>
-                  Tasks
+                  Courses Assigned
+                </Link>
+
+                <Link class="nav-link sidenavtext" to="CacCdfTask">
+                  <div class="sb-nav-link-icon">
+                    <BsFiles color="#fff" />
+                  </div>
+                  CDF Assigned
                 </Link>
 
                 <Link class="nav-link sidenavtext" to="FacultyMeeting">

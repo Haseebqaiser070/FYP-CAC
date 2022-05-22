@@ -26,11 +26,13 @@ function TaskDetails() {
         variant="outlined"
         size="small"
       ></TextField>
+
       <TextField
         label="Course Description"
         variant="outlined"
         size="small"
       ></TextField>
+
       <InputLabel id="taskType">Assign Course</InputLabel>
       <Select
         className="mb-4"
