@@ -12,7 +12,6 @@ import {
 } from "react-icons/bs";
 
 export default function CACnav() {
-  
   return (
     <React.Fragment>
       <div class="bg">
@@ -43,11 +42,11 @@ export default function CACnav() {
                   Dashboard
                 </Link>
 
-                <Link class="nav-link sidenavtext" to="CdfandSyllabus">
+                <Link class="nav-link sidenavtext" to="CacCourseTask">
                   <div class="sb-nav-link-icon">
                     <BsFiles color="#fff" />
                   </div>
-                  Cdf & Syllabus
+                  Tasks
                 </Link>
 
                 <Link class="nav-link sidenavtext" to="FacultyMeeting">

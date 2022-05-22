@@ -4,29 +4,26 @@ import CdfandSyllabus from "../CdfandSyllabus";
 import CourseFolder from "../CourseFolder";
 import CourseDescription from "../CreateCDF";
 import FacultyMeeting from "../FacultyMeeting";
-import {Route,Routes} from "react-router-dom";
-import CACDashboard from "../CACMember/CACDashboard"
-import CACnav from "../CACMember/CACnav"
+import { Route, Routes } from "react-router-dom";
+import CACDashboard from "../CACMember/CACDashboard";
+import CACnav from "../CACMember/CACnav";
+import CacCourseTask from "../CacCourseTask";
 function CACRoutes() {
-    return (
-        <Routes>
-        <Route path="/" element={<CACnav />}>
-        <Route
-          path="/Dashboard"
-          element={<CACDashboard />}
-        />{/*
-        <Route path="/CdfandSyllabus">
-          <Route path=":id" element={<CourseDescription />} />
-          <Route index element={<CdfandSyllabus />} />
+  return (
+    <Routes>
+      <Route path="/" element={<CACnav />}>
+        <Route path="/Dashboard" element={<CACDashboard />} />
+        <Route path="/CacCourseTask">
+          <Route path=":id" element={<CacCourseTask />} />
+          <Route index element={<CacCourseTask />} />
         </Route>
         <Route path="/FacultyMeeting">
           <Route path=":id" element={<FacultyMeeting />} />
           <Route index element={<FacultyMeeting />} />
         </Route>
-        */}
-        </Route>
-        </Routes>
-             );
+      </Route>
+    </Routes>
+  );
 }
 
 export default CACRoutes;

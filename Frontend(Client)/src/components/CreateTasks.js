@@ -100,6 +100,25 @@ export default function CreateTasks() {
               </FormControl>
             </div>
 
+            <div className="col">
+              <FormControl fullWidth size="small">
+                <InputLabel id="taskType">Status</InputLabel>
+                <Select
+                  className="mb-4"
+                  labelId="taskType"
+                  id="taskType"
+                  //   value={age}
+                  label="Assign Teacher"
+                  //   onChange={null}
+                  autoWidth
+                >
+                  <MenuItem value={"Assigned"}>Assigned</MenuItem>
+                  <MenuItem value={"Revision"}>Revision</MenuItem>
+                  <MenuItem value={"Completed"}>Completed</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+
             <div>
               <label>Deadline</label>
               <input

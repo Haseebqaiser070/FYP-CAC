@@ -3,14 +3,20 @@ var bcrypt = require("bcrypt");
 var { createjwts } = require("../../Utils/JWTs");
 module.exports.registerAdmin = async (req, res) => {
   try {
-    const { Name, Email, Password } = req.body;
+    const { Name, Email, Password, Phone } = req.body;
     let old = await User.findOne({ Email });
     if (old) {
       res.status(401).json("already exists");
     }
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(Password, salt);
-    const newu = await User.create({ Name, Email, Password: hashPassword,Roles:["Admin"] });
+    const newu = await User.create({
+      Name,
+      Email,
+      Phone,
+      Password: hashPassword,
+      Roles: ["Admin"],
+    });
     res.status(201).json(newu);
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -33,18 +39,16 @@ module.exports.Login = async (req, res) => {
       MaxAge: 600000,
       httpOnly: true,
     });
-    res.status(200).json(user)
+    res.status(200).json(user);
   } catch (err) {
     res.status(400).json(err);
   }
 };
-module.exports.Check = async (req,res) =>{
-  const user=req.user
-  if(!user) return res.status(401).json("not login")
-  res.status(200).json(user)
-  
-  
-}
+module.exports.Check = async (req, res) => {
+  const user = req.user;
+  if (!user) return res.status(401).json("not login");
+  res.status(200).json(user);
+};
 module.exports.Logout = async (req, res) => {
   res.cookie("AccessTokens", "", {
     MaxAge: 0,

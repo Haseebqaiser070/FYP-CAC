@@ -22,7 +22,7 @@ export default function Users() {
   const getData = async () => {
     const response = await axios.get("http://localhost:4000/User/show");
     setUser(response.data);
-    console.log(response.data)
+    console.log(response.data);
   };
   const getCources = async () => {
     const res = await axios.get("http://localhost:4000/Course/show");
@@ -44,8 +44,8 @@ export default function Users() {
         <thead>
           <tr className="d-flex">
             <th className="col-2">User Name</th>
-            <th className="col-3">Email</th>
-            <th className="col-5">Assign Role & Courses</th>
+            <th className="col-4">Email</th>
+            <th className="col-3">Assign Role & Courses</th>
             <th className="col-3">Action</th>
           </tr>
         </thead>
@@ -53,11 +53,9 @@ export default function Users() {
           {User.map((Usermember) => {
             return (
               <tr className="d-flex" scope="row" key={Usermember._id}>
-                <td className="col-2">
-                  {Usermember.Name}
-                </td>
-                <td className="col-2">{Usermember.Email}</td>
-                <td className="col-5">
+                <td className="col-2">{Usermember.Name}</td>
+                <td className="col-4">{Usermember.Email}</td>
+                <td className="col-3">
                   <div className="row">
                     <div className="col">
                       <Autocomplete
@@ -110,4 +108,4 @@ export default function Users() {
     </div>
   );
 }
-const userRole = ["Admin","CAC Member","User","Evaluator"];
+const userRole = ["Admin", "CAC Member", "User", "Evaluator"];

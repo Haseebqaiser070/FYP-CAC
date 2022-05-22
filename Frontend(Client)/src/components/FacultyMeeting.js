@@ -15,11 +15,35 @@ function Mbutton() {
         color="primary"
         size="small"
         style={{ marginLeft: 16 }}
-        // onClick={togglePopup}
+        onClick={() => {
+          availabilityPopup;
+        }}
       >
         <AiFillEdit style={{ marginRight: 10 }} />
         Set Availability
       </Button>
+    </div>
+  );
+}
+
+function availabilityPopup() {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  return (
+    <div>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <div className="container">
+            <div></div>
+          </div>
+        </Box>
+      </Modal>
     </div>
   );
 }
