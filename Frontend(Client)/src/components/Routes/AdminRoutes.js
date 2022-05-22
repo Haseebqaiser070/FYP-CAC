@@ -15,6 +15,7 @@ import Meeting from "../Meeting";
 import AddNewCourse from "../AddNewCourse";
 import CourseFolder from "../CourseFolder";
 import {  Route,Routes } from "react-router-dom";
+import CourseRepo from "../Admin/CourseRepo";
 
 function AdminRoutes() {
     return (
@@ -39,8 +40,8 @@ function AdminRoutes() {
                   element={<AllSchemeofStudies />}
                 />
                 <Route path="/Sos" element={<Sos />} />
-
                 <Route path="/SosCreation" element={<SosCreation />} />
+                <Route path="/InitCourse" element={<CourseRepo />} />
                 {/*<Route path="/CdfandSyllabus">
                   <Route path=":id" element={<CourseDescription />} />
                   <Route index element={<CdfandSyllabus />} />

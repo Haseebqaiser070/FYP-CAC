@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./css/styles.css";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import {useNavigate, Link, useParams } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
+import { AiFillEye, AiFillEdit } from "react-icons/ai";
 
 function ActionButtons(props) {
   const navigate = useNavigate();
@@ -28,7 +29,9 @@ function ActionButtons(props) {
         color="primary"
         size="small"
         style={{ marginLeft: 16 }}
-        // onClick={null}
+        onClick={()=>{
+          navigate("/CAC/CourseCretion", { replace: true })
+        }}
       >
         <AiFillEdit style={{ marginRight: 10 }} />
         Add Course
@@ -50,23 +53,29 @@ function ActionButtons(props) {
 
 export default function CacCourseTask() {
   const [Rows, setRows] = useState([]);
+    useEffect(() => {
+      getRepoCourse();
+    }, []);
+  
+    const getRepoCourse = async () => {
+      const response = await axios.get("http://localhost:4000/CoursesCreate/get");
+      console.log(response.data)
+      setRows(response.data);
+    };
+    
   const columns = [
     {
-      field: "tittle",
-      headerName: "Tittle",
+      field: "Code",
+      headerName: "Code",
       flex: 1,
     },
 
     {
-      field: "deadline",
-      headerName: "Deadline",
+      field: "Name",
+      headerName: "Name",
       flex: 1,
     },
-    {
-      field: "status",
-      headerName: "Status",
-      flex: 1,
-    },
+    
     {
       field: "Action",
       headerName: "Action",

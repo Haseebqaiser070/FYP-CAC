@@ -1,0 +1,38 @@
+var mongoose = require('mongoose');
+
+var TaskSchema = new mongoose.Schema({
+    taskType:{  
+        type: String,
+        required: true
+    },
+    User:{
+        type: mongoose.Schema.ObjectId,
+        ref: 'User'
+    },
+    Deadline:{    
+        type: String,
+        required: true
+    },
+    Status:{    
+        type: String,
+        required: true
+    },
+    Course :{
+        type: mongoose.Schema.ObjectId,
+        ref: 'Repo'
+        }   
+});
+
+module.exports = mongoose.model('Task', TaskSchema);
+
+
+
+
+
+
+
+
+
+
+
+

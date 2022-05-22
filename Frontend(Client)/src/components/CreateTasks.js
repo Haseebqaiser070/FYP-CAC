@@ -16,7 +16,7 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
-
+import axios from "axios"
 function TaskDetails() {
   return (
     <div>
@@ -52,13 +52,66 @@ function TaskDetails() {
 }
 
 export default function CreateTasks() {
+  axios.defaults.withCredentials = true;
   const [taskType, settaskType] = useState("");
-  const [teacher, setTeacher] = useState("");
-  const [deadline, setDeadline] = useState("");
+  const [User, setUser] = useState("");
+  const [Deadline, setDeadline] = useState("");
+  const [Status, setStatus] = useState("");
+  const [Avail, setAvail] = useState([]);
+  const [RepoCourse, setRepoCourse] = useState([]);
+  const [Course,setCourse] = useState("")
+  useEffect(() => {
+    getRepoCourse();
+    getData();
+  }, []);
+  const getData = async () => {
+    const response = await axios.get("http://localhost:4000/User/show/CAC");
+    setAvail(response.data);
+  };
+/*  const getCources = async () => {
+    const res = await axios.get("http://localhost:4000/Course/show");
+    const data = await res.data;
+    setCourse([{ Name: "none" }, ...data]);
+  };
+*/
+
+
+const getRepoCourse = async () => {
+  const response = await axios.get("http://localhost:4000/RepoCourse/show");
+  setRepoCourse(response.data);
+};
+
+
+const handleSubmit = async(e) => {
+  e.preventDefault();
+  if (
+    taskType != "" &&
+    User != "" &&
+    Deadline != "" &&
+    Status!= "" &&
+    Course !=""
+    ) {
+    const res = await axios.post("http://localhost:4000/Task/add", {
+      taskType ,
+      User ,
+      Deadline,
+      Status,
+      Course
+      });
+    
+    settaskType("") 
+    setUser("")
+    setDeadline("")
+    setStatus("")
+    setCourse("")
+
+  }
+  else{alert("Empty Field")}
+};
   return (
     <div className="container" style={{ width: "100%", padding: 20 }}>
       <Card variant="outlined">
-        <Box className="row  p-3" sx={{ minWidth: 275 }}>
+        <Box className="row  p-3" component="form" onSubmit={handleSubmit}  sx={{ minWidth: 275 }}>
           <h2>Create Task</h2>
           <CardContent>
             <div className="col">
@@ -68,16 +121,16 @@ export default function CreateTasks() {
                   className="mb-4"
                   labelId="taskType"
                   id="taskType"
-                  //   value={age}
+                  value={taskType}
                   label="Task Type"
-                  //   onChange={null}
+                  onChange={(e)=>settaskType(e.target.value)}
                   autoWidth
                 >
                   <MenuItem value={"Add New Course"}>Add New Course</MenuItem>
                   <MenuItem value={"Create Course CDF"}>
                     Create Course CDF
                   </MenuItem>
-                  <MenuItem value={"Create Course CDF"}>
+                  <MenuItem value={"Create Syllabus"}>
                     Create Syllabus
                   </MenuItem>
                 </Select>
@@ -91,17 +144,38 @@ export default function CreateTasks() {
                   className="mb-4"
                   labelId="taskType"
                   id="taskType"
-                  //   value={age}
+                  value={User}
                   label="Assign Teacher"
-                  //   onChange={null}
+                  onChange={(e)=>setUser(e.target.value)}
                   autoWidth
                 >
-                  <MenuItem value={"Tanveer Ahmed"}>Tanveer Ahmed</MenuItem>
-                  <MenuItem value={"Rizwan Rashid"}>Rizwan Rashid</MenuItem>
+                {Avail.map((a)=>{
+                  return(  
+                  <MenuItem value={a}>{a.Name}</MenuItem>
+                  )})
+                } 
                 </Select>
               </FormControl>
             </div>
-
+            <div className="col">
+            <FormControl fullWidth size="small">
+            <InputLabel id="taskType">Assign Course</InputLabel>
+            <Select
+              className="mb-4"
+              labelId="courseAssign"
+              id="courseAssign"
+              value={Course}
+              label="Assign Teacher"
+              onChange={(e)=>setCourse(e.target.value)}
+              autoWidth>
+              {RepoCourse.map((a)=>{
+                  return(  
+                  <MenuItem value={a}>{a.Code +"  "+ a.Name}</MenuItem>
+                  )})
+                } 
+            </Select>
+            </FormControl>
+            </div>
             <div className="col">
               <FormControl fullWidth size="small">
                 <InputLabel id="taskType">Status</InputLabel>
@@ -109,10 +183,10 @@ export default function CreateTasks() {
                   className="mb-4"
                   labelId="taskType"
                   id="taskType"
-                  //   value={age}
                   label="Assign Teacher"
-                  //   onChange={null}
                   autoWidth
+                  value={Status}
+                  onChange={(e)=>setStatus(e.target.value)}
                 >
                   <MenuItem value={"Assigned"}>Assigned</MenuItem>
                   <MenuItem value={"Revision"}>Revision</MenuItem>
@@ -124,6 +198,8 @@ export default function CreateTasks() {
             <div>
               <label>Deadline</label>
               <input
+                value={Deadline}
+                onChange={(e)=>setDeadline(e.target.value)} 
                 style={{ width: "100%" }}
                 type="datetime-local"
                 placeholder="Deadline"
@@ -135,6 +211,7 @@ export default function CreateTasks() {
             <CardActions>
               <Stack>
                 <Button
+                  type="submit"
                   variant="contained"
                   color="primary"
                   size="medium"

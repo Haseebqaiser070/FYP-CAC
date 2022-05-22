@@ -27,7 +27,7 @@ var UserSchema = new mongoose.Schema({
     CourseCreation:[
         {
         type: mongoose.Schema.ObjectId,
-        ref: 'Course',
+        ref: 'Repo',
         default:'none'
         }]
     ,

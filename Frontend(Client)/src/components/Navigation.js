@@ -107,6 +107,12 @@ export default function Navigation() {
                   Dashboard
                 </Link>
 
+                <Link className="nav-link sidenavtext" to="InitCourse">
+                  <div className="sb-nav-link-icon">
+                    <BsFillBookFill color="#fff" />
+                  </div>
+                  Intialize Course
+                </Link>
                 <Link className="nav-link sidenavtext" to="AddNewCourse">
                   <div className="sb-nav-link-icon">
                     <BsFillBookFill color="#fff" />

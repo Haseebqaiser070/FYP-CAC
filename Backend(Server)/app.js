@@ -1,4 +1,3 @@
-var createError = require("http-errors");
 var express = require("express");
 var cookieParser = require("cookie-parser");
 var mongoose = require("mongoose");
@@ -7,10 +6,14 @@ var AuthRouter = require("./Routes/AuthRoutes/Auth");
 var CourseRouter = require("./Routes/AdminRoutes/Courses");
 var FacultyRouter = require("./Routes/AdminRoutes/Faculty");
 var UserRouter = require("./Routes/AdminRoutes/User");
-
 var MeetingRouter = require("./Routes/MeetingRoute/MeetingRoute");
 var CategoryRouter = require("./Routes/AdminRoutes/Category")
 var SOSRouter = require("./Routes/DocumentRoutes/SOS")
+var RepoRouter = require("./Routes/AdminRoutes/Repo")
+var CourseVersion = require("./Routes/CAC/CourseVersion")
+var TaskRouter = require("./Routes/AdminRoutes/Task")
+var CourseCreationRouter = require("./Routes/CAC/CoursesCreation")
+
 
 var { getUser } = require("./Middleware/User");
 
@@ -24,11 +27,15 @@ app.use(cookieParser());
 app.use("/Auth", AuthRouter);
 app.use("/Course", getUser, CourseRouter);
 app.use("/User", getUser, UserRouter);
-
 app.use("/Faculty", getUser, FacultyRouter);
 app.use("/Meeting", getUser, MeetingRouter);
 app.use("/Category", getUser, CategoryRouter);
 app.use("/SOS", getUser, SOSRouter);
+app.use("/RepoCourse", getUser, RepoRouter);
+app.use("/CourseVersion", getUser, CourseVersion);
+app.use("/Task", getUser, TaskRouter);
+app.use("/CoursesCreate", getUser, CourseCreationRouter);
+
 
 const start = async () => {
   try {

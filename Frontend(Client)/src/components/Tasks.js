@@ -48,7 +48,7 @@ function Mbutton(props) {
         color="primary"
         size="small"
         style={{ marginLeft: 16 }}
-        // onClick={null}
+        //onClick={}
       >
         <AiFillEdit style={{ marginRight: 10 }} />
         Delete
@@ -62,26 +62,38 @@ export default function Tasks() {
   const [Rows, setRows] = useState([]);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
+  axios.defaults.withCredentials = true;
+  useEffect(() => {
+    getData();
+  }, []);
+  const getData = async () => {
+    const response = await axios.get("http://localhost:4000/Task/show");
+    setRows(response.data);
+  };
   const columns = [
     {
-      field: "tittle",
-      headerName: "Tittle",
+      field: "taskType",
+      headerName: "Task",
       flex: 1,
     },
     {
-      field: "teacherAssigned",
-      headerName: "Teacher Assigned",
+      field: "User",
+      headerName: "Assigned To",
       flex: 1,
     },
     {
-      field: "deadline",
+      field: "Deadline",
       headerName: "Deadline",
       flex: 1,
     },
     {
-      field: "status",
+      field: "Status",
       headerName: "Status",
+      flex: 1,
+    },
+    {
+      field: "Course",
+      headerName: "Course",
       flex: 1,
     },
     {

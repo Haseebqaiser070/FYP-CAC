@@ -41,6 +41,22 @@ module.exports.Delete = async (req, res) => {
   }
 };
 
+module.exports.getRole = async (req, res) => {
+  try {
+    if (!req.user) return await res.status(401).json("Timed Out");
+    if(!req.user.Roles.includes("Admin")) return res.status(401).json("Unautherized");
+    const Users = await Userdoc.find({});
+    const RoleUsers = Users.filter((user)=>{
+      if(user?.Roles?.includes(req.params.Role))
+      return user
+    })
+    console.log(RoleUsers)
+    res.status(200).json(RoleUsers);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 module.exports.ShowOne = async (req, res) => {
   try {
     if (!req.user) return await res.status(401).json("Timed Out");
@@ -51,6 +67,10 @@ module.exports.ShowOne = async (req, res) => {
     console.log(err);
   }
 };
+
+
+
+
 module.exports.Update = async (req, res) => {
   try {
     if(!req.user)return await res.status(401).json("Timed Out")
