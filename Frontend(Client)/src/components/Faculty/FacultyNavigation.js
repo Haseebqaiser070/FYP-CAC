@@ -38,7 +38,9 @@ export default function FacultyNavigation() {
           >
             <i class="fas fa-bars"></i>
           </button>
-          <AvatarMenu />
+          <div className="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <AvatarMenu />
+          </div>
         </nav>
       </div>
       <div id="layoutSidenav">
@@ -53,12 +55,26 @@ export default function FacultyNavigation() {
                   </div>
                   Dashboard
                 </Link>
-                
-                <Link class="nav-link sidenavtext" to="FacultyMeeting">
+
+                <Link class="nav-link sidenavtext" to="AllCourses">
                   <div class="sb-nav-link-icon">
                     <BsFiles color="#fff" />
                   </div>
-                  Meetings
+                  All Courses
+                </Link>
+
+                <Link class="nav-link sidenavtext" to="AllSchemeofStudies">
+                  <div class="sb-nav-link-icon">
+                    <BsFiles color="#fff" />
+                  </div>
+                  All Scheme of Studies
+                </Link>
+
+                <Link class="nav-link sidenavtext" to="CourseFolder">
+                  <div class="sb-nav-link-icon">
+                    <BsFiles color="#fff" />
+                  </div>
+                  Course Folder
                 </Link>
               </div>
             </div>

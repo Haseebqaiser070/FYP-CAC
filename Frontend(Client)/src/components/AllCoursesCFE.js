@@ -5,10 +5,10 @@ import { useNavigate } from "react-router-dom";
 import Popup from "./AddCourceForm";
 import axios from "axios";
 import Button from "@mui/material/Button";
-import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
+import { AiFillEdit } from "react-icons/ai";
 import Course from "./PdfTemplates/course";
 
-export default function AddCourse() {
+export default function AllCoursesCFE() {
   const [Course, setCourse] = useState([]);
   const navigate = useNavigate();
   useEffect(async () => {
@@ -23,19 +23,6 @@ export default function AddCourse() {
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:4000/Course/${id}`);
-    getCourse();
-  };
-  const handleUpdate = (id) => {
-    navigate(`/admin/EditCourse/${id}`, { replace: true });
-
-    /* 
-    const response = await axios.get(`http://localhost:4000/Course/${id}`);
-    const updating = await response.data;
-    */
   };
 
   return (
@@ -80,28 +67,6 @@ export default function AddCourse() {
                     >
                       <AiFillEdit style={{ marginRight: 10 }} />
                       View
-                    </Button>
-
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      size="small"
-                      style={{ marginLeft: 16 }}
-                      onClick={() => handleUpdate(cor._id)}
-                    >
-                      <AiFillEdit style={{ marginRight: 10 }} />
-                      Edit
-                    </Button>
-
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      size="small"
-                      style={{ marginLeft: 16 }}
-                      onClick={() => handleDelete(cor._id)}
-                    >
-                      <AiFillDelete style={{ marginRight: 10 }} />
-                      Delete
                     </Button>
                   </td>
                 </tr>

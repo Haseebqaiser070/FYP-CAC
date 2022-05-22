@@ -3,22 +3,11 @@ import "./css/styles.css";
 import { Link, Outlet } from "react-router-dom";
 import Popup from "./AddCourceForm";
 import Register from "./Register";
-import Users from "./Users";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
 import axios from "axios";
 import Avatar from "@mui/material/Avatar";
 import AvatarMenu from "./AvatarMenu";
 import Stack from "@mui/material/Stack";
 
-import ListSubheader from "@mui/material/ListSubheader";
-import List from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Collapse from "@mui/material/Collapse";
 import {
   BsFillPersonPlusFill,
   BsFiles,
@@ -33,11 +22,7 @@ import useAuth from "../MyHooks/useAuth";
 export default function Navigation() {
   const [isOpen, setIsOpen] = React.useState(false);
   const { setAdmin, setFaculty } = useAuth();
-  const [open, setOpen] = React.useState(true);
 
-  const handleClick = () => {
-    setOpen(!open);
-  };
   axios.defaults.withCredentials = true;
 
   const handleLogout = async (e) => {
@@ -163,16 +148,9 @@ export default function Navigation() {
 
                 <Link className="nav-link sidenavtext" to="Meeting">
                   <div className="sb-nav-link-icon">
-                    <BsFillPeopleFill color="#fff" />
+                    <BsPersonCircle color="#fff" />
                   </div>
                   Meeting
-                </Link>
-
-                <Link className="nav-link sidenavtext" to="CourseFolder">
-                  <div className="sb-nav-link-icon">
-                    <BsFillBookFill color="#fff" />
-                  </div>
-                  Course Folder
                 </Link>
               </div>
             </div>
