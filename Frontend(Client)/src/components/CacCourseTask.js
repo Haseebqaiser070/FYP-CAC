@@ -11,6 +11,7 @@ import { AiFillEye, AiFillEdit } from "react-icons/ai";
 function ActionButtons(props) {
   const navigate = useNavigate();
   const { row } = props;
+  console.log("rwo",row)
   return (
     <div>
       <Button
@@ -30,7 +31,8 @@ function ActionButtons(props) {
         size="small"
         style={{ marginLeft: 16 }}
         onClick={()=>{
-          navigate("/CAC/CourseCretion", { replace: true })
+          
+          navigate(`/CAC/CourseCreation/${row.Code}`, { state: { row } }, { replace: true })
         }}
       >
         <AiFillEdit style={{ marginRight: 10 }} />

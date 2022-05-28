@@ -6,7 +6,6 @@ import Popup from "./AddCourceForm";
 import axios from "axios";
 import Button from "@mui/material/Button";
 import { AiFillEdit } from "react-icons/ai";
-import Course from "./PdfTemplates/course";
 
 export default function AllCoursesCFE() {
   const [Course, setCourse] = useState([]);

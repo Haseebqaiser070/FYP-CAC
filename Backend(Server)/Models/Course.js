@@ -46,8 +46,21 @@ var CourseSchema = new mongoose.Schema({
         }
     }],
     required:true
-  }
-  
+  },
+  Books:[{
+    id:{
+      type:String
+    },
+    BookName: {
+    type:String,
+  },
+  BookWriter: {
+    type:String,
+  },
+  BookYear: {
+    type:String,
+  }}
+  ]
 });
 
 module.exports = mongoose.model("Course", CourseSchema);
