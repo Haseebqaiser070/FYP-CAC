@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import "./css/styles.css";
 import axios from "axios";
-import {useNavigate, Link, useParams } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
-import { AiFillEye, AiFillEdit } from "react-icons/ai";
+import { AiOutlineCheckSquare, AiFillEdit } from "react-icons/ai";
 
 function ActionButtons(props) {
   const navigate = useNavigate();
   const { row } = props;
-  console.log("rwo",row)
+  console.log("rwo", row);
   return (
     <div>
       <Button
@@ -19,20 +19,12 @@ function ActionButtons(props) {
         color="primary"
         size="small"
         style={{ marginLeft: 16 }}
-        // onClick={}
-      >
-        <AiFillEdit style={{ marginRight: 10 }} />
-        View
-      </Button>
-
-      <Button
-        variant="contained"
-        color="primary"
-        size="small"
-        style={{ marginLeft: 16 }}
-        onClick={()=>{
-          
-          navigate(`/CAC/CourseCreation/${row.Code}`, { state: { row } }, { replace: true })
+        onClick={() => {
+          navigate(
+            `/CAC/CourseCreation/${row.Code}`,
+            { state: { row } },
+            { replace: true }
+          );
         }}
       >
         <AiFillEdit style={{ marginRight: 10 }} />
@@ -46,7 +38,7 @@ function ActionButtons(props) {
         style={{ marginLeft: 16 }}
         // onClick={null}
       >
-        <AiFillEdit style={{ marginRight: 10 }} />
+        <AiOutlineCheckSquare style={{ marginRight: 10 }} />
         Submit
       </Button>
     </div>
@@ -55,16 +47,16 @@ function ActionButtons(props) {
 
 export default function CacCourseTask() {
   const [Rows, setRows] = useState([]);
-    useEffect(() => {
-      getRepoCourse();
-    }, []);
-  
-    const getRepoCourse = async () => {
-      const response = await axios.get("http://localhost:4000/CoursesCreate/get");
-      console.log(response.data)
-      setRows(response.data);
-    };
-    
+  useEffect(() => {
+    getRepoCourse();
+  }, []);
+
+  const getRepoCourse = async () => {
+    const response = await axios.get("http://localhost:4000/CoursesCreate/get");
+    console.log(response.data);
+    setRows(response.data);
+  };
+
   const columns = [
     {
       field: "Code",
@@ -77,7 +69,7 @@ export default function CacCourseTask() {
       headerName: "Name",
       flex: 1,
     },
-    
+
     {
       field: "Action",
       headerName: "Action",
@@ -87,8 +79,8 @@ export default function CacCourseTask() {
     },
   ];
   return (
-    <div className="container" style={{ width: "100%", padding: 20 }}>
-      <h1>
+    <div className="container" style={{ width: "100%", padding: 30 }}>
+      <h1 className="mb-4">
         <b>Courses Assigned</b>
       </h1>
       <div>

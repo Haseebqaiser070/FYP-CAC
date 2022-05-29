@@ -16,7 +16,7 @@ function Mbutton() {
         size="small"
         style={{ marginLeft: 16 }}
         onClick={() => {
-          availabilityPopup;
+          <AvailabilityPopup />;
         }}
       >
         <AiFillEdit style={{ marginRight: 10 }} />
@@ -26,7 +26,7 @@ function Mbutton() {
   );
 }
 
-function availabilityPopup() {
+function AvailabilityPopup() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -40,7 +40,36 @@ function availabilityPopup() {
       >
         <Box sx={style}>
           <div className="container">
-            <div></div>
+            <div className="form-group">
+              <label for="appt">Monday:</label>
+              <input type="time" className="form-control" id="appt">
+                {" "}
+              </input>
+            </div>
+            <div className="form-group">
+              <label for="appt">Tuesday:</label>
+              <input type="time" className="form-control" id="appt">
+                {" "}
+              </input>
+            </div>
+            <div className="form-group">
+              <label for="appt">Wednesday:</label>
+              <input type="time" className="form-control" id="appt">
+                {" "}
+              </input>
+            </div>
+            <div className="form-group">
+              <label for="appt">Thursday:</label>
+              <input type="time" className="form-control" id="appt">
+                {" "}
+              </input>
+            </div>
+            <div className="form-group">
+              <label for="appt">Friday:</label>
+              <input type="time" className="form-control" id="appt">
+                {" "}
+              </input>
+            </div>
           </div>
         </Box>
       </Modal>

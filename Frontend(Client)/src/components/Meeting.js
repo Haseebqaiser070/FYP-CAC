@@ -51,11 +51,6 @@ export default function Meeting() {
     },
   ];
 
-  //   const rows = [
-  //     { id: 1, subject: "Snow" },
-  //     { id: 2, subject: "Snow" },
-  //     { id: 3, subject: "Snow" },
-  //   ];
   return (
     <div
       className="container"

@@ -25,6 +25,11 @@ export default function AddNewCourse() {
   const [objective, setobjective] = useState("");
   const [objectiveList, setObjectiveList] = useState([]);
   const [Courses, setCourse] = useState([]);
+  const [bookname, setBookname] = useState("");
+  const [writers, setWriters] = useState("");
+  const [year, setYear] = useState("");
+  const [booksList, setBookList] = useState([]);
+
   const recommended_books = [
     {
       field: "book",
@@ -298,7 +303,7 @@ export default function AddNewCourse() {
           </form>
         </div>
         <div className="mb-3">
-          <textarea value={catalogue}></textarea>
+          {/* <textarea value={catalogue}></textarea> */}
           <table className="table table-responsive ">
             <thead>
               <tr className="cdf">

@@ -22,7 +22,6 @@ import {
 import useAuth from "../../MyHooks/useAuth";
 
 export default function FacultyNavigation() {
-
   return (
     <React.Fragment>
       <div class="bg">
@@ -37,8 +36,9 @@ export default function FacultyNavigation() {
           >
             <i class="fas fa-bars"></i>
           </button>
-          <AvatarMenu />
-
+          <div className="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <AvatarMenu />
+          </div>
         </nav>
       </div>
       <div id="layoutSidenav">
@@ -53,8 +53,6 @@ export default function FacultyNavigation() {
                   </div>
                   Dashboard
                 </Link>
-
-                
               </div>
             </div>
             <div class="sb-sidenav-footer sidenavtext">
