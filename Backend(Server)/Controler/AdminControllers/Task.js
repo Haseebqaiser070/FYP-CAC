@@ -27,7 +27,7 @@ module.exports.Showall = async (req, res) => {
   try {
     if (!req.user) return await res.status(401).json("Timed Out");
     if (!req.user.Roles.includes("Admin")) return await res.status(401).json("UnAutherized");
-    const Tasks = await Task.find({});
+    const Tasks = await Task.find({}).populate("User").populate("Course");
     console.log("all Tasks", Tasks);
     await res.json(Tasks);
   } catch (err) {
@@ -50,7 +50,7 @@ module.exports.Delete = async (req, res) => {
 module.exports.showUsers= async (req, res) => {
   try {
     if (!req.user) return await res.status(401).json("Timed Out");
-    const task = await Task.find({ User: req.user._id });
+    const task = await Task.find({ User: req.user._id }).populate("User").populate("Course");
     console.log("all Tasks", task);
     await res.json(task);
   } catch (err) {
