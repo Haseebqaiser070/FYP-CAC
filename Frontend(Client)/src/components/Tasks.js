@@ -27,36 +27,6 @@ const style = {
   p: 4,
 };
 
-function Mbutton(props) {
-  const navigate = useNavigate();
-  const { row } = props;
-  return (
-    <div>
-      <Button
-        variant="contained"
-        color="primary"
-        size="small"
-        style={{ marginLeft: 16 }}
-        // onClick={}
-      >
-        <AiFillEdit style={{ marginRight: 10 }} />
-        Edit
-      </Button>
-
-      <Button
-        variant="contained"
-        color="primary"
-        size="small"
-        style={{ marginLeft: 16 }}
-        //onClick={}
-      >
-        <AiFillEdit style={{ marginRight: 10 }} />
-        Delete
-      </Button>
-    </div>
-  );
-}
-
 export default function Tasks() {
   const [open, setOpen] = useState(false);
   const [Rows, setRows] = useState([]);
@@ -70,6 +40,40 @@ export default function Tasks() {
     const response = await axios.get("http://localhost:4000/Task/show");
     setRows(response.data);
   };
+
+  function Mbutton(props) {
+    const navigate = useNavigate();
+    const { row } = props;
+    return (
+      <div>
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          style={{ marginLeft: 16 }}
+          // onClick={}
+        >
+          <AiFillEdit style={{ marginRight: 10 }} />
+          Edit
+        </Button>
+  
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          style={{ marginLeft: 16 }}
+          onClick={async()=>{ 
+              await axios.delete(`http://localhost:4000/Task/${row._id}`);
+              getData();
+        }}
+        >
+          <AiFillEdit style={{ marginRight: 10 }} />
+          Delete
+        </Button>
+      </div>
+    );
+  }
+  
   const columns = [
     {
       field: "taskType",

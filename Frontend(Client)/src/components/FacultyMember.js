@@ -4,18 +4,29 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
+import Autocomplete from "@mui/material/Autocomplete";
+import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 
 function ActionButtons(props) {
-  const navigate = useNavigate();
   const { row } = props;
   return (
     <div>
-      <Autocomplete
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          style={{ marginLeft: 16 }}
+          // onClick={}
+        >
+          <AiFillEdit style={{ marginRight: 10 }} />
+          Assign Course
+        </Button>
+      {/* <Autocomplete
         multiple
         id="tags-standard"
-        // options={userRole}
-        // getOptionLabel={(option) => option}
-        // defaultValue={[...Usermember.Roles]}
+        //options={}
+        //getOptionLabel={(option) => option}
+        defaultValue={[]}
         renderInput={(params) => (
           <TextField
             {...params}
@@ -25,21 +36,31 @@ function ActionButtons(props) {
             size="small"
           />
         )}
-      />
+
+      /> */}
     </div>
   );
 }
 
 export default function FacultyMembers() {
   const [Rows, setRows] = useState([]);
+console.log(Rows)
+  useEffect(() => {
+    getData();
+  }, []);
+  const getData = async () => {
+    const response = await axios.get("http://localhost:4000/User/show/Faculty");
+    setRows(response.data);
+  };
+
   const columns = [
     {
-      field: "teacherName",
+      field: "Name",
       headerName: "Name",
       flex: 1,
     },
     {
-      field: "email",
+      field: "Email",
       headerName: "Email",
       flex: 1,
     },
