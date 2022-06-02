@@ -46,7 +46,9 @@ export default function AllCategories() {
   const [Rows, setRows] = useState([]);
 
   
-  function ActionButton() {
+  function ActionButton(props) {
+    
+    const {row}=props
     return (
       <div>
         <Button
@@ -65,7 +67,7 @@ export default function AllCategories() {
           color="primary"
           size="small"
           style={{ marginLeft: 16 }}
-         //onClick={handleDelete(Rows._id)}
+         onClick={()=>handleDelete(row._id)}
         >
           <AiFillEdit style={{ marginRight: 10 }} />
           Delete
@@ -74,7 +76,6 @@ export default function AllCategories() {
     );
   }
   const handleDelete = async (id) => {
-    console.log("ID"+id)
     await axios.delete(`http://localhost:4000/Category/${id}`);
     getRows();
   };
