@@ -79,7 +79,7 @@ export default function Tasks() {
     {
       field: "User",
       headerName: "Assigned To",
-      valueFormatter: ({ value }) => value?.Name,
+      valueGetter:(params) => params?.row?.User?.Name,
       flex: 1,
     },
     {
@@ -95,8 +95,8 @@ export default function Tasks() {
     {
       field: "Course",
       headerName: "Course",
-      valueFormatter: ({ value }) => value.Name,
-      flex: 1,
+	  valueGetter:(params) => params?.row?.Course?.Name,
+	  flex: 1,
     },
     {
       field: "Action",

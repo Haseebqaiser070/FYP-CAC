@@ -23,7 +23,7 @@ export default function CACDashboard() {
       {
         field: "User",
         headerName: "Assigned To",
-        valueFormatter:({value})=>value.Name,
+        valueGetter: (params) => params?.row?.User?.Name,
         flex: 1,
       },
       {
@@ -39,7 +39,7 @@ export default function CACDashboard() {
       {
         field: "Course",
         headerName: "Course",
-        valueFormatter:({value})=>value.Name,
+        valueGetter:(params) => params?.row?.Course?.Name,
         flex: 1,
       },
       
