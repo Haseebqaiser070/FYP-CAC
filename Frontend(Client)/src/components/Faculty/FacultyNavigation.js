@@ -63,7 +63,7 @@ export default function FacultyNavigation() {
                   All Courses
                 </Link>
 
-                <Link class="nav-link sidenavtext" to="AllSchemeofStudies">
+                <Link class="nav-link sidenavtext" to="AllSchemeofStudiesCFE">
                   <div class="sb-nav-link-icon">
                     <BsFiles color="#fff" />
                   </div>

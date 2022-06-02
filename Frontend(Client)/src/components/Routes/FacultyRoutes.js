@@ -20,7 +20,7 @@ function FacultyRoutes() {
           <Route path=":id" element={<AllCoursesCFE />} />
           <Route index element={<AllCoursesCFE />} />
         </Route>
-        <Route path="/AllSchemeofStudies">
+        <Route path="/AllSchemeofStudiesCFE">
           <Route path=":id" element={<AllSchemeofStudiesCFE />} />
           <Route index element={<AllSchemeofStudiesCFE />} />
         </Route>
