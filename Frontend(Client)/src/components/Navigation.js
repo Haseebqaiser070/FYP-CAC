@@ -136,10 +136,17 @@ export default function Navigation() {
                   <div className="sb-nav-link-icon">
                     <BsFillPeopleFill color="#fff" />
                   </div>
-                  Ongoing Tasks
+                  Submitted Tasks
                 </Link>
 
                 <Link className="nav-link sidenavtext" to="Users">
+                  <div className="sb-nav-link-icon">
+                    <BsFillPeopleFill color="#fff" />
+                  </div>
+                  All Users
+                </Link>
+
+                <Link className="nav-link sidenavtext" to="FacultyMembers">
                   <div className="sb-nav-link-icon">
                     <BsFillPeopleFill color="#fff" />
                   </div>

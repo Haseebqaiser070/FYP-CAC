@@ -79,7 +79,7 @@ export default function Tasks() {
     {
       field: "User",
       headerName: "Assigned To",
-      valueGetter:(params) => params?.row?.User?.Name,
+      valueGetter: (params) => params?.row?.User?.Name,
       flex: 1,
     },
     {
@@ -95,13 +95,13 @@ export default function Tasks() {
     {
       field: "Course",
       headerName: "Course",
-	  valueGetter:(params) => params?.row?.Course?.Name,
-	  flex: 1,
+      valueGetter: (params) => params?.row?.Course?.Name,
+      flex: 1,
     },
     {
       field: "Action",
       headerName: "Action",
-      flex: 1,
+      flex: 2,
       editable: false,
       renderCell: Mbutton,
     },
