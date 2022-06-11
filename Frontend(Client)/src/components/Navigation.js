@@ -139,6 +139,16 @@ export default function Navigation() {
                   Submitted Tasks
                 </Link>
 
+                <Link
+                  className="nav-link sidenavtext"
+                  to="CourseFolderDeadlines"
+                >
+                  <div className="sb-nav-link-icon">
+                    <BsFillPeopleFill color="#fff" />
+                  </div>
+                  Course Folder Deadlines
+                </Link>
+
                 <Link className="nav-link sidenavtext" to="Users">
                   <div className="sb-nav-link-icon">
                     <BsFillPeopleFill color="#fff" />
@@ -151,6 +161,13 @@ export default function Navigation() {
                     <BsFillPeopleFill color="#fff" />
                   </div>
                   Faculty Members
+                </Link>
+
+                <Link className="nav-link sidenavtext" to="Flip">
+                  <div className="sb-nav-link-icon">
+                    <BsFillPeopleFill color="#fff" />
+                  </div>
+                  flip
                 </Link>
 
                 <Link className="nav-link sidenavtext" to="Meeting">

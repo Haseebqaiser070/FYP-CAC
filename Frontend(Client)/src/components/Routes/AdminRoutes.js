@@ -17,6 +17,8 @@ import CourseFolder from "../CourseFolder";
 import { Route, Routes } from "react-router-dom";
 import CourseRepo from "../Admin/CourseRepo";
 import FacultyMembers from "../FacultyMember";
+import DemoBook from "../flipbook";
+import CourseFolderDeadlines from "../CourseFolderDeadlines";
 
 function AdminRoutes() {
   return (
@@ -43,6 +45,12 @@ function AdminRoutes() {
         <Route path="/FacultyMembers" element={<FacultyMembers />} />
         <Route path="/CourseFolder" element={<CourseFolder />} />
         <Route path="/Tasks" element={<Tasks />} />
+        <Route path="/flip" element={<DemoBook />} />
+        <Route
+          path="/CourseFolderDeadlines"
+          element={<CourseFolderDeadlines />}
+        />
+
         <Route path="/OngoingTasks" element={<OngoingTasks />} />
       </Route>
     </Routes>

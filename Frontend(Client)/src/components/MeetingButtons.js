@@ -50,7 +50,15 @@ export default function MeetingButton(props) {
         style={{ marginLeft: 16 }}
       >
         <AiFillEdit style={{ marginRight: 10 }} />
-        Edit
+      </Button>
+      <Button
+        variant="contained"
+        color="primary"
+        size="small"
+        style={{ marginLeft: 16 }}
+        // onClick={togglePopup}
+      >
+        <AiFillEye style={{ marginRight: 10 }} />
       </Button>
       {isOpen && (
         <Popup
