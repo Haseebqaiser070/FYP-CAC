@@ -145,7 +145,7 @@ export default function Tasks() {
           <Box sx={style}>
             <div className="container">
               <div>
-                <CreateTasks />
+                <CreateTasks func ={getData}/>
               </div>
             </div>
           </Box>

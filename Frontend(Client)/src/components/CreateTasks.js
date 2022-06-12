@@ -51,7 +51,7 @@ function TaskDetails() {
   );
 }
 
-export default function CreateTasks() {
+export default function CreateTasks({func}) {
   axios.defaults.withCredentials = true;
   const [taskType, settaskType] = useState("");
   const [User, setUser] = useState("");
@@ -98,12 +98,12 @@ const handleSubmit = async(e) => {
       Status,
       Course
       });
-    
     settaskType("") 
     setUser("")
     setDeadline("")
     setStatus("")
     setCourse("")
+    func
 
   }
   else{alert("Empty Field")}

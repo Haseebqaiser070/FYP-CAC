@@ -10,10 +10,11 @@ import SosCreation from "../SosCreation";
 import Sos from "../PdfTemplates/Sos";
 import CreateTasks from "../CreateTasks";
 import Tasks from "../Tasks";
-import OngoingTasks from "../OngoingTasks";
+import ReturnedTasks from "../ReturnedTasks";
 import Meeting from "../Meeting";
 import AddNewCourse from "../AddNewCourse";
 import CourseFolder from "../CourseFolder";
+import CourseFinal from "../Admin/CourseFinal";
 import { Route, Routes } from "react-router-dom";
 import CourseRepo from "../Admin/CourseRepo";
 import FacultyMembers from "../FacultyMember";
@@ -21,6 +22,7 @@ import DemoBook from "../flipbook";
 import CourseFolderDeadlines from "../CourseFolderDeadlines";
 import Profile from "../UserProfile";
 
+import CourseReturnedView from "../Admin/CourseReturnedView";
 function AdminRoutes() {
   return (
     <Routes>
@@ -30,7 +32,11 @@ function AdminRoutes() {
         <Route path="/AllCategories" element={<AllCategories />} />
         <Route path="/AddNewCourse" element={<AddNewCourse />} />
         <Route path="/AddCourse" element={<AddCourse />} />
-
+        <Route path="/CourseView/:id" element={<CourseFinal />} />
+        <Route
+          path="CourseReturnedView/:Code"
+          element={<CourseReturnedView />}
+        />
         <Route path="/EditCourse/:id" element={<EditCourseForm />} />
         <Route path="/Meeting" element={<Meeting />} />
         <Route path="/AllSchemeofStudies" element={<AllSchemeofStudies />} />
@@ -54,6 +60,7 @@ function AdminRoutes() {
         />
 
         <Route path="/OngoingTasks" element={<OngoingTasks />} />
+        <Route path="/ReturnedTasks" element={<ReturnedTasks />} />
       </Route>
     </Routes>
   );

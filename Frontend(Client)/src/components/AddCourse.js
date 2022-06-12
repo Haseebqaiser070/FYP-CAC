@@ -75,7 +75,11 @@ export default function AddCourse() {
                       color="primary"
                       size="small"
                       style={{ marginLeft: 16 }}
-                      onClick={null}
+                      onClick={() => {
+                        navigate(
+                          `/Admin/CourseView/${cor._id}`,{ replace: true }
+                        );
+                      }}
                     >
                       <AiFillEdit style={{ marginRight: 10 }} />
                       View

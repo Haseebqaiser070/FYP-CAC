@@ -1,4 +1,4 @@
-var coursedoc = require("../../Models/Course");
+var coursedoc = require("../../Models/CourseModels/Course");
 var facultydoc = require("../../Models/Faculty");
 var bcrypt = require("bcrypt");
 
