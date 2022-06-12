@@ -8,45 +8,49 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import { AiOutlineCheckSquare, AiFillEdit } from "react-icons/ai";
 
-function ActionButtons(props) {
-  const navigate = useNavigate();
-  const { row } = props;
-  console.log("rwo", row);
-  return (
-    <div>
-      <Button
-        variant="contained"
-        color="primary"
-        size="small"
-        style={{ marginLeft: 16 }}
-        onClick={() => {
-          navigate(
-            `/CAC/CourseCreation/${row.Code}`,
-            { state: { row } },
-            { replace: true }
-          );
-        }}
-      >
-        <AiFillEdit style={{ marginRight: 10 }} />
-        Add Course
-      </Button>
 
-      <Button
-        variant="contained"
-        color="primary"
-        size="small"
-        style={{ marginLeft: 16 }}
-        // onClick={null}
-      >
-        <AiOutlineCheckSquare style={{ marginRight: 10 }} />
-        Submit
-      </Button>
-    </div>
-  );
-}
 
 export default function CacCourseTask() {
   const [Rows, setRows] = useState([]);
+  function ActionButtons(props) {
+    const navigate = useNavigate();
+    const { row } = props;
+    console.log("rwo", row);
+    return (
+      <div>
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          style={{ marginLeft: 16 }}
+          onClick={() => {
+            navigate(
+              `/CAC/CourseCreation/${row.Code}`,
+              { state: { row } },
+              { replace: true }
+            );
+          }}
+        >
+          <AiFillEdit style={{ marginRight: 10 }} />
+          Add Course
+        </Button>
+  
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          style={{ marginLeft: 16 }}
+          onClick={async()=>{
+           await axios.post(`http://localhost:4000/CoursesCreate/Submit/${row.Code}`)
+           getRepoCourse();
+          }}
+        >
+          <AiOutlineCheckSquare style={{ marginRight: 10 }} />
+          Submit
+        </Button>
+      </div>
+    );
+  }
   useEffect(() => {
     getRepoCourse();
   }, []);

@@ -1,4 +1,4 @@
-var coursedoc = require("../../Models/Course");
+var coursedoc = require("../../Models/CourseModels/Course");
 
 module.exports.Add = async (req, res) => {
   try {

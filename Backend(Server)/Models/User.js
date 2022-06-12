@@ -34,7 +34,7 @@ var UserSchema = new mongoose.Schema({
     CourseCDF:[
         {
         type: mongoose.Schema.ObjectId,
-        ref: 'Course',
+        ref: 'Repo',
         default:'none'
         }]
     ,
