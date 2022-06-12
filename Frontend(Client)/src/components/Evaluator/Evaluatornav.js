@@ -47,11 +47,18 @@ export default function FacultyNavigation() {
             <div class="sb-sidenav-menu">
               <div class="nav">
                 <div class="sb-sidenav-menu-heading"></div>
-                <Link class="nav-link sidenavtext " to="Dashboard">
+                {/* <Link class="nav-link sidenavtext " to="Dashboard">
                   <div class="sb-nav-link-icon">
                     <BsBuilding color="#fff" />
                   </div>
                   Dashboard
+                </Link> */}
+
+                <Link class="nav-link sidenavtext " to="FolderEvaluation">
+                  <div class="sb-nav-link-icon">
+                    <BsBuilding color="#fff" />
+                  </div>
+                  Evaluate Folder
                 </Link>
               </div>
             </div>

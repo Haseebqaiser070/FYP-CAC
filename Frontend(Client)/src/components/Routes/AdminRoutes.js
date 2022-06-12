@@ -19,6 +19,7 @@ import CourseRepo from "../Admin/CourseRepo";
 import FacultyMembers from "../FacultyMember";
 import DemoBook from "../flipbook";
 import CourseFolderDeadlines from "../CourseFolderDeadlines";
+import Profile from "../UserProfile";
 
 function AdminRoutes() {
   return (
@@ -46,6 +47,7 @@ function AdminRoutes() {
         <Route path="/CourseFolder" element={<CourseFolder />} />
         <Route path="/Tasks" element={<Tasks />} />
         <Route path="/flip" element={<DemoBook />} />
+        <Route path="/profile" element={<Profile />} />
         <Route
           path="/CourseFolderDeadlines"
           element={<CourseFolderDeadlines />}
