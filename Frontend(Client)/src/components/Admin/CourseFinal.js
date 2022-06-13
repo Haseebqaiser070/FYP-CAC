@@ -67,7 +67,7 @@ export default function CourseFinal() {
             <div style={{ paddingBottom: 20 }} className="row">
               <div className="col">
                 <h6>
-                  <b>Course Code: </b> {Content.Code}
+                  <b>Course Code: </b> {Content.Code.split("-")[0]}{Content.Code.split("-")[1]}
                 </h6>
               </div>
               <div className="col">
