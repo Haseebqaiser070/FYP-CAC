@@ -135,7 +135,7 @@ export default function AddNewCourse() {
       Category != "" &&
       objectiveList != []
     ) {
-      await axios.post("http://localhost:4000/Course/add", {
+      const response  = await axios.post("http://localhost:4000/Course/add", {
         Code,
         Name,
         Credit,
@@ -146,12 +146,15 @@ export default function AddNewCourse() {
         catalogue,
         objectiveList,
       });
+      if(response.data =="Already Exists Code")alert("Conflict with Code") 
+      else if(response.data =="Already Exists Code")alert("Conflict with Name")
+      else{
       setSufCode("");
       setName("");
       setPreRequisites([]);
       setCatalogue("");
       setObjectiveList([]);
-      getData();
+      getData();}
     } else {
       alert("empty values");
     }

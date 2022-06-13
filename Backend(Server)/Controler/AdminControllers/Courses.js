@@ -3,6 +3,10 @@ var coursedoc = require("../../Models/CourseModels/Course");
 module.exports.Add = async (req, res) => {
   try {
     if (!req.user) return await res.json("Timed Out");
+    const precourses = await coursedoc.findOne({Code:req.body.Code});
+    const precourse = await coursedoc.findOne({Name:req.body.Name});
+    if(precourses)return await res.json("Already Exists Code");
+    if(precourse)return await res.json("Already Exists Name");
     const course = await coursedoc.create(req.body);
     console.log("course added", course);
     await res.json(course);

@@ -51,15 +51,18 @@ export default function CourseRepo() {
     e.preventDefault();
     if (PreCode != "" && SufCode != "" && Name != "") {
       var Code = PreCode + "-" + SufCode;
-      await axios.post("http://localhost:4000/RepoCourse/add", {
+      const reposnse  = await axios.post("http://localhost:4000/RepoCourse/add", {
         Code,
         Name,
       });
+      if(reposnse.data == "Already Exists Code") alert("Conflict with Course Code")
+      else if(reposnse.data == "Already Exists Name") alert("Conflict with Course Name")
+      else{
       setPreCode("");
       setSufCode("");
       setName("");
       getRepoCourse();
-      setIsOpen(false);
+      setIsOpen(false);}
     } else {
       alert("empty values");
     }

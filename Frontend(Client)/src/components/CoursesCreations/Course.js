@@ -155,7 +155,7 @@ export default function Course() {
             <div style={{ paddingBottom: 20 }} className="row">
               <div className="col">
                 <h6>
-                  <b>Course Code: </b> {Code}
+                  <b>Course Code: </b> {Code.split("-")[0]}{Code.split("-")[1]}
                 </h6>
               </div>
               <div className="col">

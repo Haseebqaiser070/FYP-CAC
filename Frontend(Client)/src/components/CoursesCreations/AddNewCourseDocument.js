@@ -35,8 +35,8 @@ export default function AddNewCourseDocument() {
   const [BookYear, setBookYear] = useState("");
   const [BookWriter, setBookWriter] = useState("");
   const [Books, setBooks] = useState(Content.Books);
-  
   const navigate=useNavigate()
+  console.log(Courses)
 
   const recommended_books = [
     {
@@ -128,7 +128,15 @@ export default function AddNewCourseDocument() {
   const getData = async () => {
     const res = await axios.get("http://localhost:4000/Course/show");
     const data = await res.data;
-    setCourse([{ Name: "none" }, ...data]);
+    let num2 = Code.split("-")[1].charAt(0)
+    let numcode = parseInt(num2)
+    const corsss = data.filter((x)=>{
+      let num = x.Code.split("-")[1].charAt(0)
+      let num1 = parseInt(num)
+      if(num1 <numcode)return(x)
+
+    })
+    setCourse([...corsss]);
     
   };
   const AddCourse = async (e) => {
