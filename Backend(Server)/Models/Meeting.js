@@ -4,7 +4,12 @@ var MeetingSchema = new mongoose.Schema({
   subject: { type: String },
   meetingAgenda: { type: String },
   time: { type: Date },
-  availability: { type: Array, required: true },
+  availability: [
+    {
+      teacher_id: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+      time: { type: Object },
+    },
+  ],
 });
 
 module.exports = mongoose.model("Meeting", MeetingSchema);

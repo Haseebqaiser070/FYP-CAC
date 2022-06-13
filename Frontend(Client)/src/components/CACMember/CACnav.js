@@ -3,12 +3,11 @@ import "../css/styles.css";
 import { Link, Outlet } from "react-router-dom";
 import AvatarMenu from "../AvatarMenu";
 import {
-  BsFillPersonPlusFill,
+  BsFilePersonFill,
   BsFiles,
-  BsBuilding,
-  BsFillGearFill,
-  BsFillPeopleFill,
-  BsFillBookFill,
+  BsFillCalendarWeekFill,
+  BsFillFilterCircleFill,
+  BsFillHouseDoorFill,
 } from "react-icons/bs";
 
 export default function CACnav() {
@@ -39,21 +38,21 @@ export default function CACnav() {
                 <div class="sb-sidenav-menu-heading"></div>
                 <Link class="nav-link sidenavtext " to="Dashboard">
                   <div class="sb-nav-link-icon">
-                    <BsBuilding color="#fff" />
+                    <BsFillHouseDoorFill color="#fff" />
                   </div>
                   Dashboard
                 </Link>
 
                 <Link class="nav-link sidenavtext" to="CacAllTasks">
                   <div class="sb-nav-link-icon">
-                    <BsFiles color="#fff" />
+                    <BsFillFilterCircleFill color="#fff" />
                   </div>
                   All Ongoing Tasks
                 </Link>
 
                 <Link class="nav-link sidenavtext" to="CacCourseTask">
                   <div class="sb-nav-link-icon">
-                    <BsFiles color="#fff" />
+                    <BsFilePersonFill color="#fff" />
                   </div>
                   Courses Assigned
                 </Link>
@@ -67,7 +66,7 @@ export default function CACnav() {
 
                 <Link class="nav-link sidenavtext" to="FacultyMeeting">
                   <div class="sb-nav-link-icon">
-                    <BsFiles color="#fff" />
+                    <BsFillCalendarWeekFill color="#fff" />
                   </div>
                   Meetings
                 </Link>

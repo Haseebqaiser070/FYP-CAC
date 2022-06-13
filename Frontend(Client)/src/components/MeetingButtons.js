@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import Button from "@mui/material/Button";
-import { AiFillEye, AiFillEdit, AiFillDelete } from "react-icons/ai";
+import {
+  AiFillEye,
+  AiFillEdit,
+  AiFillDelete,
+  AiOutlineClockCircle,
+} from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import MeetingForm from "./MeetingForm";
 import Popup from "./AddCourceForm";
@@ -24,8 +29,9 @@ const style = {
 export default function MeetingButton(props) {
   const [isOpen, setIsOpen] = React.useState(false);
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [open1, setOpen1] = React.useState(false);
+  const handleClose1 = () => setOpen1(false);
   const [rows, setRows] = useState([]);
   console.log(props);
   const togglePopup = () => {
@@ -38,6 +44,34 @@ export default function MeetingButton(props) {
     );
     console.log(res);
   };
+
+  useEffect(() => {
+    const getAll = async () => {
+      var { data } = await axios.get("http://localhost:4000/Meeting/all");
+      console.log("data", data);
+      data.forEach((meeting) => {
+        data = meeting.availability.map((avail) => {
+          console.log("avail", avail);
+          return {
+            cacMember: avail.teacher_id.Name,
+            id: meeting._id,
+            mon: avail.time.mon,
+            tue: avail.time.tue,
+            wed: avail.time.wed,
+            thur: avail.time.thur,
+            fri: avail.time.fri,
+            sat: avail.time.sat,
+          };
+        });
+      });
+      console.log("data2", data);
+
+      console.log("Rows", rows);
+      setRows(data);
+    };
+
+    getAll();
+  }, []);
 
   const columns = [
     {
@@ -68,6 +102,11 @@ export default function MeetingButton(props) {
     {
       field: "fri",
       headerName: "Friday",
+      flex: 1,
+    },
+    {
+      field: "sat",
+      headerName: "Saturday",
       flex: 1,
     },
 
@@ -113,7 +152,7 @@ export default function MeetingButton(props) {
       >
         <Box sx={style}>
           <DataGrid
-            style={{ height: 400, width: "100%" }}
+            style={{ height: 300, width: "100%" }}
             columns={columns}
             rows={rows}
             pageSize={10}
@@ -143,22 +182,22 @@ export default function MeetingButton(props) {
         color="primary"
         size="small"
         style={{ marginLeft: 16 }}
-        onClick={togglePopup}
+        onClick={() => setOpen1(true)}
       >
         <AiFillEdit style={{ marginRight: 10 }} />
         Create Meeting
       </Button>
 
-      {isOpen && (
-        <Popup
-          content={
-            <>
-              <MeetingForm id={props.id} onOpen={setIsOpen} />
-            </>
-          }
-          handleClose={togglePopup}
-        />
-      )}
+      <Modal
+        open={open1}
+        onClose={handleClose1}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <MeetingForm id={props.id} onOpen={setIsOpen} />
+        </Box>
+      </Modal>
     </div>
   );
 }

@@ -53,7 +53,7 @@ export default function Meeting() {
 
   return (
     <div
-      className="container"
+      className="container card"
       style={{ height: 700, width: "100%", padding: 20 }}
     >
       <h1>All Meetings</h1>

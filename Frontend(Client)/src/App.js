@@ -18,19 +18,19 @@ function App() {
         <AuthProvider>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/forgotpassword" element={<Forgot />} />            
-            <Route element={<PersistLogin />} >
-              <Route element={<ProtrctedRoutes allowedRoles={"Admin"}/>}>
-                <Route path="/Admin/*" element={<AdminRoutes />}/>
-              </Route>        
-              <Route  element={<ProtrctedRoutes allowedRoles={"CAC"}/>}>
-                <Route path= "/CAC/*"element={ <CACRoutes/>}/>
+            <Route path="/forgotpassword" element={<Forgot />} />
+            <Route element={<PersistLogin />}>
+              <Route element={<ProtrctedRoutes allowedRoles={"Admin"} />}>
+                <Route path="/Admin/*" element={<AdminRoutes />} />
               </Route>
-              <Route  element={<ProtrctedRoutes allowedRoles={"Faculty"}/>}>
-                <Route path= "/Faculty/*"element={ <FacultyRoutes/>}/>
+              <Route element={<ProtrctedRoutes allowedRoles={"CAC"} />}>
+                <Route path="/CAC/*" element={<CACRoutes />} />
               </Route>
-              <Route  element={<ProtrctedRoutes allowedRoles={"Evaluator"}/>}>
-                <Route path= "/Evaluator/*"element={ <EvaluatorRoutes/>}/>
+              <Route element={<ProtrctedRoutes allowedRoles={"Faculty"} />}>
+                <Route path="/Faculty/*" element={<FacultyRoutes />} />
+              </Route>
+              <Route element={<ProtrctedRoutes allowedRoles={"Evaluator"} />}>
+                <Route path="/Evaluator/*" element={<EvaluatorRoutes />} />
               </Route>
             </Route>
           </Routes>

@@ -24,10 +24,10 @@ export default function Register() {
       Email != "" &&
       Password != "" &&
       Roles != "" &&
-      Phone !=""
-      ) {
-        console.log(Roles)
-      const Name = FirstName+" "+SecondName 
+      Phone != ""
+    ) {
+      console.log(Roles);
+      const Name = FirstName + " " + SecondName;
       const res = await axios.post("http://localhost:4000/User/add", {
         Name,
         Email,
@@ -35,7 +35,7 @@ export default function Register() {
         Phone,
         Roles,
       });
-      console.log("1here")
+      console.log("1here");
 
       setFirstName("");
       setSecondName("");
@@ -93,7 +93,7 @@ export default function Register() {
                         type="number"
                         placeholder="Enter your phone nmber"
                         value={Phone}
-                        onChange={(e)=>setPhone(e.target.value)}
+                        onChange={(e) => setPhone(e.target.value)}
                       />
                       <label for="inputLastName">Phone Number</label>
                     </div>
@@ -105,13 +105,13 @@ export default function Register() {
                       options={userRoles}
                       getOptionLabel={(option) => option}
                       defaultValue={[...Roles]}
-                      onChange ={(e,val)=>setRoles(val)}
+                      onChange={(e, val) => setRoles(val)}
                       renderInput={(params) => (
                         <TextField
                           {...params}
                           variant="outlined"
                           label="Select User Roles"
-                          placeholder="User Roless"
+                          placeholder="User Roles"
                         />
                       )}
                     />
@@ -129,8 +129,8 @@ export default function Register() {
                       <label for="inputEmail">Email address</label>
                     </div>
                   </div>
-                 
-                  <div className="col-md-6">
+
+                  <div className="col-md-12">
                     <div className="form-floating mb-3 mb-md-0 mt-3">
                       <input
                         className="form-control"
@@ -152,7 +152,7 @@ export default function Register() {
                       type="submit"
                       name="submit"
                       value="Submit"
-                      className="button btn btn-primary ms-auto me-0 me-md-3 my-2 my-md-0"
+                      className="btn btn-primary ms-auto me-0 me-md-3 my-2 my-md-0"
                     />
                   </div>
                 </div>
@@ -165,4 +165,4 @@ export default function Register() {
   );
 }
 
-const userRoles = ["Admin","CAC","Faculty","Evaluator" ];
+const userRoles = ["Admin", "CAC", "Faculty", "Evaluator"];

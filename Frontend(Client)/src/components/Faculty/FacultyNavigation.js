@@ -12,12 +12,9 @@ import axios from "axios";
 import AvatarMenu from "../AvatarMenu";
 
 import {
-  BsFillPersonPlusFill,
-  BsFiles,
-  BsBuilding,
-  BsFillGearFill,
-  BsFillPeopleFill,
-  BsFillBookFill,
+  BsFillHouseDoorFill,
+  BsFillFilePdfFill,
+  BsFillFolderFill,
 } from "react-icons/bs";
 import useAuth from "../../MyHooks/useAuth";
 
@@ -51,28 +48,21 @@ export default function FacultyNavigation() {
                 <div class="sb-sidenav-menu-heading"></div>
                 <Link class="nav-link sidenavtext " to="Dashboard">
                   <div class="sb-nav-link-icon">
-                    <BsBuilding color="#fff" />
+                    <BsFillHouseDoorFill color="#fff" />
                   </div>
                   Dashboard
                 </Link>
 
-                <Link class="nav-link sidenavtext" to="AllCourses">
-                  <div class="sb-nav-link-icon">
-                    <BsFiles color="#fff" />
-                  </div>
-                  All Courses
-                </Link>
-
                 <Link class="nav-link sidenavtext" to="AllSchemeofStudiesCFE">
                   <div class="sb-nav-link-icon">
-                    <BsFiles color="#fff" />
+                    <BsFillFilePdfFill color="#fff" />
                   </div>
                   All Scheme of Studies
                 </Link>
 
                 <Link class="nav-link sidenavtext" to="CourseFolder">
                   <div class="sb-nav-link-icon">
-                    <BsFiles color="#fff" />
+                    <BsFillFolderFill color="#fff" />
                   </div>
                   Course Folder
                 </Link>

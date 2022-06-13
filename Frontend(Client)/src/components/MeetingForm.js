@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./css/styles.css";
 import axios from "axios";
 import { useParams } from "react-router-dom";
@@ -7,8 +7,18 @@ import { DataGrid } from "@mui/x-data-grid";
 import MeetingButton from "./MeetingButtons";
 
 export default function MeetingForm({ onOpen, id }) {
-  const [data, setData] = useState({});
-
+  const [data, setData] = useState({
+    subject: "",
+    time: "",
+    meetingAgenda: "",
+  });
+  useEffect(() => {
+    async function getData() {
+      var { data } = await axios.get(`http://localhost:4000/Meeting/get/${id}`);
+      setData(data);
+    }
+    getData();
+  }, []);
   const handleData = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
     console.log(data);
@@ -39,6 +49,7 @@ export default function MeetingForm({ onOpen, id }) {
             className="form-control"
             id="title"
             type="text"
+            value={data.subject}
             placeholder="Enter title "
           />
         </div>
@@ -46,11 +57,13 @@ export default function MeetingForm({ onOpen, id }) {
           <label style={{ display: "block" }} for="title">
             <b>Select Date & Time</b>
           </label>
+          <p>{new Date(data.time).toLocaleString()}</p>
           <input
             name="time"
             onChange={handleData}
             style={{ width: "100%" }}
             type="datetime-local"
+            value={data.time}
           ></input>
         </div>
 
@@ -63,6 +76,7 @@ export default function MeetingForm({ onOpen, id }) {
             onChange={handleData}
             placeholder="Add Meeting Agenda"
             rows="4"
+            value={data.meetingAgenda}
           ></textarea>
         </div>
         <button

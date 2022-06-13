@@ -6,42 +6,43 @@ import Register from "./Register";
 import axios from "axios";
 import Avatar from "@mui/material/Avatar";
 import AvatarMenu from "./AvatarMenu";
-import Stack from "@mui/material/Stack";
 
 import {
   BsFillPersonPlusFill,
-  BsFiles,
-  BsBuilding,
-  BsFillGearFill,
   BsFillPeopleFill,
   BsFillBookFill,
-  BsPersonCircle,
+  BsFillHouseDoorFill,
+  BsFillBookmarkPlusFill,
+  BsListCheck,
+  BsListTask,
+  BsFillFileCheckFill,
+  BsFillFilePdfFill,
+  BsFillFolderFill,
+  BsFillPersonFill,
+  BsFillCalendarWeekFill,
+  BsBookHalf,
 } from "react-icons/bs";
 import useAuth from "../MyHooks/useAuth";
-import Sidebar from "./Sidebar";
+import { Box, Modal } from "@mui/material";
 
-import ListSubheader from "@mui/material/ListSubheader";
-import List from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Collapse from "@mui/material/Collapse";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import DraftsIcon from "@mui/icons-material/Drafts";
-import SendIcon from "@mui/icons-material/Send";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
-import ArticleIcon from "@mui/icons-material/Article";
-import HomeIcon from "@mui/icons-material/Home";
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 700,
+  bgcolor: "background.paper",
+  //   border: "2px solid #000",
+
+  boxShadow: 24,
+  p: 4,
+};
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+  const handleClose = () => setOpen(false);
   const { setAdmin, setFaculty } = useAuth();
-  const [open, setOpen] = React.useState(true);
-
-  const handleClick = () => {
-    setOpen(!open);
-  };
 
   axios.defaults.withCredentials = true;
 
@@ -57,7 +58,12 @@ export default function Navigation() {
 
   return (
     <React.Fragment>
-      <div className="bg">
+      <div
+        className="bg"
+        style={{
+          boxShadow: "rgba(0, 0, 0, 0.45) 0px 25px 20px -20px",
+        }}
+      >
         <nav className="sb-topnav navbar navbar-expand navbar-dark ">
           <a className="navbar-brand ps-3" to="/Dashboard">
             <b>Admin</b>
@@ -72,27 +78,28 @@ export default function Navigation() {
           <div className="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div className="input-group">
               <button
+                style={{ backgroundColor: "#fff", color: "#0054a6" }}
                 className="btn btn-primary"
                 id="btnNavbarSearch"
                 type="button"
-                onClick={togglePopup}
+                onClick={() => setOpen(true)}
               >
                 <span style={{ marginRight: 10 }}>
                   <BsFillPersonPlusFill />
                 </span>
-                Add Faculty
+                <b>Add Faculty</b>
               </button>
 
-              {isOpen && (
-                <Popup
-                  content={
-                    <>
-                      <Register />
-                    </>
-                  }
-                  handleClose={togglePopup}
-                />
-              )}
+              <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box sx={style}>
+                  <Register />
+                </Box>
+              </Modal>
             </div>
           </div>
           <AvatarMenu />
@@ -111,156 +118,78 @@ export default function Navigation() {
             <div className="sb-sidenav-menu">
               <div className="nav">
                 <div className="sb-sidenav-menu-heading"></div>
-                <List
-                  sx={{
-                    width: "100%",
-                    maxWidth: 360,
-                    bgcolor: "#0054a6",
-                  }}
-                  component="nav"
-                  aria-labelledby="nested-list-subheader"
-                >
-                  <Link to="Dashboard">
-                    <ListItemButton>
-                      <ListItemIcon>
-                        <HomeIcon color="#fff" />
-                      </ListItemIcon>
-                      <ListItemText primary="Dashboard" />
-                    </ListItemButton>
-                  </Link>
-
-                  <ListItemButton onClick={handleClick}>
-                    <ListItemIcon>
-                      <ArticleIcon />
-                    </ListItemIcon>
-                    {/* Courses */}
-                    <ListItemText primary="Courses" />
-                    {open ? <ExpandLess /> : <ExpandMore />}
-                  </ListItemButton>
-                  <Collapse in={open} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                      <Link to="AddCourse">
-                        <ListItemButton sx={{ pl: 4 }}>
-                          <ListItemIcon>
-                            <ArticleIcon />
-                          </ListItemIcon>
-                          <ListItemText primary="All Courses" />
-                        </ListItemButton>
-                      </Link>
-
-                      <Link to="InitCourse">
-                        <ListItemButton sx={{ pl: 4 }}>
-                          <ListItemIcon>
-                            <BsFillPeopleFill />
-                          </ListItemIcon>
-                          <ListItemText primary="Initilize New Course" />
-                        </ListItemButton>
-                      </Link>
-
-                      <Link to="AllCategories">
-                        <ListItemButton sx={{ pl: 4 }}>
-                          <ListItemIcon>
-                            <BsFillPeopleFill />
-                          </ListItemIcon>
-                          <ListItemText primary="Course Categories" />
-                        </ListItemButton>
-                      </Link>
-                    </List>
-                  </Collapse>
-                  {/* Tasks */}
-                  <ListItemButton onClick={handleClick}>
-                    <ListItemIcon>
-                      <InboxIcon />
-                    </ListItemIcon>
-
-                    <ListItemText primary="Tasks" />
-                    {open ? <ExpandLess /> : <ExpandMore />}
-                  </ListItemButton>
-                  <Collapse in={open} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                      <Link to="Tasks">
-                        <ListItemButton sx={{ pl: 4 }}>
-                          <ListItemIcon>
-                            <BsFillPeopleFill />
-                          </ListItemIcon>
-                          <ListItemText primary="Create Tasks" />
-                        </ListItemButton>
-                      </Link>
-
-                      <Link to="ReturnedTasks">
-                        <ListItemButton sx={{ pl: 4 }}>
-                          <ListItemIcon>
-                            <BsFillPeopleFill />
-                          </ListItemIcon>
-                          <ListItemText primary="Submitted Tasks" />
-                        </ListItemButton>
-                      </Link>
-                    </List>
-                  </Collapse>
-                  <Link to="AllSchemeofStudies">
-                    <ListItemButton>
-                      <ListItemIcon>
-                        <SendIcon />
-                      </ListItemIcon>
-                      <ListItemText primary="Scheme of Studies" />
-                    </ListItemButton>
-                  </Link>
-                  <Link to="CourseFolderDeadlines">
-                    <ListItemButton>
-                      <ListItemIcon>
-                        <SendIcon />
-                      </ListItemIcon>
-                      <ListItemText primary="Course Folder Deadlines" />
-                    </ListItemButton>
-                  </Link>
-                  {/* Users */}
-                  <ListItemButton onClick={handleClick}>
-                    <ListItemIcon>
-                      <InboxIcon />
-                    </ListItemIcon>
-
-                    <ListItemText primary="Users" />
-                    {open ? <ExpandLess /> : <ExpandMore />}
-                  </ListItemButton>
-                  <Collapse in={open} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                      <Link to="Users">
-                        <ListItemButton sx={{ pl: 4 }}>
-                          <ListItemIcon>
-                            <BsFillPeopleFill />
-                          </ListItemIcon>
-                          <ListItemText primary="All Users" />
-                        </ListItemButton>
-                      </Link>
-
-                      <Link to="FacultyMembers">
-                        <ListItemButton sx={{ pl: 4 }}>
-                          <ListItemIcon>
-                            <BsFillPeopleFill />
-                          </ListItemIcon>
-                          <ListItemText primary="Faculty Members" />
-                        </ListItemButton>
-                      </Link>
-                    </List>
-                  </Collapse>
-
-                  <Link to="Meeting">
-                    <ListItemButton>
-                      <ListItemIcon>
-                        <SendIcon />
-                      </ListItemIcon>
-                      <ListItemText primary="CAC Meeting" />
-                    </ListItemButton>
-                  </Link>
-                  <Link to="Flip">
-                    <ListItemButton>
-                      <ListItemIcon>
-                        <SendIcon />
-                      </ListItemIcon>
-                      <ListItemText primary="Flipbook" />
-                    </ListItemButton>
-                  </Link>
-                </List>
+                <Link class="nav-link sidenavtext " to="Dashboard">
+                  <div class="sb-nav-link-icon">
+                    <BsFillHouseDoorFill color="#fff" />
+                  </div>
+                  Dashboard
+                </Link>
+                <Link class="nav-link sidenavtext " to="AddCourse">
+                  <div class="sb-nav-link-icon">
+                    <BsFillBookFill color="#fff" />
+                  </div>
+                  All Courses
+                </Link>
+                <Link class="nav-link sidenavtext " to="InitCourse">
+                  <div class="sb-nav-link-icon">
+                    <BsFillBookmarkPlusFill color="#fff" />
+                  </div>
+                  Initialize New Course
+                </Link>
+                <Link class="nav-link sidenavtext " to="AllCategories">
+                  <div class="sb-nav-link-icon">
+                    <BsListCheck color="#fff" />
+                  </div>
+                  Course Categories
+                </Link>
+                <Link class="nav-link sidenavtext " to="Tasks">
+                  <div class="sb-nav-link-icon">
+                    <BsListTask color="#fff" />
+                  </div>
+                  Create Tasks
+                </Link>
+                <Link class="nav-link sidenavtext " to="ReturnedTasks">
+                  <div class="sb-nav-link-icon">
+                    <BsFillFileCheckFill color="#fff" />
+                  </div>
+                  Submitted Tasks
+                </Link>
+                <Link class="nav-link sidenavtext " to="AllSchemeofStudies">
+                  <div class="sb-nav-link-icon">
+                    <BsFillFilePdfFill color="#fff" />
+                  </div>
+                  Scheme of Studies
+                </Link>
+                <Link class="nav-link sidenavtext " to="CourseFolderDeadlines">
+                  <div class="sb-nav-link-icon">
+                    <BsFillFolderFill color="#fff" />
+                  </div>
+                  Course Folder Deadlines
+                </Link>
+                <Link class="nav-link sidenavtext " to="Users">
+                  <div class="sb-nav-link-icon">
+                    <BsFillPeopleFill color="#fff" />
+                  </div>
+                  All Users
+                </Link>
+                <Link class="nav-link sidenavtext " to="FacultyMembers">
+                  <div class="sb-nav-link-icon">
+                    <BsFillPersonFill color="#fff" />
+                  </div>
+                  FacultyMembers
+                </Link>
+                <Link class="nav-link sidenavtext " to="Meeting">
+                  <div class="sb-nav-link-icon">
+                    <BsFillCalendarWeekFill color="#fff" />
+                  </div>
+                  CAC Meeting
+                </Link>
+                <Link class="nav-link sidenavtext " to="Flip">
+                  <div class="sb-nav-link-icon">
+                    <BsBookHalf color="#fff" />
+                  </div>
+                  Flipbook
+                </Link>
               </div>
             </div>
           </nav>
