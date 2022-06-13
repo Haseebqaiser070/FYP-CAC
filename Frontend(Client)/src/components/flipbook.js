@@ -1,112 +1,120 @@
-import React, { useState, useEffect } from "react";
-import "./css/styles.css";
-import axios from "axios";
-import { Link, useParams } from "react-router-dom";
-import Button from "@mui/material/Button";
-import { DataGrid } from "@mui/x-data-grid";
-import Autocomplete from "@mui/material/Autocomplete";
-import { AiFillDelete, AiFillEdit } from "react-icons/ai";
+import "./flipbook.css";
 import HTMLFlipBook from "react-pageflip";
+import { useEffect, useRef, useState } from "react";
+import useWindowWide from "./usewidth";
+export default function DemoBook() {
+  const [width, setWidth] = useState(800);
+  const [height, setHeight] = useState(500);
+  const widthScreen = useWindowWide();
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(0);
+  const book = useRef();
 
-const PageCover = React.forwardRef((props, ref) => {
+  useEffect(() => {
+    if (widthScreen < 600) {
+      setWidth(400);
+      setHeight(300);
+    } else {
+      setWidth(Math.ceil((0.9 * widthScreen) / 2));
+      setHeight(Math.ceil((0.6 * widthScreen) / 2));
+    }
+  }, [widthScreen]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setTotal(book.current.pageFlip().getPageCount());
+    }, 1000);
+  }, []);
+
+  const updatePage = ({ data }) => setPage(data + 2);
+
   return (
-    <div className="page page-cover" ref={ref} data-density="hard">
-      <div className="page-content">
-        <h2>{props.children}</h2>
-      </div>
-    </div>
-  );
-});
-
-const Page = React.forwardRef((props, ref) => {
-  return (
-    <div className="page" ref={ref}>
-      <div className="page-content">
-        <h2 className="page-header">Page header - {props.number}</h2>
-        <div className="page-image"></div>
-        <div className="page-text">{props.children}</div>
-        <div className="page-footer">{props.number + 1}</div>
-      </div>
-    </div>
-  );
-});
-
-class DemoBook extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      page: 0,
-      totalPage: 0,
-    };
-  }
-
-  nextButtonClick = () => {
-    this.flipBook.getPageFlip().flipNext();
-  };
-
-  prevButtonClick = () => {
-    this.flipBook.getPageFlip().flipPrev();
-  };
-
-  onPage = (e) => {
-    this.setState({
-      page: e.data,
-    });
-  };
-
-  componentDidMount() {
-    this.setState({
-      totalPage: this.flipBook.getPageFlip().getPageCount(),
-    });
-  }
-
-  render() {
-    return (
-      <div>
-        <HTMLFlipBook
-          width={550}
-          height={733}
-          size="stretch"
-          minWidth={315}
-          maxWidth={1000}
-          minHeight={400}
-          maxHeight={1533}
-          maxShadowOpacity={0.5}
-          showCover={true}
-          mobileScrollSupport={true}
-          onFlip={this.onPage}
-          onChangeOrientation={this.onChangeOrientation}
-          onChangeState={this.onChangeState}
-          className="demo-book"
-          ref={(el) => (this.flipBook = el)}
-        >
-          <PageCover>BOOK TITLE</PageCover>
-          <Page number={1}>Lorem ipsum...</Page>
-          <Page number={2}>Lorem ipsum...</Page>
-          /*...*/
-          <PageCover>THE END</PageCover>
-        </HTMLFlipBook>
-
-        <div className="container">
-          <div>
-            <button type="button" onClick={this.prevButtonClick}>
-              Previous page
-            </button>
-            [<span>{this.state.page}</span> of
-            <span>{this.state.totalPage}</span>]
-            <button type="button" onClick={this.nextButtonClick}>
-              Next page
-            </button>
-          </div>
-          <div>
-            State: <i>{this.state.state}</i>, orientation:{" "}
-            <i>{this.state.orientation}</i>
-          </div>
+    <div className="flex" style={{ padding: "50px 0" }}>
+      <span
+        onClick={() => book.current.pageFlip().flipNext()}
+        className={"next button"}
+      >
+        <i className="fas fa-chevron-right"></i>
+      </span>
+      <HTMLFlipBook
+        onFlip={updatePage}
+        width={width}
+        height={height}
+        ref={book}
+      >
+        <div className="page">
+          <img src="https://picsum.photos/510/300?random" alt="person" />
         </div>
-      </div>
-    );
-  }
+        <div className="page">
+          <h1>hskhsdkjsdkjdskjdkjs</h1>
+          <img src="https://picsum.photos/510/300?random" alt="person" />
+        </div>
+        <div className="page">
+          <h1>Balti</h1>
+          <img src="https://picsum.photos/510/300?random" alt="person" />
+        </div>
+        <div className="page">
+          <img src="https://picsum.photos/510/300?random" alt="person" />
+        </div>
+        <div className="page">
+          <img src="https://picsum.photos/510/300?random" alt="person" />
+        </div>
+        <div className="page">
+          <img src="https://picsum.photos/510/300?random" alt="person" />
+        </div>
+        <div className="page">
+          <img src="https://picsum.photos/510/300?random" alt="person" />
+        </div>
+        <div className="page">
+          <img src="https://picsum.photos/510/300?random" alt="person" />
+        </div>
+        <div className="page">
+          <img src="https://picsum.photos/510/300?random" alt="person" />
+        </div>
+        <div className="page">
+          <img src="https://picsum.photos/510/300?random" alt="person" />
+        </div>
+        <div className="page">
+          <h1>hskhsdkjsdkjdskjdkjs</h1>
+          <img src="https://picsum.photos/510/300?random" alt="person" />
+        </div>
+        <div className="page">
+          <img src="https://picsum.photos/510/300?random" alt="person" />
+        </div>
+        <div className="page">
+          <img src="https://picsum.photos/510/300?random" alt="person" />
+        </div>
+        <div className="page">
+          <img src="https://picsum.photos/510/300?random" alt="person" />
+        </div>
+        <div className="page">
+          <img src="https://picsum.photos/510/300?random" alt="person" />
+        </div>
+        <div className="page">
+          <img src="https://picsum.photos/510/300?random" alt="person" />
+        </div>
+        <div className="page">
+          <img src="https://picsum.photos/510/300?random" alt="person" />
+        </div>
+        <div className="page">
+          <img src="https://picsum.photos/510/300?random" alt="person" />
+        </div>
+        <div className="page">
+          <img src="https://picsum.photos/510/300?random" alt="person" />
+        </div>
+        <div className="page">
+          <img src="https://picsum.photos/510/300?random" alt="person" />
+        </div>
+      </HTMLFlipBook>
+      <span
+        onClick={() => book.current.pageFlip().flipPrev()}
+        className={"previous button"}
+      >
+        <i className="fas fa-chevron-left"></i>
+      </span>
+      <span className="info-page">
+        {page} - {total}
+      </span>
+    </div>
+  );
 }
-
-export default DemoBook;

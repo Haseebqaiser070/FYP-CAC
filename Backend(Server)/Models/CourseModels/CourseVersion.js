@@ -2,6 +2,7 @@ var mongoose = require("mongoose");
 var CourseVersionSchema = new mongoose.Schema({
   Code: {
     type: String,
+    // unique: true,
     required: true,
   },
   Name: {
@@ -20,46 +21,50 @@ var CourseVersionSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  Category:{
-    type:String,
-    required:true
+  Category: {
+    type: String,
+    required: true,
   },
-  PreRequisites:[
-    { 
+  PreRequisites: [
+    {
       type: mongoose.Schema.ObjectId,
-      ref: 'Course',
-      default:'none'
-    }
+      ref: "Course",
+      default: "none",
+    },
   ],
 
   catalogue: {
-    type:String,
+    type: String,
   },
   objectiveList: {
-    type:[{
-      id:{
-        type:String
+    type: [
+      {
+        id: {
+          type: String,
+        },
+        title: {
+          type: String,
+        },
       },
-      title:{
-          type:String
-        }
-    }],
-    required:true
+    ],
+    required: true,
   },
-  Books:[{
-    id:{
-      type:String
+  Books: [
+    {
+      id: {
+        type: String,
+      },
+      BookName: {
+        type: String,
+      },
+      BookWriter: {
+        type: String,
+      },
+      BookYear: {
+        type: String,
+      },
     },
-    BookName: {
-    type:String,
-  },
-  BookWriter: {
-    type:String,
-  },
-  BookYear: {
-    type:String,
-  }}
-  ]
+  ],
 });
 
 module.exports = mongoose.model("CourseVersion", CourseVersionSchema);

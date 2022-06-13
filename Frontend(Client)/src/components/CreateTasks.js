@@ -16,7 +16,7 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
-import axios from "axios"
+import axios from "axios";
 function TaskDetails() {
   return (
     <div>
@@ -51,7 +51,7 @@ function TaskDetails() {
   );
 }
 
-export default function CreateTasks({func}) {
+export default function CreateTasks({ func }) {
   axios.defaults.withCredentials = true;
   const [taskType, settaskType] = useState("");
   const [User, setUser] = useState("");
@@ -59,7 +59,7 @@ export default function CreateTasks({func}) {
   const [Status, setStatus] = useState("");
   const [Avail, setAvail] = useState([]);
   const [RepoCourse, setRepoCourse] = useState([]);
-  const [Course,setCourse] = useState("")
+  const [Course, setCourse] = useState("");
   useEffect(() => {
     getRepoCourse();
     getData();
@@ -68,50 +68,53 @@ export default function CreateTasks({func}) {
     const response = await axios.get("http://localhost:4000/User/show/CAC");
     setAvail(response.data);
   };
-/*  const getCources = async () => {
+  /*  const getCources = async () => {
     const res = await axios.get("http://localhost:4000/Course/show");
     const data = await res.data;
     setCourse([{ Name: "none" }, ...data]);
   };
 */
 
+  const getRepoCourse = async () => {
+    const response = await axios.get("http://localhost:4000/RepoCourse/show");
+    setRepoCourse(response.data);
+  };
 
-const getRepoCourse = async () => {
-  const response = await axios.get("http://localhost:4000/RepoCourse/show");
-  setRepoCourse(response.data);
-};
-
-
-const handleSubmit = async(e) => {
-  e.preventDefault();
-  if (
-    taskType != "" &&
-    User != "" &&
-    Deadline != "" &&
-    Status!= "" &&
-    Course !=""
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (
+      taskType != "" &&
+      User != "" &&
+      Deadline != "" &&
+      Status != "" &&
+      Course != ""
     ) {
-    const res = await axios.post("http://localhost:4000/Task/add", {
-      taskType ,
-      User ,
-      Deadline,
-      Status,
-      Course
+      const res = await axios.post("http://localhost:4000/Task/add", {
+        taskType,
+        User,
+        Deadline,
+        Status,
+        Course,
       });
-    settaskType("") 
-    setUser("")
-    setDeadline("")
-    setStatus("")
-    setCourse("")
-    func
-
-  }
-  else{alert("Empty Field")}
-};
+      settaskType("");
+      setUser("");
+      setDeadline("");
+      setStatus("");
+      setCourse("");
+      func;
+    } else {
+      alert("Empty Field");
+    }
+  };
   return (
     <div className="container" style={{ width: "100%", padding: 20 }}>
       <Card variant="outlined">
-        <Box className="row  p-3" component="form" onSubmit={handleSubmit}  sx={{ minWidth: 275 }}>
+        <Box
+          className="row  p-3"
+          component="form"
+          onSubmit={handleSubmit}
+          sx={{ minWidth: 275 }}
+        >
           <h2>Create Task</h2>
           <CardContent>
             <div className="col">
@@ -123,16 +126,14 @@ const handleSubmit = async(e) => {
                   id="taskType"
                   value={taskType}
                   label="Task Type"
-                  onChange={(e)=>settaskType(e.target.value)}
+                  onChange={(e) => settaskType(e.target.value)}
                   autoWidth
                 >
                   <MenuItem value={"Add New Course"}>Add New Course</MenuItem>
                   <MenuItem value={"Create Course CDF"}>
                     Create Course CDF
                   </MenuItem>
-                  <MenuItem value={"Create Syllabus"}>
-                    Create Syllabus
-                  </MenuItem>
+                  <MenuItem value={"Create Syllabus"}>Create Syllabus</MenuItem>
                 </Select>
               </FormControl>
             </div>
@@ -146,35 +147,34 @@ const handleSubmit = async(e) => {
                   id="taskType"
                   value={User}
                   label="Assign Teacher"
-                  onChange={(e)=>setUser(e.target.value)}
+                  onChange={(e) => setUser(e.target.value)}
                   autoWidth
                 >
-                {Avail.map((a)=>{
-                  return(  
-                  <MenuItem value={a}>{a.Name}</MenuItem>
-                  )})
-                } 
+                  {Avail.map((a) => {
+                    return <MenuItem value={a}>{a.Name}</MenuItem>;
+                  })}
                 </Select>
               </FormControl>
             </div>
             <div className="col">
-            <FormControl fullWidth size="small">
-            <InputLabel id="taskType">Assign Course</InputLabel>
-            <Select
-              className="mb-4"
-              labelId="courseAssign"
-              id="courseAssign"
-              value={Course}
-              label="Assign Teacher"
-              onChange={(e)=>setCourse(e.target.value)}
-              autoWidth>
-              {RepoCourse.map((a)=>{
-                  return(  
-                  <MenuItem value={a}>{a.Code +"  "+ a.Name}</MenuItem>
-                  )})
-                } 
-            </Select>
-            </FormControl>
+              <FormControl fullWidth size="small">
+                <InputLabel id="taskType">Assign Course</InputLabel>
+                <Select
+                  className="mb-4"
+                  labelId="courseAssign"
+                  id="courseAssign"
+                  value={Course}
+                  label="Assign Teacher"
+                  onChange={(e) => setCourse(e.target.value)}
+                  autoWidth
+                >
+                  {RepoCourse.map((a) => {
+                    return (
+                      <MenuItem value={a}>{a.Code + "  " + a.Name}</MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
             </div>
             <div className="col">
               <FormControl fullWidth size="small">
@@ -186,11 +186,10 @@ const handleSubmit = async(e) => {
                   label="Assign Teacher"
                   autoWidth
                   value={Status}
-                  onChange={(e)=>setStatus(e.target.value)}
+                  onChange={(e) => setStatus(e.target.value)}
                 >
                   <MenuItem value={"Assigned"}>Assigned</MenuItem>
                   <MenuItem value={"Revision"}>Revision</MenuItem>
-                  <MenuItem value={"Completed"}>Completed</MenuItem>
                 </Select>
               </FormControl>
             </div>
@@ -199,7 +198,7 @@ const handleSubmit = async(e) => {
               <label>Deadline</label>
               <input
                 value={Deadline}
-                onChange={(e)=>setDeadline(e.target.value)} 
+                onChange={(e) => setDeadline(e.target.value)}
                 style={{ width: "100%" }}
                 type="datetime-local"
                 placeholder="Deadline"

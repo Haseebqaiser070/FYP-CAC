@@ -59,7 +59,6 @@ function AdminRoutes() {
           element={<CourseFolderDeadlines />}
         />
 
-        <Route path="/OngoingTasks" element={<OngoingTasks />} />
         <Route path="/ReturnedTasks" element={<ReturnedTasks />} />
       </Route>
     </Routes>

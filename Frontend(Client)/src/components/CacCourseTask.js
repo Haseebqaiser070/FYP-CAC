@@ -8,8 +8,6 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import { AiOutlineCheckSquare, AiFillEdit } from "react-icons/ai";
 
-
-
 export default function CacCourseTask() {
   const [Rows, setRows] = useState([]);
   function ActionButtons(props) {
@@ -34,15 +32,17 @@ export default function CacCourseTask() {
           <AiFillEdit style={{ marginRight: 10 }} />
           Add Course
         </Button>
-  
+
         <Button
           variant="contained"
           color="primary"
           size="small"
           style={{ marginLeft: 16 }}
-          onClick={async()=>{
-           await axios.post(`http://localhost:4000/CoursesCreate/Submit/${row.Code}`)
-           getRepoCourse();
+          onClick={async () => {
+            await axios.post(
+              `http://localhost:4000/CoursesCreate/Submit/${row.Code}`
+            );
+            getRepoCourse();
           }}
         >
           <AiOutlineCheckSquare style={{ marginRight: 10 }} />
@@ -83,8 +83,11 @@ export default function CacCourseTask() {
     },
   ];
   return (
-    <div className="container" style={{ width: "100%", padding: 30 }}>
-      <h1 className="mb-4">
+    <div
+      className="container"
+      style={{ height: 700, width: "100%", padding: 20 }}
+    >
+      <h1 className="mb-4 py-4">
         <b>Courses Assigned</b>
       </h1>
       <div>

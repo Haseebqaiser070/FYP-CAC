@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./css/styles.css";
 import axios from "axios";
-import { Link, useParams,useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
 import {
@@ -16,12 +16,11 @@ export default function ReturnedTasks() {
     getData();
   }, []);
   const getData = async () => {
-    const response = await axios.get('http://localhost:4000/Task/show/Returned');
+    const response = await axios.get(
+      "http://localhost:4000/Task/show/Returned"
+    );
     setRows(response.data);
   };
-
-
-
 
   function ActionButtons(props) {
     const navigate = useNavigate();
@@ -34,9 +33,9 @@ export default function ReturnedTasks() {
           size="small"
           style={{ marginLeft: 16 }}
           onClick={() => {
-            navigate(
-              `/Admin/CourseReturnedView/${row.Course.Code}`,{ replace: true }
-            );
+            navigate(`/Admin/CourseReturnedView/${row.Course.Code}`, {
+              replace: true,
+            });
           }}
         >
           <AiFillEdit style={{ marginRight: 10 }} />
@@ -52,15 +51,15 @@ export default function ReturnedTasks() {
           <AiFillEdit style={{ marginRight: 10 }} />
           Edit
         </Button>
-  
+
         <Button
           variant="contained"
           color="primary"
           size="small"
           style={{ marginLeft: 16 }}
-          onClick={async()=>{   
-             await axios.post(`http://localhost:4000/Task/lock/${row._id}`);
-             getData();
+          onClick={async () => {
+            await axios.post(`http://localhost:4000/Task/lock/${row._id}`);
+            getData();
           }}
         >
           <AiFillEdit style={{ marginRight: 10 }} />
@@ -68,7 +67,7 @@ export default function ReturnedTasks() {
         </Button>
       </div>
     );
-  }  
+  }
   const columns = [
     {
       field: "taskType",
@@ -100,7 +99,7 @@ export default function ReturnedTasks() {
     {
       field: "Action",
       headerName: "Action",
-      flex: 1,
+      flex: 2,
       editable: false,
       renderCell: ActionButtons,
     },

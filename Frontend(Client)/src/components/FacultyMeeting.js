@@ -5,7 +5,10 @@ import { useParams } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
 import { AiOutlineClockCircle, AiOutlineUsergroupAdd } from "react-icons/ai";
-import { Modal } from "@mui/material";
+import { MenuItem, Modal } from "@mui/material";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
 import { Box } from "@mui/system";
 
 const style = {
@@ -23,9 +26,24 @@ export default function FacultyMeeting() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [rows, setRows] = useState([]);
+
+  const getAll = async () => {
+    var { data } = await axios.get("http://localhost:4000/Meeting/all");
+    data = data.map((meeting) => {
+      return {
+        subject: meeting.subject,
+        id: meeting._id,
+      };
+    });
+
+    setRows(data);
+    console.log(data);
+    console.log(rows);
+  };
+  getAll();
 
   const columns = [
-    { field: "id", headerName: "ID" },
     {
       field: "subject",
       headerName: "Meeting Subject",
@@ -63,11 +81,7 @@ export default function FacultyMeeting() {
       ),
     },
   ];
-  const rows = [
-    { id: 1, subject: "Snow" },
-    { id: 2, subject: "Snow" },
-    { id: 3, subject: "Snow" },
-  ];
+
   return (
     <div
       className="container"
@@ -96,24 +110,104 @@ export default function FacultyMeeting() {
         <Box sx={style}>
           <>
             <div className="form-group">
-              <label for="appt">Monday:</label>
-              <input type="time" className="form-control"></input>
+              <FormControl fullWidth size="small">
+                <InputLabel id="taskType">Monday</InputLabel>
+                <Select
+                  className="mb-4"
+                  labelId="mon"
+                  id="mon"
+                  // value={taskType}
+                  label="Task Type"
+                  autoWidth
+                >
+                  <MenuItem value={"8:30-10:00"}>8:30-10:00</MenuItem>
+                  <MenuItem value={"10:00-11:30"}>10:00-11:30</MenuItem>
+                  <MenuItem value={"11:30-01:00"}>11:30-01:00</MenuItem>
+                  <MenuItem value={"01:00-2:30"}>01:00-2:30</MenuItem>
+                  <MenuItem value={"2:30-4:00"}>2:30-4:00</MenuItem>
+                  <MenuItem value={"4:30-5:30"}>4:30-5:30</MenuItem>
+                </Select>
+              </FormControl>
             </div>
             <div className="form-group">
-              <label for="appt">Tuesday:</label>
-              <input type="time" className="form-control"></input>
+              <FormControl fullWidth size="small">
+                <InputLabel id="taskType">Tuesday</InputLabel>
+                <Select
+                  className="mb-4"
+                  labelId="mon"
+                  id="mon"
+                  // value={taskType}
+                  label="Task Type"
+                  autoWidth
+                >
+                  <MenuItem value={"8:30-10:00"}>8:30-10:00</MenuItem>
+                  <MenuItem value={"10:00-11:30"}>10:00-11:30</MenuItem>
+                  <MenuItem value={"11:30-01:00"}>11:30-01:00</MenuItem>
+                  <MenuItem value={"01:00-2:30"}>01:00-2:30</MenuItem>
+                  <MenuItem value={"2:30-4:00"}>2:30-4:00</MenuItem>
+                  <MenuItem value={"4:30-5:30"}>4:30-5:30</MenuItem>
+                </Select>
+              </FormControl>
             </div>
             <div className="form-group">
-              <label for="appt">Wednesday:</label>
-              <input type="time" className="form-control"></input>
+              <FormControl fullWidth size="small">
+                <InputLabel id="taskType">Wednesday</InputLabel>
+                <Select
+                  className="mb-4"
+                  labelId="mon"
+                  id="mon"
+                  // value={taskType}
+                  label="Task Type"
+                  autoWidth
+                >
+                  <MenuItem value={"8:30-10:00"}>8:30-10:00</MenuItem>
+                  <MenuItem value={"10:00-11:30"}>10:00-11:30</MenuItem>
+                  <MenuItem value={"11:30-01:00"}>11:30-01:00</MenuItem>
+                  <MenuItem value={"01:00-2:30"}>01:00-2:30</MenuItem>
+                  <MenuItem value={"2:30-4:00"}>2:30-4:00</MenuItem>
+                  <MenuItem value={"4:30-5:30"}>4:30-5:30</MenuItem>
+                </Select>
+              </FormControl>
             </div>
             <div className="form-group">
-              <label for="appt">Thursday:</label>
-              <input type="time" className="form-control"></input>
+              <FormControl fullWidth size="small">
+                <InputLabel id="taskType">Thursday</InputLabel>
+                <Select
+                  className="mb-4"
+                  labelId="mon"
+                  id="mon"
+                  // value={taskType}
+                  label="Task Type"
+                  autoWidth
+                >
+                  <MenuItem value={"8:30-10:00"}>8:30-10:00</MenuItem>
+                  <MenuItem value={"10:00-11:30"}>10:00-11:30</MenuItem>
+                  <MenuItem value={"11:30-01:00"}>11:30-01:00</MenuItem>
+                  <MenuItem value={"01:00-2:30"}>01:00-2:30</MenuItem>
+                  <MenuItem value={"2:30-4:00"}>2:30-4:00</MenuItem>
+                  <MenuItem value={"4:30-5:30"}>4:30-5:30</MenuItem>
+                </Select>
+              </FormControl>
             </div>
             <div className="form-group">
-              <label for="appt">Friday:</label>
-              <input type="time" className="form-control"></input>
+              <FormControl fullWidth size="small">
+                <InputLabel id="taskType">Friday</InputLabel>
+                <Select
+                  className="mb-4"
+                  labelId="mon"
+                  id="mon"
+                  // value={taskType}
+                  label="Task Type"
+                  autoWidth
+                >
+                  <MenuItem value={"8:30-10:00"}>8:30-10:00</MenuItem>
+                  <MenuItem value={"10:00-11:30"}>10:00-11:30</MenuItem>
+                  <MenuItem value={"11:30-01:00"}>11:30-01:00</MenuItem>
+                  <MenuItem value={"01:00-2:30"}>01:00-2:30</MenuItem>
+                  <MenuItem value={"2:30-4:00"}>2:30-4:00</MenuItem>
+                  <MenuItem value={"4:30-5:30"}>4:30-5:30</MenuItem>
+                </Select>
+              </FormControl>
             </div>
             <Button
               variant="contained"

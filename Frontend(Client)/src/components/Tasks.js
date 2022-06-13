@@ -56,16 +56,16 @@ export default function Tasks() {
           <AiFillEdit style={{ marginRight: 10 }} />
           Edit
         </Button>
-  
+
         <Button
           variant="contained"
           color="primary"
           size="small"
           style={{ marginLeft: 16 }}
-          onClick={async()=>{ 
-              await axios.delete(`http://localhost:4000/Task/${row._id}`);
-              getData();
-        }}
+          onClick={async () => {
+            await axios.delete(`http://localhost:4000/Task/${row._id}`);
+            getData();
+          }}
         >
           <AiFillEdit style={{ marginRight: 10 }} />
           Delete
@@ -73,7 +73,7 @@ export default function Tasks() {
       </div>
     );
   }
-  
+
   const columns = [
     {
       field: "taskType",
@@ -119,7 +119,12 @@ export default function Tasks() {
   return (
     <div
       className="container"
-      style={{ height: 700, width: "100%", padding: 20 }}
+      style={{
+        width: "100%",
+        padding: 20,
+        overflow: "auto",
+        height: "90vh",
+      }}
     >
       <h1 className="py-4">
         <b>All Tasks</b>
@@ -145,7 +150,7 @@ export default function Tasks() {
           <Box sx={style}>
             <div className="container">
               <div>
-                <CreateTasks func ={getData}/>
+                <CreateTasks func={getData} />
               </div>
             </div>
           </Box>
