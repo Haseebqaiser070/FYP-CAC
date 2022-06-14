@@ -72,6 +72,9 @@ export default function AddProgram() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const [degreeLevel, setDegreeLevel] = useState("");
+  const [programName, setProgramName] = useState("");
+
   return (
     <div
       className="container"
@@ -107,9 +110,9 @@ export default function AddProgram() {
                 className="mb-4"
                 labelId="selectdegree"
                 id="selectdegree"
-                value={null}
+                value={degreeLevel}
                 label="Select Degree"
-                onChange={(e) => setCourse(e.target.value)}
+                onChange={(e) => setDegreeLevel(e.target.value)}
                 autoWidth
               >
                 <MenuItem value={"BS"}>BS</MenuItem>
@@ -126,6 +129,8 @@ export default function AddProgram() {
               variant="outlined"
               size="small"
               fullWidth
+              value={programName}
+              onChange={(e) => setProgramName(e.target.value)}
             />
           </div>
           <Button

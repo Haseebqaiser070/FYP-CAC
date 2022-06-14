@@ -28,6 +28,8 @@ export default function InitializeTask() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [taskType, setTaskType] = useState("");
+  const [AssignMember, setAssignMember] = useState([]);
 
   const columns = [
     {
@@ -118,8 +120,8 @@ export default function InitializeTask() {
                   className="mb-4"
                   labelId="task-type"
                   name="tasktype"
-                  // onChange={handleChange}
-                  // value={taskType}
+                  value={taskType}
+                  onChange={(e) => setTaskType(e.target.value)}
                   label="Task Type"
                   autoWidth
                 >
@@ -142,7 +144,7 @@ export default function InitializeTask() {
                 options={top100Films}
                 getOptionLabel={(option) => option.title}
                 defaultValue={[top100Films[13]]}
-                //   onChange={}
+                onChange={(e, val) => setAssignMember(val)}
                 renderInput={(params) => (
                   <TextField
                     {...params}

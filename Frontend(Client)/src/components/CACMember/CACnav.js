@@ -43,6 +43,12 @@ export default function CACnav() {
                   Dashboard
                 </Link>
 
+                <Link class="nav-link sidenavtext" to="CacInitializedTasks">
+                  <div class="sb-nav-link-icon">
+                    <BsFillFilterCircleFill color="#fff" />
+                  </div>
+                  Initialized Tasks
+                </Link>
                 <Link class="nav-link sidenavtext" to="CacAllTasks">
                   <div class="sb-nav-link-icon">
                     <BsFillFilterCircleFill color="#fff" />

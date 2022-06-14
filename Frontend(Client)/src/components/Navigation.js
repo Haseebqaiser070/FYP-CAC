@@ -159,7 +159,7 @@ export default function Navigation() {
                   <div class="sb-nav-link-icon">
                     <BsListTask color="#fff" />
                   </div>
-                  Create Tasks
+                  Assigned Tasks
                 </Link>
                 <Link class="nav-link sidenavtext " to="ReturnedTasks">
                   <div class="sb-nav-link-icon">
