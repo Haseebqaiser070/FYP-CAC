@@ -26,6 +26,7 @@ import CourseReturnedView from "../Admin/CourseReturnedView";
 import InitializeTask from "../InitializeTask";
 import ViewCacAvailability from "../ViewCacAvailability";
 import AddProgram from "../AddProgram";
+import Evaluators from "../Evaluators";
 function AdminRoutes() {
   return (
     <Routes>
@@ -57,6 +58,7 @@ function AdminRoutes() {
               */}
         <Route path="/Users" element={<Users />} />
         <Route path="/FacultyMembers" element={<FacultyMembers />} />
+        <Route path="/Evaluators" element={<Evaluators />} />
         <Route path="/CourseFolder" element={<CourseFolder />} />
         <Route path="/AddProgram" element={<AddProgram />} />
         <Route path="/Tasks" element={<Tasks />} />

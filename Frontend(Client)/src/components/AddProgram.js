@@ -102,13 +102,13 @@ export default function AddProgram() {
         <Box sx={style}>
           <div className="col">
             <FormControl fullWidth size="small">
-              <InputLabel id="taskType">Assign Course</InputLabel>
+              <InputLabel id="taskType">Select Degree</InputLabel>
               <Select
                 className="mb-4"
-                labelId="courseAssign"
-                id="courseAssign"
+                labelId="selectdegree"
+                id="selectdegree"
                 value={null}
-                label="Assign Teacher"
+                label="Select Degree"
                 onChange={(e) => setCourse(e.target.value)}
                 autoWidth
               >

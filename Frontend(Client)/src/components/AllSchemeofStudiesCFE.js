@@ -37,7 +37,7 @@ function Mbutton(props) {
         size="small"
         style={{ marginLeft: 16 }}
         onClick={() => {
-          navigate("/admin/Sos", { state: row });
+          navigate("/faculty/Sos", { state: row });
         }}
       >
         <AiFillEdit style={{ marginRight: 10 }} />

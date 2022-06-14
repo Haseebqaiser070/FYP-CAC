@@ -77,123 +77,155 @@ export default function CourseFolder() {
         </Box>
       </Modal>
 
-      <table class=" table tablecourse">
+      <table class=" table  tablecourse">
         <tbody>
-          <tr>
-            <th>Quizzes</th>
-            <td>
-              <button
-                class="btn btn-primary"
-                id="quiz1"
-                type="button"
-                onClick={handleOpen}
+          <div className="row">
+            <div className="col">
+              <tr
+                className="card p-4 m-2"
+                style={{
+                  boxShadow: "rgba(17, 12, 46, 0.15) 0px 48px 100px 0px",
+                }}
               >
-                Quiz 1
-              </button>
-            </td>
-            <td>
-              <button
-                class="btn btn-primary"
-                id="quiz2"
-                type="button"
-                onClick={handleOpen}
+                <th className="py-2">
+                  <h2>Round 1</h2>
+                </th>
+                <td className="d-grid py-2 px-2">
+                  <button
+                    class="btn btn-block py-2 btn-primary"
+                    id="quiz1"
+                    type="button"
+                    onClick={handleOpen}
+                  >
+                    Quiz 1
+                  </button>
+                </td>
+                <td className="d-grid py-2 px-2">
+                  <button
+                    class="btn btn-block py-2 btn-primary"
+                    id="quiz2"
+                    type="button"
+                    onClick={handleOpen}
+                  >
+                    Quiz 2
+                  </button>
+                </td>
+                <td className="d-grid py-2 px-2">
+                  <button
+                    class="btn btn-block py-2 btn-primary"
+                    id="quiz1"
+                    type="button"
+                    onClick={handleOpen}
+                  >
+                    Assignment 1
+                  </button>
+                </td>
+                <td className="d-grid py-2 px-2">
+                  <button
+                    class="btn btn-block py-2 btn-primary"
+                    id="quiz1"
+                    type="button"
+                    onClick={handleOpen}
+                  >
+                    Assignment 2
+                  </button>
+                </td>
+                <td className="d-grid py-2 px-2">
+                  <button
+                    class="btn btn-block py-2 btn-primary"
+                    id="quiz1"
+                    type="button"
+                    onClick={handleOpen}
+                  >
+                    Midterm Exam
+                  </button>
+                </td>
+                <td className="d-grid py-4 px-2">
+                  <button
+                    class="btn btn-block py-2 btn-primary"
+                    id="quiz1"
+                    type="button"
+                    // onClick={handleOpen}
+                  >
+                    Submit
+                  </button>
+                </td>
+              </tr>
+            </div>
+            <div className="col">
+              <tr
+                className="card m-2 p-4"
+                style={{
+                  boxShadow: "rgba(17, 12, 46, 0.15) 0px 48px 100px 0px",
+                }}
               >
-                Quiz 2
-              </button>
-            </td>
-            <td>
-              <button
-                class="btn btn-primary"
-                id="quiz3"
-                type="button"
-                onClick={handleOpen}
-              >
-                Quiz 3
-              </button>
-            </td>
-            <td>
-              <button
-                class="btn btn-primary"
-                id="quiz4"
-                type="button"
-                onClick={handleOpen}
-              >
-                Quiz 4
-              </button>
-            </td>
-          </tr>
+                <th className="py-2">
+                  <h2>Round 2</h2>
+                </th>
 
-          <tr>
-            <th>Assignments</th>
-            <td>
-              <button
-                class="btn btn-primary"
-                id="quiz1"
-                type="button"
-                onClick={handleOpen}
-              >
-                Assignment 1
-              </button>
-            </td>
-            <td>
-              <button
-                class="btn btn-primary"
-                id="quiz1"
-                type="button"
-                onClick={handleOpen}
-              >
-                Assignment 2
-              </button>
-            </td>
-            <td>
-              <button
-                class="btn btn-primary"
-                id="quiz1"
-                type="button"
-                onClick={handleOpen}
-              >
-                Assignment 3
-              </button>
-            </td>
-            <td>
-              <button
-                class="btn btn-primary"
-                id="quiz1"
-                type="button"
-                onClick={handleOpen}
-              >
-                Assignment 4
-              </button>
-            </td>
-          </tr>
-
-          <tr>
-            <th>Midterm Exam</th>
-            <td>
-              <button
-                class="btn btn-primary"
-                id="quiz1"
-                type="button"
-                onClick={handleOpen}
-              >
-                Midterm Exam
-              </button>
-            </td>
-          </tr>
-
-          <tr>
-            <th>Terminal Exam</th>
-            <td>
-              <button
-                class="btn btn-primary"
-                id="quiz1"
-                type="button"
-                onClick={handleOpen}
-              >
-                Terminal Exam
-              </button>
-            </td>
-          </tr>
+                <td className="d-grid py-2 px-2">
+                  <button
+                    class="btn btn-block py-2 btn-primary"
+                    id="quiz3"
+                    type="button"
+                    onClick={handleOpen}
+                  >
+                    Quiz 3
+                  </button>
+                </td>
+                <td className="d-grid py-2 px-2">
+                  <button
+                    class="btn btn-block py-2 btn-primary"
+                    id="quiz4"
+                    type="button"
+                    onClick={handleOpen}
+                  >
+                    Quiz 4
+                  </button>
+                </td>
+                <td className="d-grid py-2 px-2">
+                  <button
+                    class="btn btn-block py-2 btn-primary"
+                    id="quiz1"
+                    type="button"
+                    onClick={handleOpen}
+                  >
+                    Assignment 3
+                  </button>
+                </td>
+                <td className="d-grid py-2 px-2">
+                  <button
+                    class="btn btn-block py-2 btn-primary"
+                    id="quiz1"
+                    type="button"
+                    onClick={handleOpen}
+                  >
+                    Assignment 4
+                  </button>
+                </td>
+                <td className="d-grid py-2 px-2">
+                  <button
+                    class="btn py-2  btn-block btn-primary"
+                    id="quiz1"
+                    type="button"
+                    onClick={handleOpen}
+                  >
+                    Terminal Exam
+                  </button>
+                </td>
+                <td className="d-grid py-4 px-2">
+                  <button
+                    class="btn btn-block py-2 btn-primary"
+                    id="quiz1"
+                    type="button"
+                    // onClick={handleOpen}
+                  >
+                    Submit
+                  </button>
+                </td>
+              </tr>
+            </div>
+          </div>
         </tbody>
       </table>
     </div>

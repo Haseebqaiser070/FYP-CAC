@@ -52,10 +52,6 @@ export default function FolderEvaluation() {
   return (
     <div style={{ height: 700, width: "100%", padding: 20 }}>
       <h1 style={{ marginBottom: 30 }}>Evaluate Folders</h1>
-      <div className="py-4">
-        <h4>Course Code: </h4>
-        <h4>Course Name: </h4>
-      </div>
 
       <div style={{ marginTop: 30 }}>
         <DataGrid
