@@ -70,6 +70,12 @@ export default function CACnav() {
                   </div>
                   Meetings
                 </Link>
+                <Link class="nav-link sidenavtext" to="SetAvailability">
+                  <div class="sb-nav-link-icon">
+                    <BsFillCalendarWeekFill color="#fff" />
+                  </div>
+                  Set/Edit Availability
+                </Link>
               </div>
             </div>
             <div class="sb-sidenav-footer sidenavtext">

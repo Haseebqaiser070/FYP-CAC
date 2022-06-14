@@ -22,24 +22,24 @@
     justify-content: center;
     align-items: center;
     padding: 50px 0;
-    background-color: gray;
+    background-color: #fff;
   }
   
   .button {
-    position: absolute;
+    /* position: absolute; */
     color: red;
-    z-index: 1000;
+    /* z-index: 1000; */
     cursor: pointer;
   }
   .button i {
     font-size: 30px;
   }
-  .previous {
+  /* .previous {
     left: 1%;
   }
   .next {
     right: 1%;
-  }
+  } */
   .info-page {
     position: absolute;
     bottom: 20px;

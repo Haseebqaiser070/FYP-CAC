@@ -12,6 +12,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import axios from "axios";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 const style = {
   position: "absolute",
@@ -26,18 +27,20 @@ const style = {
   p: 4,
 };
 
-
 export default function AllCategories() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
-  
-  
-  const handleClose = () =>{
-    setDegree("Degree Program") 
-    setCategoryName("")
-    setEnteredCourse([])  
+
+  const [open1, setOpen1] = React.useState(false);
+  const handleOpen1 = () => setOpen1(true);
+  const handleClose1 = () => setOpen1(false);
+
+  const handleClose = () => {
+    setDegree("Degree Program");
+    setCategoryName("");
+    setEnteredCourse([]);
     setOpen(false);
-  }
+  };
 
   const [EnteredCourse, setEnteredCourse] = useState([]);
   const [Courses, setCourse] = useState([]);
@@ -45,10 +48,8 @@ export default function AllCategories() {
   const [Degree, setDegree] = useState("Degree Program");
   const [Rows, setRows] = useState([]);
 
-  
   function ActionButton(props) {
-    
-    const {row}=props
+    const { row } = props;
     return (
       <div>
         <Button
@@ -56,18 +57,18 @@ export default function AllCategories() {
           color="primary"
           size="small"
           style={{ marginLeft: 16 }}
-        //  onClick={Update(Rows._id)}
+          //  onClick={Update(Rows._id)}
         >
           <AiFillEdit style={{ marginRight: 10 }} />
           Edit
         </Button>
-  
+
         <Button
           variant="contained"
           color="primary"
           size="small"
           style={{ marginLeft: 16 }}
-         onClick={()=>handleDelete(row._id)}
+          onClick={() => handleDelete(row._id)}
         >
           <AiFillEdit style={{ marginRight: 10 }} />
           Delete
@@ -79,15 +80,14 @@ export default function AllCategories() {
     await axios.delete(`http://localhost:4000/Category/${id}`);
     getRows();
   };
-  const Update = async (id)=> {
+  const Update = async (id) => {
     const res = await axios.get(`http://localhost:4000/Category/${id}`);
-    const data = res.data
-
-  }
+    const data = res.data;
+  };
 
   useEffect(() => {
     getData();
-    getRows()
+    getRows();
   }, []);
   const getData = async () => {
     const res = await axios.get("http://localhost:4000/Course/show");
@@ -97,12 +97,12 @@ export default function AllCategories() {
   const getRows = async () => {
     const res = await axios.get("http://localhost:4000/Category/show");
     const data = await res.data;
-    console.log(data)
+    console.log(data);
     setRows([...data]);
   };
-  
+
   const columns = [
-    { field: "Degree", headerName: "Program",flex: 1, },
+    { field: "Degree", headerName: "Program", flex: 1 },
     {
       field: "CategoryName",
       headerName: "Category",
@@ -117,27 +117,26 @@ export default function AllCategories() {
       renderCell: ActionButton,
     },
   ];
-  const onSubmit=async(e)=>{
+  const onSubmit = async (e) => {
     e.preventDefault();
-    if (  
+    if (
       Degree != "Degree Program" &&
       CategoryName != "" &&
-      EnteredCourse.length >0 
-    ){
+      EnteredCourse.length > 0
+    ) {
       await axios.post("http://localhost:4000/Category/add", {
-        Degree ,
+        Degree,
         CategoryName,
-        EnteredCourse
+        EnteredCourse,
       });
-      setDegree("Degree Program") 
-      setCategoryName("")
-      setEnteredCourse([])
-      getRows()
+      setDegree("Degree Program");
+      setCategoryName("");
+      setEnteredCourse([]);
+      getRows();
     } else {
       alert("empty values");
     }
-
-  }
+  };
 
   return (
     <div
@@ -149,6 +148,75 @@ export default function AllCategories() {
       </h1>
 
       <div className="d-flex justify-content-end mb-4">
+        <Button
+          style={{ marginRight: 15 }}
+          variant="contained"
+          color="primary"
+          size="small"
+          onClick={handleOpen1}
+        >
+          <AiFillEdit style={{ marginRight: 10 }} />
+          Categorize Courses
+        </Button>
+
+        <Modal
+          open={open1}
+          onClose={handleClose1}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <div>
+              <FormControl fullWidth size="small">
+                <InputLabel id="taskType">Select Category</InputLabel>
+                <Select
+                  className="mb-4"
+                  labelId="course-category"
+                  name="course-category"
+                  // onChange={handleChange}
+                  // value={taskType}
+                  label="Task Type"
+                  autoWidth
+                >
+                  <MenuItem value={"CC"}>Computing Core</MenuItem>
+                  <MenuItem value={"CC"}>Update SOS</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+            <div className="form-floating mb-3">
+              <Autocomplete
+                multiple
+                variant="outlined"
+                id="tags-standard"
+                value={EnteredCourse}
+                options={Courses}
+                size="small"
+                getOptionLabel={(option) => option.Name}
+                defaultValue={null}
+                onChange={(e, val) => setEnteredCourse(val)}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="outlined"
+                    label="Enter Courses"
+                    placeholder="Enter Courses"
+                  />
+                )}
+              />
+            </div>
+
+            <Button
+              style={{ marginRight: 15 }}
+              variant="contained"
+              color="primary"
+              size="small"
+              // onClick={handleOpen1}
+            >
+              <AiFillEdit style={{ marginRight: 10 }} />
+              Submit
+            </Button>
+          </Box>
+        </Modal>
         <Button
           variant="contained"
           color="primary"
@@ -176,8 +244,10 @@ export default function AllCategories() {
                 <div className="card-body">
                   <form onSubmit={onSubmit}>
                     <div className="form-floating mb-3">
-              
-                      <select class="form-select" onChange={(e)=>setDegree(e.target.value)}>
+                      <select
+                        class="form-select"
+                        onChange={(e) => setDegree(e.target.value)}
+                      >
                         <option value={Degree} selected disabled hidden>
                           {Degree}
                         </option>
@@ -195,7 +265,7 @@ export default function AllCategories() {
                         id="inputName"
                         type="text"
                         value={CategoryName}
-                        onChange={(e)=>setCategoryName(e.target.value)}
+                        onChange={(e) => setCategoryName(e.target.value)}
                         required
                       />
                       <label htmlFor="Email" className="form-label">
@@ -207,6 +277,7 @@ export default function AllCategories() {
                       <Stack spacing={3} sx={{ width: 300 }}>
                         <Autocomplete
                           multiple
+                          variant="outlined"
                           id="tags-standard"
                           value={EnteredCourse}
                           options={Courses}
@@ -216,7 +287,7 @@ export default function AllCategories() {
                           renderInput={(params) => (
                             <TextField
                               {...params}
-                              variant="standard"
+                              variant="outlined"
                               label="Enter Courses"
                               placeholder="Enter Courses"
                             />
@@ -242,7 +313,7 @@ export default function AllCategories() {
         <DataGrid
           style={{ height: 400, width: "100%" }}
           columns={columns}
-          getRowId={(Rows)=>Rows._id}
+          getRowId={(Rows) => Rows._id}
           rows={Rows}
           pageSize={10}
           rowsPerPageOptions={[5]}

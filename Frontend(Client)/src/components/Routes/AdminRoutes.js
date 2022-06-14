@@ -23,6 +23,9 @@ import CourseFolderDeadlines from "../CourseFolderDeadlines";
 import Profile from "../UserProfile";
 
 import CourseReturnedView from "../Admin/CourseReturnedView";
+import InitializeTask from "../InitializeTask";
+import ViewCacAvailability from "../ViewCacAvailability";
+import AddProgram from "../AddProgram";
 function AdminRoutes() {
   return (
     <Routes>
@@ -39,6 +42,10 @@ function AdminRoutes() {
         />
         <Route path="/EditCourse/:id" element={<EditCourseForm />} />
         <Route path="/Meeting" element={<Meeting />} />
+        <Route
+          path="/ViewCacMemberAvailabilty"
+          element={<ViewCacAvailability />}
+        />
         <Route path="/AllSchemeofStudies" element={<AllSchemeofStudies />} />
         <Route path="/Sos" element={<Sos />} />
         <Route path="/SosCreation" element={<SosCreation />} />
@@ -51,7 +58,9 @@ function AdminRoutes() {
         <Route path="/Users" element={<Users />} />
         <Route path="/FacultyMembers" element={<FacultyMembers />} />
         <Route path="/CourseFolder" element={<CourseFolder />} />
+        <Route path="/AddProgram" element={<AddProgram />} />
         <Route path="/Tasks" element={<Tasks />} />
+        <Route path="/InitializeTask" element={<InitializeTask />} />
         <Route path="/flip" element={<DemoBook />} />
         <Route path="/profile" element={<Profile />} />
         <Route

@@ -3,8 +3,8 @@ import HTMLFlipBook from "react-pageflip";
 import { useEffect, useRef, useState } from "react";
 import useWindowWide from "./usewidth";
 export default function DemoBook() {
-  const [width, setWidth] = useState(800);
-  const [height, setHeight] = useState(500);
+  const [width, setWidth] = useState(100);
+  const [height, setHeight] = useState(100);
   const widthScreen = useWindowWide();
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(0);

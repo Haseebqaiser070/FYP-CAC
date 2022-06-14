@@ -124,6 +124,12 @@ export default function Navigation() {
                   </div>
                   Dashboard
                 </Link>
+                <Link class="nav-link sidenavtext " to="AddProgram">
+                  <div class="sb-nav-link-icon">
+                    <BsFillHouseDoorFill color="#fff" />
+                  </div>
+                  Add Program
+                </Link>
                 <Link class="nav-link sidenavtext " to="AddCourse">
                   <div class="sb-nav-link-icon">
                     <BsFillBookFill color="#fff" />
@@ -141,6 +147,13 @@ export default function Navigation() {
                     <BsListCheck color="#fff" />
                   </div>
                   Course Categories
+                </Link>
+
+                <Link class="nav-link sidenavtext " to="InitializeTask">
+                  <div class="sb-nav-link-icon">
+                    <BsListTask color="#fff" />
+                  </div>
+                  Initialize Task
                 </Link>
                 <Link class="nav-link sidenavtext " to="Tasks">
                   <div class="sb-nav-link-icon">
@@ -178,11 +191,21 @@ export default function Navigation() {
                   </div>
                   FacultyMembers
                 </Link>
+
                 <Link class="nav-link sidenavtext " to="Meeting">
                   <div class="sb-nav-link-icon">
                     <BsFillCalendarWeekFill color="#fff" />
                   </div>
                   CAC Meeting
+                </Link>
+                <Link
+                  class="nav-link sidenavtext "
+                  to="ViewCacMemberAvailabilty"
+                >
+                  <div class="sb-nav-link-icon">
+                    <BsFillCalendarWeekFill color="#fff" />
+                  </div>
+                  CAC Member Availability
                 </Link>
                 <Link class="nav-link sidenavtext " to="Flip">
                   <div class="sb-nav-link-icon">
