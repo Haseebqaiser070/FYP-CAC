@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./css/styles.css";
 import axios from "axios";
 import { useParams } from "react-router-dom";
@@ -31,19 +31,15 @@ export default function InitializeTask() {
   const handleClose = () => setOpen(false);
   const [taskType, setTaskType] = useState("");
   const [AssignMember, setAssignMember] = useState([]);
-  const [CAC,setCAC] = useState([])
-  const [Programs,setPrograms] = useState([])
-  const [Program,setProgram] = useState([])
-  
-console.log(rows)
+  const [CAC, setCAC] = useState([]);
+  const [Programs, setPrograms] = useState([]);
+  const [Program, setProgram] = useState([]);
+
+  console.log(rows);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(12)
-    if (
-      taskType != "" &&
-      AssignMember != "" &&
-      Program!= "" 
-    ) {
+    console.log(12);
+    if (taskType != "" && AssignMember != "" && Program != "") {
       const res = await axios.post("http://localhost:4000/Task/addInit", {
         taskType,
         AssignMember,
@@ -52,7 +48,7 @@ console.log(rows)
       setTaskType("");
       setAssignMember("");
       setProgram("");
-      getRows()
+      getRows();
     } else {
       alert("Empty Field");
     }
@@ -60,8 +56,8 @@ console.log(rows)
 
   useEffect(() => {
     getData();
-    getPrograms()
-    getRows()
+    getPrograms();
+    getRows();
   }, []);
   const getData = async () => {
     const response = await axios.get("http://localhost:4000/User/show/CAC");
@@ -69,35 +65,32 @@ console.log(rows)
   };
   const getPrograms = async () => {
     const res = await axios.get("http://localhost:4000/Program/show");
-    setPrograms(res.data)
+    setPrograms(res.data);
   };
   const getRows = async () => {
     const res = await axios.get("http://localhost:4000/Task/showInit");
-    console.log(res.data)
-    setRows(res.data)
+    console.log(res.data);
+    setRows(res.data);
   };
 
-  const[Init,setInit]=useState("")
+  const [Init, setInit] = useState("");
   const [open2, setOpen2] = useState(false);
   const handleClose2 = () => setOpen2(false);
 
- 
-
   function Mbutton(props) {
-  const{row}=props
+    const { row } = props;
 
-  return(
-    <div>
+    return (
+      <div>
         <Button
           variant="contained"
           color="primary"
           size="small"
           style={{ marginLeft: 16 }}
-          onClick={()=>{
-            setInit(row)
-            setOpen2(true)
-           }
-          }
+          onClick={() => {
+            setInit(row);
+            setOpen2(true);
+          }}
         >
           <AiFillDelete style={{ marginRight: 10 }} />
           Create Task
@@ -106,26 +99,24 @@ console.log(rows)
           variant="contained"
           color="primary"
           size="small"
-          style={{ marginLeft: 16 }}
-           // onClick={}
+          style={{ marginLeft: 16, padding: 10 }}
+          // onClick={}
         >
-          <AiFillEdit style={{ marginRight: 10 }} />
-          Edit
+          <AiFillEdit />
         </Button>
 
         <Button
           variant="contained"
           color="primary"
           size="small"
-          style={{ marginLeft: 16 }}
+          style={{ marginLeft: 16, padding: 10 }}
           // onClick={}
         >
-          <AiFillDelete style={{ marginRight: 10 }} />
-          Delete
+          <AiFillDelete />
         </Button>
       </div>
-    )
-}
+    );
+  }
   const columns = [
     {
       field: "taskType",
@@ -136,20 +127,24 @@ console.log(rows)
       field: "Program",
       headerName: "Program",
       flex: 1,
-    },{
+    },
+    {
       field: "AssignMember",
       headerName: "CAC Members Assigned",
-      renderCell: (params) => params?.row?.AssignMember.map(i =>{return(<>{i.Name +"  "}</>)}),
+      renderCell: (params) =>
+        params?.row?.AssignMember.map((i) => {
+          return <>{i.Name + "  "}</>;
+        }),
       flex: 2,
     },
-    
 
     {
       field: "Action",
       headerName: "Action",
-      flex: 1,
+      flex: 3,
       editable: false,
-      renderCell: Mbutton,}
+      renderCell: Mbutton,
+    },
   ];
   return (
     <div
@@ -172,19 +167,19 @@ console.log(rows)
         </Button>
       </div>
       <Modal
-          open={open2}
-          onClose={handleClose2}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <div className="container">
-              <div>
-                <CreateTasks pre={Init} />
-              </div>
+        open={open2}
+        onClose={handleClose2}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <div className="container">
+            <div>
+              <CreateTasks pre={Init} />
             </div>
-          </Box>
-        </Modal>
+          </div>
+        </Box>
+      </Modal>
 
       <Modal
         open={open}
@@ -214,8 +209,12 @@ console.log(rows)
                   <MenuItem value={"Update CDF"}>Update CDF</MenuItem>
                   <MenuItem value={"Create Syllabus"}>Create Syllabus</MenuItem>
                   <MenuItem value={"Update Syllabus"}>Update Syllabus</MenuItem>
-                  <MenuItem value={"Create Lab Manual"}>Create Lab Manual</MenuItem>
-                  <MenuItem value={"Update Lab Manual"}>Update Lab Manual</MenuItem>
+                  <MenuItem value={"Create Lab Manual"}>
+                    Create Lab Manual
+                  </MenuItem>
+                  <MenuItem value={"Update Lab Manual"}>
+                    Update Lab Manual
+                  </MenuItem>
                 </Select>
               </FormControl>
             </div>
@@ -251,10 +250,12 @@ console.log(rows)
                   autoWidth
                 >
                   <MenuItem value={"For All"}>For All</MenuItem>
-                  {Programs.map((a)=>{
-                      return(
-                        <MenuItem value={a.Degree+" "+ a.Program}>{a.Degree}{" "}{a.Program}</MenuItem>
-                      )
+                  {Programs.map((a) => {
+                    return (
+                      <MenuItem value={a.Degree + " " + a.Program}>
+                        {a.Degree} {a.Program}
+                      </MenuItem>
+                    );
                   })}
                 </Select>
               </FormControl>
@@ -268,7 +269,7 @@ console.log(rows)
               <AiFillEdit style={{ marginRight: 10 }} />
               Initialize Task
             </Button>
-         </form>
+          </form>
         </Box>
       </Modal>
 
@@ -286,4 +287,3 @@ console.log(rows)
     </div>
   );
 }
-

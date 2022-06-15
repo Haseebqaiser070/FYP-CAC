@@ -42,7 +42,7 @@ export default function AddCourse() {
       className="container"
       style={{ height: 700, width: "100%", padding: 20 }}
     >
-      <h1 className="py-4">Add Cources</h1>
+      <h1 className="py-4">All Cources</h1>
 
       <table style={{ textAlign: "center" }} className="table" id="list">
         <thead>
@@ -76,9 +76,9 @@ export default function AddCourse() {
                       size="small"
                       style={{ marginLeft: 16 }}
                       onClick={() => {
-                        navigate(
-                          `/Admin/CourseView/${cor._id}`,{ replace: true }
-                        );
+                        navigate(`/Admin/CourseView/${cor._id}`, {
+                          replace: true,
+                        });
                       }}
                     >
                       <AiFillEdit style={{ marginRight: 10 }} />
