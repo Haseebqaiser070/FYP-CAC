@@ -1,8 +1,8 @@
-const Repo = require("../../Models/RepoCourse");
-const Userdoc = require("../../Models/User");
-const Versionodoc=require("../../Models/CourseModels/CourseVersion")
-const Task = require("../../Models/Tasks");
-const ReturnCourse = require("../../Models/CourseModels/ReturnCourse");
+const Repo = require("../../../Models/RepoCourse");
+const Userdoc = require("../../../Models/User");
+const Versionodoc=require("../../../Models/CourseModels/CourseVersion")
+const Task = require("../../../Models/Tasks");
+const ReturnCourse = require("../../../Models/CourseModels/ReturnCourse");
 
 module.exports.showUsers = async (req, res) => {
     try {

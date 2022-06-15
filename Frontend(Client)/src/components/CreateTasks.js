@@ -52,8 +52,9 @@ function TaskDetails() {
   );
 }
 
-export default function CreateTasks({ func }) {
+export default function CreateTasks(props) {
   axios.defaults.withCredentials = true;
+  console.log("pops",props)
   const [taskType, settaskType] = useState("");
   const [User, setUser] = useState("");
   const [Deadline, setDeadline] = useState("");
@@ -102,7 +103,7 @@ export default function CreateTasks({ func }) {
       setDeadline("");
       setStatus("");
       setCourse("");
-      func;
+
     } else {
       alert("Empty Field");
     }
@@ -124,6 +125,7 @@ export default function CreateTasks({ func }) {
                 id="outlined-basic"
                 label="Task Type"
                 variant="outlined"
+                value = {props.pre.taskType}
                 size="small"
                 fullWidth
               />

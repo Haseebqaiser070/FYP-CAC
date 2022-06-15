@@ -13,6 +13,7 @@ var RepoRouter = require("./Routes/AdminRoutes/Repo")
 var CourseVersion = require("./Routes/CAC/CourseVersion")
 var TaskRouter = require("./Routes/AdminRoutes/Task")
 var CourseCreationRouter = require("./Routes/CAC/CoursesCreation")
+var ProgramRouter = require("./Routes/AdminRoutes/Program")
 
 
 var { getUser } = require("./Middleware/User");
@@ -28,6 +29,7 @@ app.use("/Auth", AuthRouter);
 app.use("/Course", getUser, CourseRouter);
 app.use("/User", getUser, UserRouter);
 app.use("/Faculty", getUser, FacultyRouter);
+app.use("/Program", getUser, ProgramRouter);
 app.use("/Meeting", getUser, MeetingRouter);
 app.use("/Category", getUser, CategoryRouter);
 app.use("/SOS", getUser, SOSRouter);

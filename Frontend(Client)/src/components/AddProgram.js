@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import "./css/styles.css";
 import axios from "axios";
 import { useParams } from "react-router-dom";
@@ -11,69 +11,135 @@ import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import { Box } from "@mui/system";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 500,
-  bgcolor: "#fff",
-  boxShadow: 24,
-  p: 4,
-  boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
-};
-
-const columns = [
-  {
-    field: "degreeLevel",
-    headerName: "Degree Level",
-    flex: 1,
-  },
-  {
-    field: "program",
-    headerName: "Program Name",
-    flex: 1,
-  },
-  {
-    field: "Action",
-    headerName: "Action",
-    flex: 1,
-    editable: false,
-    renderCell: () => (
-      <>
-        <Button
-          variant="contained"
-          color="primary"
-          size="small"
-          style={{ marginLeft: 16 }}
-          // onClick={() => setOpen(true)}
-        >
-          <AiFillEdit style={{ marginRight: 10 }} />
-          Edit
-        </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          size="small"
-          style={{ marginLeft: 16 }}
-          // onClick={() => setOpen(true)}
-        >
-          <AiFillDelete style={{ marginRight: 10 }} />
-          Delete
-        </Button>
-      </>
-    ),
-  },
-];
-
 export default function AddProgram() {
   const [rows, setRows] = useState([]);
   const [open, setOpen] = useState(false);
+  const [up, setup] = useState(false);
+  useEffect(() => {
+    getRows();
+  }, []);
+  const getRows = async () => {
+    const res = await axios.get("http://localhost:4000/Program/show");
+    setRows(res.data)
+  };
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {setup(false);setOpen(false)};
+  const[id,setid]=useState("")
+  const [Degree, setDegree] = useState("");
+  const [Program, setProgram] = useState("");
+  const Update = async() => {
+    setup(true)
+    const res = await axios.get(`http://localhost:4000/Program/${id}`);
+    setDegree(res.data.Degree)
+    setProgram(res.data.Program)
+  };
 
-  const [degreeLevel, setDegreeLevel] = useState("");
-  const [programName, setProgramName] = useState("");
+  const handleSubmit = async(e)=>{
+    e.preventDefault();
+    console.log("here")
+      if (!up&&
+        Degree != "" &&
+        Program != "" 
+      ) 
+      {
+        const res = await axios.post("http://localhost:4000/Program/add", {
+          Degree,
+          Program,
+        });
+        if(res.data=="Already Exists") alert("Already Exists")
+        else{
+          setDegree("");
+          setProgram("");
+          getRows();
+        }
+        
+      }
+      if (up&&
+        Degree != "" &&
+        Program != "" 
+      ){
+        const res = await axios.put(`http://localhost:4000/Program/${id}`, {
+          Degree,
+          Program
+        });
+        if(res.data=="Already Exists") alert("Already Exists")
+        else{
+          setDegree("");
+          setProgram("");
+          setup(false)
+          getRows();
+        }
+      } 
+       else {
+        alert("Empty Field");
+      }
+    };
+  
+
+    const style = {
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      width: 500,
+      bgcolor: "#fff",
+      boxShadow: 24,
+      p: 4,
+      boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+    };
+    
+    const columns = [
+      {
+        field: "Degree",
+        headerName: "Degree Level",
+        flex: 1,
+      },
+      {
+        field: "Program",
+        headerName: "Program Name",
+        flex: 1,
+      },
+      {
+        field: "Action",
+        headerName: "Action",
+        flex: 1,
+        editable: false,
+        renderCell: ActionButton, 
+      },
+    ];
+    
+  function ActionButton({row}) {
+ 
+    return (
+    <>
+      <Button
+        variant="contained"
+        color="primary"
+        size="small"
+        style={{ marginLeft: 16 }}
+        onClick={() =>{
+          setid(row._id)
+          Update()
+          setOpen(true)}}
+      >
+        <AiFillEdit style={{ marginRight: 10 }} />
+        Edit
+      </Button>
+      <Button
+        variant="contained"
+        color="primary"
+        size="small"
+        style={{ marginLeft: 16 }}
+        onClick={async() =>{ 
+          await axios.delete(`http://localhost:4000/Program/${row._id}`)
+          getRows()
+        }}
+      >
+        <AiFillDelete style={{ marginRight: 10 }} />
+        Delete
+      </Button>
+    </>
+  )}
 
   return (
     <div
@@ -103,6 +169,7 @@ export default function AddProgram() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
+          <form onSubmit={handleSubmit}>
           <div className="col">
             <FormControl fullWidth size="small">
               <InputLabel id="taskType">Select Degree</InputLabel>
@@ -110,9 +177,9 @@ export default function AddProgram() {
                 className="mb-4"
                 labelId="selectdegree"
                 id="selectdegree"
-                value={degreeLevel}
+                value={Degree}
                 label="Select Degree"
-                onChange={(e) => setDegreeLevel(e.target.value)}
+                onChange={(e) => setDegree(e.target.value)}
                 autoWidth
               >
                 <MenuItem value={"BS"}>BS</MenuItem>
@@ -122,6 +189,7 @@ export default function AddProgram() {
             </FormControl>
           </div>
           <div className="col">
+          <FormControl fullWidth size="small">
             <TextField
               className="mb-4"
               id="outlined-basic"
@@ -129,20 +197,23 @@ export default function AddProgram() {
               variant="outlined"
               size="small"
               fullWidth
-              value={programName}
-              onChange={(e) => setProgramName(e.target.value)}
+              value={Program}
+              onChange={(e) => setProgram(e.target.value)}
             />
+            </FormControl>
           </div>
           <Button
             variant="contained"
             color="primary"
             size="small"
+            type="submit"
             style={{ marginTop: 16 }}
-            //   onClick={handleOpen}
+            
           >
             <AiFillEdit style={{ marginRight: 10 }} />
             Add Program
           </Button>
+          </form>
         </Box>
       </Modal>
       <div>
@@ -150,9 +221,9 @@ export default function AddProgram() {
           style={{ height: 300, width: "100%" }}
           columns={columns}
           rows={rows}
+          getRowId={(Rows) => Rows._id}
           pageSize={10}
           rowsPerPageOptions={[5]}
-          checkboxSelection
           disableSelectionOnClick
         />
       </div>

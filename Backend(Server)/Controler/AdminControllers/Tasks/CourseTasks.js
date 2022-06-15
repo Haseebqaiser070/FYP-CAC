@@ -1,7 +1,7 @@
-const Task = require("../../Models/Tasks");
-const coursedoc = require("../../Models/CourseModels/Course");
-const ReturnCourse = require("../../Models/CourseModels/ReturnCourse");
-const Versionodoc=require("../../Models/CourseModels/CourseVersion")
+const Task = require("../../../Models/Tasks");
+const coursedoc = require("../../../Models/CourseModels/Course");
+const ReturnCourse = require("../../../Models/CourseModels/ReturnCourse");
+const Versionodoc=require("../../../Models/CourseModels/CourseVersion")
 
 module.exports.Showall = async (req, res) => {
     try {

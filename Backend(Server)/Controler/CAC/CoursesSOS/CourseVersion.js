@@ -1,4 +1,4 @@
-const Versionodoc=require("../../Models/CourseModels/CourseVersion")
+const Versionodoc=require("../../../Models/CourseModels/CourseVersion")
 module.exports.Add= async (req,res)=>{
     try {
         const user = req.user

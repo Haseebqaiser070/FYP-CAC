@@ -1,5 +1,5 @@
-var Task = require("../../Models/Tasks");
-var Userdoc = require("../../Models/User");
+var Task = require("../../../Models/Tasks");
+var Userdoc = require("../../../Models/User");
 
 module.exports.Add = async (req, res) => {
   try {
