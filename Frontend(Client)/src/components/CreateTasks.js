@@ -54,7 +54,6 @@ function TaskDetails() {
 
 export default function CreateTasks(props) {
   axios.defaults.withCredentials = true;
-  console.log("pops",props)
   const [taskType, settaskType] = useState("");
   const [User, setUser] = useState("");
   const [Deadline, setDeadline] = useState("");
@@ -91,13 +90,13 @@ export default function CreateTasks(props) {
       Status != "" &&
       Course != ""
     ) {
-      const res = await axios.post("http://localhost:4000/Task/add", {
-        taskType,
-        User,
-        Deadline,
-        Status,
-        Course,
-      });
+      // const res = await axios.post("http://localhost:4000/Task/add", {
+      //   taskType,
+      //   User,
+      //   Deadline,
+      //   Status,
+      //   Course,
+      // });
       settaskType("");
       setUser("");
       setDeadline("");
@@ -143,7 +142,7 @@ export default function CreateTasks(props) {
                   onChange={(e) => setUser(e.target.value)}
                   autoWidth
                 >
-                  {Avail.map((a) => {
+                  {props.pre.AssignMember.map((a) => {
                     return <MenuItem value={a}>{a.Name}</MenuItem>;
                   })}
                 </Select>
@@ -169,6 +168,8 @@ export default function CreateTasks(props) {
                 </Select>
               </FormControl>
             </div>
+            {props.pre.taskType =="Create SOS"||props.pre.taskType =="Update SOS"?
+            
             <div>
               <Autocomplete
                 className="mb-4"
@@ -187,7 +188,8 @@ export default function CreateTasks(props) {
                 )}
               />
             </div>
-
+            :props.pre.taskType =="Create CDF"||props.pre.taskType =="Update CDF"?
+            
             <div>
               <Autocomplete
                 className="mb-4"
@@ -207,7 +209,7 @@ export default function CreateTasks(props) {
                 )}
               />
             </div>
-
+            :props.pre.taskType =="Create Syllabus"||props.pre.taskType =="Update Syllabus"?
             <div>
               <Autocomplete
                 className="mb-4"
@@ -227,7 +229,8 @@ export default function CreateTasks(props) {
                 )}
               />
             </div>
-            <div>
+            :props.pre.taskType =="Create Lab Manual"||props.pre.taskType =="Update Lab Manual"?
+              <div>
               <Autocomplete
                 className="mb-4"
                 multiple
@@ -246,6 +249,11 @@ export default function CreateTasks(props) {
                 )}
               />
             </div>
+            
+            :""
+              }
+            
+            
             <div className="col">
               <FormControl fullWidth size="small">
                 <InputLabel id="taskType">Status</InputLabel>

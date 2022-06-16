@@ -46,7 +46,7 @@ export default function InitializeTask() {
         Program,
       });
       setTaskType("");
-      setAssignMember("");
+      setAssignMember([]);
       setProgram("");
       getRows();
     } else {
@@ -224,7 +224,7 @@ export default function InitializeTask() {
                 multiple
                 id="tags-standard"
                 options={CAC}
-                defaultValue={AssignMember}
+                value={AssignMember}
                 getOptionLabel={(option) => option.Name}
                 onChange={(e, val) => setAssignMember(val)}
                 renderInput={(params) => (
