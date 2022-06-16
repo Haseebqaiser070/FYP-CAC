@@ -48,6 +48,7 @@ export default function AllCategories() {
   const [Programdb, setProgramdb] = useState([]);
   const [Degree, setDegree] = useState("Degree Program");
   const [Rows, setRows] = useState([]);
+  const [Category, setCategory] = useState([]);
   
   const getPrograms = async () => {
     const res = await axios.get("http://localhost:4000/Program/show");
@@ -108,7 +109,11 @@ export default function AllCategories() {
   };
 
   const columns = [
-    { field: "Degree", headerName: "Program", flex: 1 },
+    { 
+    field: "Degree",
+    headerName: "Program",
+    flex: 1,
+    valueGetter: (params) =>{ return(params?.row?.Degree?.Degree+" "+params?.row?.Degree?.Program)} },
     {
       field: "CategoryName",
       headerName: "Category",
@@ -127,8 +132,7 @@ export default function AllCategories() {
     e.preventDefault();
     if (
       Degree != "Degree Program" &&
-      CategoryName != "" &&
-      EnteredCourse.length > 0
+      CategoryName != "" 
     ) {
       await axios.post("http://localhost:4000/Category/add", {
         Degree,
@@ -179,13 +183,18 @@ export default function AllCategories() {
                   className="mb-4"
                   labelId="course-category"
                   name="course-category"
-                  // onChange={handleChange}
-                  // value={taskType}
-                  label="Task Type"
+                  onChange={(e)=>{setCategory(e.target.value)}}
+                  value={Category}
+                  label="Categories"
                   autoWidth
                 >
-                  <MenuItem value={"CC"}>Computing Core</MenuItem>
-                  <MenuItem value={"CC"}>Update SOS</MenuItem>
+                {
+                Rows.map((i)=>{
+                  return(                    
+                    <MenuItem value={i._id}>{i.CategoryName}</MenuItem>                    
+                    )
+                  }
+                )}
                 </Select>
               </FormControl>
             </div>

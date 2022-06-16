@@ -2,7 +2,7 @@ var mongoose = require("mongoose");
 var CategorySchema = new mongoose.Schema({
     Degree:{
         type: mongoose.Schema.ObjectId,
-        ref: 'Course',
+        ref: 'Progrm',
     },
     CategoryName:{
         type:String,
