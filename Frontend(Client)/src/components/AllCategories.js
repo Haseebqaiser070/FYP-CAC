@@ -45,9 +45,14 @@ export default function AllCategories() {
   const [EnteredCourse, setEnteredCourse] = useState([]);
   const [Courses, setCourse] = useState([]);
   const [CategoryName, setCategoryName] = useState("");
+  const [Programdb, setProgramdb] = useState([]);
   const [Degree, setDegree] = useState("Degree Program");
   const [Rows, setRows] = useState([]);
-
+  
+  const getPrograms = async () => {
+    const res = await axios.get("http://localhost:4000/Program/show");
+    setProgramdb(res.data);
+  };
   function ActionButton(props) {
     const { row } = props;
     return (
@@ -87,6 +92,7 @@ export default function AllCategories() {
 
   useEffect(() => {
     getData();
+    getPrograms();
     getRows();
   }, []);
   const getData = async () => {
@@ -250,12 +256,11 @@ export default function AllCategories() {
                       >
                         <option value={Degree} selected disabled hidden>
                           {Degree}
-                        </option>
-                        <option>Computer Science</option>
-                        <option>Software Engineering</option>
-                        <option>Artificial Intelligence</option>
-                        <option>Cyber Security</option>
-                        <option>Data Science</option>
+                        </option>{
+                          Programdb.map((p)=>{
+                            return(
+                        <option value={p._id}>{p.Degree}{" "}{p.Program}</option>)})
+                        }
                       </select>
                     </div>
 
