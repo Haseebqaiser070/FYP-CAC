@@ -278,29 +278,6 @@ export default function AllCategories() {
                       </label>
                     </div>
 
-                    <div className="form-floating mb-3">
-                      <Stack spacing={3} sx={{ width: 300 }}>
-                        <Autocomplete
-                          multiple
-                          variant="outlined"
-                          id="tags-standard"
-                          value={EnteredCourse}
-                          options={Courses}
-                          getOptionLabel={(option) => option.Name}
-                          defaultValue={null}
-                          onChange={(e, val) => setEnteredCourse(val)}
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              variant="outlined"
-                              label="Enter Courses"
-                              placeholder="Enter Courses"
-                            />
-                          )}
-                        />
-                      </Stack>
-                    </div>
-
                     <div className="d-flex align-items-center justify-content-between mt-4 mb-0">
                       <button type="Submit" className="btn btn-primary">
                         Add Category

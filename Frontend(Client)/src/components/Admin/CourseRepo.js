@@ -4,7 +4,15 @@ import Popup from "../AddCourceForm";
 import axios from "axios";
 import Button from "@mui/material/Button";
 import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
-import { Box, Modal } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Modal,
+  Select,
+  TextField,
+} from "@mui/material";
 
 const style = {
   position: "absolute",
@@ -24,6 +32,8 @@ export default function CourseRepo() {
   const [PreCode, setPreCode] = useState("");
   const [Name, setName] = useState("");
   const [SufCode, setSufCode] = useState("");
+  const [Category, setCategory] = useState("");
+  const [CreditHour, setCreditHour] = useState("");
   const [RepoCourse, setRepoCourse] = useState([]);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -51,18 +61,24 @@ export default function CourseRepo() {
     e.preventDefault();
     if (PreCode != "" && SufCode != "" && Name != "") {
       var Code = PreCode + "-" + SufCode;
-      const reposnse  = await axios.post("http://localhost:4000/RepoCourse/add", {
-        Code,
-        Name,
-      });
-      if(reposnse.data == "Already Exists Code") alert("Conflict with Course Code")
-      else if(reposnse.data == "Already Exists Name") alert("Conflict with Course Name")
-      else{
-      setPreCode("");
-      setSufCode("");
-      setName("");
-      getRepoCourse();
-      setIsOpen(false);}
+      const reposnse = await axios.post(
+        "http://localhost:4000/RepoCourse/add",
+        {
+          Code,
+          Name,
+        }
+      );
+      if (reposnse.data == "Already Exists Code")
+        alert("Conflict with Course Code");
+      else if (reposnse.data == "Already Exists Name")
+        alert("Conflict with Course Name");
+      else {
+        setPreCode("");
+        setSufCode("");
+        setName("");
+        getRepoCourse();
+        setIsOpen(false);
+      }
     } else {
       alert("empty values");
     }
@@ -85,7 +101,7 @@ export default function CourseRepo() {
             size="medium"
             onClick={() => setOpen(true)}
           >
-            Add New RepoCourse
+            Initialize New Course
           </Button>
 
           <Modal
@@ -99,11 +115,30 @@ export default function CourseRepo() {
                 Add New Cource
               </h4>
               <form onSubmit={AddRepoCourse}>
-                <div class="row">
-                  <div className="mb-3 col-4">
-                    <label for="course-code" className="form-label">
-                      Course Code
-                    </label>
+                <div className="row">
+                  <div className="col">
+                    <FormControl fullWidth size="small">
+                      <InputLabel id="taskType">Select Credit Hour</InputLabel>
+                      <Select
+                        className="mb-4"
+                        labelId="selectcredithour"
+                        id="selectcredithour"
+                        value={CreditHour}
+                        label="Select Category"
+                        onChange={(e) => setCreditHour(e.target.value)}
+                        autoWidth
+                      >
+                        <MenuItem value={"4(0,4)"}>4(0,4)</MenuItem>
+                        <MenuItem value={"4(0,4)"}>4(3,1)</MenuItem>
+                        <MenuItem value={"4(0,4)"}>3(3,0)</MenuItem>
+                        <MenuItem value={"4(0,4)"}>3(2,1)</MenuItem>
+                        <MenuItem value={"4(0,4)"}>2(0,2)</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="mb-3 col">
                     <div className="row">
                       <div className="col">
                         <select
@@ -111,7 +146,7 @@ export default function CourseRepo() {
                           onChange={(e) => setPreCode(e.target.value)}
                         >
                           <option value="" selected disabled hidden>
-                            select
+                            Code Prefix
                           </option>
                           <option>MTH</option>
                           <option>CSC</option>
@@ -124,33 +159,38 @@ export default function CourseRepo() {
                         </select>
                       </div>
                       <div className="col">
-                        <input
-                          maxlength="3"
-                          pattern="^[0-9]{3}$"
-                          type="text"
-                          className="form-control"
-                          id="course-code"
-                          placeholder="Code"
-                          value={SufCode}
-                          onChange={(e) => setSufCode(e.target.value)}
-                        />
+                        <FormControl fullWidth size="small">
+                          <TextField
+                            className="mb-4"
+                            id="course-code"
+                            label="Code"
+                            variant="outlined"
+                            size="small"
+                            fullWidth
+                            value={SufCode}
+                            onChange={(e) => setSufCode(e.target.value)}
+                          />
+                        </FormControl>
                       </div>
                     </div>
                   </div>
 
-                  <div class="mb-3 col col-6">
-                    <label for="Repocourse-name" class="form-label">
-                      Course Name
-                    </label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="Repocourse-name"
-                      value={Name}
-                      onChange={(e) => setName(e.target.value)}
-                    />
+                  <div class="mb-3 col">
+                    <FormControl fullWidth size="small">
+                      <TextField
+                        className="mb-4"
+                        id="Repocourse-name"
+                        label="Course Title"
+                        variant="outlined"
+                        size="small"
+                        fullWidth
+                        value={Name}
+                        onChange={(e) => setName(e.target.value)}
+                      />
+                    </FormControl>
                   </div>
                 </div>
+
                 <input
                   type="submit"
                   name="submit"
