@@ -70,6 +70,13 @@ export default function CACnav() {
                   CDF Assigned
                 </Link>
 
+                <Link class="nav-link sidenavtext" to="CacSyllabusTask">
+                  <div class="sb-nav-link-icon">
+                    <BsFiles color="#fff" />
+                  </div>
+                  Syllabus Assigned
+                </Link>
+
                 <Link class="nav-link sidenavtext" to="FacultyMeeting">
                   <div class="sb-nav-link-icon">
                     <BsFillCalendarWeekFill color="#fff" />

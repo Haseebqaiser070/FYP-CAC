@@ -54,13 +54,14 @@ function TaskDetails() {
 
 export default function CreateTasks(props) {
   axios.defaults.withCredentials = true;
-  const [taskType, settaskType] = useState("");
+  const [taskType, settaskType] = useState(props.pre.taskType);
   const [User, setUser] = useState("");
   const [Deadline, setDeadline] = useState("");
   const [Status, setStatus] = useState("");
   const [Avail, setAvail] = useState([]);
   const [RepoCourse, setRepoCourse] = useState([]);
   const [Course, setCourse] = useState("");
+  
   useEffect(() => {
     getRepoCourse();
     getData();
@@ -90,14 +91,14 @@ export default function CreateTasks(props) {
       Status != "" &&
       Course != ""
     ) {
-      // const res = await axios.post("http://localhost:4000/Task/add", {
-      //   taskType,
-      //   User,
-      //   Deadline,
-      //   Status,
-      //   Course,
-      // });
-      settaskType("");
+      const res = await axios.post("http://localhost:4000/Task/add", {
+        obj:{taskType,
+        User,
+        Deadline,
+        Status,
+        Course},
+        id: props.pre.taskType
+      });
       setUser("");
       setDeadline("");
       setStatus("");
@@ -188,7 +189,7 @@ export default function CreateTasks(props) {
                 )}
               />
             </div>
-            :props.pre.taskType =="Create CDF"||props.pre.taskType =="Update CDF"?
+            :props.pre.taskType =="Update CDF"?
             
             <div>
               <Autocomplete
@@ -209,7 +210,7 @@ export default function CreateTasks(props) {
                 )}
               />
             </div>
-            :props.pre.taskType =="Create Syllabus"||props.pre.taskType =="Update Syllabus"?
+            :props.pre.taskType =="Update Syllabus"?
             <div>
               <Autocomplete
                 className="mb-4"
@@ -229,7 +230,7 @@ export default function CreateTasks(props) {
                 )}
               />
             </div>
-            :props.pre.taskType =="Create Lab Manual"||props.pre.taskType =="Update Lab Manual"?
+            :props.pre.taskType =="Update Lab Manual"?
               <div>
               <Autocomplete
                 className="mb-4"

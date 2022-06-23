@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import "./css/styles.css";
+import "../css/styles.css";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
+import { useNavigate } from "react-router-dom";
+import { AiOutlineCheckSquare, AiFillEdit } from "react-icons/ai";
 
 function ActionButtons(props) {
   const navigate = useNavigate();
@@ -48,23 +50,27 @@ function ActionButtons(props) {
   );
 }
 
-export default function CacCdfTask() {
+export default function CacSyllabus() {
   const [Rows, setRows] = useState([]);
+  useEffect(() => {
+    getRepoCourse();
+  }, []);
+  const getRepoCourse = async () => {
+    const response = await axios.get("http://localhost:4000/SyllabusCreate/get");
+    console.log(response.data);
+    setRows(response.data);
+  };
+
   const columns = [
     {
-      field: "tittle",
-      headerName: "Tittle",
+      field: "Code",
+      headerName: "Code",
       flex: 1,
     },
 
     {
-      field: "deadline",
-      headerName: "Deadline",
-      flex: 1,
-    },
-    {
-      field: "status",
-      headerName: "Status",
+      field: "Name",
+      headerName: "Name",
       flex: 1,
     },
     {
@@ -78,7 +84,7 @@ export default function CacCdfTask() {
   return (
     <div className="container" style={{ width: "100%", padding: 20 }}>
       <h1 className="py-4">
-        <b>CDF Assigned</b>
+        <b>Syllabus Assigned</b>
       </h1>
       <div>
         <DataGrid

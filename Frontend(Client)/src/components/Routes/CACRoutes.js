@@ -4,22 +4,22 @@ import CACDashboard from "../CACMember/CACDashboard";
 import CACnav from "../CACMember/CACnav";
 import CacCourseTask from "../CacCourseTask";
 import CacAllTasks from "../CacAllTasks";
-import CacCdfTask from "../CacCdfTask";
+import CacCdfTask from "../CACMember/CacCdfTask";
 import AddNewCourseDocument from "../CoursesCreations/AddNewCourseDocument";
 import Course from "../CoursesCreations/Course";
 import CacAvailability from "../CacAvailability";
 import CacInitializedTasks from "../CacInitializedTasks";
+import CacSyllabus from "../CACMember/CACSyllabus";
+
 function CACRoutes() {
   return (
     <Routes>
       <Route path="/" element={<CACnav />}>
         <Route path="/Dashboard" element={<CACDashboard />} />
-        <Route path="/CacCourseTask">
-          <Route path=":id" element={<CacCourseTask />} />
-          <Route index element={<CacCourseTask />} />
-        </Route>
+        <Route path="/CacCourseTask" Route index element={<CacCourseTask />} />
         <Route path="/CourseCreation/:Code" element={<Course />} />
         <Route path="/AddnewCourse/:Code" element={<AddNewCourseDocument />} />
+        <Route path="/CacSyllabusTask" Route index element={<CacSyllabus />} />
         <Route path="/CacAllTasks">
           <Route path=":id" element={<CacAllTasks />} />
           <Route index element={<CacAllTasks />} />
@@ -28,10 +28,9 @@ function CACRoutes() {
           <Route path=":id" element={<CacInitializedTasks />} />
           <Route index element={<CacInitializedTasks />} />
         </Route>
-        <Route path="/CacCdfTask">
-          <Route path=":id" element={<CacCdfTask />} />
-          <Route index element={<CacCdfTask />} />
-        </Route>
+
+        <Route path="/CacCdfTask" element={<CacCdfTask />} />
+        
         <Route path="/FacultyMeeting">
           <Route path=":id" element={<FacultyMeeting />} />
           <Route index element={<FacultyMeeting />} />

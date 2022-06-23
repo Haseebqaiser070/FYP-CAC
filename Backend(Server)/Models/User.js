@@ -38,6 +38,13 @@ var UserSchema = new mongoose.Schema({
         default:'none'
         }]
     ,
+    CourseSyllabus:[
+        {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Repo',
+        default:'none'
+        }]
+    ,
     CourseFolders:[
         {
         type: mongoose.Schema.ObjectId,
