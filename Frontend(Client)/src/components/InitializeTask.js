@@ -175,7 +175,7 @@ export default function InitializeTask() {
         <Box sx={style}>
           <div className="container">
             <div>
-              <CreateTasks pre={Init} />
+              <CreateTasks pre={Init} func={()=>getRows()} />
             </div>
           </div>
         </Box>

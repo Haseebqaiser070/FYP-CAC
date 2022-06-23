@@ -97,13 +97,13 @@ export default function CreateTasks(props) {
         Deadline,
         Status,
         Course},
-        id: props.pre.taskType
+        id: props.pre._id
       });
       setUser("");
       setDeadline("");
       setStatus("");
       setCourse("");
-
+      props.func()
     } else {
       alert("Empty Field");
     }

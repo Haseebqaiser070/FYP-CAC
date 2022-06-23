@@ -7,24 +7,24 @@ module.exports.Add = async (req, res) => {
     if (!req.user) return await res.status(401).json("Timed Out");
     if (!req.user.Roles.includes("Admin")) return await res.status(401).json("UnAutherized");
     const task = await Task.create(req.body.obj);
-    
-    if(req.body.taskType=="Add New Course"){
-        req.body.User.CourseCreation=[...req.body.obj.User.CourseCreation,req.body.obj.Course]
+    console.log("body",req.body)
+    if(req.body.obj.taskType=="Create Course"){
+        req.body.obj.User.CourseCreation=[...req.body.obj.User.CourseCreation,req.body.obj.Course._id]
     }
     
-    else if(req.body.taskType=="Create CDF"){
-        req.body.User.CourseCDF=[...req.body.obj.User.CourseCDF,req.body.obj.Course]
+    else if(req.body.obj.taskType=="Create CDF"){
+        req.body.obj.User.CourseCDF=[...req.body.obj.User.CourseCDF,req.body.obj.Course._id]
     }
-    else if(req.body.taskType=="Create Syllabus"){
-        req.body.User.CourseSyllabus=[...req.body.obj.User.CourseCreation,req.body.obj.Course]
+    else if(req.body.obj.taskType=="Create Syllabus"){
+        req.body.obj.User.CourseSyllabus=[...req.body.obj.User.CourseSyllabus,req.body.obj.Course._id]
     }
-    
+    console.log("user obj",req.body.obj.User)
     const up = await Userdoc.findOneAndUpdate({ _id: req.body.obj.User._id },req.body.obj.User);
-    const ini = await InitTask.Task.find({_id: req.body.id})
-    ini.Task = task._id 
+    const ini = await InitTask.findOne({_id: req.body.id})
+    ini.Task = task
     const up2 = await InitTask.findOneAndUpdate({ _id: req.body.id },ini);
     console.log("Task added", task);
-    console.log("User Updated",req.body.User)
+    console.log("User Updated",up)
     await res.status(201).json(task);
   } catch (err) {
     console.log(err);
