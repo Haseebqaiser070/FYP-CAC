@@ -59,13 +59,19 @@ export default function CourseRepo() {
 
   const AddRepoCourse = async (e) => {
     e.preventDefault();
-    if (PreCode != "" && SufCode != "" && Name != "") {
+    if (PreCode != "" && SufCode != "" && Name != "",CreditHour!="") {
       var Code = PreCode + "-" + SufCode;
+      const LectureHoursWeek = CreditHour.slice(2, 3);
+      const LabHoursWeek = CreditHour.slice(4, 5);
+      const Credit = CreditHour.slice(0, 1);
       const reposnse = await axios.post(
         "http://localhost:4000/RepoCourse/add",
         {
           Code,
           Name,
+          Credit,
+          LectureHoursWeek,
+          LabHoursWeek
         }
       );
       if (reposnse.data == "Already Exists Code")
@@ -129,10 +135,10 @@ export default function CourseRepo() {
                         autoWidth
                       >
                         <MenuItem value={"4(0,4)"}>4(0,4)</MenuItem>
-                        <MenuItem value={"4(0,4)"}>4(3,1)</MenuItem>
-                        <MenuItem value={"4(0,4)"}>3(3,0)</MenuItem>
-                        <MenuItem value={"4(0,4)"}>3(2,1)</MenuItem>
-                        <MenuItem value={"4(0,4)"}>2(0,2)</MenuItem>
+                        <MenuItem value={"4(3,1)"}>4(3,1)</MenuItem>
+                        <MenuItem value={"3(3,0)"}>3(3,0)</MenuItem>
+                        <MenuItem value={"3(2,1)"}>3(2,1)</MenuItem>
+                        <MenuItem value={"2(0,2)"}>2(0,2)</MenuItem>
                       </Select>
                     </FormControl>
                   </div>

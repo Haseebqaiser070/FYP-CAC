@@ -9,6 +9,19 @@ var RepoSchema = new mongoose.Schema({
     type: String,
     required: true,
   },  
+  Credit: {
+    type: String,
+    required: true,
+  },
+  LectureHoursWeek: {
+    type: String,
+    required: true,
+  },
+  LabHoursWeek: {
+    type: String,
+    required: true,
+  },
+
 });
 
 module.exports = mongoose.model("Repo", RepoSchema);
