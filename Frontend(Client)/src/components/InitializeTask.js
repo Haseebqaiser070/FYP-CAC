@@ -93,7 +93,7 @@ export default function InitializeTask() {
           }}
         >
           <AiFillDelete style={{ marginRight: 10 }} />
-          Create Task
+          Assign Task
         </Button>
         <Button
           variant="contained"
@@ -175,7 +175,7 @@ export default function InitializeTask() {
         <Box sx={style}>
           <div className="container">
             <div>
-              <CreateTasks pre={Init} func={()=>getRows()} />
+              <CreateTasks pre={Init} func={() => getRows()} />
             </div>
           </div>
         </Box>

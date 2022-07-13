@@ -130,33 +130,6 @@ export default function Tasks() {
         <b>All Tasks</b>
       </h1>
 
-      <div className="d-flex justify-content-end mb-4">
-        <Button
-          variant="contained"
-          color="primary"
-          size="small"
-          onClick={handleOpen}
-        >
-          <AiFillEdit style={{ marginRight: 10 }} />
-          Create a Task
-        </Button>
-
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <div className="container">
-              <div>
-                <CreateTasks func={getData} />
-              </div>
-            </div>
-          </Box>
-        </Modal>
-      </div>
-
       <div>
         <DataGrid
           style={{ height: 400, width: "100%" }}

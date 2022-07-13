@@ -33,7 +33,7 @@ function ActionButtons(props) {
         // onClick={null}
       >
         <AiFillEdit style={{ marginRight: 10 }} />
-        Add Course
+        Add Syllabus
       </Button>
 
       <Button
@@ -56,7 +56,9 @@ export default function CacSyllabus() {
     getRepoCourse();
   }, []);
   const getRepoCourse = async () => {
-    const response = await axios.get("http://localhost:4000/SyllabusCreate/get");
+    const response = await axios.get(
+      "http://localhost:4000/SyllabusCreate/get"
+    );
     console.log(response.data);
     setRows(response.data);
   };
@@ -76,7 +78,7 @@ export default function CacSyllabus() {
     {
       field: "Action",
       headerName: "Action",
-      flex: 1,
+      flex: 2,
       editable: false,
       renderCell: ActionButtons,
     },

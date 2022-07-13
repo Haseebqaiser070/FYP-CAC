@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AiOutlineCheckSquare, AiFillEdit } from "react-icons/ai";
 
 function ActionButtons(props) {
@@ -33,7 +33,7 @@ function ActionButtons(props) {
         // onClick={null}
       >
         <AiFillEdit style={{ marginRight: 10 }} />
-        Add Course
+        Add CDF
       </Button>
 
       <Button
@@ -76,7 +76,7 @@ export default function CacCdfTask() {
     {
       field: "Action",
       headerName: "Action",
-      flex: 1,
+      flex: 2,
       editable: false,
       renderCell: ActionButtons,
     },
