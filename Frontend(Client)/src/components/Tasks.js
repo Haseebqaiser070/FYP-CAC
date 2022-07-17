@@ -41,7 +41,7 @@ export default function Tasks() {
     setRows(response.data);
   };
 
-  function Mbutton(props) {
+  function Actionbuttons(props) {
     const navigate = useNavigate();
     const { row } = props;
     return (
@@ -107,7 +107,7 @@ export default function Tasks() {
       headerName: "Action",
       flex: 2,
       editable: false,
-      renderCell: Mbutton,
+      renderCell: Actionbuttons,
     },
   ];
   //const rows = [

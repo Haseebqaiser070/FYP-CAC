@@ -4,8 +4,14 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
-import { AiFillDelete, AiFillEdit } from "react-icons/ai";
-import { Autocomplete, MenuItem, Modal, TextField } from "@mui/material";
+import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
+import {
+  Autocomplete,
+  MenuItem,
+  Modal,
+  TextField,
+  Tooltip,
+} from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
@@ -24,11 +30,28 @@ const style = {
   boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
 };
 
+const modalstyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 500,
+  bgcolor: "background.paper",
+  //   border: "2px solid #000",
+
+  boxShadow: 24,
+  p: 4,
+};
+
 export default function InitializeTask() {
   const [rows, setRows] = useState([]);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const [open1, setOpen1] = useState(false);
+  const handleClose1 = () => setOpen1(false);
+
   const [taskType, setTaskType] = useState("");
   const [AssignMember, setAssignMember] = useState([]);
   const [CAC, setCAC] = useState([]);
@@ -95,6 +118,47 @@ export default function InitializeTask() {
           <AiFillDelete style={{ marginRight: 10 }} />
           Assign Task
         </Button>
+
+        <Tooltip title="View task Progress" placement="top-start">
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            style={{ marginLeft: 16, padding: 10 }}
+            onClick={() => setOpen1(true)}
+          >
+            <AiFillEye />
+          </Button>
+        </Tooltip>
+
+        <Modal
+          open={open1}
+          onClose={handleClose1}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={modalstyle}>
+            <h4>Team Members: </h4>
+            <p>Team Members here</p>
+            <h4>Total Tasks Assigned: </h4>
+            <p>Total Tasks Assigned here</p>
+            <h4>Remaining Tasks: </h4>
+            <p style={{ color: "red" }}>
+              <b>Remaining Tasks</b>
+            </p>
+          </Box>
+        </Modal>
+
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          style={{ marginLeft: 16, padding: 10 }}
+          // onClick={}
+        >
+          <AiFillEdit />
+        </Button>
+
         <Button
           variant="contained"
           color="primary"
@@ -128,15 +192,15 @@ export default function InitializeTask() {
       headerName: "Program",
       flex: 1,
     },
-    {
-      field: "AssignMember",
-      headerName: "CAC Members Assigned",
-      renderCell: (params) =>
-        params?.row?.AssignMember.map((i) => {
-          return <>{i.Name + "  "}</>;
-        }),
-      flex: 2,
-    },
+    // {
+    //   field: "AssignMember",
+    //   headerName: "CAC Members Assigned",
+    //   renderCell: (params) =>
+    //     params?.row?.AssignMember.map((i) => {
+    //       return <>{i.Name + "  "}</>;
+    //     }),
+    //   flex: 2,
+    // },
 
     {
       field: "Action",

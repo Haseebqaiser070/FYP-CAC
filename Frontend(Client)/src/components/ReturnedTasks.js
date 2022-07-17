@@ -4,13 +4,34 @@ import axios from "axios";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
+import { AiFillEye, AiFillEdit, AiOutlineUnorderedList } from "react-icons/ai";
 import {
-  AiFillPrinter,
-  AiFillEdit,
-  AiOutlineUnorderedList,
-} from "react-icons/ai";
+  Box,
+  FormControl,
+  FormControlLabel,
+  Modal,
+  TextField,
+  Tooltip,
+} from "@mui/material";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 500,
+  bgcolor: "background.paper",
+  //   border: "2px solid #000",
+
+  boxShadow: 24,
+  p: 4,
+};
+
 export default function ReturnedTasks() {
   const [Rows, setRows] = useState([]);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   useEffect(() => {
     getData();
@@ -27,30 +48,32 @@ export default function ReturnedTasks() {
     const { row } = props;
     return (
       <div>
-        <Button
-          variant="contained"
-          color="primary"
-          size="small"
-          style={{ marginLeft: 16 }}
-          onClick={() => {
-            navigate(`/Admin/CourseReturnedView/${row.Course.Code}`, {
-              replace: true,
-            });
-          }}
-        >
-          <AiFillEdit style={{ marginRight: 10 }} />
-          View
-        </Button>
-        <Button
-          variant="contained"
-          color="primary"
-          size="small"
-          style={{ marginLeft: 16 }}
-          // onClick={}
-        >
-          <AiFillEdit style={{ marginRight: 10 }} />
-          Edit
-        </Button>
+        <Tooltip title="View" placement="top-start">
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            style={{ marginLeft: 16, padding: 10 }}
+            onClick={() => {
+              navigate(`/Admin/CourseReturnedView/${row.Course.Code}`, {
+                replace: true,
+              });
+            }}
+          >
+            <AiFillEye />
+          </Button>
+        </Tooltip>
+        <Tooltip title="Edit" placement="top-start">
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            style={{ marginLeft: 16, padding: 10 }}
+            // onClick={}
+          >
+            <AiFillEdit />
+          </Button>
+        </Tooltip>
 
         <Button
           variant="contained"
@@ -65,6 +88,45 @@ export default function ReturnedTasks() {
           <AiFillEdit style={{ marginRight: 10 }} />
           Lock
         </Button>
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          style={{ marginLeft: 16 }}
+          onClick={() => setOpen(true)}
+        >
+          <AiFillEdit style={{ marginRight: 10 }} />
+          Send Revision
+        </Button>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <div>
+              <TextField
+                fullWidth
+                id="outlined-multiline-static"
+                label="Revisions"
+                placeholder="Input changes"
+                multiline
+                rows={4}
+              />
+            </div>
+
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              width="100"
+              style={{ marginTop: 10 }}
+            >
+              Send Revision
+            </Button>
+          </Box>
+        </Modal>
       </div>
     );
   }
@@ -88,7 +150,7 @@ export default function ReturnedTasks() {
     {
       field: "Status",
       headerName: "Status",
-      flex: 1,
+      flex: 0.5,
     },
     {
       field: "Course",
@@ -99,7 +161,7 @@ export default function ReturnedTasks() {
     {
       field: "Action",
       headerName: "Action",
-      flex: 2,
+      flex: 3,
       editable: false,
       renderCell: ActionButtons,
     },
