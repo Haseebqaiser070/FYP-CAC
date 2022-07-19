@@ -6,26 +6,39 @@ module.exports.Add = async (req, res) => {
   try {
     if (!req.user) return await res.status(401).json("Timed Out");
     if (!req.user.Roles.includes("Admin")) return await res.status(401).json("UnAutherized");
-    const task = await Task.create(req.body.obj);
+    const Tasks=await Promise.all(req.body.obj.map(async(e)=>{
+     try{
+      const task = await Task.create({taskType:e.taskType,User:e.User,Deadline:e.Deadline
+        ,Status:e.Status,Course :e.Course})
+        return task}
+      catch(er){
+          console.error(er);
+      }
+    }))
     console.log("body",req.body)
-    if(req.body.obj.taskType=="Create Course"){
-        req.body.obj.User.CourseCreation=[...req.body.obj.User.CourseCreation,req.body.obj.Course._id]
+    req.body.obj.forEach(async(e)=> {
+    console.log("\n\n\n\n\n\n",e)
+    if(e.taskType=="Create Catalog Description"){
+        e.User.CourseCreation=[...e.User.CourseCreation,e.Course._id]
     }
     
-    else if(req.body.obj.taskType=="Create CDF"){
-        req.body.obj.User.CourseCDF=[...req.body.obj.User.CourseCDF,req.body.obj.Course._id]
+    else if(e.taskType=="Create CDF"){
+        e.User.CourseCDF=[...e.CourseCDF,e.Course._id]
     }
-    else if(req.body.obj.taskType=="Create Syllabus"){
-        req.body.obj.User.CourseSyllabus=[...req.body.obj.User.CourseSyllabus,req.body.obj.Course._id]
+    else if(e.taskType=="Create Syllabus"){
+        e.User.CourseSyllabus=[...e.User.CourseSyllabus,e.Course._id]
     }
-    console.log("user obj",req.body.obj.User)
-    const up = await Userdoc.findOneAndUpdate({ _id: req.body.obj.User._id },req.body.obj.User);
-    const ini = await InitTask.findOne({_id: req.body.id})
-    ini.Task = task
-    const up2 = await InitTask.findOneAndUpdate({ _id: req.body.id },ini);
-    console.log("Task added", task);
+    console.log("user obj",e.User)
+    const up = await Userdoc.findOneAndUpdate({ _id: e.User._id },e.User);
     console.log("User Updated",up)
-    await res.status(201).json(task);
+    
+
+    });
+    const ini = await InitTask.findOne({_id: req.body.id})
+    ini.Task =  Tasks
+    const up2 = await InitTask.findOneAndUpdate({ _id: req.body.id },ini);
+    console.log("Task added", Tasks);
+    await res.status(201).json(Tasks);
   } catch (err) {
     console.log(err);
   }
@@ -42,11 +55,12 @@ module.exports.Showall = async (req, res) => {
   }
 };
 
-
 module.exports.Delete = async (req, res) => {
   try {
     if (!req.user) return await res.status(401).json("Timed Out");
     if (!req.user.Roles.includes("Admin")) return await res.status(401).json("UnAutherized");
+    const abc = await Task.findById(req.params.id)
+    const up = await Userdoc.findOneAndUpdate({ _id: abc.User._id },{$pullAll:{Task:req.params.id}});    
     const task = await Task.deleteOne({ _id: req.params.id });
     console.log("all Tasks", task);
     await res.json(task);

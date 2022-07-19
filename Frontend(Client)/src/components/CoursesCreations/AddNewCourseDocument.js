@@ -22,8 +22,7 @@ export default function AddNewCourseDocument() {
   const [PreCode, setPreCode] = useState(codes[0]);
   const [SufCode, setSufCode] = useState(codes[1]);
   const [Name, setName] = useState(state.row.Name);
-  const sum  = parseInt(Content.LectureHoursWeek)+parseInt(Content.LabHoursWeek)
-  const [allCredit, setAllCredit] = useState(sum+"("+Content.LectureHoursWeek+","+Content.LabHoursWeek+")");
+  const [allCredit, setAllCredit] = useState(state.row.Credit+"("+state.row.LectureHoursWeek+","+state.row.LabHoursWeek+")");
   const [Category, setCategory] = useState(Content.Category);
   const [PreRequisites, setPreRequisites] = useState(Content.PreRequisites);
   const [mainTopic, setmainTopic] = useState("");
@@ -107,7 +106,11 @@ export default function AddNewCourseDocument() {
 
   const handleAdd = (e) => {
     e.preventDefault();
-    setCatalogue(`${catalogue} ${mainTopic}; `);
+    let clone = catalogue.slice(0,-2)
+    if(catalogue!=""){
+      clone = clone+";"
+    }
+    setCatalogue(`${clone} ${mainTopic}. `);
     setmainTopic("");
   };
   const handleObjective = (e) => {
@@ -183,6 +186,7 @@ export default function AddNewCourseDocument() {
       alert("empty values");
     }
   };
+  console.log("allcredit",allCredit)
   return (
     <div className="row" style={{ padding: 30 }}>
       <h3 style={{ textAlign: "center", marginBottom: 30 }}>
@@ -241,22 +245,6 @@ export default function AddNewCourseDocument() {
             />
           </div>
 
-          <div className="mb-3 col-2">
-            <label for="credit-hour" className="form-label">
-              Course Categories
-            </label>
-            <select
-              class="form-select"
-              onChange={(e) => setCategory(e.target.value)}
-            >
-              <option value= {Category} selected disabled hidden>
-                {Category}
-              </option>
-              <option>Computing Course</option>
-              <option>CYC</option>
-              <option>AIC</option>
-            </select>
-          </div>
         </div>
 
         <div className="row">
@@ -266,38 +254,13 @@ export default function AddNewCourseDocument() {
             </label>
             <select
               class="form-select"
-              onChange={(e) => setAllCredit(e.target.value)}
+              value={allCredit}
+             
             >
               <option value={allCredit} selected disabled hidden>
                 {allCredit}
               </option>
-              <option>4(0,4)</option>
-              <option>4(3,1)</option>
-              <option>3(3,0)</option>
-              <option>3(2,1)</option>
-              <option>2(0,2)</option>
-            </select>
-          </div>
-          <div class="col">
-            <Stack>
-              <Autocomplete
-                multiple
-                id="tags-standard"
-                value={PreRequisites}
-                options={Courses}
-                getOptionLabel={(option) => option.Name}
-                defaultValue={PreRequisites}
-                onChange={(e, val) => setPreRequisites(val)}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant="outlined"
-                    label="Pre-Requisites"
-                    placeholder="Pre-Requisites"
-                  />
-                )}
-              />
-            </Stack>
+              </select>
           </div>
         </div>
 

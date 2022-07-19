@@ -13,11 +13,11 @@ var InitTaskSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    Task:{
+    Task:[{
         type: mongoose.Schema.ObjectId,
         ref: 'Task',
-        default:null
-    },
+        default:'none'
+    }]
 });
 
 module.exports = mongoose.model('InitialTask', InitTaskSchema);

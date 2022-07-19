@@ -22,7 +22,7 @@ export default function Course() {
     content: () => componentRef.current,
   });
 
-  const { Code, Name } = state.row;
+  const { Code, Name, } = state.row;
   const [Version, setVersion] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [res, setresponse] = useState(false);
@@ -77,7 +77,7 @@ export default function Course() {
     );
     setContent(response.data);
   };
-
+console.log("content", Content)
   return (
     <div style={{ height: 700, padding: 30, width: "100%" }}>
       <div className="d-flex justify-content-end mb-4">
@@ -147,9 +147,7 @@ export default function Course() {
         <h3>Empty Repository</h3>
       ) : (
         <div ref={componentRef} className="main">
-          <h5 style={{ paddingBottom: 30 }}>
-            <u>Course Category</u>
-          </h5>
+
 
           <div>
             <div style={{ paddingBottom: 20 }} className="row">

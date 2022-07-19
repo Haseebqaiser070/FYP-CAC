@@ -61,7 +61,7 @@ export default function InitializeTask() {
   console.log(rows);
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(12);
+    
     if (taskType != "" && AssignMember != "" && Program != "") {
       const res = await axios.post("http://localhost:4000/Task/addInit", {
         taskType,
@@ -76,6 +76,28 @@ export default function InitializeTask() {
       alert("Empty Field");
     }
   };
+
+  const updateSubmit = async (e) => {
+    e.preventDefault();   
+    if (taskType != "" && AssignMember != "" && Program != "") {
+      const res = await axios.put(`http://localhost:4000/Task/updateInit/${upid}`, {
+        taskType,
+        AssignMember,
+        Program,
+        Task
+      });
+      setTaskType("");
+      setAssignMember([]);
+      setProgram("");
+      setTasks([]);
+      getRows();
+      setOpen3(false)
+    } else {
+      alert("Empty Field");
+    }
+  
+  
+  }
 
   useEffect(() => {
     getData();
@@ -95,16 +117,42 @@ export default function InitializeTask() {
     console.log(res.data);
     setRows(res.data);
   };
+  // const [taskType, setTaskType] = useState("");
+  // const [AssignMember, setAssignMember] = useState([]);
+  // const [Program, setProgram] = useState([]);
+  const ups =async(id)=>{
+    const res = await axios.get(`http://localhost:4000/Task/showOneInit/${id}`);
+    const obj = res.data
+    setupid(id)
+    setTaskType(obj.taskType)
+    setAssignMember(obj.AssignMember)
+    setProgram(obj.Program)
+    setOpen3(true)
+
+  }
 
   const [Init, setInit] = useState("");
   const [open2, setOpen2] = useState(false);
   const handleClose2 = () => setOpen2(false);
-
+  const [open3, setOpen3] = useState(false);
+  const [Task, setTasks] = useState([])
+  const [upid, setupid] = useState("")
+  
+  const handleClose3 = () =>{
+    setTaskType("")
+    setAssignMember("")
+    setProgram("")
+    setupid("")
+    setOpen3(false)
+    };
+  
   function Mbutton(props) {
     const { row } = props;
 
     return (
       <div>
+      
+      {row.Task?.length == 0 &&
         <Button
           variant="contained"
           color="primary"
@@ -118,7 +166,7 @@ export default function InitializeTask() {
           <AiFillDelete style={{ marginRight: 10 }} />
           Assign Task
         </Button>
-
+        }
         <Tooltip title="View task Progress" placement="top-start">
           <Button
             variant="contained"
@@ -148,7 +196,23 @@ export default function InitializeTask() {
             </p>
           </Box>
         </Modal>
+        {/* Edit InitTasks */}
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          style={{ marginLeft: 16, padding: 10 }}
+          onClick={()=>{ups(row._id)
+            setTasks(row.Task)
+            }
+          }
+        >
+          <AiFillEdit />
+          Edit Group
+        </Button>
 
+        {/* Edit tasks assigned to memebers */}
+      {row.Task?.length >0 && row.Task !=null &&
         <Button
           variant="contained"
           color="primary"
@@ -157,24 +221,19 @@ export default function InitializeTask() {
           // onClick={}
         >
           <AiFillEdit />
+          Edit Task
         </Button>
+        }
 
         <Button
           variant="contained"
           color="primary"
           size="small"
           style={{ marginLeft: 16, padding: 10 }}
-          // onClick={}
-        >
-          <AiFillEdit />
-        </Button>
-
-        <Button
-          variant="contained"
-          color="primary"
-          size="small"
-          style={{ marginLeft: 16, padding: 10 }}
-          // onClick={}
+          onClick={async()=>{
+              await axios.delete(`http://localhost:4000/Task/deleteInit/${row._id}`);
+              getRows();
+          }}
         >
           <AiFillDelete />
         </Button>
@@ -235,11 +294,16 @@ export default function InitializeTask() {
         onClose={handleClose2}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        style={{overflow:'scroll'}}
       >
         <Box sx={style}>
-          <div className="container">
+          <div className="container" >
             <div>
-              <CreateTasks pre={Init} func={() => getRows()} />
+              <CreateTasks pre={Init} func={() =>{ 
+                getRows()
+                handleClose2()
+              }} />
+
             </div>
           </div>
         </Box>
@@ -263,6 +327,99 @@ export default function InitializeTask() {
                   value={taskType}
                   onChange={(e) => setTaskType(e.target.value)}
                   label="Task Type"
+                  autoWidth
+                >
+                  <MenuItem value={"Create Catalog Description"}>Create Catalog Description</MenuItem>
+                  <MenuItem value={"Update Catalog Description"}>Update Catalog Description</MenuItem>
+                  <MenuItem value={"Create SOS"}>Create SOS</MenuItem>
+                  <MenuItem value={"Update SOS"}>Update SOS</MenuItem>
+                  <MenuItem value={"Create CDF"}>Create CDF</MenuItem>
+                  <MenuItem value={"Update CDF"}>Update CDF</MenuItem>
+                  <MenuItem value={"Create Syllabus"}>Create Syllabus</MenuItem>
+                  <MenuItem value={"Update Syllabus"}>Update Syllabus</MenuItem>
+                  <MenuItem value={"Create Lab Manual"}>
+                    Create Lab Manual
+                  </MenuItem>
+                  <MenuItem value={"Update Lab Manual"}>
+                    Update Lab Manual
+                  </MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+            <div>
+              <Autocomplete
+                className="mb-4"
+                multiple
+                id="tags-standard"
+                options={CAC}
+                value={AssignMember}
+                getOptionLabel={(option) => option.Name}
+                onChange={(e, val) => setAssignMember(val)}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="outlined"
+                    label="Select CAC Member"
+                    placeholder="Select CAC Member"
+                  />
+                )}
+              />
+            </div>
+            <div>
+              <FormControl fullWidth size="small">
+                <InputLabel id="Program">Program</InputLabel>
+                <Select
+                  className="mb-4"
+                  labelId="Program"
+                  name="Program"
+                  value={Program}
+                  onChange={(e) => setProgram(e.target.value)}
+                  label="Program"
+                  autoWidth
+                >
+                  <MenuItem value={"For All"}>For All</MenuItem>
+                  {Programs.map((a) => {
+                    return (
+                      <MenuItem value={a.Degree + " " + a.Program}>
+                        {a.Degree} {a.Program}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+            </div>
+            <Button
+              variant="contained"
+              color="primary"
+              size="small"
+              type="submit"
+            >
+              <AiFillEdit style={{ marginRight: 10 }} />
+              Initialize Task
+            </Button>
+          </form>
+        </Box>
+      </Modal>
+
+
+      <Modal
+        open={open3}
+        onClose={handleClose3}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <form onSubmit={updateSubmit}>
+            <div>
+              <FormControl fullWidth size="small">
+                <InputLabel id="taskType">Task Type</InputLabel>
+                <Select
+                  className="mb-4"
+                  labelId="task-type"
+                  name="tasktype"
+                  value={taskType}
+                  onChange={(e) => setTaskType(e.target.value)}
+                  label={taskType}
                   autoWidth
                 >
                   <MenuItem value={"Create Course"}>Create Course</MenuItem>
@@ -310,7 +467,7 @@ export default function InitializeTask() {
                   name="Program"
                   value={Program}
                   onChange={(e) => setProgram(e.target.value)}
-                  label="Program"
+                  label={Program}
                   autoWidth
                 >
                   <MenuItem value={"For All"}>For All</MenuItem>
