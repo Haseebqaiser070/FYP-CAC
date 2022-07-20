@@ -45,7 +45,7 @@ app.use("/SyllabusCreate", getUser, SyllabusRouter);
 
 const start = async () => {
   try {
-    await mongoose.connect("mongodb://localhost:27017/CAC");
+    await mongoose.connect("mongodb+srv://AhmedAli:LpYmvUSfw3ESnL3R@cac.psfpu.mongodb.net/?retryWrites=true&w=majority");
     app.listen(process.env.PORT || 4000, () =>
       console.log("Listening on port 4000")
     );
