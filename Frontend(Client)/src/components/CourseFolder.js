@@ -89,6 +89,11 @@ export default function CourseFolder() {
               >
                 <th className="py-2">
                   <h2>Round 1</h2>
+                  <h4
+                    style={{ color: "red", textAlign: "center", marginTop: 20 }}
+                  >
+                    Deadline: 07/13/2022 04:38 PM
+                  </h4>
                 </th>
                 <td className="d-grid py-2 px-2">
                   <button
@@ -161,6 +166,11 @@ export default function CourseFolder() {
               >
                 <th className="py-2">
                   <h2>Round 2</h2>
+                  <h4
+                    style={{ color: "red", textAlign: "center", marginTop: 20 }}
+                  >
+                    Deadline: 07/13/2022 04:38 PM
+                  </h4>
                 </th>
 
                 <td className="d-grid py-2 px-2">

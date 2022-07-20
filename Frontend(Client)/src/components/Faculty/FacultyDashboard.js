@@ -59,7 +59,7 @@ export default function FacultyDashboard() {
           <b>Course Assigned: </b>Intro to ICT
         </h4>
       </div>
-      <div>
+      {/* <div>
         <h2 style={{ textAlign: "left", marginTop: 20 }}>Deadlines</h2>
         <DataGrid
           style={{ height: 400, width: "100%" }}
@@ -70,7 +70,7 @@ export default function FacultyDashboard() {
           rowsPerPageOptions={[5]}
           disableSelectionOnClick
         />
-      </div>
+      </div> */}
     </div>
   );
 }

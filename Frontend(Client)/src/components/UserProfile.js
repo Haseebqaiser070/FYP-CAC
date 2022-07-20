@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./css/styles.css";
 export default function Profile() {
   return (
-    <div class="gradient-custom-2 container py-5 h-100">
+    <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col col-lg-9 col-xl-7">
           <div class="card">
