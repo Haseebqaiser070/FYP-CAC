@@ -59,7 +59,7 @@ export default function CourseRepo() {
 
   const AddRepoCourse = async (e) => {
     e.preventDefault();
-    if (PreCode != "" && SufCode != "" && Name != "",CreditHour!="") {
+    if ((PreCode != "" && SufCode != "" && Name != "", CreditHour != "")) {
       var Code = PreCode + "-" + SufCode;
       const LectureHoursWeek = CreditHour.slice(2, 3);
       const LabHoursWeek = CreditHour.slice(4, 5);
@@ -71,7 +71,7 @@ export default function CourseRepo() {
           Name,
           Credit,
           LectureHoursWeek,
-          LabHoursWeek
+          LabHoursWeek,
         }
       );
       if (reposnse.data == "Already Exists Code")
@@ -219,7 +219,7 @@ export default function CourseRepo() {
               Course Name
             </th>
             <th class="col-4" scope="col">
-              Delete Repo
+              Actions
             </th>
           </tr>
         </thead>
@@ -231,6 +231,16 @@ export default function CourseRepo() {
                   <td>{cor.Code}</td>
                   <td>{cor.Name}</td>
                   <td>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      size="small"
+                      style={{ marginLeft: 16 }}
+                      // onClick={() => handleDelete(cor._id)}
+                    >
+                      <AiFillEdit style={{ marginRight: 10 }} />
+                      Edit
+                    </Button>
                     <Button
                       variant="contained"
                       color="primary"

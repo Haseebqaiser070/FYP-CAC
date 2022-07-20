@@ -17,31 +17,35 @@ function Login() {
       try {
         const response = await axios.post("http://localhost:4000/Auth/login", {
           Email,
-          Password
+          Password,
         });
         const data = response.data;
         console.log(data);
-       
+
         const accessToken = response?.data?.accessToken;
         const Roles = response?.data?.Roles;
         setAuth({ Email, Roles });
-        setEmail('');
-        setPassword('');
-        if(Roles.includes("Admin")) navigate("/Admin/Dashboard", { replace: true });
-        else if(Roles.includes("CAC")) navigate("/CAC/Dashboard", { replace: true });
-        else if(Roles.includes("Faculty")) navigate("/Faculty/Dashboard", { replace: true });
-        else if(Roles.includes("Eveluator")) navigate("/Eveluator/Dashboard", { replace: true });
-        } catch (err) {
-            if (!err?.response) {
-                console.log('No Server Response');
-            } else if (err.response?.status === 400) {
-              console.log('Missing Username or Password');
-            } else if (err.response?.status === 401) {
-              console.log('Unauthorized');
-            } else {
-              console.log('Login Failed');
-            }
-          } 
+        setEmail("");
+        setPassword("");
+        if (Roles.includes("Admin"))
+          navigate("/Admin/Dashboard", { replace: true });
+        else if (Roles.includes("CAC"))
+          navigate("/CAC/Dashboard", { replace: true });
+        else if (Roles.includes("Faculty"))
+          navigate("/Faculty/Dashboard", { replace: true });
+        else if (Roles.includes("Eveluator"))
+          navigate("/Eveluator/Dashboard", { replace: true });
+      } catch (err) {
+        if (!err?.response) {
+          console.log("No Server Response");
+        } else if (err.response?.status === 400) {
+          console.log("Missing Username or Password");
+        } else if (err.response?.status === 401) {
+          console.log("Unauthorized");
+        } else {
+          console.log("Login Failed");
+        }
+      }
     } else {
       alert("Fill all the fields");
     }
@@ -78,21 +82,7 @@ function Login() {
                 Password
               </label>
             </div>
-            <div className="form-check mb-3">
-              <input
-                className="form-check-input"
-                id="inputRememberPassword"
-                type="checkbox"
-                value=""
-              />
-              <label
-                htmlFor="check"
-                className="form-check-label"
-                for="inputRememberPas1sword"
-              >
-                Remember Password
-              </label>
-            </div>
+
             <div className="d-flex align-items-center justify-content-between mt-4 mb-0">
               <Link className="small" to="forgotpassword">
                 Forgot Password?

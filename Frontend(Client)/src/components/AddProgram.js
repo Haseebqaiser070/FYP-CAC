@@ -28,6 +28,7 @@ export default function AddProgram() {
     setOpen(false);
   };
   const [id, setid] = useState("");
+
   const [Degree, setDegree] = useState("");
   const [Program, setProgram] = useState("");
   const Update = async () => {
