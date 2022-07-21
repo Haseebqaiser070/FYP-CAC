@@ -9,6 +9,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import { Box, Modal, Switch } from "@mui/material";
+import UserCards from "./UserCards";
 
 const modalstyle = {
   position: "absolute",
@@ -62,7 +63,10 @@ export default function Users() {
       className="container"
       style={{ height: 700, width: "100%", padding: 20 }}
     >
-      <h1 className="mt-4 mb-4">User Members</h1>
+      <h1 className="mt-4 mb-4">All Users</h1>
+      <div style={{ padding: 10 }}>
+        <UserCards />
+      </div>
       <table className="table" id="list">
         <thead>
           <tr className="d-flex">
