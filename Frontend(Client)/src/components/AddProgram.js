@@ -26,6 +26,9 @@ export default function AddProgram() {
   const handleClose = () => {
     setup(false);
     setOpen(false);
+    setDegree("");
+    setProgram("");
+  
   };
   const [id, setid] = useState("");
 
@@ -36,6 +39,8 @@ export default function AddProgram() {
     const res = await axios.get(`http://localhost:4000/Program/${id}`);
     setDegree(res.data.Degree);
     setProgram(res.data.Program);
+    setOpen(true);
+
   };
 
   const handleSubmit = async (e) => {
@@ -112,7 +117,6 @@ export default function AddProgram() {
           onClick={() => {
             setid(row._id);
             Update();
-            setOpen(true);
           }}
         >
           <AiFillEdit style={{ marginRight: 10 }} />
@@ -165,7 +169,7 @@ export default function AddProgram() {
         <Box sx={style}>
           <form onSubmit={handleSubmit}>
             <div className="col">
-              <FormControl fullWidth size="small">
+              {!up?<FormControl fullWidth size="small">
                 <InputLabel id="taskType">Select Degree</InputLabel>
                 <Select
                   className="mb-4"
@@ -180,7 +184,23 @@ export default function AddProgram() {
                   <MenuItem value={"MS"}>MS</MenuItem>
                   <MenuItem value={"p.hd"}>P.hd</MenuItem>
                 </Select>
-              </FormControl>
+              </FormControl>:<FormControl fullWidth size="small">
+                <InputLabel id="taskType">Select Degree</InputLabel>
+                <Select
+                  className="mb-4"
+                  labelId="selectdegree"
+                  id="selectdegree"
+                  value={Degree}
+                  label="Select Degree"
+                  onChange={(e) => setDegree(e.target.value)}
+                  autoWidth
+                >
+                  <MenuItem selected hidden value={Degree}>{Degree}</MenuItem>
+                  <MenuItem value={"BS"}>BS</MenuItem>
+                  <MenuItem value={"MS"}>MS</MenuItem>
+                  <MenuItem value={"p.hd"}>P.hd</MenuItem>
+                </Select>
+              </FormControl>}
             </div>
             <div className="col">
               <FormControl fullWidth size="small">

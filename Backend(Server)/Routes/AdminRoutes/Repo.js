@@ -4,6 +4,6 @@ var Repo = require("../../Controler/AdminControllers/Repo");
 
 router.route("/add").post(Repo.Add);
 router.route("/show").get(Repo.Showall);
-router.route("/:id").delete(Repo.Delete)
+router.route("/:id").delete(Repo.Delete).get(Repo.ShowOne).put(Repo.Update)
 
 module.exports = router;
