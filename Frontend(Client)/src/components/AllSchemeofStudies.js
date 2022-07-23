@@ -201,15 +201,15 @@ export default function AllSchemeofStudies() {
                       </select>
                       <label className="form-label">Program</label>
                     </div>
-
-                    <div className="d-flex align-items-center justify-content-between mt-4 mb-0">
-                      <button
-                        type="Submit"
-                        className="btn btn-block btn-primary"
-                      >
-                        Next
-                      </button>
-                    </div>
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      color="primary"
+                      type="submit"
+                      style={{ marginTop: 16 }}
+                    >
+                      Next
+                    </Button>
                   </form>
                 </div>
               </div>

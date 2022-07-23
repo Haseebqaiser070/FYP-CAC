@@ -72,7 +72,7 @@ const columns = [
   },
 ];
 
-export default function () {
+export default function ViewCacAvailability() {
   const [rows, setRows] = React.useState([]);
   return (
     <div

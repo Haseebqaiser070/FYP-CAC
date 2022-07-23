@@ -11,22 +11,23 @@ import Stack from "@mui/material/Stack";
 import { DataGrid } from "@mui/x-data-grid";
 import { AiFillDelete } from "react-icons/ai";
 import { v4 as uuidv4 } from "uuid";
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function EditCourseForm() {
+  const navigate = useNavigate();
   const [PreCode, setPreCode] = useState("");
   const [SufCode, setSufCode] = useState("");
   const [Name, setName] = useState("");
   const [allCredit, setAllCredit] = useState("");
-  const [Category,setCategory] = useState("");
+  const [Category, setCategory] = useState("");
   const [PreRequisites, setPreRequisites] = useState([]);
   const [mainTopic, setmainTopic] = useState("");
   const [catalogue, setCatalogue] = useState("");
   const [objective, setobjective] = useState("");
   const [objectiveList, setObjectiveList] = useState([]);
-  const [Courses,setCourse] = useState([])
- 
-  const{id}=useParams()
+  const [Courses, setCourse] = useState([]);
+
+  const { id } = useParams();
 
   const columns = [
     {
@@ -67,71 +68,69 @@ export default function EditCourseForm() {
     setObjectiveList([...objectiveList, { id: uuidv4(), title: objective }]);
     setobjective("");
   };
-  useEffect(()=>{
-    getData()
-  },[])
-  const getData=async()=>{
-    const res = await axios.get("http://localhost:4000/Course/show")
-    const data = await res.data
+  useEffect(() => {
+    getData();
+  }, []);
+  const getData = async () => {
+    const res = await axios.get("http://localhost:4000/Course/show");
+    const data = await res.data;
     const response = await axios.get(`http://localhost:4000/Course/${id}`);
     const up = await response.data;
-    console.log(up)
-    const newarr= data.filter(x=>{if(x.Name!=up.Name)return x})
-    setCourse([{Name:"none"},...newarr])
-    setName(up.Name)
-    setPreCode(up.Code.split("-")[0])
-    setSufCode(up.Code.split("-")[1])
-    setCategory(up.Category)
-    setCatalogue(up.catalogue)
-    setObjectiveList(up.objectiveList)
-    setPreRequisites([...up.PreRequisites])
-    const sum  = parseInt(up.LectureHoursWeek)+parseInt(up.LabHoursWeek)
-    setAllCredit(sum+"("+up.LectureHoursWeek+","+up.LabHoursWeek+")")
-
-    
-}
-  const EditCourse = async(e) => {
+    console.log(up);
+    const newarr = data.filter((x) => {
+      if (x.Name != up.Name) return x;
+    });
+    setCourse([{ Name: "none" }, ...newarr]);
+    setName(up.Name);
+    setPreCode(up.Code.split("-")[0]);
+    setSufCode(up.Code.split("-")[1]);
+    setCategory(up.Category);
+    setCatalogue(up.catalogue);
+    setObjectiveList(up.objectiveList);
+    setPreRequisites([...up.PreRequisites]);
+    const sum = parseInt(up.LectureHoursWeek) + parseInt(up.LabHoursWeek);
+    setAllCredit(sum + "(" + up.LectureHoursWeek + "," + up.LabHoursWeek + ")");
+  };
+  const EditCourse = async (e) => {
     e.preventDefault();
-    const Code = PreCode+"-"+SufCode
-    const LectureHoursWeek = allCredit.slice(2,3)
-    const LabHoursWeek = allCredit.slice(4,5)
-    const Credit = allCredit.slice(0,1)
-    console.log(Code,LectureHoursWeek,LabHoursWeek,Credit,objectiveList)
-    console.log("cat: ",Category)
-    console.log("catlog: ",catalogue)
-    console.log("pre: ",PreRequisites)
+    const Code = PreCode + "-" + SufCode;
+    const LectureHoursWeek = allCredit.slice(2, 3);
+    const LabHoursWeek = allCredit.slice(4, 5);
+    const Credit = allCredit.slice(0, 1);
+    console.log(Code, LectureHoursWeek, LabHoursWeek, Credit, objectiveList);
+    console.log("cat: ", Category);
+    console.log("catlog: ", catalogue);
+    console.log("pre: ", PreRequisites);
     if (
-        PreCode != "" &&
-        SufCode != "" &&
-        Name != "" &&
-        allCredit != "" &&
-        PreRequisites != [] &&
-        catalogue!="" &&
-        Category!=""&&
-        objectiveList!=[]
-        ) 
-       {
-         await axios.put(`http://localhost:4000/Course/${id}`, {
-          Code,
-          Name,
-          Credit,
-          LectureHoursWeek,
-          LabHoursWeek,
-          Category,
-          PreRequisites,
-          catalogue,
-          objectiveList
-        });
-        setSufCode("") 
-        setName("") 
-        setPreRequisites([]) 
-        setCatalogue("")
-        setObjectiveList([])
-        navigate("/admin/AddCourse", { replace: true })
+      PreCode != "" &&
+      SufCode != "" &&
+      Name != "" &&
+      allCredit != "" &&
+      PreRequisites != [] &&
+      catalogue != "" &&
+      Category != "" &&
+      objectiveList != []
+    ) {
+      await axios.put(`http://localhost:4000/Course/${id}`, {
+        Code,
+        Name,
+        Credit,
+        LectureHoursWeek,
+        LabHoursWeek,
+        Category,
+        PreRequisites,
+        catalogue,
+        objectiveList,
+      });
+      setSufCode("");
+      setName("");
+      setPreRequisites([]);
+      setCatalogue("");
+      setObjectiveList([]);
+      navigate("/admin/AddCourse", { replace: true });
     } else {
-        alert("empty values");
-      }
-    
+      alert("empty values");
+    }
   };
   return (
     <div style={{ padding: 30 }} className="row">
@@ -144,8 +143,14 @@ export default function EditCourseForm() {
             </label>
             <div className="row">
               <div className="col">
-                <select class="form-select" onChange={(e)=>setPreCode(e.target.value)} defaultValue={PreCode}>
-                <option value="" selected disabled hidden>{PreCode}</option>
+                <select
+                  class="form-select"
+                  onChange={(e) => setPreCode(e.target.value)}
+                  defaultValue={PreCode}
+                >
+                  <option value="" selected disabled hidden>
+                    {PreCode}
+                  </option>
                   <option>MTH</option>
                   <option>CSC</option>
                   <option>HUM</option>
@@ -188,8 +193,14 @@ export default function EditCourseForm() {
             <label for="credit-hour" className="form-label">
               Course Categories
             </label>
-            <select class="form-select" value={Category} onChange={(e)=>setCategory(e.target.value)}>
-            <option value="" selected disabled hidden>={Category}</option>
+            <select
+              class="form-select"
+              value={Category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value="" selected disabled hidden>
+                ={Category}
+              </option>
               <option>Computing Course</option>
               <option>CYC</option>
               <option>AIC</option>
@@ -202,8 +213,13 @@ export default function EditCourseForm() {
             <label for="credit-hour" className="form-label">
               Credit Hour
             </label>
-            <select class="form-select" onChange={(e)=>setAllCredit(e.target.value)}>
-              <option value="" selected disabled hidden>{allCredit}</option>
+            <select
+              class="form-select"
+              onChange={(e) => setAllCredit(e.target.value)}
+            >
+              <option value="" selected disabled hidden>
+                {allCredit}
+              </option>
               <option>4(0,4)</option>
               <option>4(3,1)</option>
               <option>3(3,0)</option>
@@ -220,7 +236,7 @@ export default function EditCourseForm() {
                 options={Courses}
                 getOptionLabel={(option) => option.Name}
                 defaultValue={null}
-                onChange={(e,val)=>setPreRequisites(val)}
+                onChange={(e, val) => setPreRequisites(val)}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -314,7 +330,6 @@ export default function EditCourseForm() {
           type="submit"
           name="submit"
           value="Update"
-          
           className="button btn btn-primary ms-auto me-0 me-md-3 my-2 my-md-0"
         />
       </form>

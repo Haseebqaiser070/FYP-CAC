@@ -8,7 +8,7 @@ import {
 import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 import "./pdfstyles.css";
-import { useNavigate ,useParams} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
 
 export default function CourseFinal() {
@@ -17,7 +17,7 @@ export default function CourseFinal() {
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
-  const { id } = useParams()
+  const { id } = useParams();
 
   const [Content, setContent] = useState({
     Code: "",
@@ -37,10 +37,10 @@ export default function CourseFinal() {
   }, []);
 
   const getData = async () => {
-  	console.log(id)
+    console.log(id);
     const response = await axios.get(`http://localhost:4000/Course/${id}`);
-    setContent(response.data)
-}
+    setContent(response.data);
+  };
   return (
     <div style={{ height: 700, padding: 30, width: "100%" }}>
       <div className="d-flex justify-content-end mb-4">
@@ -56,7 +56,6 @@ export default function CourseFinal() {
         </Button>
       </div>
 
-      
       {
         <div ref={componentRef} className="main">
           <h5 style={{ paddingBottom: 30 }}>
@@ -67,7 +66,8 @@ export default function CourseFinal() {
             <div style={{ paddingBottom: 20 }} className="row">
               <div className="col">
                 <h6>
-                  <b>Course Code: </b> {Content.Code.split("-")[0]}{Content.Code.split("-")[1]}
+                  <b>Course Code: </b> {Content.Code.split("-")[0]}
+                  {Content.Code.split("-")[1]}
                 </h6>
               </div>
               <div className="col">

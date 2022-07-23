@@ -6,9 +6,12 @@ import Popup from "./AddCourceForm";
 import axios from "axios";
 import Button from "@mui/material/Button";
 import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
+import { DataGrid } from "@mui/x-data-grid";
 
 export default function AddCourse() {
   const [Course, setCourse] = useState([]);
+  const [id, setid] = useState("");
+
   const navigate = useNavigate();
   useEffect(async () => {
     await getCourse();
@@ -37,81 +40,88 @@ export default function AddCourse() {
     */
   };
 
+  const columns = [
+    {
+      field: "courseCode",
+      headerName: "Course Code",
+      flex: 1,
+    },
+    {
+      field: "courseName",
+      headerName: "Course Name",
+      flex: 1,
+    },
+    {
+      field: "creditHours",
+      headerName: "Credit Hour",
+      flex: 1,
+    },
+    {
+      field: "Action",
+      headerName: "Action",
+      flex: 1,
+      editable: false,
+      renderCell: ActionButton,
+    },
+  ];
+  function ActionButton({ row }) {
+    return (
+      <>
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          style={{ marginLeft: 16 }}
+          onClick={() => {
+            navigate(`/Admin/CourseView/${row._id}`, {
+              replace: true,
+            });
+          }}
+        >
+          <AiFillEdit style={{ marginRight: 10 }} />
+          View
+        </Button>
+
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          style={{ marginLeft: 16 }}
+          onClick={() => handleUpdate(row._id)}
+        >
+          <AiFillEdit style={{ marginRight: 10 }} />
+          Edit
+        </Button>
+
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          style={{ marginLeft: 16 }}
+          onClick={() => handleDelete(row._id)}
+        >
+          <AiFillDelete style={{ marginRight: 10 }} />
+          Delete
+        </Button>
+      </>
+    );
+  }
+
   return (
     <div
       className="container"
       style={{ height: 700, width: "100%", padding: 20 }}
     >
-      <h1 className="py-4">All Cources</h1>
-
-      <table style={{ textAlign: "center" }} className="table" id="list">
-        <thead>
-          <tr>
-            <th className="col-2" scope="col">
-              Cource Code
-            </th>
-            <th className="col-4" scope="col">
-              Course Name
-            </th>
-            <th className="col-2" scope="col">
-              Credit Hour
-            </th>
-            <th className="col-4" scope="col">
-              Actions
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {Course &&
-            Course?.map((cor) => {
-              return (
-                <tr scope="row" key={cor._id}>
-                  <td>{cor.Code}</td>
-                  <td>{cor.Name}</td>
-                  <td>{cor.Credit}</td>
-                  <td>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      size="small"
-                      style={{ marginLeft: 16 }}
-                      onClick={() => {
-                        navigate(`/Admin/CourseView/${cor._id}`, {
-                          replace: true,
-                        });
-                      }}
-                    >
-                      <AiFillEdit style={{ marginRight: 10 }} />
-                      View
-                    </Button>
-
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      size="small"
-                      style={{ marginLeft: 16 }}
-                      onClick={() => handleUpdate(cor._id)}
-                    >
-                      <AiFillEdit style={{ marginRight: 10 }} />
-                      Edit
-                    </Button>
-
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      size="small"
-                      style={{ marginLeft: 16 }}
-                      onClick={() => handleDelete(cor._id)}
-                    >
-                      <AiFillDelete style={{ marginRight: 10 }} />
-                      Delete
-                    </Button>
-                  </td>
-                </tr>
-              );
-            })}
-        </tbody>
-      </table>
+      <h1 className="py-4">All Courses</h1>
+      <DataGrid
+        style={{ height: 300, width: "100%" }}
+        columns={columns}
+        rows={Course}
+        getRowId={(Rows) => Rows._id}
+        pageSize={10}
+        rowsPerPageOptions={[5]}
+        disableSelectionOnClick
+      />
     </div>
   );
 }

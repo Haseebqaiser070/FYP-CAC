@@ -113,7 +113,7 @@ export default function FacultyMembers() {
             options={Courses}
             getOptionLabel={(option) => option.Name}
             defaultValue={null}
-            onChange={(e, val) => setAssignCources(val)}
+            onChange={(e, val) => setAssignCourses(val)}
             renderInput={(params) => (
               <TextField
                 {...params}

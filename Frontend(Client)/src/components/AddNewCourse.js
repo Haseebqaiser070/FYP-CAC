@@ -135,7 +135,7 @@ export default function AddNewCourse() {
       Category != "" &&
       objectiveList != []
     ) {
-      const response  = await axios.post("http://localhost:4000/Course/add", {
+      const response = await axios.post("http://localhost:4000/Course/add", {
         Code,
         Name,
         Credit,
@@ -146,15 +146,17 @@ export default function AddNewCourse() {
         catalogue,
         objectiveList,
       });
-      if(response.data =="Already Exists Code")alert("Conflict with Code") 
-      else if(response.data =="Already Exists Code")alert("Conflict with Name")
-      else{
-      setSufCode("");
-      setName("");
-      setPreRequisites([]);
-      setCatalogue("");
-      setObjectiveList([]);
-      getData();}
+      if (response.data == "Already Exists Code") alert("Conflict with Code");
+      else if (response.data == "Already Exists Code")
+        alert("Conflict with Name");
+      else {
+        setSufCode("");
+        setName("");
+        setPreRequisites([]);
+        setCatalogue("");
+        setObjectiveList([]);
+        getData();
+      }
     } else {
       alert("empty values");
     }
@@ -397,6 +399,16 @@ export default function AddNewCourse() {
                   ></input>
                 </div>
                 <div className="col-3 d-grid gap-2">
+                  <Button
+                    fullWidth
+                    style={{ marginRight: 15 }}
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                    type="submit"
+                  >
+                    ADD
+                  </Button>
                   <button
                     type="submit"
                     className="btn btn-primary btn-block"
