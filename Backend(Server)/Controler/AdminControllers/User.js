@@ -8,6 +8,11 @@ module.exports.Add = async (req, res) => {
     newPassword = await bcrypt.hash(req.body.Password, 12);
     req.body.Password = newPassword
     console.log(req.body)
+    
+    const oldUser = await Userdoc.find({Email:req.body.Email});
+    if(oldUser)return await res.status(409).json("Email")
+    const oldUser2 = await Userdoc.find({Phone:req.body.Phone});
+    if(oldUser2)return await res.status(409).json("Phone")
     const User = await Userdoc.create(
       req.body
     );

@@ -28,6 +28,7 @@ export default function Register() {
     ) {
       console.log(Roles);
       const Name = FirstName + " " + SecondName;
+     try{
       const res = await axios.post("http://localhost:4000/User/add", {
         Name,
         Email,
@@ -35,14 +36,21 @@ export default function Register() {
         Phone,
         Roles,
       });
-      console.log("1here");
-
-      setFirstName("");
-      setSecondName("");
-      setEmail("");
-      setPhone("");
-      setPassword("");
-      setRoles("");
+      
+        setFirstName("");
+        setSecondName("");
+        setEmail("");
+        setPhone("");
+        setPassword("");
+        setRoles("");
+      
+    }catch(err){
+      if(err.response.data="Email"){alert("User with this Email already Exists")}
+      else if(err.response.data="Phone"){alert("User with this Phone already Exists")}
+      else {
+        alert("try again");
+      }
+    }
     }
   };
   return (
@@ -104,7 +112,7 @@ export default function Register() {
                       id="tags-standard"
                       options={userRoles}
                       getOptionLabel={(option) => option}
-                      defaultValue={[...Roles]}
+                      defaultValue={[]}
                       onChange={(e, val) => setRoles(val)}
                       renderInput={(params) => (
                         <TextField

@@ -17,6 +17,7 @@ import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import { Box } from "@mui/system";
 import CreateTasks from "./CreateTasks";
+import EditTasks from "./EditTasks";
 
 const style = {
   position: "absolute",
@@ -133,8 +134,11 @@ export default function InitializeTask() {
 
   const [Init, setInit] = useState("");
   const [open2, setOpen2] = useState(false);
-  const handleClose2 = () => setOpen2(false);
+  const handleClose2 = () => {setInit("");setOpen2(false);}
   const [open3, setOpen3] = useState(false);
+  const [open4, setOpen4] = useState(false);
+  const handleClose4 = () => {setInit("");setOpen4(false);}
+
   const [Task, setTasks] = useState([]);
   const [upid, setupid] = useState("");
 
@@ -151,8 +155,24 @@ export default function InitializeTask() {
 
     return (
       <div>
-        {row.Task?.length == 0 && (
+      
+        {/* Edit tasks assigned to memebers */}
+        {row.Task?.length > 0 && row.Task != null ? 
           <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            style={{ marginRight: 10 }}
+            onClick={()=>{
+                setInit(row);
+                setOpen4(true);
+            }}
+          >
+            <AiFillEdit />
+            Edit Task
+          </Button>
+        : 
+        <Button
             variant="contained"
             color="primary"
             size="small"
@@ -165,8 +185,7 @@ export default function InitializeTask() {
             <AiFillDelete style={{ marginRight: 10 }} />
             Assign Task
           </Button>
-        )}
-
+          }
         <Modal
           open={open1}
           onClose={handleClose1}
@@ -199,20 +218,7 @@ export default function InitializeTask() {
           Edit Group
         </Button>
 
-        {/* Edit tasks assigned to memebers */}
-        {row.Task?.length > 0 && row.Task != null && (
-          <Button
-            variant="contained"
-            color="primary"
-            size="small"
-            style={{ marginLeft: 16, padding: 5 }}
-            // onClick={}
-          >
-            <AiFillEdit />
-            Edit Task
-          </Button>
-        )}
-        <Tooltip title="View task Progress" placement="top-start">
+        {row.Task?.length > 0 && row.Task != null&&(<Tooltip title="View task Progress" placement="top-start">
           <Button
             variant="contained"
             color="primary"
@@ -222,7 +228,7 @@ export default function InitializeTask() {
           >
             <AiFillEye />
           </Button>
-        </Tooltip>
+        </Tooltip>)}
         <Tooltip title="Delete" placement="top-start">
           <Button
             variant="contained"
@@ -312,6 +318,33 @@ export default function InitializeTask() {
           </div>
         </Box>
       </Modal>
+
+{/* Edit Task */}
+      <Modal
+        open={open4}
+        onClose={handleClose4}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        style={{ overflow: "scroll" }}
+      >
+        <Box sx={style}>
+          <div className="container">
+            <div>
+              <EditTasks
+                pre={Init}
+                func={() => {
+                  getRows();
+                  handleClose4();
+                }}
+              />
+            </div>
+          </div>
+        </Box>
+      </Modal>
+
+
+
+
 
       <Modal
         open={open}
