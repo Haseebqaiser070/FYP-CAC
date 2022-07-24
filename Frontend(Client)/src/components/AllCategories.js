@@ -225,7 +225,6 @@ export default function AllCategories() {
               size="small"
               // onClick={handleOpen1}
             >
-              <AiFillEdit style={{ marginRight: 10 }} />
               Submit
             </Button>
           </Box>

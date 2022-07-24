@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./css/styles.css";
 import { Link, Outlet } from "react-router-dom";
 import Popup from "./AddCourceForm";
@@ -21,9 +21,23 @@ import {
   BsFillPersonFill,
   BsFillCalendarWeekFill,
   BsBookHalf,
+  BsCollectionFill,
+  BsJournal,
+  BsStack,
+  BsPersonFill,
+  BsPersonBadgeFill,
+  BsPersonCheckFill,
+  BsCalendarMonthFill,
+  BsCalendarPlusFill,
+  BsCalendarCheckFill,
+  BsPlusCircleFill,
+  BsFillFilterCircleFill,
 } from "react-icons/bs";
+import SubtitlesIcon from "@mui/icons-material/Subtitles";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import useAuth from "../MyHooks/useAuth";
-import { Box, Modal } from "@mui/material";
+import { Box, Button, Modal } from "@mui/material";
 
 const style = {
   position: "absolute",
@@ -39,6 +53,10 @@ const style = {
 };
 
 export default function Navigation() {
+  const [openCourses, setOpenCourses] = useState(false);
+  const [openTasks, setOpenTasks] = useState(false);
+  const [openUsers, setOpenUsers] = useState(false);
+  const [openMeeting, setOpenMeeting] = useState(false);
   const [isOpen, setIsOpen] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const handleClose = () => setOpen(false);
@@ -77,7 +95,24 @@ export default function Navigation() {
           </button>
           <div className="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div className="input-group">
-              <button
+              <Button
+                fullWidth
+                style={{
+                  backgroundColor: "#fff",
+                  color: "#1565C0",
+                }}
+                variant="contained"
+                color="primary"
+                size="small"
+                type="button"
+                onClick={() => setOpen(true)}
+              >
+                <span style={{ marginRight: 10 }}>
+                  <BsFillPersonPlusFill />
+                </span>
+                <b>Add Faculty</b>
+              </Button>
+              {/* <button
                 style={{ backgroundColor: "#fff", color: "#0054a6" }}
                 className="btn btn-primary"
                 id="btnNavbarSearch"
@@ -88,7 +123,7 @@ export default function Navigation() {
                   <BsFillPersonPlusFill />
                 </span>
                 <b>Add Faculty</b>
-              </button>
+              </button> */}
 
               <Modal
                 open={open}
@@ -115,7 +150,13 @@ export default function Navigation() {
             className="sb-sidenav accordion bg"
             id="sidenavAccordion"
           >
-            <div className="sb-sidenav-menu">
+            <div
+              style={{
+                height: "calc(100vh - 56px)",
+                overflow: "auto",
+              }}
+              className="sb-sidenav-menu"
+            >
               <div className="nav">
                 <div className="sb-sidenav-menu-heading"></div>
                 <Link class="nav-link sidenavtext " to="Dashboard">
@@ -126,47 +167,113 @@ export default function Navigation() {
                 </Link>
                 <Link class="nav-link sidenavtext " to="AddProgram">
                   <div class="sb-nav-link-icon">
-                    <BsFillHouseDoorFill color="#fff" />
+                    <BsPlusCircleFill color="#fff" />
                   </div>
                   Add Program
                 </Link>
                 <Link class="nav-link sidenavtext " to="AddCourse">
                   <div class="sb-nav-link-icon">
-                    <BsFillBookFill color="#fff" />
+                    <BsCollectionFill color="#fff" />
                   </div>
                   All Courses
                 </Link>
-                <Link class="nav-link sidenavtext " to="InitCourse">
+                <div
+                  onClick={() => {
+                    openCourses ? setOpenCourses(false) : setOpenCourses(true);
+                  }}
+                  style={{ cursor: "pointer" }}
+                  class="nav-link sidenavtext"
+                >
                   <div class="sb-nav-link-icon">
-                    <BsFillBookmarkPlusFill color="#fff" />
+                    <BsFillBookFill color="#fff" />
                   </div>
-                  Initialize New Course
-                </Link>
-                <Link class="nav-link sidenavtext " to="AllCategories">
+                  Courses
+                  <div style={{ marginLeft: "auto" }} class="sb-nav-link-icon">
+                    {openCourses ? (
+                      <KeyboardArrowUpIcon />
+                    ) : (
+                      <KeyboardArrowDownIcon />
+                    )}
+                  </div>
+                </div>
+                {openCourses && (
+                  <>
+                    <Link
+                      style={{ marginLeft: "12px", fontSize: "14px" }}
+                      class="nav-link sidenavtext"
+                      to="InitCourse"
+                    >
+                      <div class="sb-nav-link-icon">
+                        <BsFillBookmarkPlusFill color="#fff" />
+                      </div>
+                      Initialize New Course
+                    </Link>
+                    <Link
+                      style={{ marginLeft: "12px", fontSize: "14px" }}
+                      class="nav-link sidenavtext "
+                      to="AllCategories"
+                    >
+                      <div class="sb-nav-link-icon">
+                        <BsListCheck color="#fff" />
+                      </div>
+                      Course Categories
+                    </Link>
+                  </>
+                )}
+                <div
+                  onClick={() => {
+                    openTasks ? setOpenTasks(false) : setOpenTasks(true);
+                  }}
+                  style={{ cursor: "pointer" }}
+                  class="nav-link sidenavtext"
+                >
                   <div class="sb-nav-link-icon">
-                    <BsListCheck color="#fff" />
+                    <BsStack color="#fff" backgroundColor="#fff" />
                   </div>
-                  Course Categories
-                </Link>
+                  Tasks
+                  <div style={{ marginLeft: "auto" }} class="sb-nav-link-icon">
+                    {openTasks ? (
+                      <KeyboardArrowUpIcon />
+                    ) : (
+                      <KeyboardArrowDownIcon />
+                    )}
+                  </div>
+                </div>
+                {openTasks && (
+                  <>
+                    <Link
+                      style={{ marginLeft: "12px", fontSize: "14px" }}
+                      class="nav-link sidenavtext "
+                      to="InitializeTask"
+                    >
+                      <div class="sb-nav-link-icon">
+                        <BsFillBookmarkPlusFill color="#fff" />
+                      </div>
+                      Initialize Task
+                    </Link>
+                    <Link
+                      style={{ marginLeft: "12px", fontSize: "14px" }}
+                      class="nav-link sidenavtext "
+                      to="Tasks"
+                    >
+                      <div class="sb-nav-link-icon">
+                        <BsFillFilterCircleFill color="#fff" />
+                      </div>
+                      Assigned Tasks
+                    </Link>
+                    <Link
+                      style={{ marginLeft: "12px", fontSize: "14px" }}
+                      class="nav-link sidenavtext "
+                      to="ReturnedTasks"
+                    >
+                      <div class="sb-nav-link-icon">
+                        <BsFillFileCheckFill color="#fff" />
+                      </div>
+                      Submitted Tasks
+                    </Link>
+                  </>
+                )}
 
-                <Link class="nav-link sidenavtext " to="InitializeTask">
-                  <div class="sb-nav-link-icon">
-                    <BsListTask color="#fff" />
-                  </div>
-                  Initialize Task
-                </Link>
-                <Link class="nav-link sidenavtext " to="Tasks">
-                  <div class="sb-nav-link-icon">
-                    <BsListTask color="#fff" />
-                  </div>
-                  Assigned Tasks
-                </Link>
-                <Link class="nav-link sidenavtext " to="ReturnedTasks">
-                  <div class="sb-nav-link-icon">
-                    <BsFillFileCheckFill color="#fff" />
-                  </div>
-                  Submitted Tasks
-                </Link>
                 <Link class="nav-link sidenavtext " to="AllSchemeofStudies">
                   <div class="sb-nav-link-icon">
                     <BsFillFilePdfFill color="#fff" />
@@ -179,25 +286,61 @@ export default function Navigation() {
                   </div>
                   Course Folder Deadlines
                 </Link>
-                <Link class="nav-link sidenavtext " to="Users">
-                  <div class="sb-nav-link-icon">
-                    <BsFillPeopleFill color="#fff" />
-                  </div>
-                  All Users
-                </Link>
-                <Link class="nav-link sidenavtext " to="FacultyMembers">
-                  <div class="sb-nav-link-icon">
-                    <BsFillPersonFill color="#fff" />
-                  </div>
-                  FacultyMembers
-                </Link>
 
-                <Link class="nav-link sidenavtext " to="Evaluators">
+                <div
+                  onClick={() => {
+                    openUsers ? setOpenUsers(false) : setOpenUsers(true);
+                  }}
+                  style={{ cursor: "pointer" }}
+                  class="nav-link sidenavtext"
+                >
                   <div class="sb-nav-link-icon">
-                    <BsFillPersonFill color="#fff" />
+                    <BsPersonFill color="#fff" />
                   </div>
-                  Evaluators
-                </Link>
+                  Users
+                  <div style={{ marginLeft: "auto" }} class="sb-nav-link-icon">
+                    {openUsers ? (
+                      <KeyboardArrowUpIcon />
+                    ) : (
+                      <KeyboardArrowDownIcon />
+                    )}
+                  </div>
+                </div>
+                {openUsers && (
+                  <>
+                    <Link
+                      style={{ marginLeft: "12px", fontSize: "14px" }}
+                      class="nav-link sidenavtext "
+                      to="Users"
+                    >
+                      <div class="sb-nav-link-icon">
+                        <BsFillPeopleFill color="#fff" />
+                      </div>
+                      All Users
+                    </Link>
+                    <Link
+                      style={{ marginLeft: "12px", fontSize: "14px" }}
+                      class="nav-link sidenavtext "
+                      to="FacultyMembers"
+                    >
+                      <div class="sb-nav-link-icon">
+                        <BsPersonBadgeFill color="#fff" />
+                      </div>
+                      FacultyMembers
+                    </Link>
+
+                    <Link
+                      style={{ marginLeft: "12px", fontSize: "14px" }}
+                      class="nav-link sidenavtext "
+                      to="Evaluators"
+                    >
+                      <div class="sb-nav-link-icon">
+                        <BsPersonCheckFill color="#fff" />
+                      </div>
+                      Evaluators
+                    </Link>
+                  </>
+                )}
 
                 <Link class="nav-link sidenavtext " to="Meeting">
                   <div class="sb-nav-link-icon">
@@ -205,21 +348,50 @@ export default function Navigation() {
                   </div>
                   CAC Meeting
                 </Link>
-                <Link class="nav-link sidenavtext " to="CreateNewMeeting">
-                  <div class="sb-nav-link-icon">
-                    <BsFillCalendarWeekFill color="#fff" />
-                  </div>
-                  Create New Meeting
-                </Link>
-                <Link
-                  class="nav-link sidenavtext "
-                  to="ViewCacMemberAvailabilty"
+                <div
+                  onClick={() => {
+                    openMeeting ? setOpenMeeting(false) : setOpenMeeting(true);
+                  }}
+                  style={{ cursor: "pointer" }}
+                  class="nav-link sidenavtext"
                 >
                   <div class="sb-nav-link-icon">
-                    <BsFillCalendarWeekFill color="#fff" />
+                    <BsCalendarMonthFill color="#fff" />
                   </div>
-                  CAC Member Availability
-                </Link>
+                  Meeting
+                  <div style={{ marginLeft: "auto" }} class="sb-nav-link-icon">
+                    {openMeeting ? (
+                      <KeyboardArrowUpIcon />
+                    ) : (
+                      <KeyboardArrowDownIcon />
+                    )}
+                  </div>
+                </div>
+                {openMeeting && (
+                  <>
+                    <Link
+                      style={{ marginLeft: "12px", fontSize: "14px" }}
+                      class="nav-link sidenavtext "
+                      to="CreateNewMeeting"
+                    >
+                      <div class="sb-nav-link-icon">
+                        <BsCalendarPlusFill color="#fff" />
+                      </div>
+                      Create New Meeting
+                    </Link>
+                    <Link
+                      style={{ marginLeft: "12px", fontSize: "14px" }}
+                      class="nav-link sidenavtext "
+                      to="ViewCacMemberAvailabilty"
+                    >
+                      <div class="sb-nav-link-icon">
+                        <BsCalendarCheckFill color="#fff" />
+                      </div>
+                      CAC Member Availability
+                    </Link>
+                  </>
+                )}
+
                 <Link class="nav-link sidenavtext " to="Flip">
                   <div class="sb-nav-link-icon">
                     <BsBookHalf color="#fff" />
@@ -230,7 +402,15 @@ export default function Navigation() {
             </div>
           </nav>
         </div>
-        <Outlet />
+        <div
+          style={{
+            width: "100%",
+            height: "calc(100vh - 56px)",
+            overflow: "auto",
+          }}
+        >
+          <Outlet />
+        </div>
       </div>
     </React.Fragment>
   );

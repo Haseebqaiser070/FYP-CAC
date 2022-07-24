@@ -8,6 +8,9 @@ import {
   BsFillCalendarWeekFill,
   BsFillFilterCircleFill,
   BsFillHouseDoorFill,
+  BsFillBookmarkPlusFill,
+  BsCalendarMonthFill,
+  BsStickyFill,
 } from "react-icons/bs";
 
 export default function CACnav() {
@@ -33,7 +36,13 @@ export default function CACnav() {
       <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
           <nav class="sb-sidenav accordion bg" id="sidenavAccordion">
-            <div class="sb-sidenav-menu">
+            <div
+              style={{
+                height: "calc(100vh - 56px)",
+                overflow: "auto",
+              }}
+              class="sb-sidenav-menu"
+            >
               <div class="nav">
                 <div class="sb-sidenav-menu-heading"></div>
                 <Link class="nav-link sidenavtext " to="Dashboard">
@@ -45,7 +54,7 @@ export default function CACnav() {
 
                 <Link class="nav-link sidenavtext" to="CacInitializedTasks">
                   <div class="sb-nav-link-icon">
-                    <BsFillFilterCircleFill color="#fff" />
+                    <BsFillBookmarkPlusFill color="#fff" />
                   </div>
                   Initialized Tasks
                 </Link>
@@ -65,7 +74,7 @@ export default function CACnav() {
 
                 <Link class="nav-link sidenavtext" to="CacCdfTask">
                   <div class="sb-nav-link-icon">
-                    <BsFiles color="#fff" />
+                    <BsStickyFill color="#fff" />
                   </div>
                   CDF Assigned
                 </Link>
@@ -79,7 +88,7 @@ export default function CACnav() {
 
                 <Link class="nav-link sidenavtext" to="FacultyMeeting">
                   <div class="sb-nav-link-icon">
-                    <BsFillCalendarWeekFill color="#fff" />
+                    <BsCalendarMonthFill color="#fff" />
                   </div>
                   Meetings
                 </Link>
@@ -90,13 +99,24 @@ export default function CACnav() {
                   Set/Edit Availability
                 </Link>
               </div>
-            </div>
-            <div class="sb-sidenav-footer sidenavtext">
-              Comsats University Islamabad
+              <div
+                style={{ position: "fixed", left: "8px", bottom: "8px" }}
+                class="sb-sidenav-footer sidenavtext"
+              >
+                Comsats University Islamabad
+              </div>
             </div>
           </nav>
         </div>
-        <Outlet />
+        <div
+          style={{
+            width: "100%",
+            height: "calc(100vh - 56px)",
+            overflow: "auto",
+          }}
+        >
+          <Outlet />
+        </div>
       </div>
     </React.Fragment>
   );

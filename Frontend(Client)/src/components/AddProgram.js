@@ -8,7 +8,9 @@ import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { Autocomplete, MenuItem, Modal, TextField } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import CloseIcon from "@mui/icons-material/Close";
 import InputLabel from "@mui/material/InputLabel";
+import AddIcon from "@mui/icons-material/Add";
 import { Box } from "@mui/system";
 
 export default function AddProgram() {
@@ -28,7 +30,6 @@ export default function AddProgram() {
     setOpen(false);
     setDegree("");
     setProgram("");
-  
   };
   const [id, setid] = useState("");
 
@@ -40,7 +41,6 @@ export default function AddProgram() {
     setDegree(res.data.Degree);
     setProgram(res.data.Program);
     setOpen(true);
-
   };
 
   const handleSubmit = async (e) => {
@@ -155,7 +155,7 @@ export default function AddProgram() {
           style={{ marginTop: 16 }}
           onClick={handleOpen}
         >
-          <AiFillEdit style={{ marginRight: 10 }} />
+          <AddIcon style={{ marginRight: "6px" }} />
           Add New Program
         </Button>
       </div>
@@ -168,39 +168,51 @@ export default function AddProgram() {
       >
         <Box sx={style}>
           <form onSubmit={handleSubmit}>
+            <Box mb={3} style={{ display: "flex", justifyContent: "end" }}>
+              <CloseIcon
+                onClick={handleClose}
+                style={{ cursor: "pointer", color: "gray" }}
+              />
+            </Box>
             <div className="col">
-              {!up?<FormControl fullWidth size="small">
-                <InputLabel id="taskType">Select Degree</InputLabel>
-                <Select
-                  className="mb-4"
-                  labelId="selectdegree"
-                  id="selectdegree"
-                  value={Degree}
-                  label="Select Degree"
-                  onChange={(e) => setDegree(e.target.value)}
-                  autoWidth
-                >
-                  <MenuItem value={"BS"}>BS</MenuItem>
-                  <MenuItem value={"MS"}>MS</MenuItem>
-                  <MenuItem value={"p.hd"}>P.hd</MenuItem>
-                </Select>
-              </FormControl>:<FormControl fullWidth size="small">
-                <InputLabel id="taskType">Select Degree</InputLabel>
-                <Select
-                  className="mb-4"
-                  labelId="selectdegree"
-                  id="selectdegree"
-                  value={Degree}
-                  label="Select Degree"
-                  onChange={(e) => setDegree(e.target.value)}
-                  autoWidth
-                >
-                  <MenuItem selected hidden value={Degree}>{Degree}</MenuItem>
-                  <MenuItem value={"BS"}>BS</MenuItem>
-                  <MenuItem value={"MS"}>MS</MenuItem>
-                  <MenuItem value={"p.hd"}>P.hd</MenuItem>
-                </Select>
-              </FormControl>}
+              {!up ? (
+                <FormControl fullWidth size="small">
+                  <InputLabel id="taskType">Select Degree</InputLabel>
+                  <Select
+                    className="mb-4"
+                    labelId="selectdegree"
+                    id="selectdegree"
+                    value={Degree}
+                    label="Select Degree"
+                    onChange={(e) => setDegree(e.target.value)}
+                    autoWidth
+                  >
+                    <MenuItem value={"BS"}>BS</MenuItem>
+                    <MenuItem value={"MS"}>MS</MenuItem>
+                    <MenuItem value={"p.hd"}>P.hd</MenuItem>
+                  </Select>
+                </FormControl>
+              ) : (
+                <FormControl fullWidth size="small">
+                  <InputLabel id="taskType">Select Degree</InputLabel>
+                  <Select
+                    className="mb-4"
+                    labelId="selectdegree"
+                    id="selectdegree"
+                    value={Degree}
+                    label="Select Degree"
+                    onChange={(e) => setDegree(e.target.value)}
+                    autoWidth
+                  >
+                    <MenuItem selected hidden value={Degree}>
+                      {Degree}
+                    </MenuItem>
+                    <MenuItem value={"BS"}>BS</MenuItem>
+                    <MenuItem value={"MS"}>MS</MenuItem>
+                    <MenuItem value={"p.hd"}>P.hd</MenuItem>
+                  </Select>
+                </FormControl>
+              )}
             </div>
             <div className="col">
               <FormControl fullWidth size="small">
@@ -231,7 +243,7 @@ export default function AddProgram() {
       </Modal>
       <div>
         <DataGrid
-          style={{ height: 300, width: "100%" }}
+          style={{ height: "70vh", width: "100%" }}
           columns={columns}
           rows={rows}
           getRowId={(Rows) => Rows._id}

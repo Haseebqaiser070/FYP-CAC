@@ -78,7 +78,7 @@ export default function AddCourse() {
             });
           }}
         >
-          <AiFillEdit style={{ marginRight: 10 }} />
+          <AiFillEye style={{ marginRight: 10 }} />
           View
         </Button>
 
@@ -110,11 +110,19 @@ export default function AddCourse() {
   return (
     <div
       className="container"
-      style={{ height: 700, width: "100%", padding: 20 }}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        height: 700,
+        width: "100%",
+        padding: 20,
+      }}
     >
       <h1 className="py-4">All Courses</h1>
       <DataGrid
-        style={{ height: 300, width: "100%" }}
+        style={{ height: 500, width: "100%" }}
         columns={columns}
         rows={Course}
         getRowId={(Rows) => Rows._id}

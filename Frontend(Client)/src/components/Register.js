@@ -6,6 +6,7 @@ import axios from "axios";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
+import { Button } from "@mui/material";
 
 export default function Register() {
   const [FirstName, setFirstName] = useState("");
@@ -147,14 +148,9 @@ export default function Register() {
 
                 <div className="row mb-3"></div>
                 <div className="mt-4 mb-0">
-                  <div className="d-grid">
-                    <input
-                      type="submit"
-                      name="submit"
-                      value="Submit"
-                      className="btn btn-primary ms-auto me-0 me-md-3 my-2 my-md-0"
-                    />
-                  </div>
+                  <Button variant="contained" color="primary" type="submit">
+                    Submit
+                  </Button>
                 </div>
               </form>
             </div>

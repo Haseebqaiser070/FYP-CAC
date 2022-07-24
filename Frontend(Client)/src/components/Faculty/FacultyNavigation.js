@@ -43,7 +43,13 @@ export default function FacultyNavigation() {
       <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
           <nav class="sb-sidenav accordion bg" id="sidenavAccordion">
-            <div class="sb-sidenav-menu">
+            <div
+              style={{
+                height: "calc(100vh - 56px)",
+                overflow: "auto",
+              }}
+              class="sb-sidenav-menu"
+            >
               <div class="nav">
                 <div class="sb-sidenav-menu-heading"></div>
                 <Link class="nav-link sidenavtext " to="Dashboard">
@@ -67,13 +73,24 @@ export default function FacultyNavigation() {
                   Course Folder
                 </Link>
               </div>
-            </div>
-            <div class="sb-sidenav-footer sidenavtext">
-              Comsats University Islamabad
+              <div
+                style={{ position: "fixed", left: "8px", bottom: "8px" }}
+                class="sb-sidenav-footer sidenavtext"
+              >
+                Comsats University Islamabad
+              </div>
             </div>
           </nav>
         </div>
-        <Outlet />
+        <div
+          style={{
+            width: "100%",
+            height: "calc(100vh - 56px)",
+            overflow: "auto",
+          }}
+        >
+          <Outlet />
+        </div>
       </div>
     </React.Fragment>
   );
