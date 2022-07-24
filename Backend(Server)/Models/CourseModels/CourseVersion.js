@@ -21,10 +21,7 @@ var CourseVersionSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  Category: {
-    type: String,
-    required: true,
-  },
+  
   PreRequisites: [
     {
       type: mongoose.Schema.ObjectId,

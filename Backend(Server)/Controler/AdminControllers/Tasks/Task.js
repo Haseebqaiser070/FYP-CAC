@@ -108,7 +108,25 @@ module.exports.Delete = async (req, res) => {
   try {
     if (!req.user) return await res.status(401).json("Timed Out");
     if (!req.user.Roles.includes("Admin")) return await res.status(401).json("UnAutherized");
-    const abc = await Task.findById(req.params.id)
+    const abc = await Task.findById(req.params.id).populate("User")
+    
+    /////---------------------------------------------------------------------------------------
+    if(abc.taskType=="Create Catalog Description"){
+      abc.User.CourseCreation=abc.User.CourseCreation.filter((i)=>{
+        if(i!=abc._id)return i
+      })
+  }
+  
+  else if(abc.taskType=="Create CDF"){
+    abc.User.CourseCDF=abc.User.CourseCDF=abc.User.CourseCDF.filter((i)=>{
+      if(i!=abc._id)return i
+    })
+  }
+  else if(abc.taskType=="Create Syllabus"){
+    abc.User.CourseSyllabus=abc.User.CourseSyllabus=abc.User.CourseSyllabus.filter((i)=>{
+      if(i!=abc._id)return i
+    }) 
+  } 
     const up = await Userdoc.findOneAndUpdate({ _id: abc.User._id },{$pullAll:{Task:req.params.id}});    
     const task = await Task.deleteOne({ _id: req.params.id });
     console.log("all Tasks", task);

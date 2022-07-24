@@ -3,7 +3,7 @@ import "./css/styles.css";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Button from "@mui/material/Button";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, gridPaginatedVisibleSortedGridRowEntriesSelector } from "@mui/x-data-grid";
 import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
 import {
   Autocomplete,
@@ -149,7 +149,24 @@ export default function InitializeTask() {
     setupid("");
     setOpen3(false);
   };
-
+  const[Team,setTeam]=useState([])
+  const[TotalOngoingTasks,setTotalOngoingTasks]=useState("")
+  const [ReturnedTasks,setReturnedTasks]=useState("")
+  const[ RemainingTasks,setRemainingTasks]=useState("")
+  const Getss = async(id) => {
+    const res = await axios.get(`http://localhost:4000/Task/showOneInit/${id}`);
+  console.log('res',res.data)
+    setTeam(res.data.AssignMember)
+    setTotalOngoingTasks(res.data.Task.length)
+    var returne=0
+    var ip=0
+    res.data.Task.forEach(element => {
+      if(element.Status=="Returned")returne=returne+1
+      else ip=ip+1 
+    });
+    setReturnedTasks(returne)
+    setRemainingTasks(ip)
+  }
   function Mbutton(props) {
     const { row } = props;
 
@@ -186,23 +203,6 @@ export default function InitializeTask() {
             Assign Task
           </Button>
           }
-        <Modal
-          open={open1}
-          onClose={handleClose1}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={modalstyle}>
-            <h4>Team Members: </h4>
-            <p>Team Members here</p>
-            <h4>Total Tasks Assigned: </h4>
-            <p>Total Tasks Assigned here</p>
-            <h4>Remaining Tasks: </h4>
-            <p style={{ color: "red" }}>
-              <b>Remaining Tasks</b>
-            </p>
-          </Box>
-        </Modal>
         {/* Edit InitTasks */}
         <Button
           variant="contained"
@@ -224,7 +224,7 @@ export default function InitializeTask() {
             color="primary"
             size="small"
             style={{ marginLeft: 16, padding: 10 }}
-            onClick={() => setOpen1(true)}
+            onClick={() => {Getss(row._id) ;setOpen1(true)}}
           >
             <AiFillEye />
           </Button>
@@ -318,6 +318,33 @@ export default function InitializeTask() {
           </div>
         </Box>
       </Modal>
+
+
+   {/* progress ----------------------*/}
+   <Modal
+          open={open1}
+          onClose={handleClose1}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={modalstyle}>
+            <h4>Team Members: </h4>
+            <p>{Team.map(i=>{
+              return(i.Name + " ")
+            })}</p>
+            <h4>Total Tasks Assigned: </h4>
+            <p>{TotalOngoingTasks}</p>
+            <h4>Returned Tasks: </h4>
+            <p>{ReturnedTasks}</p>
+            <h4>Remaining Tasks: </h4>
+            <p style={{ color: "red" }}>
+              <b>{RemainingTasks}</b>
+            </p>
+          </Box>
+        </Modal>
+  
+
+
 
 {/* Edit Task */}
       <Modal

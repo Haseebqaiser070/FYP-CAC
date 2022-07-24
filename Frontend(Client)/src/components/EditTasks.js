@@ -56,22 +56,24 @@ export default function EditTasks(props) {
   axios.defaults.withCredentials = true;
   const [Avail, setAvail] = useState([]);
   const [RepoCourse, setRepoCourse] = useState([]);
-  
+  console.log("pre",props.pre)
   const [obj, setobj] = useState([]);
-console.log("obj",obj)
-  useEffect(() => {
-    getRepoCourse();
-    getobj()
+  console.log("obj",obj)
+  console.log("RepoCourse",RepoCourse)
+  useEffect(async() => {
+   await  getRepoCourse();
+    await getobj()
   }, []);
   
     const getobj = async () => {
+      console.log(props.pre._id)
     const res = await axios.get(`http://localhost:4000/Task/showOneInit/${props.pre._id}`);
     setobj([...res.data.Task])
   };
 
   const getRepoCourse = async () => {
     const response = await axios.get("http://localhost:4000/RepoCourse/show");
-    setRepoCourse([response.data]);
+    setRepoCourse([...response.data]);
   };
 
   const handleSubmit = async (e) => {
@@ -116,7 +118,7 @@ console.log("obj",obj)
                 fullWidth
               />
             </div>
-    {obj.map((e,index)=>{
+    {obj.length>0 && obj.map((oo,index)=>{
       
       return(
                 <>
@@ -145,7 +147,7 @@ console.log("obj",obj)
               className="mb-4"
               labelId="taskType"
               id="taskType"
-              value={obj[index].User}
+              value={oo.User}
               label="Assign Teacher"
               onChange={(e) => {
                 const clone = [...obj]
@@ -153,7 +155,7 @@ console.log("obj",obj)
                 setobj([...clone])
               }}
               autoWidth
-            > <MenuItem value={obj[index].User} selected hidden>{obj[index].User.Name}</MenuItem>;
+            > <MenuItem value={oo.User} selected hidden>{obj[index].User.Name}</MenuItem>;
               {props.pre.AssignMember.map((a) => {
                 return <MenuItem value={a}>{a.Name}</MenuItem>;
               })}
@@ -166,7 +168,7 @@ console.log("obj",obj)
                 className="mb-4"
                 labelId="courseAssign"
                 id="courseAssign"
-                value={obj[index].Course}
+                value={oo.Course}
                 label="Assign Teacher"
                 onChange={(e) => 
                   {
@@ -176,7 +178,7 @@ console.log("obj",obj)
                   }}
                 autoWidth
             > 
-            <MenuItem value={obj[index].Course} selected hidden>{obj[index].Course.Code+ " " +obj[index].Course.Name}</MenuItem>
+            <MenuItem value={oo.Course} selected hidden>{oo.Course.Code+ " " +oo.Course.Name}</MenuItem>
         
                 { RepoCourse.length>1 && RepoCourse.map((a) => {
                   return (
@@ -289,7 +291,7 @@ console.log("obj",obj)
                           setobj([...clone])
                         }}
                     >
-                    <MenuItem value={obj[index].Course} selected hidden>{obj[index].Status}</MenuItem>;
+                    <MenuItem value={oo.Course} selected hidden>{oo.Status}</MenuItem>;
                       <MenuItem value={"Assigned"}>Assigned</MenuItem>
                       <MenuItem value={"Revision"}>Revision</MenuItem>
                     </Select>
@@ -301,7 +303,7 @@ console.log("obj",obj)
                   <input
                     className="mb-4"
                     // inputProps={{min = new Date.toISOString.slice(0,16)}}
-                    value={obj[index].Deadline}
+                    value={oo.Deadline}
                     onChange={(e) =>
                       {
                         const clone = [...obj]

@@ -1,7 +1,6 @@
-const { model } = require("mongoose");
 var InitTask = require("../../../Models/InitTask");
-const { populate } = require("../../../Models/Tasks");
 var Task = require("../../../Models/Tasks");
+var Userdoc = require("../../../Models/User");
 
 module.exports.Add = async (req, res) => {
   try {
@@ -51,11 +50,36 @@ module.exports.Delete = async (req, res) => {
     if (!req.user) return await res.status(401).json("Timed Out");
     if (!req.user.Roles.includes("Admin")) return await res.status(401).json("UnAutherized");
     const Inis1 = await InitTask.findById(req.params.id).populate("AssignMember")
-    Inis1.Task?.forEach(async(e) => {
+    console.log("ini",Inis1.Task)
+    Inis1.Task.forEach(async(e) => {
+      const abc = await Task.findById(e).populate("User")
+      if(abc.taskType=="Create Catalog Description"){   
+        var clone = abc.User.CourseCreation.filter((i)=>{
+          console.log("aaaaaaaa",abc.Course)
+          console.log("iiiii",i)
+          console.log("iiiiaai",!i.equals(abc.Course))
+          if(!i.equals(abc.Course)){
+            return i
+          }
+        })
+        
+        abc.User.CourseCreation=[...clone]
+    }
+    
+    else if(abc.taskType=="Create CDF"){
+      abc.User.CourseCDF=abc.User.CourseCDF=abc.User.CourseCDF.filter((i)=>{
+        if(i!=abc.Course)return i
+      })
+    }
+    else if(abc.taskType=="Create Syllabus"){
+      abc.User.CourseSyllabus=abc.User.CourseSyllabus=abc.User.CourseSyllabus.filter((i)=>{
+        if(i!=abc.Course)return i
+      }) 
+    } 
+      await Userdoc.findOneAndUpdate({ _id: abc.User._id },abc.User);    
       await Task.deleteOne({ _id: e });
-    });        
+    })        
     const Inittask = await InitTask.deleteOne({ _id: req.params.id });
-    console.log("all InitTasks", Inittask);
     await res.status(204).json(Inittask);
   } catch (err) {
     console.log(err);
