@@ -157,9 +157,7 @@ export default function AddNewCourseDocument() {
       SufCode != "" &&
       Name != "" &&
       allCredit != "" &&
-      PreRequisites != [] &&
       catalogue != "" &&
-      Category != "" &&
       objectiveList != []
     ) {
       await axios.post("http://localhost:4000/CourseVersion/add", {
@@ -168,16 +166,12 @@ export default function AddNewCourseDocument() {
         Credit,
         LectureHoursWeek,
         LabHoursWeek,
-        Category,
-        PreRequisites,
         catalogue,
         objectiveList,
         Books
       });
       setSufCode("");
       setName("");
-      setPreRequisites([]);
-      setCatalogue("");
       setObjectiveList([]);
       setBooks([])
       navigate(`/CAC/CourseCreation/${Code}` , { state: { row :{Code:state.row.Code,Name:state.row.Name}} }, { replace: true })

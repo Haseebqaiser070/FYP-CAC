@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import useAuth from "../MyHooks/useAuth";
+import { gridFilteredRowsLookupSelector } from "@mui/x-data-grid";
 function Login() {
   axios.defaults.withCredentials = true;
   const [Email, setEmail] = useState("");
@@ -20,30 +21,32 @@ function Login() {
           Password,
         });
         const data = response.data;
-        console.log(data);
-
-        const accessToken = response?.data?.accessToken;
-        const Roles = response?.data?.Roles;
-        setAuth({ Email, Roles });
-        setEmail("");
-        setPassword("");
-        if (Roles.includes("Admin"))
-          navigate("/Admin/Dashboard", { replace: true });
-        else if (Roles.includes("CAC"))
-          navigate("/CAC/Dashboard", { replace: true });
-        else if (Roles.includes("Faculty"))
-          navigate("/Faculty/Dashboard", { replace: true });
-        else if (Roles.includes("Eveluator"))
-          navigate("/Eveluator/Dashboard", { replace: true });
-      } catch (err) {
-        if (!err?.response) {
-          console.log("No Server Response");
-        } else if (err.response?.status === 400) {
-          console.log("Missing Username or Password");
-        } else if (err.response?.status === 401) {
-          console.log("Unauthorized");
+        console.log("ss",data);
+        
+          const Roles = response?.data?.Roles;
+          console.log(Roles)
+          setAuth({ Email, Roles });
+          setEmail("");
+          setPassword("");
+          if (Roles.includes("Admin"))
+            navigate("/Admin/Dashboard", { replace: true });
+          else if (Roles.includes("CAC"))
+            navigate("/CAC/Dashboard", { replace: true });
+          else if (Roles.includes("Faculty"))
+            navigate("/Faculty/Dashboard", { replace: true });
+          else if (Roles.includes("Eveluator"))
+            navigate("/Eveluator/Dashboard", { replace: true });}
+       catch (err) {
+       if (err.response?.data === "is not a User") {
+          alert("User with this email does not exist")
+        } 
+        else if (err.response?.data === "Deactivated") {
+          alert("Account Deactivated by Admin")
+        }
+        else if (err.response?.data === "wrong password") {
+          alert("Incorrect Password")
         } else {
-          console.log("Login Failed");
+          alert("Login Failed");
         }
       }
     } else {

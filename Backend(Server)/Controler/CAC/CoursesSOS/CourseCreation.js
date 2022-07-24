@@ -45,8 +45,6 @@ module.exports.showUsers = async (req, res) => {
     Credit: obj.Credit,
     LectureHoursWeek: obj.LectureHoursWeek ,
     LabHoursWeek:obj.LabHoursWeek,
-    Category:obj.Category,
-    PreRequisites:obj.PreRequisites,
     catalogue: obj.catalogue,
     objectiveList:obj.objectiveList ,
     Books:obj.Books

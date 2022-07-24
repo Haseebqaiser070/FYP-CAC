@@ -27,6 +27,7 @@ module.exports.Login = async (req, res) => {
     const { Email, Password } = req.body;
     const user = await User.findOne({ Email });
     if (!user) return res.status(404).json("is not a User");
+    if(!user.Activated)return res.status(401).json("Deactivated");
     const match = await bcrypt.compare(Password, user.Password);
     if (!match) return res.status(401).json("wrong password");
     const AccessTokens = createjwts(user, "Access key", "10s");

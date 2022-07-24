@@ -5,6 +5,7 @@ var CourseTasks = require("../../Controler/AdminControllers/Tasks/CourseTasks");
 var InitTask = require("../../Controler/AdminControllers/Tasks/InitTask")
 
 router.route("/add").post(Task.Add);
+router.route("/Update").put(Task.Update)
 router.route("/show").get(Task.Showall);
 router.route("/show/:status").get(CourseTasks.Showall);
 router.route("/lock/:id").post(CourseTasks.Lock);

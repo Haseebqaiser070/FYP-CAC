@@ -35,14 +35,25 @@ export default function Users() {
   const [Phone, setPhone] = useState("");
   const [Roles, setRoles] = useState([]);
   const [User, setUser] = useState([]);
+  const [Uid, setUid] = useState([]);
+  
   const [AssignCources, setAssignCourse] = useState([]);
   const [Courses, setCourse] = useState([]);
   axios.defaults.withCredentials = true;
-
   useEffect(() => {
     getData();
     getCources();
   }, []);
+  const BeforeUp = (us) => {
+    setUid(us._id)
+    setFirstName(us.Name.split(" ")[0])
+    setSecondName(us.Name.split(" ")[1])
+    setEmail(us.Email)
+    setRoles(us.Roles)
+    setPhone(us.Phone)
+    setPassword("oldPassword")
+    setOpen1(true)
+  };
   const getData = async () => {
     const response = await axios.get("http://localhost:4000/User/show");
     setUser(response.data);
@@ -57,7 +68,33 @@ export default function Users() {
     await axios.delete(`http://localhost:4000/User/${id}`);
     getData();
   };
-
+  const Update=async(e)=>{
+    e.preventDefault();
+    const Name = FirstName + " " + SecondName;
+    await axios.put(`http://localhost:4000/User/update2/${Uid}`,
+    {
+    Name,
+    Email,
+    Password,
+    Phone,
+    Roles
+    }
+    );
+    setUid("")
+    setFirstName("")
+    setSecondName("")
+    setEmail("")
+    setRoles([])
+    setPhone("")
+    setPassword("")
+    getData();
+    setOpen1(false)
+  }  
+  const activation=async(us)=>{
+    us.Activated=!us.Activated
+    await axios.put(`http://localhost:4000/User/${us._id}`,us);
+    getData();  
+  }
   return (
     <div
       className="container"
@@ -65,7 +102,7 @@ export default function Users() {
     >
       <h1 className="mt-4 mb-4">All Users</h1>
       <div style={{ padding: 10 }}>
-        <UserCards />
+        <UserCards pre={User}/>
       </div>
       <table className="table" id="list">
         <thead>
@@ -86,27 +123,15 @@ export default function Users() {
                 <td className="col-3">
                   <div className="row">
                     <div className="col">
-                      <Autocomplete
-                        multiple
-                        id="tags-standard"
-                        options={userRole}
-                        getOptionLabel={(option) => option}
-                        defaultValue={[...Usermember.Roles]}
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            variant="outlined"
-                            label="Select User Role"
-                            placeholder="User Roles"
-                            size="small"
-                          />
-                        )}
-                      />
+                      {Usermember.Roles.map(i=>i+" ")}
                     </div>
                   </div>
                 </td>
+
                 <td className="col-1">
-                  <Switch {...label} defaultChecked />
+                
+                  <Switch {...label} checked={Usermember.Activated}  onChange={()=>activation(Usermember)} />
+                
                 </td>
 
                 <td className="col-3">
@@ -115,7 +140,7 @@ export default function Users() {
                     color="primary"
                     size="small"
                     style={{ marginLeft: 16 }}
-                    onClick={() => setOpen1(true)}
+                    onClick={() =>BeforeUp(Usermember)}
                   >
                     <AiFillEdit style={{ marginRight: 10 }} />
                     Edit
@@ -138,7 +163,7 @@ export default function Users() {
                                 </h3>
                               </div>
                               <div>
-                                <form>
+                                <form onSubmit={Update}>
                                   <div className="row mb-3">
                                     <div className="col-md-6">
                                       <div className="form-floating mb-3 mb-md-0">
@@ -147,8 +172,8 @@ export default function Users() {
                                           id="inputFirstNameName"
                                           type="text"
                                           placeholder="Enter your first name "
-                                          // value={FirstName}
-                                          // onChange={(e) => setFirstName(e.target.value)}
+                                          value={FirstName}
+                                          onChange={(e) => setFirstName(e.target.value)}
                                         />
                                         <label for="inputFirstName">
                                           First Name
@@ -162,8 +187,8 @@ export default function Users() {
                                           id="inputLastName"
                                           type="text"
                                           placeholder="Enter your last name"
-                                          // value={SecondName}
-                                          // onChange={(e) => setSecondName(e.target.value)}
+                                          value={SecondName}
+                                          onChange={(e) => setSecondName(e.target.value)}
                                         />
                                         <label for="inputLastName">
                                           Last Name
@@ -180,8 +205,8 @@ export default function Users() {
                                           id="inputPhoneNo"
                                           type="number"
                                           placeholder="Enter your phone nmber"
-                                          // value={Phone}
-                                          // onChange={(e) => setPhone(e.target.value)}
+                                          value={Phone}
+                                          onChange={(e) => setPhone(e.target.value)}
                                         />
                                         <label for="inputLastName">
                                           Phone Number
@@ -189,10 +214,10 @@ export default function Users() {
                                       </div>
                                     </div>
                                     <div className="col-md-6">
-                                      {/* <Autocomplete
+                                      <Autocomplete
                                         multiple
                                         id="tags-standard"
-                                        options={userRoles}
+                                        options={userRole}
                                         getOptionLabel={(option) => option}
                                         defaultValue={[...Roles]}
                                         onChange={(e, val) => setRoles(val)}
@@ -204,7 +229,7 @@ export default function Users() {
                                             placeholder="User Roles"
                                           />
                                         )}
-                                      /> */}
+                                      />
                                     </div>
                                     <div className="col-md-12">
                                       <div className="form-floating mb-3 mt-3 mb-md-0">
@@ -213,8 +238,8 @@ export default function Users() {
                                           id="inputEmail"
                                           type="email"
                                           placeholder="name@example.com"
-                                          // value={Email}
-                                          // onChange={(e) => setEmail(e.target.value)}
+                                          value={Email}
+                                          onChange={(e) => setEmail(e.target.value)}
                                         />
                                         <label for="inputEmail">
                                           Email address
@@ -229,8 +254,8 @@ export default function Users() {
                                           id="inputPasswordConfirm"
                                           type="password"
                                           placeholder="Enter password"
-                                          // value={Password}
-                                          // onChange={(e) => setPassword(e.target.value)}
+                                          value={Password}
+                                          onChange={(e) => setPassword(e.target.value)}
                                         />
                                         <label for="inputPasswordConfirm">
                                           Password
