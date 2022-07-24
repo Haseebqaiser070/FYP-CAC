@@ -27,6 +27,7 @@ import InitializeTask from "../InitializeTask";
 import ViewCacAvailability from "../ViewCacAvailability";
 import AddProgram from "../AddProgram";
 import Evaluators from "../Evaluators";
+import CreateNewMeeting from "../CreateNewMeeting";
 function AdminRoutes() {
   return (
     <Routes>
@@ -43,6 +44,7 @@ function AdminRoutes() {
         />
         <Route path="/EditCourse/:id" element={<EditCourseForm />} />
         <Route path="/Meeting" element={<Meeting />} />
+        <Route path="/CreateNewMeeting" element={<CreateNewMeeting />} />
         <Route
           path="/ViewCacMemberAvailabilty"
           element={<ViewCacAvailability />}

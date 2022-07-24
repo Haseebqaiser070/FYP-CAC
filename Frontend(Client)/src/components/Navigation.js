@@ -205,6 +205,12 @@ export default function Navigation() {
                   </div>
                   CAC Meeting
                 </Link>
+                <Link class="nav-link sidenavtext " to="CreateNewMeeting">
+                  <div class="sb-nav-link-icon">
+                    <BsFillCalendarWeekFill color="#fff" />
+                  </div>
+                  Create New Meeting
+                </Link>
                 <Link
                   class="nav-link sidenavtext "
                   to="ViewCacMemberAvailabilty"

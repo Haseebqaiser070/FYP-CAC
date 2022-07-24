@@ -11,6 +11,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import { Box } from "@mui/system";
+import MeetingUpdateNotification from "./AvailabilityUpdateNotification";
 
 const style = {
   position: "absolute",
@@ -110,9 +111,11 @@ export default function CacAvailability() {
       className="container"
       style={{ height: 700, width: "100%", padding: 20 }}
     >
+      <MeetingUpdateNotification />
       <h1 className="py-4">
         <b>Meeting Availability</b>
       </h1>
+
       <div className="d-flex justify-content-end mb-4">
         <Button
           variant="contained"
