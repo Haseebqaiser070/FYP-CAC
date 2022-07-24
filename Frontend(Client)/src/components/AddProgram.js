@@ -141,7 +141,7 @@ export default function AddProgram() {
 
   return (
     <div
-      className="container"
+      className=" container"
       style={{ height: 700, width: "100%", padding: 20 }}
     >
       <h1>
