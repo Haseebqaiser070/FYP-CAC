@@ -6,12 +6,14 @@ import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
 import { useTheme } from "@mui/material/styles";
 import { AiOutlineClockCircle, AiOutlineUsergroupAdd } from "react-icons/ai";
-import { MenuItem, Modal, OutlinedInput } from "@mui/material";
+import { Grid, MenuItem, Modal, OutlinedInput } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import { Box } from "@mui/system";
 import MeetingUpdateNotification from "./AvailabilityUpdateNotification";
+import Paper from "@mui/material/Paper";
+import { styled } from "@mui/material/styles";
 
 const style = {
   position: "absolute",
@@ -24,6 +26,14 @@ const style = {
   p: 4,
   boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
 };
+
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: "center",
+  color: theme.palette.text.secondary,
+}));
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -201,7 +211,7 @@ export default function CacAvailability() {
         className="container"
         style={{ height: 700, width: "100%", padding: 20 }}
       >
-        <MeetingUpdateNotification />
+        {/* <MeetingUpdateNotification /> */}
         <h1 className="py-4">
           <b>Meeting Availability</b>
         </h1>
@@ -385,23 +395,49 @@ export default function CacAvailability() {
           </Box>
         </Modal>
 
-        <div>
-          <h5>mon {availabilityData.mon}</h5>
-          <h5>tue {availabilityData.tue}</h5>
-          <h5>wed {availabilityData.wed}</h5>
-          <h5>thur {availabilityData.thur}</h5>
-          <h5>fri {availabilityData.fri}</h5>
-          <h5>sat {availabilityData.sat}</h5>
-          {/* <DataGrid
-            style={{ height: 400, width: "100%" }}
-            columns={columns}
-            rows={availabilityData}
-            getRowId={(availabilityData) => availabilityData._id}
-            pageSize={10}
-            rowsPerPageOptions={[5]}
-            checkboxSelection
-            disableSelectionOnClick
-          /> */}
+        <div style={{ padding: 30 }}>
+          <Box sx={{ flexGrow: 1 }}>
+            <Grid container spacing={2} style={{ marginBottom: 30 }}>
+              <Grid item xs={4}>
+                <Item>
+                  <h1>Monday</h1>
+                  <h5>{availabilityData.mon}</h5>
+                </Item>
+              </Grid>
+              <Grid item xs={4}>
+                <Item>
+                  <h1>Tuesday</h1>
+                  <h5>{availabilityData.tue}</h5>
+                </Item>
+              </Grid>
+              <Grid item xs={4}>
+                <Item>
+                  <h1>Wednesday</h1>
+                  <h5>{availabilityData.wed}</h5>
+                </Item>
+              </Grid>
+            </Grid>
+            <Grid container spacing={2}>
+              <Grid item xs={4}>
+                <Item>
+                  <h1>Thursday</h1>
+                  <h5>{availabilityData.thur}</h5>
+                </Item>
+              </Grid>
+              <Grid item xs={4}>
+                <Item>
+                  <h1>Friday</h1>
+                  <h5>{availabilityData.fri}</h5>
+                </Item>
+              </Grid>
+              <Grid item xs={4}>
+                <Item>
+                  <h1>Saturday</h1>
+                  <h5>{availabilityData.sat}</h5>
+                </Item>
+              </Grid>
+            </Grid>
+          </Box>
         </div>
       </div>
     )

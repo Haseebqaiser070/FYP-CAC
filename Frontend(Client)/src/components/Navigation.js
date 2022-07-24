@@ -171,12 +171,7 @@ export default function Navigation() {
                   </div>
                   Add Program
                 </Link>
-                <Link class="nav-link sidenavtext " to="AddCourse">
-                  <div class="sb-nav-link-icon">
-                    <BsCollectionFill color="#fff" />
-                  </div>
-                  All Courses
-                </Link>
+
                 <div
                   onClick={() => {
                     openCourses ? setOpenCourses(false) : setOpenCourses(true);
@@ -198,6 +193,16 @@ export default function Navigation() {
                 </div>
                 {openCourses && (
                   <>
+                    <Link
+                      style={{ marginLeft: "12px", fontSize: "14px" }}
+                      class="nav-link sidenavtext "
+                      to="AddCourse"
+                    >
+                      <div class="sb-nav-link-icon">
+                        <BsCollectionFill color="#fff" />
+                      </div>
+                      All Courses
+                    </Link>
                     <Link
                       style={{ marginLeft: "12px", fontSize: "14px" }}
                       class="nav-link sidenavtext"
@@ -251,7 +256,7 @@ export default function Navigation() {
                       </div>
                       Initialize Task
                     </Link>
-                    <Link
+                    {/* <Link
                       style={{ marginLeft: "12px", fontSize: "14px" }}
                       class="nav-link sidenavtext "
                       to="Tasks"
@@ -260,7 +265,7 @@ export default function Navigation() {
                         <BsFillFilterCircleFill color="#fff" />
                       </div>
                       Assigned Tasks
-                    </Link>
+                    </Link> */}
                     <Link
                       style={{ marginLeft: "12px", fontSize: "14px" }}
                       class="nav-link sidenavtext "
@@ -392,12 +397,12 @@ export default function Navigation() {
                   </>
                 )}
 
-                <Link class="nav-link sidenavtext " to="Flip">
+                {/* <Link class="nav-link sidenavtext " to="Flip">
                   <div class="sb-nav-link-icon">
                     <BsBookHalf color="#fff" />
                   </div>
                   Flipbook
-                </Link>
+                </Link> */}
               </div>
             </div>
           </nav>

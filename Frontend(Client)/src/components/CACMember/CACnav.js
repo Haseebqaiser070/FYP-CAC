@@ -52,12 +52,12 @@ export default function CACnav() {
                   Dashboard
                 </Link>
 
-                <Link class="nav-link sidenavtext" to="CacInitializedTasks">
+                {/* <Link class="nav-link sidenavtext" to="CacInitializedTasks">
                   <div class="sb-nav-link-icon">
                     <BsFillBookmarkPlusFill color="#fff" />
                   </div>
                   Initialized Tasks
-                </Link>
+                </Link> */}
                 <Link class="nav-link sidenavtext" to="CacAllTasks">
                   <div class="sb-nav-link-icon">
                     <BsFillFilterCircleFill color="#fff" />
