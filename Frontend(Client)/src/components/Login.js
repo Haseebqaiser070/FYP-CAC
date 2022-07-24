@@ -39,7 +39,11 @@ function Login() {
        catch (err) {
        if (err.response?.data === "is not a User") {
           alert("User with this email does not exist")
-        } else if (err.response?.data === "wrong password") {
+        } 
+        else if (err.response?.data === "Deactivated") {
+          alert("Account Deactivated by Admin")
+        }
+        else if (err.response?.data === "wrong password") {
           alert("Incorrect Password")
         } else {
           alert("Login Failed");

@@ -5,7 +5,7 @@ module.exports.Add = async (req, res) => {
   try {
     if (!req.user) return await res.status(401).json("Timed Out");
     if(!req.user.Roles.includes("Admin")) return res.status(401).json("Unautherized");
-    newPassword = await bcrypt.hash(req.body.Password, 12);
+    const newPassword = await bcrypt.hash(req.body.Password, 12);
     req.body.Password = newPassword
     console.log(req.body)
     
@@ -73,13 +73,35 @@ module.exports.ShowOne = async (req, res) => {
   }
 };
 
-
-
-
 module.exports.Update = async (req, res) => {
   try {
     if(!req.user)return await res.status(401).json("Timed Out")
     if(!req.user.Roles.includes("Admin")) return res.status(401).json("Unautherized");
+    const User = await Userdoc.findOneAndUpdate({ _id: req.params.id },req.body);
+    await res.status(201).json(User);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports.Update2 = async (req, res) => {
+  try {
+    if(!req.user)return await res.status(401).json("Timed Out")
+    if(!req.user.Roles.includes("Admin")) return res.status(401).json("Unautherized");
+    const oldUser = await Userdoc.findById(req.params.id);
+    if(req.body.Password=="oldPassword"){
+    req.body.Password=oldUser.Password
+  }
+    else{    
+      const newPassword = await bcrypt.hash(req.body.Password, 12);
+      req.body.Password = newPassword
+  }    
+    req.body.Activated=oldUser.Activated
+    req.body.CourseCreation=oldUser.CourseCreation
+    req.body.CourseCDF=oldUser.CourseCDF
+    req.body.CourseSyllabus=oldUser.CourseSyllabus
+    req.body.CourseFolders=oldUser.CourseFolders
+    req.body.EvaluateFolders=oldUser.EvaluateFolders
     const User = await Userdoc.findOneAndUpdate({ _id: req.params.id },req.body);
     await res.status(201).json(User);
   } catch (err) {

@@ -18,6 +18,11 @@ var UserSchema = new mongoose.Schema({
         type:String,
         required: true  
       },
+    Activated:{
+        type:Boolean,
+        default:true
+      },
+      
     Roles:[
         {
         type: String, 

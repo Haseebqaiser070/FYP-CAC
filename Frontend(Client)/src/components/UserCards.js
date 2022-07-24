@@ -1,6 +1,6 @@
 import { Card, CardContent, Grid } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
+import React,{useEffect,useState} from "react";
 import "./css/styles.css";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
@@ -13,26 +13,49 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-export default function UserCards() {
+export default function UserCards(props) {
+  const[CAC,setCAC]=useState(0)
+  const[Faculty,setFaculty]=useState(0)
+  const[Evaluator,setEvaluator]=useState(0)
+  useEffect(() => {
+    getData();
+  }, [props]);
+  var count1=0
+  var count2=0
+  var count3=0
+  
+  const getData = async () => {
+    props.pre.forEach(element => {
+      element.Roles.forEach(e=>{
+        if(e=="CAC")count1=count1+1 
+        if(e=="Faculty")count2=count2+1 
+        if(e=="Evaluator")count3=count3+1
+      })
+    });
+    setCAC(count1)
+    setFaculty(count2)    
+    setEvaluator(count3) 
+    console.log(response.data);
+  };
   return (
     <div style={{ marginTop: 50, marginBottom: 80 }}>
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={2}>
           <Grid item xs={4}>
             <Item>
-              <h1>20</h1>
+              <h1>{CAC}</h1>
               <h5>TOTAL CAC MEMBERS</h5>
             </Item>
           </Grid>
           <Grid item xs={4}>
             <Item>
-              <h1>20</h1>
+              <h1>{Faculty}</h1>
               <h5>TOTAL FACULTY MEMBERS</h5>
             </Item>
           </Grid>
           <Grid item xs={4}>
             <Item>
-              <h1>20</h1>
+              <h1>{Evaluator}</h1>
               <h5>Total EVALUATORS</h5>
             </Item>
           </Grid>
