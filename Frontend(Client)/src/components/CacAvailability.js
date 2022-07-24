@@ -45,14 +45,14 @@ const times = [
   "4:00-5:30",
 ];
 
-function getStyles(time, availabilityTime, theme) {
-  return {
-    fontWeight:
-      availabilityTime.indexOf(time) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
+// function getStyles(time, availabilityTime, theme) {
+//   return {
+//     fontWeight:
+//       availabilityTime.indexOf(time) === -1
+//         ? theme.typography.fontWeightRegular
+//         : theme.typography.fontWeightMedium,
+//   };
+// }
 
 const columns = [
   {
@@ -88,8 +88,16 @@ const columns = [
 ];
 
 export default function CacAvailability() {
-  const theme = useTheme();
-  const [availabilityTime, setAvailabilityTIme] = React.useState([]);
+  // const theme = useTheme();
+  const [availabilityTimeMon, setAvailabilityTImeMon] = React.useState([]);
+  const [availabilityTimeTue, setAvailabilityTImeTue] = React.useState([]);
+  const [availabilityTimeThur, setAvailabilityTImeThur] = React.useState([]);
+  const [availabilityTimeFri, setAvailabilityTImeFri] = React.useState([]);
+  const [availabilityTimeSat, setAvailabilityTImeSat] = React.useState([]);
+  const [availabilityTimeWed, setAvailabilityTImeWed] = React.useState([]);
+  const [teacherId, setTeacherId] = useState();
+  const [availabilityData, setAvailabilityData] = useState();
+  const [loading, setLoading] = useState(true);
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -97,233 +105,305 @@ export default function CacAvailability() {
 
   const [rows, setRows] = useState([]);
 
-  const handleChange = (event) => {
+  useEffect(() => {
+    const getAll = async () => {
+      var user = await axios.get("http://localhost:4000/Auth/check");
+      var { data } = await axios.get(
+        `http://localhost:4000/Meeting/get-availability/${user.data._id}`
+      );
+
+      setAvailabilityData(data.time);
+      console.log("data", data);
+
+      setTeacherId(user.data._id);
+
+      setLoading(false);
+    };
+
+    getAll();
+  }, []);
+
+  const handleChangeMon = (event) => {
     const {
       target: { value },
     } = event;
-    setAvailabilityTIme(
-      // On autofill we get a stringified value.
+
+    setAvailabilityTImeMon(
       typeof value === "string" ? value.split(",") : value
     );
   };
+  const handleChangeTue = (event) => {
+    const {
+      target: { value },
+    } = event;
+
+    setAvailabilityTImeTue(
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
+  const handleChangeWed = (event) => {
+    const {
+      target: { value },
+    } = event;
+
+    setAvailabilityTImeWed(
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
+  const handleChangeThur = (event) => {
+    const {
+      target: { value },
+    } = event;
+
+    setAvailabilityTImeThur(
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
+  const handleChangeFri = (event) => {
+    const {
+      target: { value },
+    } = event;
+
+    setAvailabilityTImeFri(
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
+  const handleChangeSat = (event) => {
+    const {
+      target: { value },
+    } = event;
+
+    setAvailabilityTImeSat(
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const data = {
+      mon: availabilityTimeMon,
+      tue: availabilityTimeTue,
+      wed: availabilityTimeWed,
+      thur: availabilityTimeThur,
+      fri: availabilityTimeFri,
+      sat: availabilityTimeSat,
+    };
+    console.log(data);
+    await axios.post(
+      `http://localhost:4000/Meeting/add-availability/${teacherId}`,
+      data
+    );
+  };
+
   return (
-    <div
-      className="container"
-      style={{ height: 700, width: "100%", padding: 20 }}
-    >
-      <MeetingUpdateNotification />
-      <h1 className="py-4">
-        <b>Meeting Availability</b>
-      </h1>
-
-      <div className="d-flex justify-content-end mb-4">
-        <Button
-          variant="contained"
-          color="primary"
-          size="small"
-          style={{ marginTop: 16 }}
-          onClick={handleOpen}
-        >
-          <AiOutlineClockCircle style={{ marginRight: 10 }} />
-          Set/Edit Availability
-        </Button>
-      </div>
-
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+    !loading && (
+      <div
+        className="container"
+        style={{ height: 700, width: "100%", padding: 20 }}
       >
-        <Box sx={style}>
-          <>
-            <div className="form-group py-2">
-              <FormControl fullWidth size="small">
-                <InputLabel id="demo-multiple-name-label">Monday</InputLabel>
-                <Select
-                  labelId="demo-multiple-name-label"
-                  id="demo-multiple-name"
-                  name="mon"
-                  multiple
-                  value={availabilityTime}
-                  onChange={handleChange}
-                  input={<OutlinedInput label="Monday" />}
-                  MenuProps={MenuProps}
-                  autoWidth
-                >
-                  {times.map((time) => (
-                    <MenuItem
-                      key={time}
-                      value={time}
-                      style={getStyles(time, availabilityTime, theme)}
-                    >
-                      {time}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </div>
+        <MeetingUpdateNotification />
+        <h1 className="py-4">
+          <b>Meeting Availability</b>
+        </h1>
 
-            <div className="form-group py-2">
-              <FormControl fullWidth size="small">
-                <InputLabel id="demo-multiple-name-label">Tuesday</InputLabel>
-                <Select
-                  labelId="demo-multiple-name-label"
-                  id="demo-multiple-name"
-                  name="tue"
-                  multiple
-                  value={availabilityTime}
-                  onChange={handleChange}
-                  input={<OutlinedInput label="Tuesday" />}
-                  MenuProps={MenuProps}
-                  autoWidth
-                >
-                  {times.map((time) => (
-                    <MenuItem
-                      key={time}
-                      value={time}
-                      style={getStyles(time, availabilityTime, theme)}
-                    >
-                      {time}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </div>
+        <div className="d-flex justify-content-end mb-4">
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            style={{ marginTop: 16 }}
+            onClick={handleOpen}
+          >
+            <AiOutlineClockCircle style={{ marginRight: 10 }} />
+            Set/Edit Availability
+          </Button>
+        </div>
 
-            <div className="form-group py-2">
-              <FormControl fullWidth size="small">
-                <InputLabel id="demo-multiple-name-label">Wednesday</InputLabel>
-                <Select
-                  labelId="demo-multiple-name-label"
-                  id="demo-multiple-name"
-                  name="wed"
-                  multiple
-                  value={availabilityTime}
-                  onChange={handleChange}
-                  input={<OutlinedInput label="Wednesday" />}
-                  MenuProps={MenuProps}
-                  autoWidth
-                >
-                  {times.map((time) => (
-                    <MenuItem
-                      key={time}
-                      value={time}
-                      style={getStyles(time, availabilityTime, theme)}
-                    >
-                      {time}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </div>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <>
+              <div className="form-group py-2">
+                <FormControl fullWidth size="small">
+                  <InputLabel id="demo-multiple-name-label">Monday</InputLabel>
+                  <Select
+                    labelId="demo-multiple-name-label"
+                    id="demo-multiple-name"
+                    name="mon"
+                    multiple
+                    value={availabilityTimeMon}
+                    onChange={handleChangeMon}
+                    input={<OutlinedInput label="Monday" />}
+                    MenuProps={MenuProps}
+                    autoWidth
+                  >
+                    {times.map((time) => (
+                      <MenuItem key={time} value={time}>
+                        {time}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </div>
 
-            <div className="form-group py-2">
-              <FormControl fullWidth size="small">
-                <InputLabel id="demo-multiple-name-label">Thursday</InputLabel>
-                <Select
-                  labelId="demo-multiple-name-label"
-                  id="demo-multiple-name"
-                  name="thur"
-                  multiple
-                  value={availabilityTime}
-                  onChange={handleChange}
-                  input={<OutlinedInput label="Thursday" />}
-                  MenuProps={MenuProps}
-                  autoWidth
-                >
-                  {times.map((time) => (
-                    <MenuItem
-                      key={time}
-                      value={time}
-                      style={getStyles(time, availabilityTime, theme)}
-                    >
-                      {time}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </div>
+              <div className="form-group py-2">
+                <FormControl fullWidth size="small">
+                  <InputLabel id="demo-multiple-name-label">Tuesday</InputLabel>
+                  <Select
+                    labelId="demo-multiple-name-label"
+                    id="demo-multiple-name"
+                    name="tue"
+                    multiple
+                    value={availabilityTimeTue}
+                    onChange={handleChangeTue}
+                    input={<OutlinedInput label="Tuesday" />}
+                    MenuProps={MenuProps}
+                    autoWidth
+                  >
+                    {times.map((time) => (
+                      <MenuItem key={time} value={time}>
+                        {time}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </div>
 
-            <div className="form-group py-2">
-              <FormControl fullWidth size="small">
-                <InputLabel id="demo-multiple-name-label">Friday</InputLabel>
-                <Select
-                  labelId="demo-multiple-name-label"
-                  id="demo-multiple-name"
-                  name="fri"
-                  multiple
-                  value={availabilityTime}
-                  onChange={handleChange}
-                  input={<OutlinedInput label="Friday" />}
-                  MenuProps={MenuProps}
-                  autoWidth
-                >
-                  {times.map((time) => (
-                    <MenuItem
-                      key={time}
-                      value={time}
-                      style={getStyles(time, availabilityTime, theme)}
-                    >
-                      {time}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </div>
+              <div className="form-group py-2">
+                <FormControl fullWidth size="small">
+                  <InputLabel id="demo-multiple-name-label">
+                    Wednesday
+                  </InputLabel>
+                  <Select
+                    labelId="demo-multiple-name-label"
+                    id="demo-multiple-name"
+                    name="wed"
+                    multiple
+                    value={availabilityTimeWed}
+                    onChange={handleChangeWed}
+                    input={<OutlinedInput label="Wednesday" />}
+                    MenuProps={MenuProps}
+                    autoWidth
+                  >
+                    {times.map((time) => (
+                      <MenuItem key={time} value={time}>
+                        {time}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </div>
 
-            <div className="form-group py-2">
-              <FormControl fullWidth size="small">
-                <InputLabel id="demo-multiple-name-label">Saturday</InputLabel>
-                <Select
-                  labelId="demo-multiple-name-label"
-                  id="demo-multiple-name"
-                  name="sat"
-                  multiple
-                  value={availabilityTime}
-                  onChange={handleChange}
-                  input={<OutlinedInput label="Saturday" />}
-                  MenuProps={MenuProps}
-                  autoWidth
-                >
-                  {times.map((time) => (
-                    <MenuItem
-                      key={time}
-                      value={time}
-                      style={getStyles(time, availabilityTime, theme)}
-                    >
-                      {time}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </div>
+              <div className="form-group py-2">
+                <FormControl fullWidth size="small">
+                  <InputLabel id="demo-multiple-name-label">
+                    Thursday
+                  </InputLabel>
+                  <Select
+                    labelId="demo-multiple-name-label"
+                    id="demo-multiple-name"
+                    name="thur"
+                    multiple
+                    value={availabilityTimeThur}
+                    onChange={handleChangeThur}
+                    input={<OutlinedInput label="Thursday" />}
+                    MenuProps={MenuProps}
+                    autoWidth
+                  >
+                    {times.map((time) => (
+                      <MenuItem key={time} value={time}>
+                        {time}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </div>
 
-            <Button
-              variant="contained"
-              color="primary"
-              size="small"
-              style={{ marginTop: 16 }}
-              //   onClick={handleSubmit}
-            >
-              <AiOutlineClockCircle style={{ marginRight: 10 }} />
-              Submit
-            </Button>
-          </>
-        </Box>
-      </Modal>
+              <div className="form-group py-2">
+                <FormControl fullWidth size="small">
+                  <InputLabel id="demo-multiple-name-label">Friday</InputLabel>
+                  <Select
+                    labelId="demo-multiple-name-label"
+                    id="demo-multiple-name"
+                    name="fri"
+                    multiple
+                    value={availabilityTimeFri}
+                    onChange={handleChangeFri}
+                    input={<OutlinedInput label="Friday" />}
+                    MenuProps={MenuProps}
+                    autoWidth
+                  >
+                    {times.map((time) => (
+                      <MenuItem key={time} value={time}>
+                        {time}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </div>
 
-      <div>
-        <DataGrid
-          style={{ height: 400, width: "100%" }}
-          columns={columns}
-          rows={rows}
-          pageSize={10}
-          rowsPerPageOptions={[5]}
-          checkboxSelection
-          disableSelectionOnClick
-        />
+              <div className="form-group py-2">
+                <FormControl fullWidth size="small">
+                  <InputLabel id="demo-multiple-name-label">
+                    Saturday
+                  </InputLabel>
+                  <Select
+                    labelId="demo-multiple-name-label"
+                    id="demo-multiple-name"
+                    name="sat"
+                    multiple
+                    value={availabilityTimeSat}
+                    onChange={handleChangeSat}
+                    input={<OutlinedInput label="Saturday" />}
+                    MenuProps={MenuProps}
+                    autoWidth
+                  >
+                    {times.map((time) => (
+                      <MenuItem key={time} value={time}>
+                        {time}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </div>
+
+              <Button
+                variant="contained"
+                color="primary"
+                size="small"
+                style={{ marginTop: 16 }}
+                onClick={handleSubmit}
+              >
+                <AiOutlineClockCircle style={{ marginRight: 10 }} />
+                Submit
+              </Button>
+            </>
+          </Box>
+        </Modal>
+
+        <div>
+          <h5>mon {availabilityData.mon}</h5>
+          <h5>tue {availabilityData.tue}</h5>
+          <h5>wed {availabilityData.wed}</h5>
+          <h5>thur {availabilityData.thur}</h5>
+          <h5>fri {availabilityData.fri}</h5>
+          <h5>sat {availabilityData.sat}</h5>
+          {/* <DataGrid
+            style={{ height: 400, width: "100%" }}
+            columns={columns}
+            rows={availabilityData}
+            getRowId={(availabilityData) => availabilityData._id}
+            pageSize={10}
+            rowsPerPageOptions={[5]}
+            checkboxSelection
+            disableSelectionOnClick
+          /> */}
+        </div>
       </div>
-    </div>
+    )
   );
 }

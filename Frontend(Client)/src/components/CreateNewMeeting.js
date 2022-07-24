@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./css/styles.css";
 import axios from "axios";
 
 import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
 import { Autocomplete, Box, Modal, TextField } from "@mui/material";
-import { AiOutlineFieldTime } from "react-icons/ai";
+import { AiFillDelete, AiFillEdit, AiOutlineFieldTime } from "react-icons/ai";
 
 const modalstyle = {
   position: "absolute",
@@ -51,6 +51,18 @@ export default function CreateNewMeeting() {
   const [rows, setRows] = useState([]);
   const [open1, setOpen1] = useState(false);
   const handleClose1 = () => setOpen1(false);
+  const handleSubmit = async (e) => {};
+  const handleChange = async (e) => {};
+
+  useEffect(() => {
+    const getAll = async () => {
+      const res = await axios.get("http://localhost:4000/Task/show");
+      setRows(res.data);
+      console.log(res.data);
+    };
+
+    getAll();
+  }, []);
 
   const columns = [
     /*     { field: "id", headerName: "ID" },
@@ -103,12 +115,12 @@ export default function CreateNewMeeting() {
           <Box sx={modalstyle}>
             <div style={{ marginBottom: 10 }}>
               <div>
-                {/* <Autocomplete
+                <Autocomplete
                   multiple
                   id="tags-standard"
-                  options={Tasks}
-                  getOptionLabel={(option) => option}
-                  // defaultValue={[...Usermember.Roles]}
+                  options={rows}
+                  getOptionLabel={(option) => option.taskType}
+                  onChange={handleChange}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -118,7 +130,7 @@ export default function CreateNewMeeting() {
                       size="small"
                     />
                   )}
-                /> */}
+                />
               </div>
               <div>
                 <label style={{ display: "block" }} for="title">
@@ -126,7 +138,7 @@ export default function CreateNewMeeting() {
                 </label>
                 <input
                   name="time"
-                  // onChange={handleData}
+                  onChange={handleChange}
                   style={{ width: "100%" }}
                   type="datetime-local"
                   // value={data.time}
@@ -138,7 +150,7 @@ export default function CreateNewMeeting() {
                 color="primary"
                 size="small"
                 style={{ marginTop: 16 }}
-                // onClick={}
+                onClick={handleSubmit}
               >
                 <AiOutlineFieldTime style={{ marginRight: 10 }} />
                 Create Meeting
@@ -148,7 +160,7 @@ export default function CreateNewMeeting() {
         </Modal>
       </div>
       <div>
-        <DataGrid
+        {/* <DataGrid
           style={{ height: 400, width: "100%" }}
           columns={columns}
           rows={rows}
@@ -156,7 +168,7 @@ export default function CreateNewMeeting() {
           rowsPerPageOptions={[5]}
           checkboxSelection
           disableSelectionOnClick
-        />
+        /> */}
       </div>
     </div>
   );

@@ -1,15 +1,17 @@
 var meetingdoc = require("../../Models/Meeting");
+var taskmeetingdoc = require("../../Models/TaskMeeting");
 
 module.exports.Create = async (req, res) => {
   try {
     // if (!req.user) return await res.json("Timed Out");
-    const meeting = await meetingdoc.create(req.body);
+    const meeting = await taskmeetingdoc.create(req.body);
     console.log("meeting added", meeting);
     await res.json(meeting);
   } catch (err) {
     console.log(err);
   }
 };
+
 module.exports.Update = async (req, res) => {
   const body = req.body;
   try {
@@ -25,11 +27,32 @@ module.exports.AddAvailability = async (req, res) => {
   const time = { time: req.body, teacher_id: req.params.tid };
   try {
     // if (!req.user) return await res.json("Timed Out");
-    const meeting = await meetingdoc.findOneAndUpdate(
-      { _id: req.params.mid },
-      { $push: { availability: time } }
-    );
+    const meeting = await meetingdoc.create(time);
     console.log("meeting updated", meeting);
+    await res.json(meeting);
+  } catch (err) {
+    console.log(err);
+  }
+};
+module.exports.GetAvailability = async (req, res) => {
+  try {
+    // if (!req.user) return await res.json("Timed Out");
+    const meeting = await meetingdoc
+      .findOne({
+        teacherId: req.params.tid,
+      })
+      .populate("teacher_id");
+    //   console.log("meeting added", meeting);
+    await res.json(meeting);
+  } catch (err) {
+    console.log(err);
+  }
+};
+module.exports.GetAllAvailability = async (req, res) => {
+  try {
+    // if (!req.user) return await res.json("Timed Out");
+    const meeting = await meetingdoc.find({}).populate("teacher_id");
+    //   console.log("meeting added", meeting);
     await res.json(meeting);
   } catch (err) {
     console.log(err);

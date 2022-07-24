@@ -3,7 +3,10 @@ import "./css/styles.css";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Button from "@mui/material/Button";
-import { DataGrid, gridPaginatedVisibleSortedGridRowEntriesSelector } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  gridPaginatedVisibleSortedGridRowEntriesSelector,
+} from "@mui/x-data-grid";
 import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
 import {
   Autocomplete,
@@ -134,10 +137,16 @@ export default function InitializeTask() {
 
   const [Init, setInit] = useState("");
   const [open2, setOpen2] = useState(false);
-  const handleClose2 = () => {setInit("");setOpen2(false);}
+  const handleClose2 = () => {
+    setInit("");
+    setOpen2(false);
+  };
   const [open3, setOpen3] = useState(false);
   const [open4, setOpen4] = useState(false);
-  const handleClose4 = () => {setInit("");setOpen4(false);}
+  const handleClose4 = () => {
+    setInit("");
+    setOpen4(false);
+  };
 
   const [Task, setTasks] = useState([]);
   const [upid, setupid] = useState("");
@@ -149,47 +158,46 @@ export default function InitializeTask() {
     setupid("");
     setOpen3(false);
   };
-  const[Team,setTeam]=useState([])
-  const[TotalOngoingTasks,setTotalOngoingTasks]=useState("")
-  const [ReturnedTasks,setReturnedTasks]=useState("")
-  const[ RemainingTasks,setRemainingTasks]=useState("")
-  const Getss = async(id) => {
+  const [Team, setTeam] = useState([]);
+  const [TotalOngoingTasks, setTotalOngoingTasks] = useState("");
+  const [ReturnedTasks, setReturnedTasks] = useState("");
+  const [RemainingTasks, setRemainingTasks] = useState("");
+  const Getss = async (id) => {
     const res = await axios.get(`http://localhost:4000/Task/showOneInit/${id}`);
-  console.log('res',res.data)
-    setTeam(res.data.AssignMember)
-    setTotalOngoingTasks(res.data.Task.length)
-    var returne=0
-    var ip=0
-    res.data.Task.forEach(element => {
-      if(element.Status=="Returned")returne=returne+1
-      else ip=ip+1 
+    console.log("res", res.data);
+    setTeam(res.data.AssignMember);
+    setTotalOngoingTasks(res.data.Task.length);
+    var returne = 0;
+    var ip = 0;
+    res.data.Task.forEach((element) => {
+      if (element.Status == "Returned") returne = returne + 1;
+      else ip = ip + 1;
     });
-    setReturnedTasks(returne)
-    setRemainingTasks(ip)
-  }
+    setReturnedTasks(returne);
+    setRemainingTasks(ip);
+  };
   function Mbutton(props) {
     const { row } = props;
 
     return (
       <div>
-      
         {/* Edit tasks assigned to memebers */}
-        {row.Task?.length > 0 && row.Task != null ? 
+        {row.Task?.length > 0 && row.Task != null ? (
           <Button
             variant="contained"
             color="primary"
             size="small"
             style={{ marginRight: 10 }}
-            onClick={()=>{
-                setInit(row);
-                setOpen4(true);
+            onClick={() => {
+              setInit(row);
+              setOpen4(true);
             }}
           >
             <AiFillEdit />
             Edit Task
           </Button>
-        : 
-        <Button
+        ) : (
+          <Button
             variant="contained"
             color="primary"
             size="small"
@@ -202,7 +210,7 @@ export default function InitializeTask() {
             <AiFillDelete style={{ marginRight: 10 }} />
             Assign Task
           </Button>
-          }
+        )}
         {/* Edit InitTasks */}
         <Button
           variant="contained"
@@ -218,17 +226,22 @@ export default function InitializeTask() {
           Edit Group
         </Button>
 
-        {row.Task?.length > 0 && row.Task != null&&(<Tooltip title="View task Progress" placement="top-start">
-          <Button
-            variant="contained"
-            color="primary"
-            size="small"
-            style={{ marginLeft: 16, padding: 10 }}
-            onClick={() => {Getss(row._id) ;setOpen1(true)}}
-          >
-            <AiFillEye />
-          </Button>
-        </Tooltip>)}
+        {row.Task?.length > 0 && row.Task != null && (
+          <Tooltip title="View task Progress" placement="top-start">
+            <Button
+              variant="contained"
+              color="primary"
+              size="small"
+              style={{ marginLeft: 16, padding: 10 }}
+              onClick={() => {
+                Getss(row._id);
+                setOpen1(true);
+              }}
+            >
+              <AiFillEye />
+            </Button>
+          </Tooltip>
+        )}
         <Tooltip title="Delete" placement="top-start">
           <Button
             variant="contained"
@@ -319,34 +332,32 @@ export default function InitializeTask() {
         </Box>
       </Modal>
 
+      {/* progress ----------------------*/}
+      <Modal
+        open={open1}
+        onClose={handleClose1}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={modalstyle}>
+          <h4>Team Members: </h4>
+          <p>
+            {Team.map((i) => {
+              return i.Name + " ";
+            })}
+          </p>
+          <h4>Total Tasks Assigned: </h4>
+          <p>{TotalOngoingTasks}</p>
+          <h4>Returned Tasks: </h4>
+          <p>{ReturnedTasks}</p>
+          <h4>Remaining Tasks: </h4>
+          <p style={{ color: "red" }}>
+            <b>{RemainingTasks}</b>
+          </p>
+        </Box>
+      </Modal>
 
-   {/* progress ----------------------*/}
-   <Modal
-          open={open1}
-          onClose={handleClose1}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={modalstyle}>
-            <h4>Team Members: </h4>
-            <p>{Team.map(i=>{
-              return(i.Name + " ")
-            })}</p>
-            <h4>Total Tasks Assigned: </h4>
-            <p>{TotalOngoingTasks}</p>
-            <h4>Returned Tasks: </h4>
-            <p>{ReturnedTasks}</p>
-            <h4>Remaining Tasks: </h4>
-            <p style={{ color: "red" }}>
-              <b>{RemainingTasks}</b>
-            </p>
-          </Box>
-        </Modal>
-  
-
-
-
-{/* Edit Task */}
+      {/* Edit Task */}
       <Modal
         open={open4}
         onClose={handleClose4}
@@ -368,10 +379,6 @@ export default function InitializeTask() {
           </div>
         </Box>
       </Modal>
-
-
-
-
 
       <Modal
         open={open}
