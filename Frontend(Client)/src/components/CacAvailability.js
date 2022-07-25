@@ -211,7 +211,7 @@ export default function CacAvailability() {
         className="container"
         style={{ height: 700, width: "100%", padding: 20 }}
       >
-        {/* <MeetingUpdateNotification /> */}
+        <MeetingUpdateNotification />
         <h1 className="py-4">
           <b>Meeting Availability</b>
         </h1>
