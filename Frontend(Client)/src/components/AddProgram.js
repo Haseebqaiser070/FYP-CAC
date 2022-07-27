@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
-import { Autocomplete, MenuItem, Modal, TextField } from "@mui/material";
+import { Autocomplete, Card, MenuItem, Modal, TextField } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import CloseIcon from "@mui/icons-material/Close";
@@ -140,118 +140,127 @@ export default function AddProgram() {
   }
 
   return (
-    <div
-      className=" container"
-      style={{ height: 700, width: "100%", padding: 20 }}
-    >
-      <h1>
-        <b>Add Degree Program</b>
-      </h1>
-      <div className="d-flex justify-content-end mb-4">
-        <Button
-          variant="contained"
-          color="primary"
-          size="small"
-          style={{ marginTop: 16 }}
-          onClick={handleOpen}
-        >
-          <AddIcon style={{ marginRight: "6px" }} />
-          Add New Program
-        </Button>
-      </div>
-
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+    <>
+      <div
+        className=" container"
+        style={{
+          height: 700,
+          width: "100%",
+          padding: 50,
+          backgroundColor: "#ddeeff",
+        }}
       >
-        <Box sx={style}>
-          <form onSubmit={handleSubmit}>
-            <Box mb={3} style={{ display: "flex", justifyContent: "end" }}>
-              <CloseIcon
-                onClick={handleClose}
-                style={{ cursor: "pointer", color: "gray" }}
-              />
-            </Box>
-            <div className="col">
-              {!up ? (
-                <FormControl fullWidth size="small">
-                  <InputLabel id="taskType">Select Degree</InputLabel>
-                  <Select
-                    className="mb-4"
-                    labelId="selectdegree"
-                    id="selectdegree"
-                    value={Degree}
-                    label="Select Degree"
-                    onChange={(e) => setDegree(e.target.value)}
-                    autoWidth
-                  >
-                    <MenuItem value={"BS"}>BS</MenuItem>
-                    <MenuItem value={"MS"}>MS</MenuItem>
-                    <MenuItem value={"p.hd"}>P.hd</MenuItem>
-                  </Select>
-                </FormControl>
-              ) : (
-                <FormControl fullWidth size="small">
-                  <InputLabel id="taskType">Select Degree</InputLabel>
-                  <Select
-                    className="mb-4"
-                    labelId="selectdegree"
-                    id="selectdegree"
-                    value={Degree}
-                    label="Select Degree"
-                    onChange={(e) => setDegree(e.target.value)}
-                    autoWidth
-                  >
-                    <MenuItem selected hidden value={Degree}>
-                      {Degree}
-                    </MenuItem>
-                    <MenuItem value={"BS"}>BS</MenuItem>
-                    <MenuItem value={"MS"}>MS</MenuItem>
-                    <MenuItem value={"p.hd"}>P.hd</MenuItem>
-                  </Select>
-                </FormControl>
-              )}
-            </div>
-            <div className="col">
-              <FormControl fullWidth size="small">
-                <TextField
-                  className="mb-4"
-                  id="outlined-basic"
-                  label="Program Name"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  value={Program}
-                  onChange={(e) => setProgram(e.target.value)}
-                />
-              </FormControl>
-            </div>
+        <Card style={{ padding: 50, borderRadius: 30 }}>
+          <h1>
+            <b>Add Degree Program</b>
+          </h1>
+          <div className="d-flex justify-content-end mb-4">
             <Button
               variant="contained"
               color="primary"
               size="small"
-              type="submit"
               style={{ marginTop: 16 }}
+              onClick={handleOpen}
             >
-              <AiFillEdit style={{ marginRight: 10 }} />
-              Add Program
+              <AddIcon style={{ marginRight: "6px" }} />
+              Add New Program
             </Button>
-          </form>
-        </Box>
-      </Modal>
-      <div>
-        <DataGrid
-          style={{ height: "70vh", width: "100%" }}
-          columns={columns}
-          rows={rows}
-          getRowId={(Rows) => Rows._id}
-          pageSize={10}
-          rowsPerPageOptions={[5]}
-          disableSelectionOnClick
-        />
+          </div>
+
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <form onSubmit={handleSubmit}>
+                <Box mb={3} style={{ display: "flex", justifyContent: "end" }}>
+                  <CloseIcon
+                    onClick={handleClose}
+                    style={{ cursor: "pointer", color: "gray" }}
+                  />
+                </Box>
+                <div className="col">
+                  {!up ? (
+                    <FormControl fullWidth size="small">
+                      <InputLabel id="taskType">Select Degree</InputLabel>
+                      <Select
+                        className="mb-4"
+                        labelId="selectdegree"
+                        id="selectdegree"
+                        value={Degree}
+                        label="Select Degree"
+                        onChange={(e) => setDegree(e.target.value)}
+                        autoWidth
+                      >
+                        <MenuItem value={"BS"}>BS</MenuItem>
+                        <MenuItem value={"MS"}>MS</MenuItem>
+                        <MenuItem value={"p.hd"}>P.hd</MenuItem>
+                      </Select>
+                    </FormControl>
+                  ) : (
+                    <FormControl fullWidth size="small">
+                      <InputLabel id="taskType">Select Degree</InputLabel>
+                      <Select
+                        className="mb-4"
+                        labelId="selectdegree"
+                        id="selectdegree"
+                        value={Degree}
+                        label="Select Degree"
+                        onChange={(e) => setDegree(e.target.value)}
+                        autoWidth
+                      >
+                        <MenuItem selected hidden value={Degree}>
+                          {Degree}
+                        </MenuItem>
+                        <MenuItem value={"BS"}>BS</MenuItem>
+                        <MenuItem value={"MS"}>MS</MenuItem>
+                        <MenuItem value={"p.hd"}>P.hd</MenuItem>
+                      </Select>
+                    </FormControl>
+                  )}
+                </div>
+                <div className="col">
+                  <FormControl fullWidth size="small">
+                    <TextField
+                      className="mb-4"
+                      id="outlined-basic"
+                      label="Program Name"
+                      variant="outlined"
+                      size="small"
+                      fullWidth
+                      value={Program}
+                      onChange={(e) => setProgram(e.target.value)}
+                    />
+                  </FormControl>
+                </div>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="small"
+                  type="submit"
+                  style={{ marginTop: 16 }}
+                >
+                  <AiFillEdit style={{ marginRight: 10 }} />
+                  Add Program
+                </Button>
+              </form>
+            </Box>
+          </Modal>
+          <div>
+            <DataGrid
+              style={{ height: "70vh", width: "100%" }}
+              columns={columns}
+              rows={rows}
+              getRowId={(Rows) => Rows._id}
+              pageSize={10}
+              rowsPerPageOptions={[5]}
+              disableSelectionOnClick
+            />
+          </div>
+        </Card>
       </div>
-    </div>
+    </>
   );
 }

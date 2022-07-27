@@ -6,7 +6,15 @@ import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
 import Autocomplete from "@mui/material/Autocomplete";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
-import { Box, Modal, TextField } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Modal,
+  Select,
+  TextField,
+} from "@mui/material";
 
 const style = {
   position: "absolute",
@@ -28,8 +36,27 @@ export default function Evaluators() {
   const [Rows, setRows] = useState([]);
   const [Courses, setCourse] = useState([]);
   const [AssignCources, setAssignCourses] = useState([]);
+  const [Degree, setDegree] = useState("Degree Program");
+  const [Programdb, setProgramdb] = useState([]);
+  const [DegreeLevel, setDegreeLevel] = useState("");
+  const [Section, setSection] = useState("");
+
+  const [obj, setobj] = useState([
+    {
+      DegreeLevel: "",
+      Degree: "",
+      AssignCources: "",
+    },
+  ]);
+
+  const getPrograms = async () => {
+    const res = await axios.get("http://localhost:4000/Program/show");
+    setProgramdb(res.data);
+  };
+
   console.log(Rows);
   useEffect(() => {
+    getPrograms();
     getData();
   }, []);
   const getData = async () => {
@@ -98,34 +125,134 @@ export default function Evaluators() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
-          <Autocomplete
-            multiple
-            id="tags-standard"
-            value={AssignCources}
-            options={Courses}
-            getOptionLabel={(option) => option.Name}
-            defaultValue={null}
-            onChange={(e, val) => setAssignCourses(val)}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="outlined"
-                label="Assign Cources"
-                placeholder="Assign Cources"
-              />
-            )}
-          />
-
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            width="100"
-            style={{ marginTop: 10 }}
-          >
-            Assign Course
-          </Button>
+        <Box component="form" sx={style}>
+          {obj.map((e, index) => {
+            return (
+              <>
+                <h4>Assign Course {index + 1}</h4>
+                {obj.length > 1 && (
+                  <FormControl>
+                    <Button
+                      className="mb-3"
+                      variant="contained"
+                      color="primary"
+                      size="medium"
+                      onClick={() => {
+                        const clone = [...obj];
+                        const a = clone.splice(index, 1);
+                        console.log("aaaaaaaaaaaaa", a, "cloneeeeeee", clone);
+                        setobj([...clone]);
+                      }}
+                    >
+                      remove
+                    </Button>
+                  </FormControl>
+                )}
+                <FormControl fullWidth size="small">
+                  <InputLabel id="taskType">Select Degree</InputLabel>
+                  <Select
+                    className="mb-4"
+                    labelId="selectdegree"
+                    id="selectdegree"
+                    value={obj[index].DegreeLevel}
+                    label="Select Degree"
+                    onChange={(e) => {
+                      const clone = [...obj];
+                      clone[index].DegreeLevel = e.target.value;
+                      setobj([...clone]);
+                    }}
+                    autoWidth
+                  >
+                    <MenuItem value={"BS"}>BS</MenuItem>
+                    <MenuItem value={"MS"}>MS</MenuItem>
+                    <MenuItem value={"p.hd"}>P.hd</MenuItem>
+                  </Select>
+                </FormControl>
+                <div className="form-floating mb-4">
+                  <select
+                    class="form-select"
+                    onChange={(e) => setDegree(e.target.value)}
+                  >
+                    <option value={Degree} selected disabled hidden>
+                      {Degree}
+                    </option>
+                    {Programdb.map((p) => {
+                      return (
+                        <option value={p._id}>
+                          {p.PDegree} {p.Program}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+                <Autocomplete
+                  multiple
+                  id="tags-standard"
+                  className="mb-4"
+                  value={AssignCources}
+                  options={Courses}
+                  getOptionLabel={(option) => option.Name}
+                  defaultValue={null}
+                  onChange={(e, val) => setAssignCourses(val)}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="outlined"
+                      label="Assign Cources"
+                      placeholder="Assign Cources"
+                    />
+                  )}
+                />
+                <div className="form-floating mb-3">
+                  <input
+                    className="form-control"
+                    id="inputName"
+                    type="text"
+                    value={obj[index].Section}
+                    onChange={(e) => {
+                      const clone = [...obj];
+                      clone[index].Section = e.target.value;
+                      setobj([...clone]);
+                    }}
+                    required
+                  />
+                  <label htmlFor="text" className="form-label">
+                    Section
+                  </label>
+                </div>
+              </>
+            );
+          })}
+          <div className="d-flex justify-content-center">
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              width="100"
+              style={{ marginTop: 10, marginRight: 20 }}
+              onClick={() => {
+                setobj([
+                  ...obj,
+                  {
+                    DegreeLevel: "",
+                    Degree: "",
+                    AssignCources: "",
+                  },
+                ]);
+              }}
+            >
+              Add another Course
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              width="100"
+              style={{ marginTop: 10 }}
+            >
+              Assign Course
+            </Button>
+          </div>
         </Box>
       </Modal>
     </div>

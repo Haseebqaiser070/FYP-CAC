@@ -291,6 +291,15 @@ export default function Navigation() {
                   </div>
                   Course Folder Deadlines
                 </Link>
+                <Link
+                  class="nav-link sidenavtext "
+                  to="PendingDeadlineRequests"
+                >
+                  <div class="sb-nav-link-icon">
+                    <BsFillFolderFill color="#fff" />
+                  </div>
+                  Pending Deadline Requests
+                </Link>
 
                 <div
                   onClick={() => {
@@ -347,12 +356,12 @@ export default function Navigation() {
                   </>
                 )}
 
-                <Link class="nav-link sidenavtext " to="Meeting">
+                {/* <Link class="nav-link sidenavtext " to="Meeting">
                   <div class="sb-nav-link-icon">
                     <BsFillCalendarWeekFill color="#fff" />
                   </div>
                   CAC Meeting
-                </Link>
+                </Link> */}
                 <div
                   onClick={() => {
                     openMeeting ? setOpenMeeting(false) : setOpenMeeting(true);

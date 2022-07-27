@@ -28,6 +28,7 @@ import ViewCacAvailability from "../ViewCacAvailability";
 import AddProgram from "../AddProgram";
 import Evaluators from "../Evaluators";
 import CreateNewMeeting from "../CreateNewMeeting";
+import PendingDeadlineRequests from "../PendingDeadlineRequests";
 function AdminRoutes() {
   return (
     <Routes>
@@ -70,6 +71,10 @@ function AdminRoutes() {
         <Route
           path="/CourseFolderDeadlines"
           element={<CourseFolderDeadlines />}
+        />
+        <Route
+          path="/PendingDeadlineRequests"
+          element={<PendingDeadlineRequests />}
         />
 
         <Route path="/ReturnedTasks" element={<ReturnedTasks />} />
