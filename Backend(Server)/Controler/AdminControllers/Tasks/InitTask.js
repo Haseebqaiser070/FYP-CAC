@@ -1,7 +1,7 @@
 var InitTask = require("../../../Models/InitTask");
 var Task = require("../../../Models/Tasks");
 var Userdoc = require("../../../Models/User");
-
+var ObjectId = require("mongoose").Types.ObjectId
 module.exports.Add = async (req, res) => {
   try {
     if (!req.user) return await res.status(401).json("Timed Out");
@@ -19,6 +19,18 @@ module.exports.UpdateTaskInit = async (req, res) => {
   try {
     if (!req.user) return await res.status(401).json("Timed Out");
     if (!req.user.Roles.includes("Admin")) return await res.status(401).json("UnAutherized");
+    // const Taskog = await InitTask.findOne({ _id: req.params.id }).populate("AssignMember").populate("Task")
+    // Taskog.Task.forEach((e)=>{
+    //   if(!req.body.AssignMember.includes(e.User)){
+    //       if(Taskog.taskType=="Create Catalog Description"){
+    //         const user = await Userdoc.findById(e)
+
+    //         const up = await Userdoc.updateOne({ _id: e },
+    //           { $pullAll : { CourseSyllabus :[ {_id : abc.Course }] } },
+    //           { multi : true }  
+    //         )}
+    //   }
+    // })
     const InitTask = await InitTask.findOneAndUpdate(
       { _id: req.params.id },
       req.body
@@ -51,34 +63,41 @@ module.exports.Delete = async (req, res) => {
     if (!req.user.Roles.includes("Admin")) return await res.status(401).json("UnAutherized");
     const Inis1 = await InitTask.findById(req.params.id).populate("AssignMember")
     console.log("ini",Inis1.Task)
+    var clone =[]
     Inis1.Task.forEach(async(e) => {
+      
       const abc = await Task.findById(e).populate("User")
       if(abc.taskType=="Create Catalog Description"){   
-        var clone = abc.User.CourseCreation.filter((i)=>{
-          console.log("aaaaaaaa",abc.Course)
-          console.log("iiiii",i)
-          console.log("iiiiaai",!i.equals(abc.Course))
-          if(!i.equals(abc.Course)){
-            return i
-          }
-        })
-        
-        abc.User.CourseCreation=[...clone]
-    }
+      //     clone = (abc.User.CourseCreation.filter((i)=>{
+      //     if(!i.equals(abc.Course))return i
+      //   }))
+      //   console.log("\n\n\n clone",clone)
+      //   abc.User.CourseCreation=clone
+       const up = await Userdoc.updateOne({ _id: abc.User._id },
+          { $pullAll : { CourseCreation :[ {_id : abc.Course }] } },
+          { multi : true }  
+        )
+        console.log("\n\nup",up)  
+      }
     
     else if(abc.taskType=="Create CDF"){
-      abc.User.CourseCDF=abc.User.CourseCDF=abc.User.CourseCDF.filter((i)=>{
-        if(i!=abc.Course)return i
-      })
+      const up = await Userdoc.updateOne({ _id: abc.User._id },
+        { $pullAll : { CourseCDF :[ {_id : abc.Course }] } },
+        { multi : true }  
+      )
+      console.log("\n\nup",up)  
     }
     else if(abc.taskType=="Create Syllabus"){
-      abc.User.CourseSyllabus=abc.User.CourseSyllabus=abc.User.CourseSyllabus.filter((i)=>{
-        if(i!=abc.Course)return i
-      }) 
+      const up = await Userdoc.updateOne({ _id: abc.User._id },
+        { $pullAll : { CourseSyllabus :[ {_id : abc.Course }] } },
+        { multi : true }  
+      )
+      console.log("\n\nup",up) 
     } 
-      await Userdoc.findOneAndUpdate({ _id: abc.User._id },abc.User);    
-      await Task.deleteOne({ _id: e });
-    })        
+    //  const up =  await Userdoc.findByIdAndUpdate({ _id: abc.User._id },abc.User);    
+    //  console.log("\n\nabc.user",abc.User,"\n\nup",up) 
+     await Task.deleteOne({ _id: e });
+    })
     const Inittask = await InitTask.deleteOne({ _id: req.params.id });
     await res.status(204).json(Inittask);
   } catch (err) {

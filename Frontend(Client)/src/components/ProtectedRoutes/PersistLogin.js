@@ -1,38 +1,34 @@
-import { Outlet } from "react-router-dom";
+import { Outlet ,Navigate} from "react-router-dom";
 import { useState, useEffect } from "react";
 import useRefreshToken from "../../MyHooks/useRefreshToken";
 import useAuth from "../../MyHooks/useAuth";
+import axios from "axios"
 
 const PersistLogin = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const refresh = useRefreshToken();
-  const { auth, persist } = useAuth();
-
-  useEffect(() => {
-    let isMounted = true;
-
-    const verifyRefreshToken = async () => {
-      try {
-        console.log("here");
-        await refresh();
-        console.log("here2");
-      } catch (err) {
-        console.error(err);
-      } finally {
-        isMounted && setIsLoading(false);
+  const { auth,setAuth, persist,setPersist } = useAuth();
+  console.log("presist",auth)
+  useEffect(async() => {
+    if(!persist){
+      console.log("per")
+      const response = await axios.get("http://localhost:4000/Auth/check",{withCredentials:true})
+        if(response.data!=undefined||response.data!=null){
+          await setAuth({Roles:response.data.Roles})
+          setPersist(true)
+          setIsLoading(false)
+        }
+        else{
+          setPersist(false)
+          setIsLoading(false)
+        }
       }
-    };
-    console.log("123");
-
-    // persist added here AFTER tutorial video
-    // Avoids unwanted call to verifyRefreshToken
-    !auth?.Email && persist ? verifyRefreshToken() : setIsLoading(false);
-
-    return () => (isMounted = false);
+      if(persist){
+        setIsLoading(false)
+      }
   }, []);
-
   return (
-    <>{!persist ? <Outlet /> : isLoading ? <p>Loading...</p> : <Outlet />}</>
+    <>{!persist && !isLoading ? <Navigate to="/" replace />:
+    isLoading ?<p>Loading...</p> : <Outlet />}</>
   );
 };
 

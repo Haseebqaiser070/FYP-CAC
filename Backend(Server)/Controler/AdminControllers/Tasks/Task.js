@@ -127,7 +127,7 @@ module.exports.Delete = async (req, res) => {
       if(i!=abc._id)return i
     }) 
   } 
-    const up = await Userdoc.findOneAndUpdate({ _id: abc.User._id },{$pullAll:{Task:req.params.id}});    
+    const up = await Userdoc.findOneAndUpdate({ _id: abc.User._id },abc.User);    
     const task = await Task.deleteOne({ _id: req.params.id });
     console.log("all Tasks", task);
     await res.json(task);

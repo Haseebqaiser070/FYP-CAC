@@ -10,7 +10,7 @@ function Login() {
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { setAuth } = useAuth();
+  const { setAuth,setPersist } = useAuth();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -25,7 +25,8 @@ function Login() {
         
           const Roles = response?.data?.Roles;
           console.log(Roles)
-          setAuth({ Email, Roles });
+          setAuth({ Roles });
+          setPersist(true)
           setEmail("");
           setPassword("");
           if (Roles.includes("Admin"))
