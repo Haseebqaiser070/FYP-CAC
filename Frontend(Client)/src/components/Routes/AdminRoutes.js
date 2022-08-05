@@ -29,6 +29,7 @@ import AddProgram from "../AddProgram";
 import Evaluators from "../Evaluators";
 import CreateNewMeeting from "../CreateNewMeeting";
 import PendingDeadlineRequests from "../PendingDeadlineRequests";
+import CreateSOS from "../CreateSOS";
 function AdminRoutes() {
   return (
     <Routes>
@@ -72,6 +73,7 @@ function AdminRoutes() {
           path="/CourseFolderDeadlines"
           element={<CourseFolderDeadlines />}
         />
+        <Route path="/CreateSOS" element={<CreateSOS />} />
         <Route
           path="/PendingDeadlineRequests"
           element={<PendingDeadlineRequests />}
