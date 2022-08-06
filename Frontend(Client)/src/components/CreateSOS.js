@@ -64,7 +64,7 @@ export default function CreateSOS() {
   }, []);
 
   const columns = [
-    // { field: "id", headerName: "ID", width: 90 },
+    { field: "id", headerName: "ID", width: 90 },
     {
       field: "S",
       headerName: "S#",
@@ -146,15 +146,15 @@ export default function CreateSOS() {
     },
   ];
 
-  // const rows = [
-  //   {
-  //     id: 1,
-  //     S: "1",
-  //     CourseCode: "CSC-101",
-  //     CourseTitle: "Intro to ICT",
-  //     CreditHour: "3(2,1)",
-  //   },
-  // ];
+  const rows = [
+    {
+      id: 1,
+      S: "1",
+      CourseCode: "CSC-101",
+      CourseTitle: "Intro to ICT",
+      CreditHour: "3(2,1)",
+    },
+  ];
 
   return (
     <div
@@ -250,7 +250,7 @@ export default function CreateSOS() {
 
       <div style={{ height: 200, width: "100%" }}>
         <DataGrid
-          rows={Rows}
+          rows={rows}
           columns={columns}
           pageSize={5}
           rowsPerPageOptions={[5]}

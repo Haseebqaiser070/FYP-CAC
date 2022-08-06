@@ -255,7 +255,7 @@ export default function AllCategories() {
                 </div>
                 <div className="card-body">
                   <form onSubmit={onSubmit}>
-                    <div className="form-floating mb-3">
+                    {/* <div className="form-floating mb-3">
                       <select
                         class="form-select"
                         onChange={(e) => setDegree(e.target.value)}
@@ -271,7 +271,7 @@ export default function AllCategories() {
                           );
                         })}
                       </select>
-                    </div>
+                    </div> */}
 
                     <div className="form-floating mb-3">
                       <input
