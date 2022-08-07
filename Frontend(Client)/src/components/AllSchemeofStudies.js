@@ -26,7 +26,7 @@ const style = {
   p: 4,
 };
 
-function Mbutton(props) {
+function ActionButton(props) {
   const navigate = useNavigate();
   const { row } = props;
   return (
@@ -80,15 +80,11 @@ export default function AllSchemeofStudies() {
 
   const columns = [
     {
-      field: "Start",
-      headerName: "Start Year",
+      field: "Year",
+      headerName: "Year",
       flex: 1,
     },
-    {
-      field: "End",
-      headerName: "End Year",
-      flex: 1,
-    },
+
     {
       field: "Program",
       headerName: "Program",
@@ -99,7 +95,7 @@ export default function AllSchemeofStudies() {
       headerName: "Action",
       flex: 1,
       editable: false,
-      renderCell: Mbutton,
+      renderCell: ActionButton,
     },
   ];
   //const rows = [
@@ -124,7 +120,7 @@ export default function AllSchemeofStudies() {
         <b>All Scheme of Studies</b>
       </h1>
 
-      <div className="d-flex justify-content-end mb-4">
+      {/* <div className="d-flex justify-content-end mb-4">
         <Button
           variant="contained"
           color="primary"
@@ -216,7 +212,7 @@ export default function AllSchemeofStudies() {
             </div>
           </Box>
         </Modal>
-      </div>
+      </div> */}
 
       <div>
         <DataGrid

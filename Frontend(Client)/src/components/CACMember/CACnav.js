@@ -72,6 +72,13 @@ export default function CACnav() {
                   Courses Assigned
                 </Link>
 
+                <Link class="nav-link sidenavtext" to="CacSosTask">
+                  <div class="sb-nav-link-icon">
+                    <BsStickyFill color="#fff" />
+                  </div>
+                  SOS Assigned
+                </Link>
+
                 <Link class="nav-link sidenavtext" to="CacCdfTask">
                   <div class="sb-nav-link-icon">
                     <BsStickyFill color="#fff" />
