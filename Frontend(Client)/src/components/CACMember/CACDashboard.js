@@ -33,6 +33,11 @@ export default function CACDashboard() {
       flex: 1,
     },
     {
+      field: "Program",
+      headerName: "Program",
+      flex: 1,
+    },
+    {
       field: "Course",
       headerName: "Course",
       valueGetter: (params) => params?.row?.Course?.Name,

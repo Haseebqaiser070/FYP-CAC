@@ -19,8 +19,12 @@ var TaskSchema = new mongoose.Schema({
     },
     Course :{
         type: mongoose.Schema.ObjectId,
-        ref: 'Repo'
-        }   
+        ref: 'Repo',
+        default:null
+        },
+    Program : {
+        type: String,
+    } 
 });
 
 module.exports = mongoose.model('Task', TaskSchema);

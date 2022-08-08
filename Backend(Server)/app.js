@@ -13,6 +13,7 @@ var RepoRouter = require("./Routes/AdminRoutes/Repo")
 var CourseVersion = require("./Routes/CAC/CourseVersion")
 var TaskRouter = require("./Routes/AdminRoutes/Task")
 var CourseCreationRouter = require("./Routes/CAC/CoursesCreation")
+var SOSCreationRouter = require("./Routes/CAC/SOSCreation")
 var ProgramRouter = require("./Routes/AdminRoutes/Program")
 var CDFRouter = require("./Routes/CAC/CDFCreation")
 var SyllabusRouter = require("./Routes/CAC/SyllabusCreation")
@@ -39,9 +40,9 @@ app.use("/RepoCourse", getUser, RepoRouter);
 app.use("/CourseVersion", getUser, CourseVersion);
 app.use("/Task", getUser, TaskRouter);
 app.use("/CoursesCreate", getUser, CourseCreationRouter);
+app.use("/SOSCreate", getUser, SOSCreationRouter);
 app.use("/CDFCreate", getUser, CDFRouter);
 app.use("/SyllabusCreate", getUser, SyllabusRouter);
-
 
 const start = async () => {
   try {

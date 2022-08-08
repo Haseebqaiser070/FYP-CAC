@@ -22,7 +22,7 @@ function CACRoutes() {
         <Route path="/CourseCreation/:Code" element={<Course />} />
         <Route path="/AddnewCourse/:Code" element={<AddNewCourseDocument />} />
         <Route path="/CacSyllabusTask" Route index element={<CacSyllabus />} />
-        <Route path="/CacSosTask" Route index element={<Cdf />} />
+        <Route path="/CacSosTask" Route index element={<CacSosTask />} />
         <Route path="/CacAllTasks">
           <Route path=":id" element={<CacAllTasks />} />
           <Route index element={<CacAllTasks />} />

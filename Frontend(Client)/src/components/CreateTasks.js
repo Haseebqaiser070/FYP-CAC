@@ -64,6 +64,7 @@ export default function CreateTasks(props) {
       Deadline: "",
       Status: "",
       Course: "",
+      Program:props.pre.Program,
     },
   ]);
 
@@ -96,8 +97,9 @@ export default function CreateTasks(props) {
       if (
         e.User == "" ||
         e.Deadline == "" ||
-        e.Status == "" ||
-        e.Course == ""
+        e.Status == "" 
+        //||
+        // e.Course == ""
       ) {
         verify = false;
       }
@@ -148,6 +150,7 @@ export default function CreateTasks(props) {
                         size="medium"
                         onClick={() => {
                           const clone = [...obj];
+                          console.log("ondex",index)
                           const a = clone.splice(index, 1);
                           console.log("aaaaaaaaaaaaa", a, "cloneeeeeee", clone);
                           setobj([...clone]);
@@ -179,52 +182,76 @@ export default function CreateTasks(props) {
                       </Select>
                     </FormControl>
                   </div>
+                  
+                  {
+                  props.pre.taskType == "Create Catalog Description"||
+                  props.pre.taskType =="Create CDF" ? (
                   <div className="col">
-                    <FormControl fullWidth size="small">
-                      <InputLabel id="taskType">Assign Course</InputLabel>
-                      <Select
-                        className="mb-4"
-                        labelId="courseAssign"
-                        id="courseAssign"
-                        value={obj[index].Course}
-                        label="Assign Teacher"
-                        onChange={(e) => {
-                          const clone = [...obj];
-                          clone[index].Course = e.target.value;
-                          setobj([...clone]);
-                        }}
-                        autoWidth
-                      >
-                        {RepoCourse.map((a) => {
-                          return (
-                            <MenuItem value={a}>
-                              {a.Code + "  " + a.Name}
-                            </MenuItem>
-                          );
-                        })}
-                      </Select>
-                    </FormControl>
-                  </div>
-                  {props.pre.taskType == "Create SOS" ||
+                  <FormControl fullWidth size="small">
+                    <InputLabel id="taskType">Assign Course</InputLabel>
+                    <Select
+                      className="mb-4"
+                      labelId="courseAssign"
+                      id="courseAssign"
+                      value={obj[index].Course}
+                      label="Assign Teacher"
+                      onChange={(e) => {
+                        const clone = [...obj];
+                        clone[index].Course = e.target.value;
+                        setobj([...clone]);
+                      }}
+                      autoWidth
+                    >
+                      {RepoCourse.map((a) => {
+                        return (
+                          <MenuItem value={a}>
+                            {a.Code + "  " + a.Name}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </FormControl>
+                </div>
+                    ):
+                  props.pre.taskType == "Create SOS" ? (
+                <div className="col">
+                  <FormControl fullWidth size="small">
+                    <InputLabel id="taskType">Assign Course</InputLabel>
+                    <Select
+                      className="mb-4"
+                      labelId="courseAssign"
+                      id="courseAssign"
+                      value={obj[index].Program}
+                      label="Assign Teacher"
+                      autoWidth
+                    >
+                      <MenuItem value={props.pre.Program}>
+                        {props.pre.Program}
+                      </MenuItem>  
+                    </Select>
+                  </FormControl>
+                </div>
+                  ) :
                   props.pre.taskType == "Update SOS" ? (
                     <div>
-                      <Autocomplete
-                        className="mb-4"
-                        multiple
-                        id="tags-standard"
-                        options={top100Films}
-                        getOptionLabel={(option) => option.title}
-                        defaultValue={[top100Films[13]]}
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            variant="outlined"
-                            label="Select SOS"
-                            placeholder="Select SOS"
-                          />
-                        )}
-                      />
-                    </div>
+                     <div className="col">
+                  <FormControl fullWidth size="small">
+                    <InputLabel id="taskType">Assign Course</InputLabel>
+                    <Select
+                      className="mb-4"
+                      labelId="courseAssign"
+                      id="courseAssign"
+                      value={obj[index].Program}
+                      label="Assign Teacher"
+                      autoWidth
+                    >
+                      <MenuItem value={props.pre.Program}>
+                        {props.pre.Program}
+                      </MenuItem>  
+                    </Select>
+                  </FormControl>
+                </div>
+                </div>
                   ) : props.pre.taskType == "Update CDF" ? (
                     <div>
                       <Autocomplete
@@ -347,6 +374,7 @@ export default function CreateTasks(props) {
                         Deadline: "",
                         Status: "",
                         Course: "",
+                        Program:props.pre.Program,
                       },
                     ]);
                   }}

@@ -8,7 +8,6 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineCheckSquare, AiFillEdit } from "react-icons/ai";
-
 function ActionButtons() {
   return (
     <div>
@@ -49,12 +48,25 @@ function ActionButtons() {
 }
 
 export default function CacSosTask() {
-  const [Rows, setRows] = useState([]);
+  const [RepoProgram, setRepoProgram] = useState([]);
 
+  useEffect(() => {
+    getRepoProgram();
+  }, []);
+
+  const getRepoProgram = async () => {
+    const response = await axios.get("http://localhost:4000/SOSCreate/get", {
+      withCredentials: true,
+    });
+    setRepoProgram(response.data);
+  };
+  console.log(RepoProgram)
   const columns = [
+    
     {
       field: "Program",
       headerName: "Program",
+      renderCell:(index)=>{`${RepoProgram[index]}`},
       flex: 2,
     },
 
@@ -75,8 +87,8 @@ export default function CacSosTask() {
         <DataGrid
           style={{ height: 400, width: "100%" }}
           columns={columns}
-          getRowId={(Rows) => Rows._id}
-          rows={Rows}
+          // getRowId={(RepoProgram) => RepoProgram.index}
+          rows={RepoProgram}
           pageSize={10}
           rowsPerPageOptions={[5]}
           disableSelectionOnClick

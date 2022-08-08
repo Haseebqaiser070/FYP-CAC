@@ -29,6 +29,12 @@ var UserSchema = new mongoose.Schema({
         required:true
     }]
     ,
+    SOSCreation:[
+      {
+      type: String,
+      default:'none'
+      }]
+  ,
     CourseCreation:[
         {
         type: mongoose.Schema.ObjectId,

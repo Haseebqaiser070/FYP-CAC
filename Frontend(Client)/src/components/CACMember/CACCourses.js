@@ -10,7 +10,9 @@ export default function CourseRepo() {
     }, []);
   
     const getRepoCourse = async () => {
-      const response = await axios.get("http://localhost:4000/CoursesCreate/get");
+      const response = await axios.get("http://localhost:4000/CoursesCreate/get", {
+        withCredentials: true,
+      });
       setRepoCourse(response.data);
     };
     

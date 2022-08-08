@@ -8,9 +8,20 @@ module.exports.Add = async (req, res) => {
     if (!req.user.Roles.includes("Admin")) return await res.status(401).json("UnAutherized");
     const Tasks=await Promise.all(req.body.obj.map(async(e)=>{
      try{
-      const task = await Task.create({taskType:e.taskType,User:e.User,Deadline:e.Deadline
-        ,Status:e.Status,Course :e.Course})
-        return task}
+      if(e.taskType=="Create SOS"){
+        const task = await Task.create({taskType:e.taskType,User:e.User,Deadline:e.Deadline
+        ,Status:e.Status,Program:e.Program})
+        console.log("\n\nTASK",task)
+        return task
+          
+      }
+      else{
+        const task = await Task.create({taskType:e.taskType,User:e.User,Deadline:e.Deadline
+        ,Status:e.Status,Course :e.Course,Program:e.Program})
+        console.log("\n\nTASK",task)
+        return task
+        }
+      }
       catch(er){
           console.error(er);
       }
@@ -21,7 +32,9 @@ module.exports.Add = async (req, res) => {
     if(e.taskType=="Create Catalog Description"){
         e.User.CourseCreation=[...e.User.CourseCreation,e.Course._id]
     }
-    
+    else if(e.taskType=="Create SOS"){
+      e.User.SOSCreation=[...e.User.SOSCreation,e.Program]
+    }
     else if(e.taskType=="Create CDF"){
         e.User.CourseCDF=[...e.CourseCDF,e.Course._id]
     }
