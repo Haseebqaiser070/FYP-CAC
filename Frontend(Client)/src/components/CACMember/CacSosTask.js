@@ -66,7 +66,6 @@ export default function CacSosTask() {
     {
       field: "Program",
       headerName: "Program",
-      renderCell:(index)=>{`${RepoProgram[index]}`},
       flex: 2,
     },
 
@@ -87,7 +86,7 @@ export default function CacSosTask() {
         <DataGrid
           style={{ height: 400, width: "100%" }}
           columns={columns}
-          // getRowId={(RepoProgram) => RepoProgram.index}
+          getRowId={(RepoProgram) => RepoProgram._id}
           rows={RepoProgram}
           pageSize={10}
           rowsPerPageOptions={[5]}

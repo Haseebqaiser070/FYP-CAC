@@ -8,7 +8,7 @@ module.exports.showUsers = async (req, res) => {
     try {
     if (!req.user) return await res.status(401).json("Timed Out");
     const user = await Userdoc.findById(req.user._id);
-    console.log(user.SOSCreations)
+     console.log("SOS",user)
     await res.status(200).json(user.SOSCreation)
     } catch (err) {
       console.log(err);

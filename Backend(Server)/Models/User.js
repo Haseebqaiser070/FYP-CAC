@@ -29,11 +29,16 @@ var UserSchema = new mongoose.Schema({
         required:true
     }]
     ,
-    SOSCreation:[
-      {
-      type: String,
-      default:'none'
-      }]
+    SOSCreation:{
+      type:[
+        {
+        Program:{
+        type: String,
+        }
+      }
+    ],
+    default:[]
+    }
   ,
     CourseCreation:[
         {

@@ -1,3 +1,4 @@
+var uuidv4 = require("uuid").v4
 var Task = require("../../../Models/Tasks");
 var Userdoc = require("../../../Models/User");
 var InitTask = require("../../../Models/InitTask");
@@ -33,7 +34,7 @@ module.exports.Add = async (req, res) => {
         e.User.CourseCreation=[...e.User.CourseCreation,e.Course._id]
     }
     else if(e.taskType=="Create SOS"){
-      e.User.SOSCreation=[...e.User.SOSCreation,e.Program]
+      e.User.SOSCreation=[...e.User.SOSCreation,{Program:e.Program}]
     }
     else if(e.taskType=="Create CDF"){
         e.User.CourseCDF=[...e.CourseCDF,e.Course._id]
