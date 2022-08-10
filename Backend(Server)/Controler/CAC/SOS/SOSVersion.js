@@ -75,4 +75,3 @@ module.exports.ViewOne= async (req,res)=>{
         await res.status(400).json(err)
     }
 }
-s
