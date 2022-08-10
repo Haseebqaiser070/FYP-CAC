@@ -1,15 +1,9 @@
 import React from "react";
 import "../css/styles.css";
 import { Link, Outlet } from "react-router-dom";
-import Popup from "../AddCourceForm";
-import Register from "../Register";
-import Users from "../Users";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
+
 import axios from "axios";
-import AvatarMenu from "../AvatarMenu";
+import AvatarMenu from "../AuxillaryComponents/AvatarMenu";
 
 import {
   BsFillPersonPlusFill,
@@ -60,7 +54,7 @@ export default function FacultyNavigation() {
                   Dashboard
                 </Link> */}
 
-                <Link class="nav-link sidenavtext " to="FolderEvaluation">
+                <Link class="nav-link sidenavtext " to="sos">
                   <div class="sb-nav-link-icon">
                     <BsBuilding color="#fff" />
                   </div>

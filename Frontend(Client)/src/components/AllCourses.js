@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import "./css/styles.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import Popup from "./AddCourceForm";
+import Popup from "./AuxillaryComponents/PopupFunction";
 import axios from "axios";
 import Button from "@mui/material/Button";
 import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
 import { DataGrid } from "@mui/x-data-grid";
 
-export default function AddCourse() {
+export default function AllCourses() {
   const [Course, setCourse] = useState([]);
   const [id, setid] = useState("");
 

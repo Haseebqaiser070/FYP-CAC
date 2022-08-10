@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./css/styles.css";
 import { Link } from "react-router-dom";
-import Popup from "./AddCourceForm";
+import Popup from "./AuxillaryComponents/PopupFunction";
 import axios from "axios";
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";

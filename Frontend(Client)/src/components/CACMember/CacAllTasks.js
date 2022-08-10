@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./css/styles.css";
+import "../css/styles.css";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import Button from "@mui/material/Button";

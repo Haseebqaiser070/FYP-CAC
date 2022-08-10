@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "./css/styles.css";
+import "../css/styles.css";
 import Button from "@mui/material/Button";
-import Popup from "./AddCourceForm";
+import Popup from "../AuxillaryComponents/PopupFunction";
 import { Box, Card, Modal } from "@mui/material";
 
 const style = {

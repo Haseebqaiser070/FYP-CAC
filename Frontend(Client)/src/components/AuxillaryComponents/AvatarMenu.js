@@ -10,7 +10,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import Logout from "@mui/icons-material/Logout";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import useAuth from "../MyHooks/useAuth";
+import useAuth from "../../MyHooks/useAuth";
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = useState(null);

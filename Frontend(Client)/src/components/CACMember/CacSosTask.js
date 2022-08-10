@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
 import "../css/styles.css";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+
 import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
-import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
+
 import { useNavigate } from "react-router-dom";
 import { AiOutlineCheckSquare, AiFillEdit } from "react-icons/ai";
 function ActionButtons(props) {
   const navigate = useNavigate();
   const { row } = props;
-    
+
   return (
     <div>
       <Button
@@ -19,14 +18,16 @@ function ActionButtons(props) {
         color="primary"
         size="small"
         style={{ marginLeft: 16 }}
-        onClick={()=>{navigate(
-          `/CAC/SOSCreation/${row.Program}`,
-          { state: { row } },
-          { replace: true }
-        )}}
+        onClick={() => {
+          navigate(
+            `/CAC/SOSCreation/${row.Program}`,
+            { state: { row } },
+            { replace: true }
+          );
+        }}
       >
         <AiFillEdit style={{ marginRight: 10 }} />
-        SOS
+        Create/Edit SOS
       </Button>
 
       <Button
@@ -56,9 +57,8 @@ export default function CacSosTask() {
     });
     setRepoProgram(response.data);
   };
-  console.log(RepoProgram)
+  console.log(RepoProgram);
   const columns = [
-    
     {
       field: "Program",
       headerName: "Program",

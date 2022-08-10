@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./css/styles.css";
+import "../css/styles.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -29,29 +29,30 @@ export default function Register() {
     ) {
       console.log(Roles);
       const Name = FirstName + " " + SecondName;
-     try{
-      const res = await axios.post("http://localhost:4000/User/add", {
-        Name,
-        Email,
-        Password,
-        Phone,
-        Roles,
-      });
-      
+      try {
+        const res = await axios.post("http://localhost:4000/User/add", {
+          Name,
+          Email,
+          Password,
+          Phone,
+          Roles,
+        });
+
         setFirstName("");
         setSecondName("");
         setEmail("");
         setPhone("");
         setPassword("");
         setRoles("");
-      
-    }catch(err){
-      if(err.response.data="Email"){alert("User with this Email already Exists")}
-      else if(err.response.data="Phone"){alert("User with this Phone already Exists")}
-      else {
-        alert("try again");
+      } catch (err) {
+        if ((err.response.data = "Email")) {
+          alert("User with this Email already Exists");
+        } else if ((err.response.data = "Phone")) {
+          alert("User with this Phone already Exists");
+        } else {
+          alert("try again");
+        }
       }
-    }
     }
   };
   return (

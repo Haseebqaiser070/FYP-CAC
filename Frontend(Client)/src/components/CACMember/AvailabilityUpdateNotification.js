@@ -1,6 +1,6 @@
 import { Card } from "@mui/material";
 import React from "react";
-import "./css/styles.css";
+import "../css/styles.css";
 import CampaignIcon from "@mui/icons-material/Campaign";
 
 export default function MeetingUpdateNotification() {

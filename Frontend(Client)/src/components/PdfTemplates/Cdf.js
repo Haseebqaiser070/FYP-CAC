@@ -42,6 +42,13 @@ export default function Cdf() {
           <div style={{ backgroundColor: "#000", color: "#fff", padding: 4 }}>
             <h4 className="head">Course Information</h4>
           </div>
+          <div className="row">
+            <div className="col-md-6">
+                
+
+            </div>
+
+          </div>
         </div>
       </div>
     </>

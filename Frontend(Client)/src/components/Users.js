@@ -9,7 +9,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import { Box, Modal, Switch } from "@mui/material";
-import UserCards from "./UserCards";
+import UserCards from "./AuxillaryComponents/UserCards";
 
 const modalstyle = {
   position: "absolute",

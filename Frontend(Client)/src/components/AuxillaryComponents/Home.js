@@ -1,24 +1,14 @@
 import React, { useState } from "react";
-import "./css/styles.css";
-import axios from "axios";
-import useAuth from "../MyHooks/useAuth";
-import Popup from "./AddCourceForm";
+import "../css/styles.css";
+import Popup from "./PopupFunction";
 import Login from "./Login";
 // import logo from "./FacultyRoutes/comsats_logo.png";
-import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import comsats from "./css/comsats.jpg";
-import {
-  BsFillPersonPlusFill,
-  BsFiles,
-  BsBuilding,
-  BsFillGearFill,
-  BsFillPeopleFill,
-  BsFillBookFill,
-} from "react-icons/bs";
+import comsats from "../css/comsats.jpg";
+import { BsFillPersonPlusFill } from "react-icons/bs";
 import { Button } from "@mui/material";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 export default function Home() {

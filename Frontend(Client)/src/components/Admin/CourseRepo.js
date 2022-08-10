@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../css/styles.css";
-import Popup from "../AddCourceForm";
+import Popup from "../AuxillaryComponents/PopupFunction";
 import axios from "axios";
 import Button from "@mui/material/Button";
 import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";

@@ -1,7 +1,7 @@
 import React from "react";
 import "../css/styles.css";
 import { Link, Outlet } from "react-router-dom";
-import AvatarMenu from "../AvatarMenu";
+import AvatarMenu from "../AuxillaryComponents/AvatarMenu";
 import {
   BsFilePersonFill,
   BsFiles,
@@ -52,12 +52,6 @@ export default function CACnav() {
                   Dashboard
                 </Link>
 
-                {/* <Link class="nav-link sidenavtext" to="CacInitializedTasks">
-                  <div class="sb-nav-link-icon">
-                    <BsFillBookmarkPlusFill color="#fff" />
-                  </div>
-                  Initialized Tasks
-                </Link> */}
                 <Link class="nav-link sidenavtext" to="CacAllTasks">
                   <div class="sb-nav-link-icon">
                     <BsFillFilterCircleFill color="#fff" />

@@ -5,11 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
 import { AiFillEye, AiFillEdit, AiOutlineCloudDownload } from "react-icons/ai";
-import MeetingButton from "./MeetingButtons";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
-import SosCreation from "./SosCreation";
+
 import { useNavigate } from "react-router-dom";
 import Sos from "./PdfTemplates/Sos";
 
@@ -98,11 +94,6 @@ export default function AllSchemeofStudies() {
       renderCell: ActionButton,
     },
   ];
-  //const rows = [
-  //{ id: 1, year: "2014-2018", program: "Computer Science" },
-  //{ id: 2, year: "2014-2018", program: "Cyber Security" },
-  //{ id: 3, year: "2014-2018", program: "Artificial Intilligence" },
-  //];
 
   const onsubmit = (e) => {
     e.preventDefault();

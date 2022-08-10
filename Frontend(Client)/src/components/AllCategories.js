@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
 import { AiFillEye, AiFillEdit } from "react-icons/ai";
-import Popup from "./AddCourceForm";
+import Popup from "./AuxillaryComponents/PopupFunction";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";

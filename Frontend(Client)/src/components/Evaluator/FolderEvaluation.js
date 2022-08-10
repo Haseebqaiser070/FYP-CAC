@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./css/styles.css";
+import "../css/styles.css";
 import Button from "@mui/material/Button";
 import { Box, Card, Modal } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";

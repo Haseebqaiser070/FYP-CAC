@@ -1,26 +1,23 @@
 import Navigation from "../Navigation";
 import Dashboard from "../Dashboard";
-import Register from "../Register";
-import AddCourse from "../AddCourse";
+import Register from "../AuxillaryComponents/Register";
 import Users from "../Users";
 import AllCategories from "../AllCategories";
 import EditCourseForm from "../EditCourseForm";
 import AllSchemeofStudies from "../AllSchemeofStudies";
-import SosCreation from "../SosCreation";
 import Sos from "../PdfTemplates/Sos";
 import CreateTasks from "../CreateTasks";
 import Tasks from "../Tasks";
 import ReturnedTasks from "../ReturnedTasks";
-import Meeting from "../Meeting";
 import AddNewCourse from "../AddNewCourse";
-import CourseFolder from "../CourseFolder";
+import CourseFolder from "../Faculty/CourseFolder";
 import CourseFinal from "../Admin/CourseFinal";
 import { Route, Routes } from "react-router-dom";
 import CourseRepo from "../Admin/CourseRepo";
 import FacultyMembers from "../FacultyMember";
-import DemoBook from "../flipbook";
+
 import CourseFolderDeadlines from "../CourseFolderDeadlines";
-import Profile from "../UserProfile";
+import Profile from "../AuxillaryComponents/UserProfile";
 
 import CourseReturnedView from "../Admin/CourseReturnedView";
 import InitializeTask from "../InitializeTask";
@@ -30,6 +27,7 @@ import Evaluators from "../Evaluators";
 import CreateNewMeeting from "../CreateNewMeeting";
 import PendingDeadlineRequests from "../PendingDeadlineRequests";
 import CreateSOS from "../SOSCreation/CreateSOS";
+import AllCourses from "../AllCourses";
 function AdminRoutes() {
   return (
     <Routes>
@@ -38,14 +36,13 @@ function AdminRoutes() {
         <Route path="/Register" element={<Register />} />
         <Route path="/AllCategories" element={<AllCategories />} />
         <Route path="/AddNewCourse" element={<AddNewCourse />} />
-        <Route path="/AddCourse" element={<AddCourse />} />
+        <Route path="/AllCourses" element={<AllCourses />} />
         <Route path="/CourseView/:id" element={<CourseFinal />} />
         <Route
           path="CourseReturnedView/:Code"
           element={<CourseReturnedView />}
         />
         <Route path="/EditCourse/:id" element={<EditCourseForm />} />
-        <Route path="/Meeting" element={<Meeting />} />
         <Route path="/CreateNewMeeting" element={<CreateNewMeeting />} />
         <Route
           path="/ViewCacMemberAvailabilty"
@@ -53,7 +50,6 @@ function AdminRoutes() {
         />
         <Route path="/AllSchemeofStudies" element={<AllSchemeofStudies />} />
         <Route path="/Sos" element={<Sos />} />
-        <Route path="/SosCreation" element={<SosCreation />} />
         <Route path="/InitCourse" element={<CourseRepo />} />
         {/*<Route path="/CdfandSyllabus">
                   <Route path=":id" element={<CourseDescription />} />
@@ -67,7 +63,6 @@ function AdminRoutes() {
         <Route path="/AddProgram" element={<AddProgram />} />
         <Route path="/Tasks" element={<Tasks />} />
         <Route path="/InitializeTask" element={<InitializeTask />} />
-        <Route path="/flip" element={<DemoBook />} />
         <Route path="/profile" element={<Profile />} />
         <Route
           path="/CourseFolderDeadlines"

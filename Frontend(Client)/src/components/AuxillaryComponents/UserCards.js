@@ -1,7 +1,7 @@
 import { Card, CardContent, Grid } from "@mui/material";
 import { Box } from "@mui/system";
-import React,{useEffect,useState} from "react";
-import "./css/styles.css";
+import React, { useEffect, useState } from "react";
+import "../css/styles.css";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 
@@ -14,27 +14,27 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function UserCards(props) {
-  const[CAC,setCAC]=useState(0)
-  const[Faculty,setFaculty]=useState(0)
-  const[Evaluator,setEvaluator]=useState(0)
+  const [CAC, setCAC] = useState(0);
+  const [Faculty, setFaculty] = useState(0);
+  const [Evaluator, setEvaluator] = useState(0);
   useEffect(() => {
     getData();
   }, [props]);
-  var count1=0
-  var count2=0
-  var count3=0
-  
+  var count1 = 0;
+  var count2 = 0;
+  var count3 = 0;
+
   const getData = async () => {
-    props.pre.forEach(element => {
-      element.Roles.forEach(e=>{
-        if(e=="CAC")count1=count1+1 
-        if(e=="Faculty")count2=count2+1 
-        if(e=="Evaluator")count3=count3+1
-      })
+    props.pre.forEach((element) => {
+      element.Roles.forEach((e) => {
+        if (e == "CAC") count1 = count1 + 1;
+        if (e == "Faculty") count2 = count2 + 1;
+        if (e == "Evaluator") count3 = count3 + 1;
+      });
     });
-    setCAC(count1)
-    setFaculty(count2)    
-    setEvaluator(count3) 
+    setCAC(count1);
+    setFaculty(count2);
+    setEvaluator(count3);
     console.log(response.data);
   };
   return (

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./css/styles.css";
+import "../css/styles.css";
 export default function Profile() {
   return (
     <div class="container py-5 h-100">

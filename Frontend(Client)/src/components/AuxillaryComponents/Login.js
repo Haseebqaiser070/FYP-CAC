@@ -1,16 +1,17 @@
 import React, { useState } from "react";
-import "./css/styles.css";
+import "../css/styles.css";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import useAuth from "../MyHooks/useAuth";
+
 import { gridFilteredRowsLookupSelector } from "@mui/x-data-grid";
+import useAuth from "../../MyHooks/useAuth";
 function Login() {
   axios.defaults.withCredentials = true;
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { setAuth,setPersist } = useAuth();
+  const { setAuth, setPersist } = useAuth();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -21,31 +22,29 @@ function Login() {
           Password,
         });
         const data = response.data;
-        console.log("ss",data);
-        
-          const Roles = response?.data?.Roles;
-          console.log(Roles)
-          setAuth({ Roles });
-          setPersist(true)
-          setEmail("");
-          setPassword("");
-          if (Roles.includes("Admin"))
-            navigate("/Admin/Dashboard", { replace: true });
-          else if (Roles.includes("CAC"))
-            navigate("/CAC/Dashboard", { replace: true });
-          else if (Roles.includes("Faculty"))
-            navigate("/Faculty/Dashboard", { replace: true });
-          else if (Roles.includes("Eveluator"))
-            navigate("/Eveluator/Dashboard", { replace: true });}
-       catch (err) {
-       if (err.response?.data === "is not a User") {
-          alert("User with this email does not exist")
-        } 
-        else if (err.response?.data === "Deactivated") {
-          alert("Account Deactivated by Admin")
-        }
-        else if (err.response?.data === "wrong password") {
-          alert("Incorrect Password")
+        console.log("ss", data);
+
+        const Roles = response?.data?.Roles;
+        console.log(Roles);
+        setAuth({ Roles });
+        setPersist(true);
+        setEmail("");
+        setPassword("");
+        if (Roles.includes("Admin"))
+          navigate("/Admin/Dashboard", { replace: true });
+        else if (Roles.includes("CAC"))
+          navigate("/CAC/Dashboard", { replace: true });
+        else if (Roles.includes("Faculty"))
+          navigate("/Faculty/Dashboard", { replace: true });
+        else if (Roles.includes("Eveluator"))
+          navigate("/Eveluator/Dashboard", { replace: true });
+      } catch (err) {
+        if (err.response?.data === "is not a User") {
+          alert("User with this email does not exist");
+        } else if (err.response?.data === "Deactivated") {
+          alert("Account Deactivated by Admin");
+        } else if (err.response?.data === "wrong password") {
+          alert("Incorrect Password");
         } else {
           alert("Login Failed");
         }

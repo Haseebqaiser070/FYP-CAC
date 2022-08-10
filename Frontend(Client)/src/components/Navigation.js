@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import "./css/styles.css";
 import { Link, Outlet } from "react-router-dom";
-import Popup from "./AddCourceForm";
-import Register from "./Register";
+import Popup from "./AuxillaryComponents/PopupFunction";
+import Register from "./AuxillaryComponents/Register";
 import axios from "axios";
 import Avatar from "@mui/material/Avatar";
-import AvatarMenu from "./AvatarMenu";
+import AvatarMenu from "./AuxillaryComponents/AvatarMenu";
 
 import {
   BsFillPersonPlusFill,
@@ -196,7 +196,7 @@ export default function Navigation() {
                     <Link
                       style={{ marginLeft: "12px", fontSize: "14px" }}
                       class="nav-link sidenavtext "
-                      to="AddCourse"
+                      to="AllCourses"
                     >
                       <div class="sb-nav-link-icon">
                         <BsCollectionFill color="#fff" />
@@ -291,12 +291,7 @@ export default function Navigation() {
                   </div>
                   Course Folder Deadlines
                 </Link>
-                <Link class="nav-link sidenavtext " to="CreateSOS">
-                  <div class="sb-nav-link-icon">
-                    <BsFillFolderFill color="#fff" />
-                  </div>
-                  CreateSOS
-                </Link>
+
                 <Link
                   class="nav-link sidenavtext "
                   to="PendingDeadlineRequests"

@@ -8,8 +8,7 @@ import {
   AiOutlineClockCircle,
 } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import MeetingForm from "./MeetingForm";
-import Popup from "./AddCourceForm";
+
 import axios from "axios";
 import { Box, Card, Modal } from "@mui/material";
 

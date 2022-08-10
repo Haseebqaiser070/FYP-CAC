@@ -6,10 +6,9 @@ import {
   Box,
   Button,
   FormControl,
-  InputLabel,
-  MenuItem,
+  FormControlLabel,
   Modal,
-  Select,
+  Switch,
   TextField,
 } from "@mui/material";
 import axios from "axios";
@@ -43,6 +42,8 @@ export default function CreateSOS() {
 
   const [coursesList, setCoursesList] = useState([]);
   const [Note, setNote] = useState("");
+
+  const [Description, setDescription] = useState("");
 
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
@@ -212,6 +213,25 @@ export default function CreateSOS() {
       </div>
       <div className="my-3">
         <h4 className="mb-3">Category Name</h4>
+        <FormControl fullWidth size="small">
+          <TextField
+            className="mb-4"
+            id="outlined-basic"
+            label="Add Category Description (optional)"
+            variant="outlined"
+            size="small"
+            fullWidth
+            value={Description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </FormControl>
+        <FormControl className="mb-4">
+          <FormControlLabel
+            control={<Switch defaultChecked />}
+            label="Do this category have tracks"
+            labelPlacement="start"
+          />
+        </FormControl>
         <div className="row">
           <div className="col-10">
             <Autocomplete
