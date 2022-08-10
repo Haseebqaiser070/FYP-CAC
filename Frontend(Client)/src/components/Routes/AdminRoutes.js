@@ -29,7 +29,7 @@ import AddProgram from "../AddProgram";
 import Evaluators from "../Evaluators";
 import CreateNewMeeting from "../CreateNewMeeting";
 import PendingDeadlineRequests from "../PendingDeadlineRequests";
-import CreateSOS from "../CreateSOS";
+import CreateSOS from "../SOSCreation/CreateSOS";
 function AdminRoutes() {
   return (
     <Routes>

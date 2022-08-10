@@ -8,7 +8,10 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineCheckSquare, AiFillEdit } from "react-icons/ai";
-function ActionButtons() {
+function ActionButtons(props) {
+  const navigate = useNavigate();
+  const { row } = props;
+    
   return (
     <div>
       <Button
@@ -16,21 +19,14 @@ function ActionButtons() {
         color="primary"
         size="small"
         style={{ marginLeft: 16 }}
-        // onClick={}
+        onClick={()=>{navigate(
+          `/CAC/SOSCreation/${row.Program}`,
+          { state: { row } },
+          { replace: true }
+        )}}
       >
         <AiFillEdit style={{ marginRight: 10 }} />
-        View
-      </Button>
-
-      <Button
-        variant="contained"
-        color="primary"
-        size="small"
-        style={{ marginLeft: 16 }}
-        // onClick={null}
-      >
-        <AiFillEdit style={{ marginRight: 10 }} />
-        Create/Edit SOS
+        SOS
       </Button>
 
       <Button
