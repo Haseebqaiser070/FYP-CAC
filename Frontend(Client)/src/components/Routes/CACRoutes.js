@@ -14,6 +14,9 @@ import CacSosTask from "../CACMember/CacSosTask";
 import Cdf from "../PdfTemplates/Cdf";
 import CreateSOS from "../SOSCreation/CreateSOS";
 import SOS from "../SOSCreation/SOS"
+import CDF from "../CDFCreations/CDF"
+import CreateCDF from "../CDFCreations/CreateCDF"
+
 function CACRoutes() {
   return (
     <Routes>
@@ -24,8 +27,13 @@ function CACRoutes() {
         <Route path="/AddnewCourse/:Code" element={<AddNewCourseDocument />} />
         <Route path="/SOSCreation/:Program" element={<SOS />} />
         <Route path="/CreateSOS/:Program" element={<CreateSOS />} />  
-        <Route path="/CacSyllabusTask" Route index element={<CacSyllabus />} />
         <Route path="/CacSosTask" Route index element={<CacSosTask />} />
+        <Route path="/CacCdfTask" element={<CacCdfTask />} />
+        <Route path="/CDFCreation/:Code" element={<CDF />} />
+        <Route path="/CreateCDF/:Code" element={<CreateCDF />} />
+        <Route path="/CacSyllabusTask" Route index element={<CacSyllabus />} />
+
+
         <Route path="/CacAllTasks">
           <Route path=":id" element={<CacAllTasks />} />
           <Route index element={<CacAllTasks />} />
@@ -34,8 +42,6 @@ function CACRoutes() {
           <Route path=":id" element={<CacInitializedTasks />} />
           <Route index element={<CacInitializedTasks />} />
         </Route>
-
-        <Route path="/CacCdfTask" element={<CacCdfTask />} />
 
         <Route path="/FacultyMeeting">
           <Route path=":id" element={<FacultyMeeting />} />

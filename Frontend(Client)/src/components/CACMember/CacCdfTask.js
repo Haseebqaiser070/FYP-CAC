@@ -19,21 +19,12 @@ function ActionButtons(props) {
         color="primary"
         size="small"
         style={{ marginLeft: 16 }}
-        // onClick={}
+        onClick={()=>{navigate(
+          `/CAC/CDFCreation/${row.Code}`,
+          { state: { row } },{ replace: true })}}
       >
         <AiFillEdit style={{ marginRight: 10 }} />
-        View
-      </Button>
-
-      <Button
-        variant="contained"
-        color="primary"
-        size="small"
-        style={{ marginLeft: 16 }}
-        // onClick={null}
-      >
-        <AiFillEdit style={{ marginRight: 10 }} />
-        Add CDF
+        CDF
       </Button>
 
       <Button
@@ -51,7 +42,7 @@ function ActionButtons(props) {
 }
 
 export default function CacCdfTask() {
-  const [Rows, setRows] = useState([]);
+  //const [Rows, setRows] = useState([]);
   useEffect(() => {
     getRepoCourse();
   }, []);
@@ -80,6 +71,14 @@ export default function CacCdfTask() {
       editable: false,
       renderCell: ActionButtons,
     },
+  ];
+  const Rows = [
+    {
+      _id: 1,
+      Code: "CSC-101",
+      Name: "Intro to ICT",
+      CreditHour: "3(2,1)",
+    }
   ];
   return (
     <div className="container" style={{ width: "100%", padding: 20 }}>
