@@ -34,7 +34,7 @@ function setPrerequisites() {}
 
 export default function CreateSOS() {
 
-  
+  const navigate = useNavigate();
   const { state } = useLocation();
   const { Program } = state.row;
 
@@ -83,6 +83,17 @@ console.log("CATS",Categories)
     const data = await res.data;
     setCourse([...data]);
   };
+  const AddSOS= async (e) => {
+    e.preventDefault();
+    console.log("SOS")
+    
+    await axios.post("http://localhost:4000/SOSVerison/add", {
+    Program,Year,Categories 
+    });
+    navigate(`/CAC/SOSCreation/${Program}` , { state: { row :{Program}} }, { replace: true })
+   
+  };
+  
 
   useEffect(() => {
     getData();
@@ -130,8 +141,8 @@ console.log("CATS",Categories)
                 if(num1<numcode)return i
               })
               setopts([...ans])
+              setAssignPrerequisite([...row.PreRequisites])
               setOpen(true)
-            
             
             }}
           >
@@ -172,13 +183,14 @@ console.log("CATS",Categories)
                 size="medium"
                 onClick={()=>{
                   row.PreRequisites=AssignPrerequisite
-                  var a1,a2;
+                  var a1
+                  var a2;
 
                   Categories.forEach((e) => {
                     let check = false
                     e.Courses.forEach((i) => {
                       if(i._id==row._id){
-                        check == true
+                        check = true
                         a2 = e.Courses.indexOf(i)
                         
                       }   
@@ -187,25 +199,23 @@ console.log("CATS",Categories)
                       a1 = Categories.indexOf(e)
                     }
                   });
-                  const clone = [...Categories]                  
-                  clone[a1].Courses[a2]=row      
+                  var clone = Categories
+                  console.log("a1",a1,"a2",a2)                              
+                  
+                  console.log("clone1",clone) 
+                  console.log(row)                             
+                  clone[a1].Courses[a2].PreRequisites=AssignPrerequisite      
                   console.log("clone12331",clone)            
                   setCategories([...clone])
+                  setAssignPrerequisite([])
+                  setOpen(false)
                 }}
               >
                 Add
               </Button>
             </Box>
           </Modal>
-          <Button
-            type="button"
-            variant="contained"
-            color="primary"
-            size="small"
-            onClick={() => setOpen(true)}
-          >
-            Remove
-          </Button>
+          
 
         </>
       ),
@@ -228,6 +238,7 @@ console.log("CATS",Categories)
       style={{ height: 700, width: "100%", padding: 20 }}
     >
       <h1>Create SOS for { Program } </h1>
+      <form onSubmit={AddSOS}>
       <FormControl fullWidth size="small">
         <TextField
           className="mb-4"
@@ -507,9 +518,11 @@ console.log("CATS",Categories)
             variant="contained"
             color="primary"
             size="large"
+            type="submit"
           >
             Submit
           </Button>
+          </form>
         </div>
     
   );

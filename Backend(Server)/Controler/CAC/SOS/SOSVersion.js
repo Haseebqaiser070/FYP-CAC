@@ -5,23 +5,29 @@ module.exports.Add= async (req,res)=>{
         const user = req.user
         if(!user) return res.status(401).json("unAutherized")  
         console.log(req.body) 
-        const cats = Promise.all(req.body.Categories.map(async(e) => {
+        const cats = await Promise.all(req.body.Categories.map(async(e) => {
            const cors = await Promise.all(e.Courses.map(async(i) => {
+                delete i._id
                 const old = await SOSCoursedoc.find({Code:i.Code,Program:req.body.Program})
-                if(old){
+                console.log(old)
+                if(old.length>0){
+                    console.log("here")
                     const doc = SOSCoursedoc.findOneAndUpdate({Code:i.Code,Program:req.body.Program},i)
                     return await doc
                 }
                 else{
+                    console.log("here2")
                     i.Program=req.body.Program
                     const doc = await SOSCoursedoc.create(i)   
                     return await doc
                 }
             })
             )
+            console.log("cors",cors)
             e.Courses = cors
             return await e
         }))
+        console.log("cats",cats)
         req.body.Categories=cats
         const Version = await Versionodoc.create(req.body) 
         console.log("NewVersion",Version)
