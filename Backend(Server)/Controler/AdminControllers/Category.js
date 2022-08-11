@@ -14,7 +14,7 @@ module.exports.Showall = async (req, res) => {
   try {
     console.log(req.user)
     if (!req.user) return await res.json("Timed Out");
-    const category = await categorydoc.find({}).populate('Degree');
+    const category = await categorydoc.find({})
     console.log("all categorys", category);
     await res.json(category);
   } catch (err) {
@@ -25,7 +25,7 @@ module.exports.Showall = async (req, res) => {
 module.exports.ShowOne = async (req, res) => {
   try {
     if (!req.user) return await res.json("Timed Out");
-    const category = await categorydoc.findById(req.params.id).populate('EnteredCourse');
+    const category = await categorydoc.findById(req.params.id)
     console.log(category)
     res.json(category);
   } catch (err) {

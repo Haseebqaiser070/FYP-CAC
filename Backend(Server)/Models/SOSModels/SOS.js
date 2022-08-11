@@ -14,10 +14,21 @@ var SOSSchema = new mongoose.Schema({
        { Category:{ 
             type:String
         },
+        Optional:{ 
+            type:String,
+            default:""
+        },
+        Track:{ 
+            type:String,
+            default:""
+        },
         Courses:[{
             type: mongoose.Schema.ObjectId,
-            ref: 'SOSCourse',}]
-        }
+            ref: 'SOSCourse',}],
+        Note:{ 
+            type:String,
+            default:""
+        },}
     ],
     required:true}
 });

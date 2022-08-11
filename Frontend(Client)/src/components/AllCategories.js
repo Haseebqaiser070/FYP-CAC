@@ -36,24 +36,24 @@ export default function AllCategories() {
   const handleClose1 = () => setOpen1(false);
 
   const handleClose = () => {
-    setDegree("Degree Program");
+    // setDegree("Degree Program");
     setCategoryName("");
-    setEnteredCourse([]);
+    // setEnteredCourse([]);
     setOpen(false);
   };
 
-  const [EnteredCourse, setEnteredCourse] = useState([]);
-  const [Courses, setCourse] = useState([]);
+  // const [EnteredCourse, setEnteredCourse] = useState([]);
+  // const [Courses, setCourse] = useState([]);
   const [CategoryName, setCategoryName] = useState("");
-  const [Programdb, setProgramdb] = useState([]);
-  const [Degree, setDegree] = useState("Degree Program");
+  // const [Programdb, setProgramdb] = useState([]);
+  // const [Degree, setDegree] = useState("Degree Program");
   const [Rows, setRows] = useState([]);
   const [Category, setCategory] = useState([]);
 
-  const getPrograms = async () => {
-    const res = await axios.get("http://localhost:4000/Program/show");
-    setProgramdb(res.data);
-  };
+  // const getPrograms = async () => {
+  //   const res = await axios.get("http://localhost:4000/Program/show");
+  //   setProgramdb(res.data);
+  // };
   function ActionButton(props) {
     const { row } = props;
     return (
@@ -92,15 +92,13 @@ export default function AllCategories() {
   };
 
   useEffect(() => {
-    getData();
-    getPrograms();
     getRows();
   }, []);
-  const getData = async () => {
-    const res = await axios.get("http://localhost:4000/Course/show");
-    const data = await res.data;
-    setCourse([...data]);
-  };
+  // const getData = async () => {
+  //   const res = await axios.get("http://localhost:4000/Course/show");
+  //   const data = await res.data;
+  //   setCourse([...data]);
+  // };
   const getRows = async () => {
     const res = await axios.get("http://localhost:4000/Category/show");
     const data = await res.data;
@@ -109,14 +107,14 @@ export default function AllCategories() {
   };
 
   const columns = [
-    {
-      field: "Degree",
-      headerName: "Program",
-      flex: 1,
-      valueGetter: (params) => {
-        return params?.row?.Degree?.Degree + " " + params?.row?.Degree?.Program;
-      },
-    },
+    // {
+    //   field: "Degree",
+    //   headerName: "Program",
+    //   flex: 1,
+    //   valueGetter: (params) => {
+    //     return params?.row?.Degree?.Degree + " " + params?.row?.Degree?.Program;
+    //   },
+    // },
     {
       field: "CategoryName",
       headerName: "Category",
@@ -133,15 +131,13 @@ export default function AllCategories() {
   ];
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (Degree != "Degree Program" && CategoryName != "") {
+    if (CategoryName != "") {
       await axios.post("http://localhost:4000/Category/add", {
-        Degree,
         CategoryName,
-        EnteredCourse,
       });
-      setDegree("Degree Program");
+      // setDegree("Degree Program");
       setCategoryName("");
-      setEnteredCourse([]);
+      // setEnteredCourse([]);
       getRows();
     } else {
       alert("empty values");
@@ -175,7 +171,7 @@ export default function AllCategories() {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <Box sx={style}>
+        {/*   <Box sx={style}>
             <div>
               <FormControl fullWidth size="small">
                 <InputLabel id="taskType">Select Category</InputLabel>
@@ -227,7 +223,7 @@ export default function AllCategories() {
             >
               Submit
             </Button>
-          </Box>
+          </Box> */}
         </Modal>
         <Button
           variant="contained"

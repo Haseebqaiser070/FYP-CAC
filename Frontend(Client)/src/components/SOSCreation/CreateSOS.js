@@ -13,6 +13,9 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
+import { useLocation, useNavigate } from "react-router-dom";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 
 const style = {
   position: "absolute",
@@ -30,29 +33,50 @@ const style = {
 function setPrerequisites() {}
 
 export default function CreateSOS() {
+
+  
+  const { state } = useLocation();
+  const { Program } = state.row;
+
+  axios.defaults.withCredentials = true;
   const [Rows, setRows] = useState([]);
   const [Year, setYear] = useState("");
-  const [Categories, setCategories] = useState([]);
-  const [AssignCategories, setAssignCategories] = useState([]);
-  const [EnteredCourse, setEnteredCourse] = useState([]);
+  //------------------------------------------------
+  
+  const [Categories, setCategories] = useState([])
+  //{Category:"",Optional:"",Track:"",Courses:[],Note:""}
+  //------------------------------------------------
   const [Courses, setCourse] = useState([]);
-
-  const [Prerequisite, setPrerequisites] = useState([]);
-  const [AssignPrerequisite, setAssignPrerequisite] = useState([]);
-
+  const [Category, setCategory] = useState([]);
+  
   const [coursesList, setCoursesList] = useState([]);
-  const [Note, setNote] = useState("");
+  
+  
 
-  const [Description, setDescription] = useState("");
+console.log("Course",Courses)
+
+
+console.log("CATS",Categories)
+
+
+
+  const [AssignCategory, setAssignCategory] = useState([""]);
+  
+  const [AssignPrerequisite,setAssignPrerequisite] = useState([]);
+  const [opts,setopts] = useState([]);
+
+
+
+
 
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
 
-  const getCategories = async () => {
+  const getCategory = async () => {
     const res = await axios.get("http://localhost:4000/Category/show");
     const data = await res.data;
     console.log(data);
-    setCategories([...data]);
+    setCategory([...data]);
   };
   const getData = async () => {
     const res = await axios.get("http://localhost:4000/Course/show");
@@ -62,29 +86,26 @@ export default function CreateSOS() {
 
   useEffect(() => {
     getData();
-    getCategories();
+    getCategory();
   }, []);
 
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
     {
-      field: "S",
-      headerName: "S#",
-      flex: 1,
-    },
-    {
-      field: "CourseCode",
+      field: "Code",
       headerName: "Course Code",
       flex: 1,
     },
     {
-      field: "CourseTitle",
-      headerName: "Course Title",
-      flex: 3,
+      field: "Name",
+      headerName: "Course Name",
+      flex: 1,
     },
     {
-      field: "CreditHour",
+      field: "CreditHours",
       headerName: "Credit Hour",
+      valueGetter: (params) => {
+            return params?.row?.Credit +"(" + params?.row?.LectureHoursWeek + "," + params?.row?.LabHoursWeek + ")"
+          },
       flex: 1,
     },
 
@@ -93,14 +114,26 @@ export default function CreateSOS() {
       headerName: "Pre-requisite(s)",
       flex: 1,
 
-      renderCell: () => (
+      renderCell: ({ row }) => (
         <>
           <Button
             type="button"
             variant="contained"
             color="primary"
             size="small"
-            onClick={() => setOpen(true)}
+            onClick={() => {
+              let num2 = row.Code.split("-")[1].charAt(0)
+              let numcode = parseInt(num2)
+              const ans = Courses.filter((i)=>{
+                let num = i.Code.split("-")[1].charAt(0)
+                let num1 = parseInt(num)
+                if(num1<numcode)return i
+              })
+              setopts([...ans])
+              setOpen(true)
+            
+            
+            }}
           >
             Add/Edit
           </Button>
@@ -117,7 +150,7 @@ export default function CreateSOS() {
                 multiple
                 id="tags-standard"
                 value={AssignPrerequisite}
-                options={Prerequisite}
+                options={opts}
                 getOptionLabel={(option) => option.Name}
                 defaultValue={null}
                 onChange={(e, val) => setAssignPrerequisite(val)}
@@ -137,33 +170,64 @@ export default function CreateSOS() {
                 variant="contained"
                 color="primary"
                 size="medium"
-                // onClick={}
+                onClick={()=>{
+                  row.PreRequisites=AssignPrerequisite
+                  var a1,a2;
+
+                  Categories.forEach((e) => {
+                    let check = false
+                    e.Courses.forEach((i) => {
+                      if(i._id==row._id){
+                        check == true
+                        a2 = e.Courses.indexOf(i)
+                        
+                      }   
+                    });
+                    if(check){
+                      a1 = Categories.indexOf(e)
+                    }
+                  });
+                  const clone = [...Categories]                  
+                  clone[a1].Courses[a2]=row      
+                  console.log("clone12331",clone)            
+                  setCategories([...clone])
+                }}
               >
                 Add
               </Button>
             </Box>
           </Modal>
+          <Button
+            type="button"
+            variant="contained"
+            color="primary"
+            size="small"
+            onClick={() => setOpen(true)}
+          >
+            Remove
+          </Button>
+
         </>
       ),
     },
   ];
 
-  const rows = [
-    {
-      id: 1,
-      S: "1",
-      CourseCode: "CSC-101",
-      CourseTitle: "Intro to ICT",
-      CreditHour: "3(2,1)",
-    },
-  ];
+  // const rows = [
+  //   {
+  //     id: 1,
+  //     S: "1",
+  //     CourseCode: "CSC-101",
+  //     CourseTitle: "Intro to ICT",
+  //     CreditHour: "3(2,1)",
+  //   },
+  // ];
 
   return (
     <div
       className="container"
       style={{ height: 700, width: "100%", padding: 20 }}
     >
-      <h1>Create SOS</h1>
+      <h1>Create SOS for { Program } </h1>
       <FormControl fullWidth size="small">
         <TextField
           className="mb-4"
@@ -177,131 +241,276 @@ export default function CreateSOS() {
         />
       </FormControl>
       <div className="row">
-        <h4 className="mb-3">Add Categories</h4>
-        <div className="col-10">
-          <Autocomplete
+        <h4 className="mb-4">Add Category</h4>
+       
+        <div className="col">
+        <FormControl fullWidth size="small">
+          {/* <Autocomplete
             multiple
             id="tags-standard"
             className="mb-4"
-            value={AssignCategories}
-            options={Categories}
-            getOptionLabel={(option) => option.Name}
+            value={AssignCategory}
+            options={Category}
+            getOptionLabel={(option) => option.CategoryName}
             defaultValue={null}
-            onChange={(e, val) => setAssignCategories(val)}
+            onChange={(e, val) => setAssignCategory(val)}
             renderInput={(params) => (
               <TextField
                 {...params}
                 variant="outlined"
-                label="Assign Categories"
-                placeholder="Assign Categories"
+                label="Assign Category"
+                placeholder="Assign Category"
                 size="small"
               />
             )}
-          />
+          /> */}
+
+          <Select
+            className="mb-4"
+            labelId="courseAssign"
+            id="courseAssign"
+            label="ADD Category"
+            value={AssignCategory[0]}
+            onChange={(e) => {
+              setAssignCategory([e.target.value,...AssignCategory])
+            }}
+            autoWidth
+          >
+            {Category.map((a) => {
+              return (
+                <MenuItem value={a.CategoryName}>
+                  {a.CategoryName}
+                </MenuItem>
+              );
+            })}
+          </Select>
+          </FormControl>
+
         </div>
         <div className="col-2">
-          <Button
-            fullWidth
-            variant="contained"
-            color="primary"
-            size="medium"
-            // onClick={() => setOpenProgram(true)}
-          >
-            Add Categories
-          </Button>
-        </div>
-      </div>
-      <div className="my-3">
-        <h4 className="mb-3">Category Name</h4>
-        <FormControl fullWidth size="small">
-          <TextField
-            className="mb-4"
-            id="outlined-basic"
-            label="Add Category Description (optional)"
-            variant="outlined"
-            size="small"
-            fullWidth
-            value={Description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </FormControl>
-        <FormControl className="mb-4">
-          <FormControlLabel
-            control={<Switch defaultChecked />}
-            label="Do this category have tracks"
-            labelPlacement="start"
-          />
-        </FormControl>
-        <div className="row">
-          <div className="col-10">
-            <Autocomplete
-              style={{ marginBottom: 35 }}
-              multiple
-              variant="outlined"
-              id="tags-standard"
-              value={EnteredCourse}
-              options={Courses}
-              size="small"
-              getOptionLabel={(option) => option.Name}
-              defaultValue={null}
-              onChange={(e, val) => setEnteredCourse(val)}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  variant="outlined"
-                  label="Select Courses"
-                  placeholder="Select Courses"
-                />
-              )}
-            />
-          </div>
-          <div className="col-2">
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              size="medium"
-              // onClick={() => setOpenProgram(true)}
-            >
-              Assign Cources
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      <div style={{ height: 200, width: "100%" }}>
-        <DataGrid
-          rows={rows}
-          columns={columns}
-          pageSize={5}
-          rowsPerPageOptions={[5]}
-          disableSelectionOnClick
-        />
-        <h4 className="mt-4">Note</h4>
-        <FormControl fullWidth size="small">
-          <TextField
-            className="mb-4"
-            id="outlined-basic"
-            label="Note"
-            variant="outlined"
-            size="medium"
-            fullWidth
-            value={Note}
-            onChange={(e) => setNote(e.target.value)}
-          />
-        </FormControl>
         <Button
           fullWidth
-          className="my-4 mb-4"
           variant="contained"
           color="primary"
-          size="large"
-          // onClick={() => setOpenProgram(true)}
+          size="medium"
+          onClick={()=>{
+            const clone = [{Category:AssignCategory[0],Optional:"",Track:"",Courses:[],Note:""},...Categories];
+            setCategories([...clone])
+            const cc =Category.filter(i=>{
+              if(i.CategoryName!=AssignCategory){
+                return i
+              }
+            })
+            console.log(Categories)
+            setCategory(cc)
+            setAssignCategory(["","",...AssignCategory])  
+          }
+        }
         >
-          Create SOS
+          Add Category
         </Button>
       </div>
-      <div></div>
     </div>
+{Categories.map((obj,index)=>{return(      
+  <div>
+  <div className="my-3">
+          <h4 className="mb-3">{obj.Category}</h4>
+          <Button
+          variant="contained"
+          color="primary"
+          size="medium"
+          onClick={()=>{
+            const clone = [...Categories];
+            clone.splice(index,1)
+            setCategories([...clone])
+            console.log("index",index)
+            const copy = [...AssignCategory]
+            copy.splice(index,1)
+            setAssignCategory([...copy])  
+          }
+        }
+        >
+          Remove
+        </Button>  
+        {/* {Category:"",Optional:"",Track:"",Courses:[],Note:""} */}
+
+          <FormControl fullWidth size="small">
+            <TextField
+              className="mb-4"
+              id="outlined-basic"
+              label="Add Category Description (optional)"
+              variant="outlined"
+              size="small"
+              fullWidth
+              value={Categories[index].Optional}
+              onChange={(e) => {
+                
+                const clone = [...Categories]
+                clone[index].Optional=e.target.value
+                setCategories([...clone])
+
+                }} />
+          </FormControl>
+
+
+          <FormControl className="mb-4">
+            <FormControlLabel
+              control={<Switch defaultChecked />}
+              label="Do this category have tracks"
+              labelPlacement="start" />
+          </FormControl>
+
+
+
+
+
+          <div className="row">
+            <div className="col-10">
+              <Autocomplete
+                style={{ marginBottom: 35 }}
+                multiple
+                variant="outlined"
+                id="tags-standard"
+                value={Categories[index].Courses}
+                options={Courses}
+                size="small"
+                getOptionLabel={(option) => option.Name}
+                defaultValue={null}
+                onChange={(e, val) => {
+                  
+                  const clone = [...Categories]
+                  clone[index].Courses=val
+                  setCategories([...clone])
+  
+                  }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="outlined"
+                    label="Select Courses"
+                    placeholder="Select Courses" />
+                )} />
+            </div>
+            <div className="col-2">
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                size="medium"
+              >
+                Assign Cources
+              </Button>
+            </div>
+          </div>
+        </div><div style={{ height: 200, width: "100%" }}>
+          <DataGrid
+            rows={Categories[index].Courses}
+            columns={columns}
+            getRowId={(Rows) => Rows._id}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
+            disableSelectionOnClick />
+          
+          <div className="row">
+            <h4 className="mt-4">Note</h4>
+          <div className="col-10">
+          <FormControl fullWidth size="small">
+            <TextField
+              className="mb-4"
+              id="outlined-basic"
+              label="Note"
+              variant="outlined"
+              size="medium"
+              fullWidth
+              value={Categories[index].Note}
+              onChange={(e) =>
+              
+                {
+                const clone = [...Categories]
+                clone[index].Note=e.target.value
+                setCategories([...clone])
+                }
+              } />
+          </FormControl>
+          </div>
+          </div>
+          </div>
+          <div className="row">
+        <h4 className="mb-4">Add Category</h4>
+       
+        <div className="col">
+        <FormControl fullWidth size="small">
+
+          <Select
+            className="mb-4"
+            labelId="courseAssign"
+            id="courseAssign"
+            label="ADD Category"
+            value={AssignCategory}
+            onChange={(e) => {
+              const clone = [...AssignCategory]
+              clone.insert(index+1,e.target.value)
+              setAssignCategory([...clone])
+            }}
+            autoWidth
+          >
+            {Category.map((a) => {
+              return (
+                <MenuItem value={a.CategoryName}>
+                  {a.CategoryName}
+                </MenuItem>
+              );
+            })}
+          </Select>
+          </FormControl>
+
+        </div>
+        <div className="col-2">
+        <Button
+          fullWidth
+          variant="contained"
+          color="primary"
+          size="medium"
+          onClick={()=>{
+            const clone = [...Categories];
+            clone.insert(index+1,{Category:AssignCategory[index+1],Optional:"",Track:"",Courses:[],Note:""})
+            setCategories([...clone])
+            const cc =Category.filter(i=>{
+              if(i.CategoryName!=AssignCategory){
+                return i
+              }
+            })
+            cosnole.log(Categories)
+            setCategory(cc)
+            const copy = AssignCategory
+            copy[index]=""
+            setAssignCategory([...copy,""])  
+          }
+        }
+        >
+          Add Category
+        </Button>
+      </div>
+    </div>
+
+
+
+
+      </div>
+        
+        )})  
+       
+       }
+          <Button
+            fullWidth
+            className="my-4 mb-4"
+            variant="contained"
+            color="primary"
+            size="large"
+          >
+            Submit
+          </Button>
+        </div>
+    
   );
 }

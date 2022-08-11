@@ -25,18 +25,8 @@ export default function SOS() {
   const { Program } = state.row;
   const [Version, setVersion] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-  const [res, setsresponse] = useState(false);
-  const [Content, setContent] = useState({
-    Code: "",
-    Name: "",
-    LectureHoursWeek: "0",
-    LabHoursWeek: "0",
-    Category: "",
-    PreRequisites: [],
-    catalogue: "",
-    objectiveList: [],
-    Books: [],
-  });
+  const [res, setresponse] = useState(false);
+  const [Content, setContent] = useState({Code: "",});
   console.log(Version);
   const navigate = useNavigate();
   const togglePopup = () => {
@@ -46,37 +36,37 @@ export default function SOS() {
     setIsOpen(false);
   };
 
-//   useEffect(() => {
-//     getData();
-//   }, []);
+  useEffect(() => {
+    getData();
+  }, []);
 
-//   const getData = async () => {
-//     console.log(Code);
-//     const response = await axios.get(
-//       `http://localhost:4000/CourseVersion/all/${Code}`
-//     );
-//     setVersion(response.data);
-//     if (response.data.length > 0) {
-//       setresponse(true);
-//       getContent();
-//     }
-//   };
-//   const getContent = async () => {
-//     const response = await axios.get(
-//       `http://localhost:4000/CourseVersion/Latest/${Code}`
-//     );
-//     setContent(response.data);
-//   };
+  const getData = async () => {
+    console.log(Program);
+    const response = await axios.get(
+      `http://localhost:4000/SOSVerison/all/${Program}`
+    );
+    setVersion(response.data);
+    if (response.data.length > 0) {
+      setresponse(true);
+      getContent();
+    }
+  };
+  const getContent = async () => {
+    const response = await axios.get(
+      `http://localhost:4000/SOSVerison/Latest/${Program}`
+    );
+    setContent(response.data);
+  };
   const Edit = () => {
     state.row.Content = Content;
     navigate(`/CAC/CreateSOS/${Program}`, { state: { row: state.row } });
   };
-//   const getCon = async (id) => {
-//     const response = await axios.get(
-//       `http://localhost:4000/CourseVersion/${id}`
-//     );
-//     setContent(response.data);
-//   };
+  const getCon = async (id) => {
+    const response = await axios.get(
+      `http://localhost:4000/SOSVerison/${id}`
+    );
+    setContent(response.data);
+  };
 console.log("content", Content)
   return (
     <div style={{ height: 700, padding: 30, width: "100%" }}>
@@ -145,57 +135,79 @@ console.log("content", Content)
       )}
       {!res ? (
         <h3>Empty Repository</h3>
-      ) : (
+      ) : (    
         <div ref={componentRef} className="main">
-
-
           <div>
-            <div style={{ paddingBottom: 20 }} className="row">
-              <div className="col">
-                <h6>
-                  <b>Course Code: </b> {Code.split("-")[0]}{Code.split("-")[1]}
-                </h6>
+            <>
+              <h5>Category Name</h5>
+              <table className="table table-bordered">
+                <thead style={{ textAlign: "center" }}>
+                  <tr>
+                    <th className="col-1">S. No</th>
+                    <th className="col-2">Course Code</th>
+                    <th className="col-5">Course Title</th>
+                    <th className="col-2">Credit Hours</th>
+                    <th className="col-2">Pre-requisite (s)</th>
+                  </tr>
+                </thead>
+                <tbody style={{ textAlign: "center" }}>
+                  <tr>
+                    <td className="col-1">1</td>
+                    <td className="col-2">CSC-101</td>
+                    <td className="col-5">Introduction to ICT</td>
+                    <td className="col-2">3(2,1)</td>
+                    <td className="col-2">None</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div>
+                <p>
+                  Non-Muslim students can opt for HUM114 Ethics 3(3,0) course in
+                  lieu of HUM110 Islamic Studies, if they intend to.
+                </p>
               </div>
-              <div className="col">
-                <h6 style={{ textAlign: "right" }}>
-                  <b>Pre-Requisite: </b>{" "}
-                  {Content.PreRequisites.map((i) => i.Name)}
-                </h6>
+              <div>
+                <div>
+                  <h5>Category Name</h5>
+
+                  <div style={{ paddingBottom: 20 }} className="row">
+                    <div className="col">
+                      <h6>
+                        <b>Course Code: </b> CSC-101
+                      </h6>
+                    </div>
+                    <div className="col">
+                      <h6 style={{ textAlign: "right" }}>
+                        <b>Pre-Requisite: </b>None
+                      </h6>
+                    </div>
+                  </div>
+                  <h6 style={{ paddingBottom: 20 }}>
+                    <b>Course Title: </b> Introduction to ICT
+                  </h6>
+                  <h6 style={{ paddingBottom: 35 }}>
+                    <b>Credit Hour: </b>
+                    3(2,1)
+                  </h6>
+                </div>
+                <div style={{ paddingBottom: 15 }}>
+                  <h5>Course Objectives: </h5>
+                  <ul>
+                    <li>Objective 1</li>
+                  </ul>
+                </div>
+                <div style={{ paddingBottom: 15 }}>
+                  <h5>Course Contents: </h5>
+                  <p>{Content.catalogue}</p>
+                </div>
+                <div style={{ paddingBottom: 15 }}>
+                  <h5>Recommended Books: </h5>
+                  <ol>
+                    <li>Book Name, Writer, Year</li>
+                  </ol>
+                </div>
               </div>
-            </div>
-            <h6 style={{ paddingBottom: 20 }}>
-              <b>Course Title: </b> {Name}
-            </h6>
-            <h6 style={{ paddingBottom: 35 }}>
-              <b>Credit Hour: </b>
-              {Content.Credit}
-            </h6>
-          </div>
-          <div style={{ paddingBottom: 15 }}>
-            <h5>Course Objectives: </h5>
-            <ul>
-              {Content.objectiveList.map((i) => {
-                return <li>{i.title}</li>;
-              })}
-            </ul>
-          </div>
-          <div style={{ paddingBottom: 15 }}>
-            <h5>Course Contents: </h5>
-            <p>{Content.catalogue}</p>
-          </div>
-          <div style={{ paddingBottom: 15 }}>
-            <h5>Recommended Books: </h5>
-            <ol>
-              {Content.Books.map((i) => {
-                return (
-                  <li>
-                    {i.BookName}
-                    {i.BookWriter}
-                    {i.BookYear}
-                  </li>
-                );
-              })}
-            </ol>
+            </>
           </div>
         </div>
       )}

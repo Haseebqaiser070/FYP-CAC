@@ -42,18 +42,21 @@ export default function AllCourses() {
 
   const columns = [
     {
-      field: "courseCode",
+      field: "Code",
       headerName: "Course Code",
       flex: 1,
     },
     {
-      field: "courseName",
+      field: "Name",
       headerName: "Course Name",
       flex: 1,
     },
     {
-      field: "creditHours",
+      field: "CreditHours",
       headerName: "Credit Hour",
+      valueGetter: (params) => {
+            return params?.row?.Credit +"(" + params?.row?.LectureHoursWeek + "," + params?.row?.LabHoursWeek + ")"
+          },
       flex: 1,
     },
     {
