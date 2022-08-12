@@ -8,7 +8,7 @@ var FacultyRouter = require("./Routes/AdminRoutes/Faculty");
 var UserRouter = require("./Routes/AdminRoutes/User");
 var MeetingRouter = require("./Routes/MeetingRoute/MeetingRoute");
 var CategoryRouter = require("./Routes/AdminRoutes/Category")
-var SOSRouter = require("./Routes/DocumentRoutes/SOS")
+var SOSRouter = require("./Routes/AdminRoutes/SOS")
 var RepoRouter = require("./Routes/AdminRoutes/Repo")
 var CourseVersion = require("./Routes/CAC/CourseVersion")
 var TaskRouter = require("./Routes/AdminRoutes/Task")
@@ -36,7 +36,7 @@ app.use("/Faculty", getUser, FacultyRouter);
 app.use("/Program", getUser, ProgramRouter);
 app.use("/Meeting", getUser, MeetingRouter);
 app.use("/Category", getUser, CategoryRouter);
-// app.use("/SOS", getUser, SOSRouter);
+app.use("/SOS", getUser, SOSRouter);
 app.use("/RepoCourse", getUser, RepoRouter);
 app.use("/CourseVersion", getUser, CourseVersion);
 app.use("/Task", getUser, TaskRouter);

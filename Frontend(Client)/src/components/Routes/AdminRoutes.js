@@ -28,6 +28,7 @@ import CreateNewMeeting from "../CreateNewMeeting";
 import PendingDeadlineRequests from "../PendingDeadlineRequests";
 import CreateSOS from "../SOSCreation/CreateSOS";
 import AllCourses from "../AllCourses";
+import SOSReturnedView from "../Admin/SOSReturnedView";
 function AdminRoutes() {
   return (
     <Routes>
@@ -42,6 +43,7 @@ function AdminRoutes() {
           path="CourseReturnedView/:Code"
           element={<CourseReturnedView />}
         />
+        <Route path="/Admin/SOSReturnedView/:Program" element={<SOSReturnedView />} />
         <Route path="/EditCourse/:id" element={<EditCourseForm />} />
         <Route path="/CreateNewMeeting" element={<CreateNewMeeting />} />
         <Route

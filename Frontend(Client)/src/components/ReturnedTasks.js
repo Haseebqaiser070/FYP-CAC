@@ -55,10 +55,16 @@ export default function ReturnedTasks() {
             size="small"
             style={{ marginLeft: 16, padding: 10 }}
             onClick={() => {
+             if(row.taskType=="Create Catalog Description") {
               navigate(`/Admin/CourseReturnedView/${row.Course.Code}`, {
                 replace: true,
-              });
-            }}
+              });}
+              else if(row.taskType=="Create SOS"){
+                navigate(`/Admin/SOSReturnedView/${row.Program}`, {
+                  replace: true,
+                });}
+              }
+            }
           >
             <AiFillEye />
           </Button>
