@@ -23,10 +23,12 @@ export default function SOS() {
   });
 
   const { Program } = state.row;
+  console.log("Program",Program)
   const [Version, setVersion] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [res, setresponse] = useState(false);
-  const [Content, setContent] = useState({Code: "",});
+  //{Category:"",Optional:"",Track:"",Courses:[],Note:""}
+  const [Content, setContent] = useState({Program:"",Year:"",Categories:[{Category:"",Optional:"",Track:"",Courses:[],Note:""}]});
   console.log(Version);
   const navigate = useNavigate();
   const togglePopup = () => {
@@ -38,13 +40,13 @@ export default function SOS() {
 
   useEffect(() => {
     getData();
+    getContent()
   }, []);
 
   const getData = async () => {
     console.log(Program);
     const response = await axios.get(
-      `http://localhost:4000/SOSVerison/all/${Program}`
-    );
+      `http://localhost:4000/SOSVerison/all/${Program}`);
     setVersion(response.data);
     if (response.data.length > 0) {
       setresponse(true);
@@ -53,8 +55,7 @@ export default function SOS() {
   };
   const getContent = async () => {
     const response = await axios.get(
-      `http://localhost:4000/SOSVerison/Latest/${Program}`
-    );
+      `http://localhost:4000/SOSVerison/Latest/${Program}`);
     setContent(response.data);
   };
   const Edit = () => {
@@ -102,7 +103,7 @@ console.log("content", Content)
           Print
         </Button>
       </div>
-
+      
       {isOpen && (
         <Popup
           content={
@@ -135,11 +136,16 @@ console.log("content", Content)
       )}
       {!res ? (
         <h3>Empty Repository</h3>
-      ) : (    
+      ) : 
+        (
         <div ref={componentRef} className="main">
-          <div>
+        <div>
+       { Content.Categories.map((x)=>{
+          return(
+  
+        
             <>
-              <h5>Category Name</h5>
+              <h5>{x.Category}</h5>
               <table className="table table-bordered">
                 <thead style={{ textAlign: "center" }}>
                   <tr>
@@ -151,66 +157,92 @@ console.log("content", Content)
                   </tr>
                 </thead>
                 <tbody style={{ textAlign: "center" }}>
+                {x.Courses.map((i,index)=>{
+                  return(
                   <tr>
-                    <td className="col-1">1</td>
-                    <td className="col-2">CSC-101</td>
-                    <td className="col-5">Introduction to ICT</td>
-                    <td className="col-2">3(2,1)</td>
-                    <td className="col-2">None</td>
-                  </tr>
+                    <td className="col-1">{index+1}</td>
+                    <td className="col-2">{i.Code}</td>
+                    <td className="col-5">{i.Name}</td>
+                    <td className="col-2">{i.Credit +"(" + i.LectureHoursWeek + "," +i.LabHoursWeek + ")"}</td>
+                    <td className="col-2"> {i.PreRequisites.map((z) => z.Name)}</td>
+                  </tr>)
+                  })}
                 </tbody>
               </table>
               <div>
                 <p>
-                  Non-Muslim students can opt for HUM114 Ethics 3(3,0) course in
-                  lieu of HUM110 Islamic Studies, if they intend to.
+                  {x.Note}
                 </p>
               </div>
-              <div>
+              </>
+              )})}
+
+              {Content.Categories.map((x)=>{
+                        // {Category:"",Optional:"",Track:"",Courses:[],Note:""}
+
+                return(
+             <div>
                 <div>
-                  <h5>Category Name</h5>
+                  <h5>{x.Category}</h5>
 
                   <div style={{ paddingBottom: 20 }} className="row">
-                    <div className="col">
-                      <h6>
-                        <b>Course Code: </b> CSC-101
+                  {x.Courses.map((i,index)=>{
+                  return(
+                  <>
+                      <div className="col">
+                        <h6>
+                          <b>Course Code: </b> {i.Code}
+                        </h6>
+                      </div>
+                      <div className="col">
+                        <h6 style={{ textAlign: "right" }}>
+                          <b>Pre-Requisite: </b>{i.PreRequisites.map((z) => z.Name)}
+                        </h6>
+                      </div>
+                    <h6 style={{ paddingBottom: 20 }}>
+                        <b>Course Title: </b> {i.Name}
+                      </h6><h6 style={{ paddingBottom: 35 }}>
+                        <b>Credit Hour: </b>
+                        {i.Credit + "(" + i.LectureHoursWeek + "," + i.LabHoursWeek + ")"}
                       </h6>
-                    </div>
-                    <div className="col">
-                      <h6 style={{ textAlign: "right" }}>
-                        <b>Pre-Requisite: </b>None
-                      </h6>
-                    </div>
-                  </div>
-                  <h6 style={{ paddingBottom: 20 }}>
-                    <b>Course Title: </b> Introduction to ICT
-                  </h6>
-                  <h6 style={{ paddingBottom: 35 }}>
-                    <b>Credit Hour: </b>
-                    3(2,1)
-                  </h6>
-                </div>
+                
                 <div style={{ paddingBottom: 15 }}>
                   <h5>Course Objectives: </h5>
                   <ul>
-                    <li>Objective 1</li>
-                  </ul>
+                  {i.objectiveList.map((z) => {
+                    return <li>{z.title}</li>;
+                  })}
+                </ul>
                 </div>
                 <div style={{ paddingBottom: 15 }}>
                   <h5>Course Contents: </h5>
-                  <p>{Content.catalogue}</p>
+                  <p>{i.catalogue}</p>
                 </div>
                 <div style={{ paddingBottom: 15 }}>
                   <h5>Recommended Books: </h5>
                   <ol>
-                    <li>Book Name, Writer, Year</li>
-                  </ol>
+                  {i.Books.map((z) => {
+                return (
+                  <li>
+                    {z.BookName}
+                    {z.BookWriter}
+                    {z.BookYear}
+                  </li>
+                );
+              })}</ol>
                 </div>
+                </>
+                )
+                })}
               </div>
-            </>
+            
           </div>
         </div>
-      )}
+        )})}     
+              
     </div>
-  );
+    </div>
+    )}
+    </div>
+  )
 }

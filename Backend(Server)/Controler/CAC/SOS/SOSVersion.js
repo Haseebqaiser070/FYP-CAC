@@ -42,7 +42,9 @@ module.exports.ViewAll= async (req,res)=>{
     try{    
         const user = req.user
         if(!user) return res.status(401).json("unAutherized")      
-        const Version = await Versionodoc.find({Program:req.params.Program}) 
+        const Version = await Versionodoc.find({Program:req.params.Program}).populate({path:"Categories"
+        ,populate:{path:"Courses",model:"SOSCourse",
+        populate:{path:'PreRequisites',model:'Course'}}});
         if(!Version)return res.status(404).json("Not Found")
         console.log("Versions",Version)
         await res.status(200).json(Version)
@@ -57,8 +59,8 @@ module.exports.Latest= async (req,res)=>{
         const user = req.user
         if(!user) return res.status(401).json("unAutherized")      
         const Version = await Versionodoc.find({Program:req.params.Program})
-        .populate("Categories").populate({path:"Courses",model:"SOSCourse"
-        ,populate:{path: 'PreRequisites', model: 'Course'}})
+        .populate({path:"Categories",populate:{path:"Courses",model:"SOSCourse"
+        ,populate:{path: 'PreRequisites', model: 'Course'}}})
         if(!Version)return res.status(404).json("Not Found")
         const obj = Version[Version.length - 1]
         console.log("Latest",obj)

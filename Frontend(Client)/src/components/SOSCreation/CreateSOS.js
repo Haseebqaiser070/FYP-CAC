@@ -35,15 +35,14 @@ function setPrerequisites() {}
 export default function CreateSOS() {
 
   const navigate = useNavigate();
-  const { state } = useLocation();
-  const { Program } = state.row;
-
+  const {state} = useLocation();
+  const {Program,Content} = state.row;
   axios.defaults.withCredentials = true;
   const [Rows, setRows] = useState([]);
-  const [Year, setYear] = useState("");
+  const [Year, setYear] = useState(Content.Year);
   //------------------------------------------------
   
-  const [Categories, setCategories] = useState([])
+  const [Categories, setCategories] = useState(Content.Categories)
   //{Category:"",Optional:"",Track:"",Courses:[],Note:""}
   //------------------------------------------------
   const [Courses, setCourse] = useState([]);
