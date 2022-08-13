@@ -60,6 +60,12 @@ export default function FacultyNavigation() {
                   </div>
                   Evaluate Folder
                 </Link>
+                <Link class="nav-link sidenavtext " to="FolderTemplete">
+                  <div class="sb-nav-link-icon">
+                    <BsBuilding color="#fff" />
+                  </div>
+                  Evaluate Folder Templete
+                </Link>
               </div>
               <div
                 style={{ position: "fixed", left: "8px", bottom: "8px" }}
