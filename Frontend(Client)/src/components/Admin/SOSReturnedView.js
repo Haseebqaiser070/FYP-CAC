@@ -21,7 +21,7 @@ export default function SOSReturnedView() {
 
   const [Content, setContent] = useState({Program:"",Year:"",Categories:[{Category:"",Optional:"",Track:"",Courses:[],Note:""}]});
   
-  navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getData();

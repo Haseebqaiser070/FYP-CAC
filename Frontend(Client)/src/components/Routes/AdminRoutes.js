@@ -40,10 +40,10 @@ function AdminRoutes() {
         <Route path="/AllCourses" element={<AllCourses />} />
         <Route path="/CourseView/:id" element={<CourseFinal />} />
         <Route
-          path="CourseReturnedView/:Code"
+          path="/CourseReturnedView/:Code"
           element={<CourseReturnedView />}
         />
-        <Route path="/Admin/SOSReturnedView/:Program" element={<SOSReturnedView />} />
+        <Route path="/SOSReturnedView/:Program" element={<SOSReturnedView />} />
         <Route path="/EditCourse/:id" element={<EditCourseForm />} />
         <Route path="/CreateNewMeeting" element={<CreateNewMeeting />} />
         <Route

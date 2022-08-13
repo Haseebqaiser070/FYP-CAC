@@ -19,7 +19,7 @@ module.exports.showUsers = async (req, res) => {
     try {
     if (!req.user) return await res.status(401).json("Timed Out");
     const user = await Userdoc.findById(req.user._id)
-    const task  = await Task.findOne({User:req.user._id,taskType:"Create SOS",Program:{$in:user.SOSCreation},Course:null})
+    const task  = await Task.findOne({User:req.user._id,taskType:"Create SOS",Program:req.params.Program,Course:null})
     task.Status = "Returned"
     console.log("\n\n\n\n\n\n\n\n",task,"\n\n\n\n\n\n\n\n")
     const newtask  = await Task.findByIdAndUpdate(task._id,task)
@@ -38,7 +38,7 @@ module.exports.showUsers = async (req, res) => {
     console.log("\n\n\n\n\n\n\n\n obj",obj)
 
     //error is here
-    const retrn = await Returned.create(obj)
+    const retrn = await Returned.create({Program:obj.Program,Year:obj.Year,Categories:obj.Categories})
     console.log("returned \n\n\n\n\n",retrn)
   
     await res.status(200).json("submitted")

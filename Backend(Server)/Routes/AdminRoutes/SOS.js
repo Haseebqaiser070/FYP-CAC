@@ -1,8 +1,7 @@
 var express = require("express");
 var router = express.Router();
-var courses = require("../../Controler/AdminControllers/Courses");
-var returnedcourses = require("../../Controler/AdminControllers/ReturnedCourse");
+var returnedSOS = require("../../Controler/AdminControllers/ReturnedSOS");
 
-router.route("/ReturnedSOS/:Program").get(returnedcourses.ViewOne);
+router.route("/ReturnedSOS/:Program").get(returnedSOS.ViewOne);
 
 module.exports = router;

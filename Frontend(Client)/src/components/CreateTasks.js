@@ -184,8 +184,7 @@ export default function CreateTasks(props) {
                   </div>
                   
                   {
-                  props.pre.taskType == "Create Catalog Description"||
-                  props.pre.taskType =="Create CDF" ? (
+                  props.pre.taskType == "Create Catalog Description"? (
                   <div className="col">
                   <FormControl fullWidth size="small">
                     <InputLabel id="taskType">Assign Course</InputLabel>
@@ -213,6 +212,34 @@ export default function CreateTasks(props) {
                   </FormControl>
                 </div>
                     ):
+                    props.pre.taskType =="Create CDF" ? (
+                      <div className="col">
+                      <FormControl fullWidth size="small">
+                        <InputLabel id="taskType">Assign Course</InputLabel>
+                        <Select
+                          className="mb-4"
+                          labelId="courseAssign"
+                          id="courseAssign"
+                          value={obj[index].Course}
+                          label="Assign Teacher"
+                          onChange={(e) => {
+                            const clone = [...obj];
+                            clone[index].Course = e.target.value;
+                            setobj([...clone]);
+                          }}
+                          autoWidth
+                        >
+                          {RepoCourse.map((a) => {
+                            return (
+                              <MenuItem value={a}>
+                                {a.Code + "  " + a.Name}
+                              </MenuItem>
+                            );
+                          })}
+                        </Select>
+                      </FormControl>
+                    </div>
+                        ):
                   props.pre.taskType == "Create SOS" ? (
                 <div className="col">
                   <FormControl fullWidth size="small">

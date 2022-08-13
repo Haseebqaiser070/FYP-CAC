@@ -7,42 +7,6 @@ import { DataGrid } from "@mui/x-data-grid";
 
 import { useNavigate } from "react-router-dom";
 import { AiOutlineCheckSquare, AiFillEdit } from "react-icons/ai";
-function ActionButtons(props) {
-  const navigate = useNavigate();
-  const { row } = props;
-
-  return (
-    <div>
-      <Button
-        variant="contained"
-        color="primary"
-        size="small"
-        style={{ marginLeft: 16 }}
-        onClick={() => {
-          navigate(
-            `/CAC/SOSCreation/${row.Program}`,
-            { state: { row } },
-            { replace: true }
-          );
-        }}
-      >
-        <AiFillEdit style={{ marginRight: 10 }} />
-        Create/Edit SOS
-      </Button>
-
-      <Button
-        variant="contained"
-        color="primary"
-        size="small"
-        style={{ marginLeft: 16 }}
-        // onClick={null}
-      >
-        <AiFillEdit style={{ marginRight: 10 }} />
-        Submit
-      </Button>
-    </div>
-  );
-}
 
 export default function CacSosTask() {
   const [RepoProgram, setRepoProgram] = useState([]);
@@ -50,7 +14,50 @@ export default function CacSosTask() {
   useEffect(() => {
     getRepoProgram();
   }, []);
-
+  function ActionButtons(props) {
+    const navigate = useNavigate();
+    const { row } = props;
+  
+    return (
+      <div>
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          style={{ marginLeft: 16 }}
+          onClick={() => {
+            navigate(
+              `/CAC/SOSCreation/${row.Program}`,
+              { state: { row } },
+              { replace: true }
+            );
+          }}
+        >
+          <AiFillEdit style={{ marginRight: 10 }} />
+          Create/Edit SOS
+        </Button>
+  
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          style={{ marginLeft: 16 }}
+          onClick={async () => {
+            await axios.post(
+              `http://localhost:4000/SOSCreate/Submit/${row.Program}`, {
+                withCredentials: true,
+              })
+              getRepoProgram()
+            }
+        }
+        >
+          <AiFillEdit style={{ marginRight: 10 }} />
+          Submit
+        </Button>
+      </div>
+    );
+  }
+  
   const getRepoProgram = async () => {
     const response = await axios.get("http://localhost:4000/SOSCreate/get", {
       withCredentials: true,
