@@ -155,26 +155,7 @@ export default function FacultyMembers() {
                     </Button>
                   </FormControl>
                 )}
-                <FormControl fullWidth size="small">
-                  <InputLabel id="taskType">Select Degree</InputLabel>
-                  <Select
-                    className="mb-4"
-                    labelId="selectdegree"
-                    id="selectdegree"
-                    value={obj[index].DegreeLevel}
-                    label="Select Degree"
-                    onChange={(e) => {
-                      const clone = [...obj];
-                      clone[index].DegreeLevel = e.target.value;
-                      setobj([...clone]);
-                    }}
-                    autoWidth
-                  >
-                    <MenuItem value={"BS"}>BS</MenuItem>
-                    <MenuItem value={"MS"}>MS</MenuItem>
-                    <MenuItem value={"p.hd"}>P.hd</MenuItem>
-                  </Select>
-                </FormControl>
+
                 <div className="form-floating mb-4">
                   <select
                     class="form-select"
@@ -192,40 +173,44 @@ export default function FacultyMembers() {
                     })}
                   </select>
                 </div>
-                <Autocomplete
-                  multiple
-                  id="tags-standard"
-                  className="mb-4"
-                  value={AssignCources}
-                  options={Courses}
-                  getOptionLabel={(option) => option.Name}
-                  defaultValue={null}
-                  onChange={(e, val) => setAssignCourses(val)}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      variant="outlined"
-                      label="Assign Cources"
-                      placeholder="Assign Cources"
+                <div className="row">
+                  <div className="col">
+                    <Autocomplete
+                      multiple
+                      id="tags-standard"
+                      className="mb-4"
+                      value={AssignCources}
+                      options={Courses}
+                      getOptionLabel={(option) => option.Name}
+                      defaultValue={null}
+                      onChange={(e, val) => setAssignCourses(val)}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          variant="outlined"
+                          label="Assign Cources"
+                          placeholder="Assign Cources"
+                        />
+                      )}
                     />
-                  )}
-                />
-                <div className="form-floating mb-3">
-                  <input
-                    className="form-control"
-                    id="inputName"
-                    type="text"
-                    value={obj[index].Section}
-                    onChange={(e) => {
-                      const clone = [...obj];
-                      clone[index].Section = e.target.value;
-                      setobj([...clone]);
-                    }}
-                    required
-                  />
-                  <label htmlFor="text" className="form-label">
-                    Section
-                  </label>
+                  </div>
+                  <div className="col form-floating mb-3">
+                    <input
+                      className="form-control"
+                      id="inputName"
+                      type="text"
+                      value={obj[index].Section}
+                      onChange={(e) => {
+                        const clone = [...obj];
+                        clone[index].Section = e.target.value;
+                        setobj([...clone]);
+                      }}
+                      required
+                    />
+                    <label htmlFor="text" className="form-label">
+                      Section
+                    </label>
+                  </div>
                 </div>
               </>
             );

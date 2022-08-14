@@ -59,19 +59,19 @@ export default function CreateSOS() {
 
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
-  const settracks = (clone)=>{
-    var num=0
-    
+  const settracks = (clone) => {
+    var num = 0;
+
     clone.forEach((e) => {
-      console.log("e",e)
-      if(e.Track.includes("Track")){
-        num=num+1
-        e.Track="Track" + num+" "
+      console.log("e", e);
+      if (e.Track.includes("Track")) {
+        num = num + 1;
+        e.Track = "Track" + num + " ";
       }
     });
-    console.log(clone)
-  setCategories([...clone])
-  }
+    console.log(clone);
+    setCategories([...clone]);
+  };
   const getCategory = async () => {
     const res = await axios.get("http://localhost:4000/Category/show");
     const data = await res.data;
@@ -366,8 +366,6 @@ export default function CreateSOS() {
                 {/* {Category:"",Optional:"",Track:"",Courses:[],Note:""} */}
 
                 <FormControl fullWidth size="small">
-               
-                  
                   <TextField
                     className="mb-4"
                     id="outlined-basic"
@@ -384,60 +382,73 @@ export default function CreateSOS() {
                   />
                 </FormControl>
 
-                
                 <FormControl className="mb-4">
                   <FormControlLabel
-                    control={<Switch checked={Categories[index].Track.includes("Track")?(true):(false)}
-                    onChange={() => {
-                      // recheck checked in conditions
-                      if(Categories[index].Track==""){
-                        const clone = Categories
-                        clone[index].Track="Track"
-                        settracks(clone)
-                      }
-                      else if(Categories[index].Track!=""){
-                        const clone = Categories
-                        clone[index].Track=""
-                        settracks(clone)
-                      }
-                    }} />}
+                    control={
+                      <Switch
+                        checked={
+                          Categories[index].Track.includes("Track")
+                            ? true
+                            : false
+                        }
+                        onChange={() => {
+                          // recheck checked in conditions
+                          if (Categories[index].Track == "") {
+                            const clone = Categories;
+                            clone[index].Track = "Track";
+                            settracks(clone);
+                          } else if (Categories[index].Track != "") {
+                            const clone = Categories;
+                            clone[index].Track = "";
+                            settracks(clone);
+                          }
+                        }}
+                      />
+                    }
                     label="Do this category have tracks"
                     labelPlacement="start"
                   />
                 </FormControl>
-                
-                
-                
-{/* {Category:"",Optional:"",Track:"",Courses:[],Note:""} */}
-                
-                
-                  {Categories[index].Track.includes("Track")?(
-                  <FormControl fullWidth size="small">
-                  <h4 className="mb-4 mt-2">
-                    <b>{
-                    
-                    Categories[index].Track.substring(0,Categories[index].Track.indexOf(" ")+1)}</b>
-                  </h4>
-                  <TextField
-                    className="mb-4"
-                    id="outlined-basic"
-                    label="Add Track (optional)"
-                    variant="outlined"
-                    size="small"
-                    fullWidth
-                    value={Categories[index].Track.substring(Categories[index].Track.indexOf(" ")+1)}
-                    onChange={(e) => {
-                      const clone = [...Categories]; 
-                      clone[index].Track=Categories[index].Track.substring(0,Categories[index].Track.indexOf(" ")+1)+e.target.value;
-                      setCategories([...clone])
-                    }}
-                  />
-                </FormControl>)
-                    :(<p>No tracks</p>)}
 
+                {/* {Category:"",Optional:"",Track:"",Courses:[],Note:""} */}
+
+                {Categories[index].Track.includes("Track") ? (
+                  <FormControl fullWidth size="small">
+                    <h4 className="mb-4 mt-2">
+                      <b>
+                        {Categories[index].Track.substring(
+                          0,
+                          Categories[index].Track.indexOf(" ") + 1
+                        )}
+                      </b>
+                    </h4>
+                    <TextField
+                      className="mb-4"
+                      id="outlined-basic"
+                      label="Add Track (optional)"
+                      variant="outlined"
+                      size="small"
+                      fullWidth
+                      value={Categories[index].Track.substring(
+                        Categories[index].Track.indexOf(" ") + 1
+                      )}
+                      onChange={(e) => {
+                        const clone = [...Categories];
+                        clone[index].Track =
+                          Categories[index].Track.substring(
+                            0,
+                            Categories[index].Track.indexOf(" ") + 1
+                          ) + e.target.value;
+                        setCategories([...clone]);
+                      }}
+                    />
+                  </FormControl>
+                ) : (
+                  <p>No tracks</p>
+                )}
 
                 <div className="row">
-                  <div className="col-10">
+                  <div className="col-12">
                     <Autocomplete
                       style={{ marginBottom: 35 }}
                       multiple
@@ -462,16 +473,6 @@ export default function CreateSOS() {
                         />
                       )}
                     />
-                  </div>
-                  <div className="col-2">
-                    <Button
-                      fullWidth
-                      variant="contained"
-                      color="primary"
-                      size="medium"
-                    >
-                      Assign Cources
-                    </Button>
                   </div>
                 </div>
               </div>
@@ -517,10 +518,10 @@ export default function CreateSOS() {
                       labelId="courseAssign"
                       id="courseAssign"
                       label="ADD Category"
-                      value={AssignCategory[index+1]}
+                      value={AssignCategory[index + 1]}
                       onChange={(e) => {
                         const clone = [...AssignCategory];
-                        clone[index+1] =e.target.value;
+                        clone[index + 1] = e.target.value;
                         setAssignCategory([...clone]);
                       }}
                       autoWidth
@@ -543,8 +544,8 @@ export default function CreateSOS() {
                     size="medium"
                     onClick={() => {
                       const clone = [...Categories];
-                      clone.splice(index+1,0, {
-                        Category: AssignCategory[index+1],
+                      clone.splice(index + 1, 0, {
+                        Category: AssignCategory[index + 1],
                         Optional: "",
                         Track: "",
                         Courses: [],
@@ -553,9 +554,9 @@ export default function CreateSOS() {
                       setCategories([...clone]);
                       cosnole.log(Categories);
                       const copy = [...AssignCategory];
-                      copy[index+1] = "";
-                      copy.splice(index+2,0,"")
-                      setAssignCategory([...copy]);                      
+                      copy[index + 1] = "";
+                      copy.splice(index + 2, 0, "");
+                      setAssignCategory([...copy]);
                       const cc = Category.filter((i) => {
                         if (i.CategoryName != AssignCategory) {
                           return i;

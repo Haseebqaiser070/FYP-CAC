@@ -5,6 +5,7 @@ import { Route, Routes } from "react-router-dom";
 
 import Sos from "../PdfTemplates/Sos";
 import CourseFolder from "../Faculty/CourseFolder";
+import AllAssignedCourses from "../Faculty/AllAssignedCourses";
 
 function FacultyRoutes() {
   return (
@@ -16,6 +17,10 @@ function FacultyRoutes() {
         <Route path="/CourseFolder">
           <Route path=":id" element={<CourseFolder />} />
           <Route index element={<CourseFolder />} />
+        </Route>
+        <Route path="/AllCoursesAssigned">
+          <Route path=":id" element={<AllAssignedCourses />} />
+          <Route index element={<AllAssignedCourses />} />
         </Route>
       </Route>
     </Routes>

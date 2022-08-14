@@ -1,6 +1,6 @@
 //----------------------------------------------------------------
 //----------------------------------------------------------------
-//          CDF Form 
+//          CDF Form
 //----------------------------------------------------------------
 //----------------------------------------------------------------
 
@@ -36,21 +36,10 @@ const style = {
 function setPrerequisites() {}
 
 export default function CreateCDF() {
+  const [mainTopic, setmainTopic] = useState("");
+  const [subTopic, setsubTopic] = useState([""]);
+  const [teachingHours, setteachingHours] = useState("");
   const [Rows, setRows] = useState([]);
-  const [Year, setYear] = useState("");
-  const [Categories, setCategories] = useState([]);
-  const [AssignCategories, setAssignCategories] = useState([]);
-  const [EnteredCourse, setEnteredCourse] = useState([]);
-  const [Courses, setCourse] = useState([]);
-
-  const [Prerequisite, setPrerequisites] = useState([]);
-  const [AssignPrerequisite, setAssignPrerequisite] = useState([]);
-
-  const [coursesList, setCoursesList] = useState([]);
-  const [Note, setNote] = useState("");
-
-  const [open, setOpen] = useState(false);
-  const handleClose = () => setOpen(false);
 
   const getCategories = async () => {
     const res = await axios.get("http://localhost:4000/Category/show");
@@ -70,85 +59,20 @@ export default function CreateCDF() {
   }, []);
 
   const columns = [
-    { field: "id", headerName: "ID", width: 90 },
     {
-      field: "S",
-      headerName: "S#",
+      field: "Unit",
+      headerName: "Unit",
       flex: 1,
     },
     {
-      field: "CourseCode",
-      headerName: "Course Code",
-      flex: 1,
-    },
-    {
-      field: "CourseTitle",
-      headerName: "Course Title",
+      field: "Topic",
+      headerName: "Topic",
       flex: 3,
     },
     {
-      field: "CreditHour",
-      headerName: "Credit Hour",
+      field: "NoofTeachingHours",
+      headerName: "No. of Teaching Hours",
       flex: 1,
-    },
-
-    {
-      field: "Prerequisites",
-      headerName: "Pre-requisite(s)",
-      flex: 1,
-
-      renderCell: () => (
-        <>
-          <Button
-            type="button"
-            variant="contained"
-            color="primary"
-            size="small"
-            onClick={() => setOpen(true)}
-          >
-            Add/Edit
-          </Button>
-
-          <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box component="form" sx={style}>
-              <Autocomplete
-                className="mb-4"
-                multiple
-                id="tags-standard"
-                value={AssignPrerequisite}
-                options={Prerequisite}
-                getOptionLabel={(option) => option.Name}
-                defaultValue={null}
-                onChange={(e, val) => setAssignPrerequisite(val)}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant="outlined"
-                    label="Set Prerequisite"
-                    placeholder="Set Prerequisite"
-                    size="small"
-                  />
-                )}
-              />
-              <Button
-                fullWidth
-                type="button"
-                variant="contained"
-                color="primary"
-                size="medium"
-                // onClick={}
-              >
-                Add
-              </Button>
-            </Box>
-          </Modal>
-        </>
-      ),
     },
   ];
 
@@ -165,10 +89,194 @@ export default function CreateCDF() {
   return (
     <div
       className="container"
-      style={{ height: 700, width: "100%", padding: 20 }}
+      style={{ height: 700, width: "100%", padding: 50 }}
     >
-      CDF Creation / CreateCDF.js file main form daalna
-      
+      <h1 className="mb-4">Create CDF</h1>
+      <div
+        style={{
+          backgroundColor: "#000",
+          color: "#fff",
+          padding: 1,
+          marginBottom: 9,
+        }}
+      >
+        <h5>Course Information</h5>
+      </div>
+      <div className="row">
+        <div className="col">
+          <h6>
+            <b>Course Code: </b>
+          </h6>
+        </div>
+        <div className="col">
+          <h6 style={{ paddingBottom: 20, textAlign: "right" }}>
+            <b>Course Title: </b>
+          </h6>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col">
+          <h6 style={{ paddingBottom: 35 }}>
+            <b>Credit Hour: </b>
+          </h6>
+        </div>
+        <div className="col">
+          <h6 style={{ paddingBottom: 35, textAlign: "right" }}>
+            <b>Lecture Hours/Week: </b>
+          </h6>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col">
+          <h6 style={{ paddingBottom: 35 }}>
+            <b>Lab Hours/Week: </b>
+          </h6>
+        </div>
+        <div className="col">
+          <h6 style={{ textAlign: "right" }}>
+            <b>Pre-Requisite: </b>
+          </h6>
+        </div>
+      </div>
+      <div>
+        <div
+          style={{
+            backgroundColor: "#000",
+            color: "#fff",
+            padding: 1,
+            marginBottom: 9,
+          }}
+        >
+          <h5>Catalogue Description:</h5>
+        </div>
+        <p>
+          This course introduces mathematical structures necessary for the
+          development of program logic. It covers the following topics: Set
+          Theory; Propositional & First Order Logic; Rules of Inference;
+          Mathematical Proofs; Counting & Probability; Graphs & Tree Structures;
+          and Discrete Probability.
+        </p>
+      </div>
+      <div>
+        <div
+          className="card"
+          style={{
+            backgroundColor: "#f5f5f5",
+            marginTop: 25,
+            borderRadius: 15,
+            padding: 25,
+          }}
+        >
+          <div className="row">
+            <div className="col-9">
+              <FormControl fullWidth size="small">
+                <TextField
+                  className="mb-4"
+                  id="outlined-basic"
+                  label="Add Main Topic"
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                  value={mainTopic}
+                  onChange={(e) => {
+                    setmainTopic(mainTopic);
+                  }}
+                />
+              </FormControl>
+            </div>
+            <div className="col-3">
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                size="medium"
+                // onClick={}
+              >
+                Add Main Topic
+              </Button>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-9">
+              <FormControl fullWidth size="small">
+                <TextField
+                  className="mb-4"
+                  id="outlined-basic"
+                  label="Add Sub Topics"
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                  value={subTopic}
+                  onChange={(e) => {
+                    setsubTopic(subTopic);
+                  }}
+                />
+              </FormControl>
+            </div>
+            <div className="col-3">
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                size="medium"
+                // onClick={}
+              >
+                Add Sub Topics
+              </Button>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-9">
+              <FormControl fullWidth size="small">
+                <TextField
+                  className="mb-4"
+                  id="outlined-basic"
+                  label="Add Main Topic"
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                  value={teachingHours}
+                  onChange={(e) => {
+                    setteachingHours(teachingHours);
+                  }}
+                />
+              </FormControl>
+            </div>
+            <div className="col-3">
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                size="medium"
+                // onClick={}
+              >
+                Add No of Teaching Hours
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        style={{
+          backgroundColor: "#000",
+          color: "#fff",
+          padding: 1,
+          marginBottom: 15,
+          marginTop: 50,
+        }}
+      >
+        <h5>Unit wise Major Topics:</h5>
+      </div>
+      <div style={{ height: 400, width: "100%" }}>
+        <DataGrid
+          rows={Rows}
+          columns={columns}
+          getRowId={(Rows) => Rows._id}
+          pageSize={5}
+          rowsPerPageOptions={[5]}
+          disableSelectionOnClick
+        />
+      </div>
     </div>
   );
 }

@@ -59,6 +59,13 @@ export default function FacultyNavigation() {
                   All Scheme of Studies
                 </Link>
 
+                <Link class="nav-link sidenavtext" to="AllCoursesAssigned">
+                  <div class="sb-nav-link-icon">
+                    <BsFillFolderFill color="#fff" />
+                  </div>
+                  All Courses Assigned
+                </Link>
+
                 <Link class="nav-link sidenavtext" to="CourseFolder">
                   <div class="sb-nav-link-icon">
                     <BsFillFolderFill color="#fff" />
