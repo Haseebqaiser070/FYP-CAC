@@ -24,7 +24,7 @@ var SOSSchema = new mongoose.Schema({
         },
         Courses:[{
             type: mongoose.Schema.ObjectId,
-            ref: 'SOSCourse',}],
+            ref: 'ProgramCourses',}],
         Note:{ 
             type:String,
             default:""

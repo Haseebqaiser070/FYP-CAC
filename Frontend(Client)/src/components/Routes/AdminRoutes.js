@@ -29,6 +29,7 @@ import PendingDeadlineRequests from "../PendingDeadlineRequests";
 import CreateSOS from "../SOSCreation/CreateSOS";
 import AllCourses from "../AllCourses";
 import SOSReturnedView from "../Admin/SOSReturnedView";
+import SOSFinal from "../Admin/SOSfinal";
 function AdminRoutes() {
   return (
     <Routes>
@@ -51,6 +52,7 @@ function AdminRoutes() {
           element={<ViewCacAvailability />}
         />
         <Route path="/AllSchemeofStudies" element={<AllSchemeofStudies />} />
+        <Route path="/SOSView/:id" element={<SOSFinal />} />
         <Route path="/Sos" element={<Sos />} />
         <Route path="/InitCourse" element={<CourseRepo />} />
         {/*<Route path="/CdfandSyllabus">
