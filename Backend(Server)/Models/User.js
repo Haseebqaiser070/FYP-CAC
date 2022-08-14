@@ -64,7 +64,7 @@ var UserSchema = new mongoose.Schema({
     CourseFolders:[
         {
         type: mongoose.Schema.ObjectId,
-        ref: 'Course',
+        ref: 'ProgramCourses',
         default:'none'
         }]
     ,

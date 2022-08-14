@@ -30,30 +30,37 @@ const style = {
 };
 
 export default function FacultyMembers() {
+  axios.defaults.withCredentials = true;
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [Rows, setRows] = useState([]);
-  const [Courses, setCourse] = useState([]);
+  const [Courses, setCourse] = useState([[]]);
   const [AssignCources, setAssignCourses] = useState([]);
   const [Degree, setDegree] = useState("Degree Program");
   const [Programdb, setProgramdb] = useState([]);
   const [DegreeLevel, setDegreeLevel] = useState("");
   const [Section, setSection] = useState("");
-
+console.log("AssignCources",AssignCources)
   const [obj, setobj] = useState([
     {
-      DegreeLevel: "",
-      Degree: "",
-      AssignCources: "",
+      Program:"",
+      Course: "",
+      Section:""
     },
   ]);
 
   const getPrograms = async () => {
-    const res = await axios.get("http://localhost:4000/Program/show");
+    const res = await axios.get("http://localhost:4000/SOS/Programs");
     setProgramdb(res.data);
   };
-
+  const getProgramCourses = async (index,Program) => {
+    const res = await axios.get(`http://localhost:4000/ProgramCourses/show/${Program}`);
+    const clone=[...Courses]
+    clone[index]=res.data
+    setCourse([...clone])
+  };
+console.log("Course",Courses)
   console.log(Rows);
   useEffect(() => {
     getPrograms();
@@ -146,7 +153,12 @@ export default function FacultyMembers() {
                       size="medium"
                       onClick={() => {
                         const clone = [...obj];
-                        const a = clone.splice(index, 1);
+                        clone[index]={
+                          Program:"",
+                          Course: "",
+                          Section:""
+                        }
+                        const a = clone.splice(index,1);                        
                         console.log("aaaaaaaaaaaaa", a, "cloneeeeeee", clone);
                         setobj([...clone]);
                       }}
@@ -159,15 +171,21 @@ export default function FacultyMembers() {
                 <div className="form-floating mb-4">
                   <select
                     class="form-select"
-                    onChange={(e) => setDegree(e.target.value)}
+                    onChange={(e) =>{
+                      const clone=[...obj]
+                      clone[index].Program=e.target.value
+                      setobj([...clone])
+                      getProgramCourses(index,e.target.value)
+                    }
+                  }
                   >
-                    <option value={Degree} selected disabled hidden>
-                      {Degree}
+                    <option value={obj[index].Program} selected disabled hidden>
+                      {obj[index].Program}
                     </option>
                     {Programdb.map((p) => {
                       return (
-                        <option value={p._id}>
-                          {p.PDegree} {p.Program}
+                        <option value={p}>
+                          {p}
                         </option>
                       );
                     })}
@@ -179,11 +197,19 @@ export default function FacultyMembers() {
                       multiple
                       id="tags-standard"
                       className="mb-4"
-                      value={AssignCources}
-                      options={Courses}
+                      value={AssignCources[index]}
+                      options={Courses[index]}
                       getOptionLabel={(option) => option.Name}
-                      defaultValue={null}
-                      onChange={(e, val) => setAssignCourses(val)}
+                      defaultValue={[]}
+                      onChange={(e, val) =>{
+                        const clone = [...obj];
+                        clone[index].Course = val;
+                        setobj([...clone]); 
+                        const clone2 = [...AssignCources];
+                        clone2[index]= val;
+                        setAssignCourses([...clone2])
+                      }
+                    }
                       renderInput={(params) => (
                         <TextField
                           {...params}
@@ -200,12 +226,11 @@ export default function FacultyMembers() {
                       id="inputName"
                       type="text"
                       value={obj[index].Section}
-                      onChange={(e) => {
+                      onChange={(e) => {      
                         const clone = [...obj];
                         clone[index].Section = e.target.value;
                         setobj([...clone]);
                       }}
-                      required
                     />
                     <label htmlFor="text" className="form-label">
                       Section
@@ -226,10 +251,14 @@ export default function FacultyMembers() {
                 setobj([
                   ...obj,
                   {
-                    DegreeLevel: "",
-                    Degree: "",
-                    AssignCources: "",
+                    Program:"",
+                    Course: "",
+                    Section:""
                   },
+                ]);
+                setCourse([
+                  ...Courses,
+                  []
                 ]);
               }}
             >

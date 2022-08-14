@@ -16,6 +16,7 @@ var CourseCreationRouter = require("./Routes/CAC/CoursesCreation")
 var SOSCreationRouter = require("./Routes/CAC/SOSCreation")
 var SOSVerisonRouter = require("./Routes/CAC/SOSVerison")
 var ProgramRouter = require("./Routes/AdminRoutes/Program")
+var ProgramCoursesRouter = require("./Routes/AdminRoutes/ProgramCourses")
 var CDFRouter = require("./Routes/CAC/CDFCreation")
 var SyllabusRouter = require("./Routes/CAC/SyllabusCreation")
 
@@ -43,7 +44,7 @@ app.use("/Task", getUser, TaskRouter);
 app.use("/CoursesCreate", getUser, CourseCreationRouter);
 app.use("/SOSCreate", getUser, SOSCreationRouter);
 app.use("/SOSVerison", getUser, SOSVerisonRouter);
-
+app.use("/ProgramCourses",getUser,ProgramCoursesRouter);
 app.use("/CDFCreate", getUser, CDFRouter);
 app.use("/SyllabusCreate", getUser, SyllabusRouter);
 

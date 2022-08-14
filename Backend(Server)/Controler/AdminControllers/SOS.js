@@ -1,4 +1,5 @@
 var SOS = require("../../Models/SOSModels/SOS");
+var SOSf = require("../../Models/SOSModels/SOS");
 
 module.exports.Showall = async (req, res) => {
     try {
@@ -7,6 +8,21 @@ module.exports.Showall = async (req, res) => {
       const backSOS = await SOS.find({});
       console.log("all SOSs", backSOS);
       await res.json(backSOS);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  module.exports.Program = async (req, res) => {
+    try {
+      console.log(req.user)
+      if (!req.user) return await res.json("Timed Out");
+      const backSOS = await SOSf.find({});
+      console.log("all SOSs", backSOS);
+      const re= backSOS.map((i)=>{
+        return(i.Program)
+      })
+      console.log(re);
+      await res.json(re);
     } catch (err) {
       console.log(err);
     }
