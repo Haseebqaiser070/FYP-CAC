@@ -43,8 +43,8 @@ module.exports.Lock = async (req, res) => {
         });
         console.log("finalcourse",finalcourse)
         await Task.deleteOne({_id:req.params.id});
-        await VersionCourse.deleteMany({Code:task.Course.Code})
         await ReturnCourse.deleteOne({Code:task.Course.Code})
+        await VersionCourse.deleteMany({Code:task.Course.Code})
         console.log(finalcourse)
         res.status(200).json(finalcourse);
       }
@@ -81,11 +81,11 @@ module.exports.Lock = async (req, res) => {
        obj.Categories=cats
         console.log(obj)
         const finalSOS = await SOSdoc.create({Program:obj.Program,Year:obj.Year,Categories:obj.Categories});
-        console.log("finalSOS",finalSOS)
+        console.log("finalSOS",finalSOS)        
         await Task.deleteOne({_id:req.params.id});
+        await ReturnedSOS.deleteOne({Program:task.Program})
         await VersionSOS.deleteMany({Program:task.Program})
         await SOSCourse.deleteMany({Program:task.Program})
-        await ReturnedSOS.deleteOne({Program:task.Program})
         console.log(finalSOS)
         res.status(200).json(finalSOS);
       }
