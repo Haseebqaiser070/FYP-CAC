@@ -54,7 +54,6 @@ function TaskDetails() {
 
 export default function CreateTasks(props) {
   axios.defaults.withCredentials = true;
-  const [Avail, setAvail] = useState([]);
   const [RepoCourse, setRepoCourse] = useState([]);
 
   const [obj, setobj] = useState([
@@ -69,19 +68,17 @@ export default function CreateTasks(props) {
   ]);
 
   useEffect(() => {
-    getRepoCourse();
-    getData();
+    if( props.pre.taskType=="Create Catalog Description")
+      {getRepoCourse();}
+    else if( props.pre.taskType=="Create CDF")
+      {getCources()}
   }, []);
-  const getData = async () => {
-    const response = await axios.get("http://localhost:4000/User/show/CAC");
-    setAvail(response.data);
+
+    const getCources = async () => {
+    const res = await axios.get("http://localhost:4000/RepoCourse/showwithecat");
+    setRepoCourse(res.data);
   };
-  /*  const getCources = async () => {
-    const res = await axios.get("http://localhost:4000/Course/show");
-    const data = await res.data;
-    setCourse([{ Name: "none" }, ...data]);
-  };
-*/
+
 
   const getRepoCourse = async () => {
     const response = await axios.get("http://localhost:4000/RepoCourse/show");
@@ -149,8 +146,24 @@ export default function CreateTasks(props) {
                         color="primary"
                         size="medium"
                         onClick={() => {
+
                           const clone = [...obj];
                           console.log("ondex",index)
+                          if(clone.length==index+1){
+                            console.log("last rm")
+                            clone[index]={
+                                taskType: props.pre.taskType,
+                                User: "",
+                                Deadline: "",
+                                Status: "",
+                                Course: "",
+                                Program:props.pre.Program,
+                              }
+                            }
+                          else if(clone.length!=index+1){
+                            console.log("not last rm")
+                            clone[index]=clone[index+1]    
+                          }
                           const a = clone.splice(index, 1);
                           console.log("aaaaaaaaaaaaa", a, "cloneeeeeee", clone);
                           setobj([...clone]);
@@ -184,7 +197,8 @@ export default function CreateTasks(props) {
                   </div>
                   
                   {
-                  props.pre.taskType == "Create Catalog Description"? (
+                  props.pre.taskType == "Create Catalog Description"||
+                  props.pre.taskType =="Create CDF" ? (
                   <div className="col">
                   <FormControl fullWidth size="small">
                     <InputLabel id="taskType">Assign Course</InputLabel>
@@ -212,34 +226,6 @@ export default function CreateTasks(props) {
                   </FormControl>
                 </div>
                     ):
-                    props.pre.taskType =="Create CDF" ? (
-                      <div className="col">
-                      <FormControl fullWidth size="small">
-                        <InputLabel id="taskType">Assign Course</InputLabel>
-                        <Select
-                          className="mb-4"
-                          labelId="courseAssign"
-                          id="courseAssign"
-                          value={obj[index].Course}
-                          label="Assign Teacher"
-                          onChange={(e) => {
-                            const clone = [...obj];
-                            clone[index].Course = e.target.value;
-                            setobj([...clone]);
-                          }}
-                          autoWidth
-                        >
-                          {RepoCourse.map((a) => {
-                            return (
-                              <MenuItem value={a}>
-                                {a.Code + "  " + a.Name}
-                              </MenuItem>
-                            );
-                          })}
-                        </Select>
-                      </FormControl>
-                    </div>
-                        ):
                   props.pre.taskType == "Create SOS" ? (
                 <div className="col">
                   <FormControl fullWidth size="small">

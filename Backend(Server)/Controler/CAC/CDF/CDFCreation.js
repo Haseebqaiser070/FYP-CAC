@@ -7,14 +7,12 @@ const ReturnCourse = require("../../../Models/CourseModels/ReturnCourse");
 module.exports.showUsers = async (req, res) => {
     try {
     if (!req.user) return await res.status(401).json("Timed Out");
-    const user = await Userdoc.findById(req.user._id);
-    console.log(user.CourseCDF)
-    const r = await Repo.find({_id:{$in:user.CourseCDF}});
-    await res.status(200).json(r)
+    const user = await Userdoc.findById(req.user._id).populate("CourseCDF");
+     console.log("CourseCDF",user)
+    await res.status(200).json(user.CourseCDF)
     } catch (err) {
       console.log(err);
       await res.status(400).json("error")
 
     }
   };
-  

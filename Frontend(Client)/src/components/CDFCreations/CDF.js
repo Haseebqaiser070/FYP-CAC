@@ -27,13 +27,14 @@ export default function CDF() {
   const [isOpen, setIsOpen] = useState(false);
   const [res, setsresponse] = useState(false);
   const [Content, setContent] = useState({
-    Code: "",
-    Name: "",
+    Code: Code,
+    Name: Name,
+    Credit:"",
     LectureHoursWeek: "0",
     LabHoursWeek: "0",
     Category: "",
     PreRequisites: [],
-    catalogue: "",
+    catalogue: "jkkl",
     objectiveList: [],
     Books: [],
   });
@@ -45,10 +46,32 @@ export default function CDF() {
   const handleCloseX = () => {
     setIsOpen(false);
   };
+  const getCat = async () => {
+    try {
+      const response = await axios.get(`http://localhost:4000/Course/${Code}`);
+      console.log(response.data);
+      setContent({
+        Code: response.data.Code,
+        Name: response.data.Name,
+        Credit:response.data.Credit,
+        LectureHoursWeek: response.data.LectureHoursWeek,
+        LabHoursWeek: response.data.LabHoursWeek,        
+        PreRequisites: response.data.PreRequisites,
+        catalogue: response.data.catalogue,
+        objectiveList: response.data.objectiveList,
+        Books: response.data.Books,
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-//   useEffect(() => {
-//     getData();
-//   }, []);
+
+
+      useEffect(() => {
+        getCat     
+      //getData();
+      }, []);
 
 //   const getData = async () => {
 //     console.log(Code);

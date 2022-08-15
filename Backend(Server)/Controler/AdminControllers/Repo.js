@@ -33,6 +33,23 @@ module.exports.Showall = async (req, res) => {
   }
 };
 
+module.exports.ShowwithCatalogdesc= async (req, res) => {
+  try {
+    if (!req.user) return await res.status(401).json("Timed Out");
+    if (!req.user.Roles.includes("Admin")) return await res.status(401).json("UnAutherized");
+    const course = await coursedoc.find({});
+    const Repos = await Repo.find({});
+    const reps = Repos.filter(i=>{
+      return course.find(e=>{
+          return(e.Code==i.Code)
+      })
+    })
+    console.log("all courses with CatalogDescriptions", reps);
+    await res.json(reps);
+  } catch (err) {
+    console.log(err);
+  }
+};
 module.exports.ShowOne = async (req, res) => {
   try {
     if (!req.user) return await res.json("Timed Out");

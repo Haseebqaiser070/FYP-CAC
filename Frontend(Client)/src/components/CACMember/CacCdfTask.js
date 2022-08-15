@@ -42,12 +42,14 @@ function ActionButtons(props) {
 }
 
 export default function CacCdfTask() {
-  //const [Rows, setRows] = useState([]);
+  const [Rows, setRows] = useState([]);
   useEffect(() => {
     getRepoCourse();
   }, []);
   const getRepoCourse = async () => {
-    const response = await axios.get("http://localhost:4000/CDFCreate/get");
+    const response = await axios.get("http://localhost:4000/CDFCreate/get", {
+      withCredentials: true,
+    });
     console.log(response.data);
     setRows(response.data);
   };
@@ -72,14 +74,7 @@ export default function CacCdfTask() {
       renderCell: ActionButtons,
     },
   ];
-  const Rows = [
-    {
-      _id: 1,
-      Code: "CSC-101",
-      Name: "Intro to ICT",
-      CreditHour: "3(2,1)",
-    }
-  ];
+
   return (
     <div className="container" style={{ width: "100%", padding: 20 }}>
       <h1 className="py-4">

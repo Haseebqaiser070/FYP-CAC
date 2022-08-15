@@ -20,6 +20,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -51,7 +52,11 @@ export default function CreateCDF() {
   const [finalterm, setfinalterm] = useState("");
   const [Project, setproject] = useState("");
   const [editsubtopics, seteditsubtopics] = useState("");
-
+  
+  const { state } = useLocation();
+  
+  const {row} = state
+ console.log("row: ",row)
   const getCategories = async () => {
     const res = await axios.get("http://localhost:4000/Category/show");
     const data = await res.data;
@@ -180,36 +185,36 @@ export default function CreateCDF() {
         <div className="row">
           <div className="col">
             <h6>
-              <b>Course Code: </b>
+              <b>Course Code: {row.Code}</b>
             </h6>
           </div>
           <div className="col">
             <h6 style={{ paddingBottom: 20, textAlign: "right" }}>
-              <b>Course Title: </b>
+              <b>Course Title: {row.Name} </b>
             </h6>
           </div>
         </div>
         <div className="row">
           <div className="col">
             <h6 style={{ paddingBottom: 35 }}>
-              <b>Credit Hour: </b>
+              <b>Credit Hour: {row.Credit+"("+row.LectureHoursWeek+","+row.LabHoursWeek+")"}</b>
             </h6>
           </div>
           <div className="col">
             <h6 style={{ paddingBottom: 35, textAlign: "right" }}>
-              <b>Lecture Hours/Week: </b>
+              <b>Lecture Hours/Week: {row.LectureHoursWeek} </b>
             </h6>
           </div>
         </div>
         <div className="row">
           <div className="col">
             <h6 style={{ paddingBottom: 35 }}>
-              <b>Lab Hours/Week: </b>
+              <b>Lab Hours/Week: {row.Content.LabHoursWeek}</b>
             </h6>
           </div>
           <div className="col">
             <h6 style={{ textAlign: "right" }}>
-              <b>Pre-Requisite: </b>
+              <b>Pre-Requisite: {row.PreRequisites}</b>
             </h6>
           </div>
         </div>
@@ -225,11 +230,7 @@ export default function CreateCDF() {
             <h5>Catalogue Description:</h5>
           </div>
           <p>
-            This course introduces mathematical structures necessary for the
-            development of program logic. It covers the following topics: Set
-            Theory; Propositional & First Order Logic; Rules of Inference;
-            Mathematical Proofs; Counting & Probability; Graphs & Tree
-            Structures; and Discrete Probability.
+            {row.Content.catalogue}
           </p>
         </div>
         <div>

@@ -37,7 +37,7 @@ module.exports.Add = async (req, res) => {
       e.User.SOSCreation=[...e.User.SOSCreation,{Program:e.Program}]
     }
     else if(e.taskType=="Create CDF"){
-        e.User.CourseCDF=[...e.CourseCDF,e.Course._id]
+        e.User.CourseCDF=[...e.User.CourseCDF,e.Course._id]
     }
     else if(e.taskType=="Create Syllabus"){
         e.User.CourseSyllabus=[...e.User.CourseSyllabus,e.Course._id]
