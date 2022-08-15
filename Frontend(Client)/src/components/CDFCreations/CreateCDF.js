@@ -50,6 +50,7 @@ export default function CreateCDF() {
   const [midterm, setmidterm] = useState("");
   const [finalterm, setfinalterm] = useState("");
   const [Project, setproject] = useState("");
+  const [editsubtopics, seteditsubtopics] = useState("");
 
   const getCategories = async () => {
     const res = await axios.get("http://localhost:4000/Category/show");
@@ -242,7 +243,7 @@ export default function CreateCDF() {
             }}
           >
             <div className="row">
-              <div className="col-9">
+              <div className="col">
                 <FormControl fullWidth size="small">
                   <TextField
                     className="mb-4"
@@ -257,17 +258,6 @@ export default function CreateCDF() {
                     }}
                   />
                 </FormControl>
-              </div>
-              <div className="col-3">
-                <Button
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  size="medium"
-                  // onClick={}
-                >
-                  Add Main Topic
-                </Button>
               </div>
             </div>
             <div className="row">
@@ -297,13 +287,24 @@ export default function CreateCDF() {
                 >
                   Add Sub Topics
                 </Button>
-                <Button>
-                  <CheckBoxIcon />
-                </Button>
               </div>
             </div>
+            <FormControl fullWidth size="small">
+              <TextField
+                className="mb-4"
+                id="outlined-basic"
+                label="Sub Topics"
+                variant="outlined"
+                size="small"
+                fullWidth
+                value={editsubtopics}
+                onChange={(e) => {
+                  seteditsubtopics(e.target.value);
+                }}
+              />
+            </FormControl>
             <div className="row">
-              <div className="col-9">
+              <div className="col">
                 <FormControl fullWidth size="small">
                   <TextField
                     className="mb-4"
@@ -319,17 +320,17 @@ export default function CreateCDF() {
                   />
                 </FormControl>
               </div>
-              <div className="col-3">
-                <Button
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  size="medium"
-                  // onClick={}
-                >
-                  Add Teaching Hours
-                </Button>
-              </div>
+            </div>
+            <div>
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                size="medium"
+                // onClick={}
+              >
+                Submit
+              </Button>
             </div>
           </div>
         </div>
@@ -366,7 +367,7 @@ export default function CreateCDF() {
           }}
         >
           <div className="row">
-            <div className="col-9">
+            <div className="col">
               <FormControl fullWidth size="small">
                 <TextField
                   className="mb-4"
@@ -382,20 +383,9 @@ export default function CreateCDF() {
                 />
               </FormControl>
             </div>
-            <div className="col-3">
-              <Button
-                fullWidth
-                variant="contained"
-                color="primary"
-                size="medium"
-                // onClick={}
-              >
-                Add CLO
-              </Button>
-            </div>
           </div>
           <div className="row">
-            <div className="col-9">
+            <div className="col">
               <FormControl fullWidth size="small">
                 <Select
                   className="mb-4"
@@ -411,17 +401,6 @@ export default function CreateCDF() {
                   <MenuItem>1</MenuItem>
                 </Select>
               </FormControl>
-            </div>
-            <div className="col-3">
-              <Button
-                fullWidth
-                variant="contained"
-                color="primary"
-                size="medium"
-                // onClick={}
-              >
-                Select Unit
-              </Button>
             </div>
           </div>
           <div className="row">
@@ -441,20 +420,9 @@ export default function CreateCDF() {
                 />
               </FormControl>
             </div>
-            <div className="col-3">
-              <Button
-                fullWidth
-                variant="contained"
-                color="primary"
-                size="medium"
-                // onClick={}
-              >
-                Add BTL Level
-              </Button>
-            </div>
           </div>
           <div className="row">
-            <div className="col-9">
+            <div className="col">
               <FormControl fullWidth size="small">
                 <TextField
                   className="mb-4"
@@ -470,17 +438,17 @@ export default function CreateCDF() {
                 />
               </FormControl>
             </div>
-            <div className="col-3">
-              <Button
-                fullWidth
-                variant="contained"
-                color="primary"
-                size="medium"
-                // onClick={}
-              >
-                Add SO
-              </Button>
-            </div>
+          </div>
+          <div>
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              size="medium"
+              // onClick={}
+            >
+              Submit
+            </Button>
           </div>
         </div>
         <div
