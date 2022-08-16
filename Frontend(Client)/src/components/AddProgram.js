@@ -142,12 +142,10 @@ export default function AddProgram() {
   return (
     <>
       <div
-        className=" container"
         style={{
-          height: 700,
           width: "100%",
           padding: 50,
-          backgroundColor: "#ddeeff",
+          backgroundColor: "#f5f5f5",
         }}
       >
         <Card style={{ padding: 50, borderRadius: 30 }}>

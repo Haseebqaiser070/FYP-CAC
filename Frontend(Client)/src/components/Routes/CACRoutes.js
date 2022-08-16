@@ -9,7 +9,6 @@ import AddNewCourseDocument from "../CoursesCreations/AddNewCourseDocument";
 import Course from "../CoursesCreations/Course";
 import CacSyllabus from "../CACMember/CACSyllabus";
 import CacSosTask from "../CACMember/CacSosTask";
-import Cdf from "../PdfTemplates/Cdf";
 import CreateSOS from "../SOSCreation/CreateSOS";
 import SOS from "../SOSCreation/SOS";
 import CDF from "../CDFCreations/CDF";

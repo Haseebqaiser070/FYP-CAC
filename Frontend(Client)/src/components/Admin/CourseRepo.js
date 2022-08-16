@@ -12,6 +12,7 @@ import {
   Modal,
   Select,
   TextField,
+  Card,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 
@@ -169,234 +170,244 @@ export default function CourseRepo() {
   }
   console.log(RepoCourse);
   return (
-    <div class="container" style={{ height: 700, width: "100%", padding: 20 }}>
-      <h1 class="mt-4">Initialize Course</h1>
+    <div
+      style={{
+        width: "100%",
+        padding: 50,
+        backgroundColor: "#f5f5f5",
+      }}
+    >
+      <Card style={{ padding: 50, borderRadius: 30 }}>
+        <h1 class="my-2 py-4">
+          <b>INITIALIZE NEW COURSE</b>
+        </h1>
 
-      <div class="row cource">
-        <div class="col d-flex justify-content-end mb-4">
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            size="medium"
-            onClick={() => setOpen(true)}
-          >
-            Initialize New Course
-          </Button>
-          {!up ? (
-            <Modal
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
+        <div class="row cource">
+          <div class="col d-flex justify-content-end mb-4">
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              size="medium"
+              onClick={() => setOpen(true)}
             >
-              <Box sx={style}>
-                <h4 style={{ textAlign: "center", marginBottom: 30 }}>
-                  Add New Cource
-                </h4>
-                <form onSubmit={AddRepoCourse}>
-                  <div className="row">
-                    <div className="col">
-                      <FormControl fullWidth size="small">
-                        <InputLabel id="taskType">
-                          Select Credit Hour
-                        </InputLabel>
-                        <Select
-                          className="mb-4"
-                          labelId="selectcredithour"
-                          id="selectcredithour"
-                          value={CreditHour}
-                          label="Select Category"
-                          onChange={(e) => setCreditHour(e.target.value)}
-                          autoWidth
-                        >
-                          <MenuItem value={"4(0,4)"}>4(0,4)</MenuItem>
-                          <MenuItem value={"4(3,1)"}>4(3,1)</MenuItem>
-                          <MenuItem value={"3(3,0)"}>3(3,0)</MenuItem>
-                          <MenuItem value={"3(2,1)"}>3(2,1)</MenuItem>
-                          <MenuItem value={"2(0,2)"}>2(0,2)</MenuItem>
-                        </Select>
-                      </FormControl>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="mb-3 col">
-                      <div className="row">
-                        <div className="col">
-                          <select
-                            class="form-select"
-                            onChange={(e) => setPreCode(e.target.value)}
+              Initialize New Course
+            </Button>
+            {!up ? (
+              <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box sx={style}>
+                  <h4 style={{ textAlign: "center", marginBottom: 30 }}>
+                    Add New Cource
+                  </h4>
+                  <form onSubmit={AddRepoCourse}>
+                    <div className="row">
+                      <div className="col">
+                        <FormControl fullWidth size="small">
+                          <InputLabel id="taskType">
+                            Select Credit Hour
+                          </InputLabel>
+                          <Select
+                            className="mb-4"
+                            labelId="selectcredithour"
+                            id="selectcredithour"
+                            value={CreditHour}
+                            label="Select Category"
+                            onChange={(e) => setCreditHour(e.target.value)}
+                            autoWidth
                           >
-                            <option value="" selected disabled hidden>
-                              Code Prefix
-                            </option>
-                            <option>MTH</option>
-                            <option>CSC</option>
-                            <option>HUM</option>
-                            <option>PHY</option>
-                            <option>EEE</option>
-                            <option>DSC</option>
-                            <option>CYC</option>
-                            <option>AIC</option>
-                          </select>
+                            <MenuItem value={"4(0,4)"}>4(0,4)</MenuItem>
+                            <MenuItem value={"4(3,1)"}>4(3,1)</MenuItem>
+                            <MenuItem value={"3(3,0)"}>3(3,0)</MenuItem>
+                            <MenuItem value={"3(2,1)"}>3(2,1)</MenuItem>
+                            <MenuItem value={"2(0,2)"}>2(0,2)</MenuItem>
+                          </Select>
+                        </FormControl>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="mb-3 col">
+                        <div className="row">
+                          <div className="col">
+                            <select
+                              class="form-select"
+                              onChange={(e) => setPreCode(e.target.value)}
+                            >
+                              <option value="" selected disabled hidden>
+                                Code Prefix
+                              </option>
+                              <option>MTH</option>
+                              <option>CSC</option>
+                              <option>HUM</option>
+                              <option>PHY</option>
+                              <option>EEE</option>
+                              <option>DSC</option>
+                              <option>CYC</option>
+                              <option>AIC</option>
+                            </select>
+                          </div>
+                          <div className="col">
+                            <FormControl fullWidth size="small">
+                              <TextField
+                                className="mb-4"
+                                id="course-code"
+                                label="Code"
+                                variant="outlined"
+                                size="small"
+                                fullWidth
+                                value={SufCode}
+                                onChange={(e) => setSufCode(e.target.value)}
+                              />
+                            </FormControl>
+                          </div>
                         </div>
-                        <div className="col">
-                          <FormControl fullWidth size="small">
-                            <TextField
-                              className="mb-4"
-                              id="course-code"
-                              label="Code"
-                              variant="outlined"
-                              size="small"
-                              fullWidth
-                              value={SufCode}
-                              onChange={(e) => setSufCode(e.target.value)}
-                            />
-                          </FormControl>
-                        </div>
+                      </div>
+
+                      <div class="mb-3 col">
+                        <FormControl fullWidth size="small">
+                          <TextField
+                            className="mb-4"
+                            id="Repocourse-name"
+                            label="Course Title"
+                            variant="outlined"
+                            size="small"
+                            fullWidth
+                            value={Name}
+                            onChange={(e) => setName(e.target.value)}
+                          />
+                        </FormControl>
                       </div>
                     </div>
 
-                    <div class="mb-3 col">
-                      <FormControl fullWidth size="small">
-                        <TextField
-                          className="mb-4"
-                          id="Repocourse-name"
-                          label="Course Title"
-                          variant="outlined"
-                          size="small"
-                          fullWidth
-                          value={Name}
-                          onChange={(e) => setName(e.target.value)}
-                        />
-                      </FormControl>
-                    </div>
-                  </div>
-
-                  <input
-                    type="submit"
-                    name="submit"
-                    value="Submit"
-                    class="btn btn-primary ms-auto me-0 me-md-3 my-2 my-md-0"
-                  />
-                </form>
-              </Box>
-            </Modal>
-          ) : (
-            <Modal
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-            >
-              <Box sx={style}>
-                <h4 style={{ textAlign: "center", marginBottom: 30 }}>
-                  Add New Cource
-                </h4>
-                <form onSubmit={AddRepoCourse}>
-                  <div className="row">
-                    <div className="col">
-                      <FormControl fullWidth size="small">
-                        <InputLabel id="taskType">
-                          Select Credit Hour
-                        </InputLabel>
-                        <Select
-                          className="mb-4"
-                          labelId="selectcredithour"
-                          id="selectcredithour"
-                          value={CreditHour}
-                          label="Select Category"
-                          onChange={(e) => setCreditHour(e.target.value)}
-                          autoWidth
-                        >
-                          <MenuItem value={CreditHour} selected hidden>
-                            {CreditHour}
-                          </MenuItem>
-
-                          <MenuItem value={"4(0,4)"}>4(0,4)</MenuItem>
-                          <MenuItem value={"4(3,1)"}>4(3,1)</MenuItem>
-                          <MenuItem value={"3(3,0)"}>3(3,0)</MenuItem>
-                          <MenuItem value={"3(2,1)"}>3(2,1)</MenuItem>
-                          <MenuItem value={"2(0,2)"}>2(0,2)</MenuItem>
-                        </Select>
-                      </FormControl>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="mb-3 col">
-                      <div className="row">
-                        <div className="col">
-                          <select
-                            class="form-select"
-                            onChange={(e) => setPreCode(e.target.value)}
+                    <input
+                      type="submit"
+                      name="submit"
+                      value="Submit"
+                      class="btn btn-primary ms-auto me-0 me-md-3 my-2 my-md-0"
+                    />
+                  </form>
+                </Box>
+              </Modal>
+            ) : (
+              <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box sx={style}>
+                  <h4 style={{ textAlign: "center", marginBottom: 30 }}>
+                    Add New Cource
+                  </h4>
+                  <form onSubmit={AddRepoCourse}>
+                    <div className="row">
+                      <div className="col">
+                        <FormControl fullWidth size="small">
+                          <InputLabel id="taskType">
+                            Select Credit Hour
+                          </InputLabel>
+                          <Select
+                            className="mb-4"
+                            labelId="selectcredithour"
+                            id="selectcredithour"
+                            value={CreditHour}
+                            label="Select Category"
+                            onChange={(e) => setCreditHour(e.target.value)}
+                            autoWidth
                           >
-                            <option value={PreCode} selected hidden>
-                              {PreCode}
-                            </option>
-                            <option>MTH</option>
-                            <option>CSC</option>
-                            <option>HUM</option>
-                            <option>PHY</option>
-                            <option>EEE</option>
-                            <option>DSC</option>
-                            <option>CYC</option>
-                            <option>AIC</option>
-                          </select>
+                            <MenuItem value={CreditHour} selected hidden>
+                              {CreditHour}
+                            </MenuItem>
+
+                            <MenuItem value={"4(0,4)"}>4(0,4)</MenuItem>
+                            <MenuItem value={"4(3,1)"}>4(3,1)</MenuItem>
+                            <MenuItem value={"3(3,0)"}>3(3,0)</MenuItem>
+                            <MenuItem value={"3(2,1)"}>3(2,1)</MenuItem>
+                            <MenuItem value={"2(0,2)"}>2(0,2)</MenuItem>
+                          </Select>
+                        </FormControl>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="mb-3 col">
+                        <div className="row">
+                          <div className="col">
+                            <select
+                              class="form-select"
+                              onChange={(e) => setPreCode(e.target.value)}
+                            >
+                              <option value={PreCode} selected hidden>
+                                {PreCode}
+                              </option>
+                              <option>MTH</option>
+                              <option>CSC</option>
+                              <option>HUM</option>
+                              <option>PHY</option>
+                              <option>EEE</option>
+                              <option>DSC</option>
+                              <option>CYC</option>
+                              <option>AIC</option>
+                            </select>
+                          </div>
+                          <div className="col">
+                            <FormControl fullWidth size="small">
+                              <TextField
+                                className="mb-4"
+                                id="course-code"
+                                label="Code"
+                                variant="outlined"
+                                size="small"
+                                fullWidth
+                                value={SufCode}
+                                onChange={(e) => setSufCode(e.target.value)}
+                              />
+                            </FormControl>
+                          </div>
                         </div>
-                        <div className="col">
-                          <FormControl fullWidth size="small">
-                            <TextField
-                              className="mb-4"
-                              id="course-code"
-                              label="Code"
-                              variant="outlined"
-                              size="small"
-                              fullWidth
-                              value={SufCode}
-                              onChange={(e) => setSufCode(e.target.value)}
-                            />
-                          </FormControl>
-                        </div>
+                      </div>
+
+                      <div class="mb-3 col">
+                        <FormControl fullWidth size="small">
+                          <TextField
+                            className="mb-4"
+                            id="Repocourse-name"
+                            label="Course Title"
+                            variant="outlined"
+                            size="small"
+                            fullWidth
+                            value={Name}
+                            onChange={(e) => setName(e.target.value)}
+                          />
+                        </FormControl>
                       </div>
                     </div>
 
-                    <div class="mb-3 col">
-                      <FormControl fullWidth size="small">
-                        <TextField
-                          className="mb-4"
-                          id="Repocourse-name"
-                          label="Course Title"
-                          variant="outlined"
-                          size="small"
-                          fullWidth
-                          value={Name}
-                          onChange={(e) => setName(e.target.value)}
-                        />
-                      </FormControl>
-                    </div>
-                  </div>
-
-                  <input
-                    type="submit"
-                    name="submit"
-                    value="Submit"
-                    class="btn btn-primary ms-auto me-0 me-md-3 my-2 my-md-0"
-                  />
-                </form>
-              </Box>
-            </Modal>
-          )}
+                    <input
+                      type="submit"
+                      name="submit"
+                      value="Submit"
+                      class="btn btn-primary ms-auto me-0 me-md-3 my-2 my-md-0"
+                    />
+                  </form>
+                </Box>
+              </Modal>
+            )}
+          </div>
         </div>
-      </div>
-      <DataGrid
-        style={{ height: 300, width: "100%" }}
-        columns={columns}
-        rows={RepoCourse}
-        getRowId={(Rows) => Rows._id}
-        pageSize={10}
-        rowsPerPageOptions={[5]}
-        disableSelectionOnClick
-      />
+        <DataGrid
+          style={{ height: 300, width: "100%" }}
+          columns={columns}
+          rows={RepoCourse}
+          getRowId={(Rows) => Rows._id}
+          pageSize={10}
+          rowsPerPageOptions={[5]}
+          disableSelectionOnClick
+        />
+      </Card>
     </div>
   );
 }

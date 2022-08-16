@@ -12,7 +12,14 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import axios from "axios";
-import { FormControl, Grid, InputLabel, MenuItem, Select } from "@mui/material";
+import {
+  Card,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@mui/material";
 
 const style = {
   position: "absolute",
@@ -146,41 +153,45 @@ export default function AllCategories() {
 
   return (
     <div
-      className="container"
-      style={{ height: 700, width: "100%", padding: 20 }}
+      style={{
+        width: "100%",
+        padding: 50,
+        backgroundColor: "#f5f5f5",
+      }}
     >
-      <h1 className="py-4">
-        <b>Course Categories</b>
-      </h1>
+      <Card style={{ padding: 50, borderRadius: 30 }}>
+        <h1 className="py-4 my-2">
+          <b>COURSE CATEGORIES</b>
+        </h1>
 
-      <div className="d-flex justify-content-end mb-4">
-        <Button
-          variant="contained"
-          color="primary"
-          size="small"
-          onClick={handleOpen}
-        >
-          <AiFillEdit style={{ marginRight: 10 }} />
-          Add Categories
-        </Button>
+        <div className="d-flex justify-content-end mb-4">
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            onClick={handleOpen}
+          >
+            <AiFillEdit style={{ marginRight: 10 }} />
+            Add Categories
+          </Button>
 
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <div className="container">
-              <div className="row card justify-content-center">
-                <div className="card-header">
-                  <h3 className="text-center font-weight-light my-4">
-                    Add Category
-                  </h3>
-                </div>
-                <div className="card-body">
-                  <form onSubmit={onSubmit}>
-                    {/* <div className="form-floating mb-3">
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <div className="container">
+                <div className="row card justify-content-center">
+                  <div className="card-header">
+                    <h3 className="text-center font-weight-light my-4">
+                      Add Category
+                    </h3>
+                  </div>
+                  <div className="card-body">
+                    <form onSubmit={onSubmit}>
+                      {/* <div className="form-floating mb-3">
                       <select
                         class="form-select"
                         onChange={(e) => setDegree(e.target.value)}
@@ -198,47 +209,48 @@ export default function AllCategories() {
                       </select>
                     </div> */}
 
-                    <div className="form-floating mb-3">
-                      <input
-                        className="form-control"
-                        id="inputName"
-                        type="text"
-                        value={CategoryName}
-                        onChange={(e) => setCategoryName(e.target.value)}
-                        required
-                      />
-                      <label htmlFor="Email" className="form-label">
-                        Category Name
-                      </label>
-                    </div>
-                    <Button
-                      style={{ marginRight: 15 }}
-                      variant="contained"
-                      color="primary"
-                      size="small"
-                      type="submit"
-                    >
-                      Add Category
-                    </Button>
-                  </form>
+                      <div className="form-floating mb-3">
+                        <input
+                          className="form-control"
+                          id="inputName"
+                          type="text"
+                          value={CategoryName}
+                          onChange={(e) => setCategoryName(e.target.value)}
+                          required
+                        />
+                        <label htmlFor="Email" className="form-label">
+                          Category Name
+                        </label>
+                      </div>
+                      <Button
+                        style={{ marginRight: 15 }}
+                        variant="contained"
+                        color="primary"
+                        size="small"
+                        type="submit"
+                      >
+                        Add Category
+                      </Button>
+                    </form>
+                  </div>
                 </div>
               </div>
-            </div>
-          </Box>
-        </Modal>
-      </div>
+            </Box>
+          </Modal>
+        </div>
 
-      <div>
-        <DataGrid
-          style={{ height: 400, width: "100%" }}
-          columns={columns}
-          getRowId={(Rows) => Rows._id}
-          rows={Rows}
-          pageSize={10}
-          rowsPerPageOptions={[5]}
-          disableSelectionOnClick
-        />
-      </div>
+        <div>
+          <DataGrid
+            style={{ height: 400, width: "100%" }}
+            columns={columns}
+            getRowId={(Rows) => Rows._id}
+            rows={Rows}
+            pageSize={10}
+            rowsPerPageOptions={[5]}
+            disableSelectionOnClick
+          />
+        </div>
+      </Card>
     </div>
   );
 }
