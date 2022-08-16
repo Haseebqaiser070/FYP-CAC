@@ -40,29 +40,19 @@ export default function CreateCDF() {
   const [subTopic, setsubTopic] = useState([""]);
   const [teachingHours, setteachingHours] = useState("");
   const [clo, setclo] = useState("");
-  const [unit, setunit] = useState("");
-  const [Rows, setRows] = useState([]);
+  const [unit, setunit] = useState([]);
+  const [TopicRows, setTopicRows] = useState([]);
   const [btl, setbtl] = useState("");
   const [so, setso] = useState("");
-  const [textBook, settextBook] = useState("");
-  const [referenceBook, setreferenceBook] = useState("");
-  const [quiz, setquiz] = useState("");
-  const [assignment, setassignment] = useState("");
-  const [midterm, setmidterm] = useState("");
-  const [finalterm, setfinalterm] = useState("");
-  const [Project, setproject] = useState("");
-  const [editsubtopics, seteditsubtopics] = useState("");
-  
+  const [textBook, settextBook] = useState([]);
+  const [referenceBook, setreferenceBook] = useState([]);
+  const [Topicsfinal, setTopicsfinal] = useState("");
+  const [CLORows, setCLORows] = useState([]);
+
   const { state } = useLocation();
   
   const {row} = state
  console.log("row: ",row)
-  const getCategories = async () => {
-    const res = await axios.get("http://localhost:4000/Category/show");
-    const data = await res.data;
-    console.log(data);
-    setCategories([...data]);
-  };
   const getData = async () => {
     const res = await axios.get("http://localhost:4000/Course/show");
     const data = await res.data;
@@ -71,7 +61,6 @@ export default function CreateCDF() {
 
   useEffect(() => {
     getData();
-    getCategories();
   }, []);
 
   const maintopicscolumns = [
@@ -86,7 +75,7 @@ export default function CreateCDF() {
       flex: 3,
     },
     {
-      field: "NoofTeachingHours",
+      field: "TeachingHours",
       headerName: "No. of Teaching Hours",
       flex: 1,
     },
@@ -94,7 +83,7 @@ export default function CreateCDF() {
       field: "action",
       headerName: "Action",
       flex: 1,
-      renderCell: () => {
+      renderCell: ({row}) => {
         return (
           <>
             <Button
@@ -102,7 +91,17 @@ export default function CreateCDF() {
               variant="contained"
               color="primary"
               size="medium"
-              // onClick={}
+              onClick={()=>{ 
+                var count=0              
+                const clone =TopicRows.filter((obj)=>{
+                  if(row!=obj)return obj
+                })
+                clone.forEach(i => {
+                count=count+1
+                i.Unit=count
+              });
+              setTopicRows([...clone])
+          }}
             >
               Remove
             </Button>
@@ -113,7 +112,7 @@ export default function CreateCDF() {
   ];
   const clocolumns = [
     {
-      field: "Sr",
+      field: "sr",
       headerName: "Sr.#",
       flex: 1,
     },
@@ -123,12 +122,12 @@ export default function CreateCDF() {
       flex: 1,
     },
     {
-      field: "CourseLearningOutcomes",
+      field: "CLOs",
       headerName: "Course Learning Outcomes",
       flex: 3,
     },
     {
-      field: "BloomTaxonomyLearningLevel",
+      field: "BTL",
       headerName: "Bloom Taxonomy Learning Level",
       flex: 1,
     },
@@ -141,7 +140,7 @@ export default function CreateCDF() {
       field: "action",
       headerName: "Action",
       flex: 1,
-      renderCell: () => {
+      renderCell: ({row}) => {
         return (
           <>
             <Button
@@ -149,7 +148,17 @@ export default function CreateCDF() {
               variant="contained"
               color="primary"
               size="medium"
-              // onClick={}
+              onClick={()=>{ 
+                var count=0              
+                const clone =CLORows.filter((obj)=>{
+                  if(row!=obj)return obj
+                })
+                clone.forEach(i => {
+                  count=count+1
+                  i.sr="CLO-"+count
+                });
+              setCLORows([...clone])
+          }}
             >
               Remove
             </Button>
@@ -158,15 +167,57 @@ export default function CreateCDF() {
       },
     },
   ];
-  const rows = [
-    {
-      id: 1,
-      S: "1",
-      CourseCode: "CSC-101",
-      CourseTitle: "Intro to ICT",
-      CreditHour: "3(2,1)",
-    },
-  ];
+  
+  const Topics=()=>{
+    var count=0
+    const clone = [...TopicRows,{Unit:"",Topic:Topicsfinal,TeachingHours:teachingHours}]
+    clone.forEach(i => {
+      count=count+1
+      i.Unit=count
+    });
+    setTopicsfinal("")
+    setteachingHours("")
+    setmainTopic("");
+    setsubTopic("")
+    setTopicRows([...clone])
+  }
+
+  const CLOS=()=>{
+    var count=0
+    var uns ="" 
+    unit.forEach(i => {
+      if(uns.length==0){
+        uns=uns+i.Unit
+      }
+      else if(uns.length==1){        
+        uns=uns+"-"+i.Unit  
+      }
+      else{       
+        var e = uns.slice(0,-2) 
+        uns=e+"-"+i.Unit  
+      }
+    });
+    const clone = [...CLORows,{sr:"",Unit:uns,CLOs:clo,BTL:btl,So:so,Quizzes:[],Assignment:[],
+      Mid:"",Final:"",Project:""}]
+    clone.forEach(i => {
+      count=count+1
+      i.sr="CLO-"+count
+    });
+    setunit([])
+    setclo("")
+    setbtl("")
+    setso("")
+    setCLORows([...clone])
+  }
+
+  const onSubmithandler=async(e)=>{
+    e.preventDefault();
+    console.log("\n\n\n\nFinal")
+    console.log(TopicRows)
+    console.log(CLORows)
+    console.log(referenceBook)
+    console.log(textBook)
+  }
 
   return (
     <>
@@ -209,12 +260,12 @@ export default function CreateCDF() {
         <div className="row">
           <div className="col">
             <h6 style={{ paddingBottom: 35 }}>
-              <b>Lab Hours/Week: {row.Content.LabHoursWeek}</b>
+              <b>Lab Hours/Week: {row.LabHoursWeek}</b>
             </h6>
           </div>
           <div className="col">
             <h6 style={{ textAlign: "right" }}>
-              <b>Pre-Requisite: {row.PreRequisites}</b>
+              <b>Pre-Requisite: {row.Content.PreRequisites}</b>
             </h6>
           </div>
         </div>
@@ -233,6 +284,7 @@ export default function CreateCDF() {
             {row.Content.catalogue}
           </p>
         </div>
+        <form onSubmit={onSubmithandler}>
         <div>
           <div
             className="card"
@@ -260,6 +312,22 @@ export default function CreateCDF() {
                   />
                 </FormControl>
               </div>
+              <div className="col-3">
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  size="medium"
+                  onClick={()=>{
+                    const s = Topicsfinal+mainTopic+": "  
+                    setTopicsfinal(s)
+                    setmainTopic("")
+                    }
+                  }
+                >
+                  Add Main Topics
+                </Button>
+              </div>
             </div>
             <div className="row">
               <div className="col-9">
@@ -284,7 +352,21 @@ export default function CreateCDF() {
                   variant="contained"
                   color="primary"
                   size="medium"
-                  // onClick={}
+                  onClick={()=>{  
+                    let clone=Topicsfinal
+                    if(Topicsfinal[Topicsfinal.length-2]==':'){
+                      
+                      clone=clone+subTopic+". "
+                  }
+                  else{
+                    clone = Topicsfinal.slice(0,-2)  
+                    clone = clone+"; "+subTopic+". "
+
+                    }
+                    setTopicsfinal(clone)
+                    setsubTopic("")
+                    }
+                  }
                 >
                   Add Sub Topics
                 </Button>
@@ -294,13 +376,13 @@ export default function CreateCDF() {
               <TextField
                 className="mb-4"
                 id="outlined-basic"
-                label="Sub Topics"
+                label="Topics"
                 variant="outlined"
                 size="small"
                 fullWidth
-                value={editsubtopics}
+                value={Topicsfinal}
                 onChange={(e) => {
-                  seteditsubtopics(e.target.value);
+                  setTopicsfinal(e.target.value);
                 }}
               />
             </FormControl>
@@ -328,7 +410,7 @@ export default function CreateCDF() {
                 variant="contained"
                 color="primary"
                 size="medium"
-                // onClick={}
+                onClick={()=>Topics()}
               >
                 Submit
               </Button>
@@ -348,9 +430,9 @@ export default function CreateCDF() {
         </div>
         <div style={{ height: 400, width: "100%" }}>
           <DataGrid
-            rows={Rows}
+            rows={TopicRows}
             columns={maintopicscolumns}
-            getRowId={(Rows) => Rows._id}
+            getRowId={(Rows) => Rows.Unit}
             pageSize={5}
             rowsPerPageOptions={[5]}
             disableSelectionOnClick
@@ -388,19 +470,30 @@ export default function CreateCDF() {
           <div className="row">
             <div className="col">
               <FormControl fullWidth size="small">
-                <Select
-                  className="mb-4"
-                  labelId="courseAssign"
-                  id="courseAssign"
-                  label="Select Unit"
-                  value={unit}
-                  onChange={(e) => {
-                    setunit([e.target.value]);
-                  }}
-                  autoWidth
-                >
-                  <MenuItem>1</MenuItem>
-                </Select>
+                <Autocomplete
+                style={{ marginBottom: 35 }}
+                multiple
+                fullWidth
+                variant="outlined"
+                id="tags-standard"
+                className="mb-4"
+                value={unit}
+                options={TopicRows}
+                size="small"
+                getOptionLabel={(option) => option.Unit}
+                defaultValue={null}
+                onChange={(e, val) => {
+                  setunit(val)
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="outlined"
+                    label="Select Unit"
+                    placeholder="Select Unit"
+                  />
+                )}
+              />
               </FormControl>
             </div>
           </div>
@@ -446,7 +539,7 @@ export default function CreateCDF() {
               variant="contained"
               color="primary"
               size="medium"
-              // onClick={}
+              onClick={()=>CLOS()}
             >
               Submit
             </Button>
@@ -465,9 +558,9 @@ export default function CreateCDF() {
         </div>
         <div style={{ height: 400, width: "100%" }}>
           <DataGrid
-            rows={Rows}
+            rows={CLORows}
             columns={clocolumns}
-            getRowId={(Rows) => Rows._id}
+            getRowId={(Rows) => Rows.sr}
             pageSize={5}
             rowsPerPageOptions={[5]}
             disableSelectionOnClick
@@ -489,22 +582,29 @@ export default function CreateCDF() {
             <thead>
               <tr>
                 <th>Assessment Tools</th>
-                <th>CLO-1</th>
-                <th>CLO-1</th>
-                <th>CLO-1</th>
-                <th>CLO-1</th>
-                <th>CLO-1</th>
+                {CLORows.map((i)=>{
+                  return(<th>{i.sr}</th>)
+                })}
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Quizzes</td>
-
+            <tr> 
+            <td>Quizzes</td>
+              {CLORows.map((i,index)=>{
+                return(
+              
+              <th>
                 <Autocomplete
                   multiple
                   id="tags-standard"
+                  value={i.Quizzes}
                   options={quizzes}
                   getOptionLabel={(option) => option.title}
+                  onChange={(e, val) => {
+                    const clone=[...CLORows]
+                    clone[index].Quizzes=val
+                    setCLORows([...clone])
+                  }}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -515,14 +615,26 @@ export default function CreateCDF() {
                     />
                   )}
                 />
+              </th>
+              )})}
               </tr>
               <tr>
-                <td>Assignments</td>
+              <td>Assignments</td>
+              {CLORows.map((i,index)=>{
+              return(
+              <th>
+                
                 <Autocomplete
                   multiple
                   id="tags-standard"
+                  value={i.Assignment}
                   options={assignments}
                   getOptionLabel={(option) => option.title}
+                  onChange={(e, val) => {
+                    const clone=[...CLORows]
+                    clone[index].Assignment=val
+                    setCLORows([...clone])
+                  }}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -533,37 +645,51 @@ export default function CreateCDF() {
                     />
                   )}
                 />
+              </th>
+              )})}
               </tr>
               <tr>
-                <td>Midterm</td>
+              <td>Midterm</td>               
+              {CLORows.map((i,index)=>{
+              return(              
+              <th>
                 <FormControl fullWidth className="mt-4 mb-4 pb-3">
                   <InputLabel id="demo-simple-select-label">
-                    Select Text Books
+                    MidTermExam
                   </InputLabel>
                   <Select
                     size="small"
-                    value={midterm}
+                    value={i.Mid}
                     label="Select Mid Term Exam"
                     onChange={(e) => {
-                      setmidterm([e.target.value]);
+                      const clone=[...CLORows]
+                      clone[index].Mid=e.target.value
+                      setCLORows([...clone])
                     }}
                   >
                     <MenuItem value={"MidTermExam"}>Mid Term Exam</MenuItem>
                   </Select>
                 </FormControl>
+              </th>
+              )})}
               </tr>
               <tr>
-                <td>Terminal</td>
+              <td>Terminal</td>              
+              {CLORows.map((i,index)=>{
+              return(              
+              <th>
                 <FormControl fullWidth className="mt-4 mb-4 pb-3">
                   <InputLabel id="demo-simple-select-label">
                     Select Final Term Exam
                   </InputLabel>
                   <Select
                     size="small"
-                    value={finalterm}
+                    value={i.Final}
                     label="Select Final Term Exam"
                     onChange={(e) => {
-                      setfinalterm([e.target.value]);
+                      const clone=[...CLORows]
+                      clone[index].Final=e.target.value
+                      setCLORows([...clone])
                     }}
                   >
                     <MenuItem value={"Final Term Exam"}>
@@ -571,24 +697,34 @@ export default function CreateCDF() {
                     </MenuItem>
                   </Select>
                 </FormControl>
+              </th>
+              )})}
               </tr>
               <tr>
-                <td>Project</td>
+              <td>Project</td>              
+              {CLORows.map((i,index)=>{
+              return(
+              <th>
                 <FormControl fullWidth className="mt-4 mb-4 pb-3">
                   <InputLabel id="demo-simple-select-label">
                     Select Project
                   </InputLabel>
                   <Select
                     size="small"
-                    value={Project}
+                    value={i.Projects}
                     label="Select Project"
                     onChange={(e) => {
-                      setproject([e.target.value]);
+                      const clone=[...CLORows]
+                      clone[index].Project=e.target.value
+                      setCLORows([...clone]);
                     }}
                   >
                     <MenuItem value={"Project"}>Project</MenuItem>
                   </Select>
                 </FormControl>
+              </th>
+              )
+                })}
               </tr>
             </tbody>
           </table>
@@ -606,33 +742,60 @@ export default function CreateCDF() {
         </div>
         <div>
           <FormControl fullWidth className="mt-4 mb-4 pb-3">
-            <InputLabel id="demo-simple-select-label">
-              Select Text Books
-            </InputLabel>
-            <Select
-              value={textBook}
-              label="Select Text Books"
-              onChange={(e) => {
-                settextBook([e.target.value]);
-              }}
-            >
-              <MenuItem value={"OOP"}>OOP</MenuItem>
-            </Select>
+     
+               <Autocomplete
+                style={{ marginBottom: 35 }}
+                multiple
+                fullWidth
+                variant="outlined"
+                id="tags-standard"
+                className="mb-4"
+                value={textBook}
+                options={row.Content.Books}
+                size="small"
+                getOptionLabel={(option) => option.BookName}
+                defaultValue={null}
+                onChange={(e, val) => {
+                  settextBook(val)
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="outlined"
+                    label="Select Text Books"
+                    placeholder="Select Text Books"
+                  />
+                )}
+              />
           </FormControl>
+          
           <FormControl fullWidth className="mb-4">
-            <InputLabel id="demo-simple-select-label">
-              Select Reference Books
-            </InputLabel>
-            <Select
-              value={referenceBook}
-              label="Select Text Books"
-              onChange={(e) => {
-                setreferenceBook([e.target.value]);
-              }}
-            >
-              <MenuItem value={"OOP"}>OOP</MenuItem>
-            </Select>
+                <Autocomplete
+                style={{ marginBottom: 35 }}
+                multiple
+                fullWidth
+                variant="outlined"
+                id="tags-standard"
+                className="mb-4"
+                value={referenceBook}
+                options={row.Content.Books}
+                size="small"
+                getOptionLabel={(option) => option.BookName}
+                defaultValue={null}
+                onChange={(e, val) => {
+                  setreferenceBook(val)
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="outlined"
+                    label="Select Reference Books"
+                    placeholder="Select Reference Books"
+                  />
+                )}
+              />
           </FormControl>
+          
         </div>
         <Button
           fullWidth
@@ -644,6 +807,7 @@ export default function CreateCDF() {
         >
           Submit
         </Button>
+        </form>
       </div>
     </>
   );

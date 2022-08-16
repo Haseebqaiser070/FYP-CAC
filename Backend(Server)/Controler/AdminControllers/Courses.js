@@ -28,7 +28,7 @@ module.exports.Showall = async (req, res) => {
 module.exports.ViewOnebyCode = async (req, res) => {
   try {
     if (!req.user) return await res.json("Timed Out");
-    const course = await coursedoc.findOne({Code:req.params.Code}).populate('PreRequisites');
+    const course = await coursedoc.findOne({Code:req.params.Code}).populate('PreRequisites')
     console.log(course)
     res.json(course);
   } catch (err) {

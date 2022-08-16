@@ -48,7 +48,7 @@ export default function CDF() {
   };
   const getCat = async () => {
     try {
-      const response = await axios.get(`http://localhost:4000/Course/${Code}`);
+      const response = await axios.get(`http://localhost:4000/Course/bycode/${Code}`);
       console.log(response.data);
       setContent({
         Code: response.data.Code,
@@ -69,7 +69,7 @@ export default function CDF() {
 
 
       useEffect(() => {
-        getCat     
+        getCat()     
       //getData();
       }, []);
 
