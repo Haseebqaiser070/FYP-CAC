@@ -172,6 +172,13 @@ export default function Navigation() {
                   Add Program
                 </Link>
 
+                <Link class="nav-link sidenavtext " to="SOandBTL">
+                  <div class="sb-nav-link-icon">
+                    <BsFillFilePdfFill color="#fff" />
+                  </div>
+                  SO and BTL Level
+                </Link>
+
                 <div
                   onClick={() => {
                     openCourses ? setOpenCourses(false) : setOpenCourses(true);
