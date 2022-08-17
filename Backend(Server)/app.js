@@ -19,6 +19,7 @@ var ProgramRouter = require("./Routes/AdminRoutes/Program")
 var ProgramCoursesRouter = require("./Routes/AdminRoutes/ProgramCourses")
 var CDFRouter = require("./Routes/CAC/CDFCreation")
 var SyllabusRouter = require("./Routes/CAC/SyllabusCreation")
+var SOBTLRouter = require("./Routes/AdminRoutes/SOBTL")
 
 
 var { getUser } = require("./Middleware/User");
@@ -47,6 +48,7 @@ app.use("/SOSVerison", getUser, SOSVerisonRouter);
 app.use("/ProgramCourses",getUser,ProgramCoursesRouter);
 app.use("/CDFCreate", getUser, CDFRouter);
 app.use("/SyllabusCreate", getUser, SyllabusRouter);
+app.use("/SOBTL", getUser, SOBTLRouter);
 
 const start = async () => {
   try {

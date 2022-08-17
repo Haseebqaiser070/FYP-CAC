@@ -31,60 +31,185 @@ const style = {
   p: 4,
   boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
 };
-function ActionButton() {
-  return (
-    <>
-      <Tooltip title="View" placement="top-start">
-        <Button
-          variant="contained"
-          color="primary"
-          size="small"
-          style={{ marginLeft: 16, padding: 10 }}
-          //   onClick={}
-        >
-          <AiFillEye />
-        </Button>
-      </Tooltip>
-      <Tooltip title="Edit" placement="top-start">
-        <Button
-          variant="contained"
-          color="primary"
-          size="small"
-          style={{ marginLeft: 16, padding: 10 }}
-          //   onClick={}
-        >
-          <AiFillEdit />
-        </Button>
-      </Tooltip>
-      <Tooltip title="Delete" placement="top-start">
-        <Button
-          variant="contained"
-          color="primary"
-          size="small"
-          style={{ marginLeft: 16, padding: 10 }}
-          //   onClick={}
-        >
-          <AiFillDelete />
-        </Button>
-      </Tooltip>
-    </>
-  );
-}
+
 export default function SO_BTL_Level() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () =>{
+    setOpen(false)
+    setGA("")
+    setSO("")
+    setUpid("")
+  }
 
   const [open1, setOpen1] = useState(false);
-  const handleOpen1 = () => setOpen1(true);
-  const handleClose1 = () => setOpen1(false);
+  const handleOpen1 = () => setOpen1(true)
+   ;
+  const handleClose1 = () =>{
+    setOpen1(false)
+    setBTL("")
+    setUpid("")
+  };
 
-  const [so, setso] = useState("");
-  const [btl, setbtl] = useState("");
+  const [GA, setGA] = useState("");
+  const [SO, setSO] = useState("");
+  const [BTL, setBTL] = useState("");
+  const [SORow, setSORow] = useState("");
+  const [BTLRow, setBTLRow] = useState("");
+  const [Upid, setUpid] = useState("");
+  
+  axios.defaults.withCredentials = true;
 
-  //   const [rows, setrows] = useState([]);
+  function ActionButton1({row}) {
+    return (
+      <>
+        <Tooltip title="Edit" placement="top-start">
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            style={{ marginLeft: 16, padding: 10 }}
+              onClick={()=>{
+                setGA(row.GA)
+                setSO(row.SO)
+                setUpid(row._id)
+                handleOpen()
+              }}
+          >
+            <AiFillEdit />
+          </Button>
+        </Tooltip>
+        <Tooltip title="Delete" placement="top-start">
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            style={{ marginLeft: 16, padding: 10 }}
+            onClick={async()=>{
+              await axios.delete(`http://localhost:4000/SOBTL/SO/${row._id}`);
+              getSORows()
+            }
+           }
+          >
+            <AiFillDelete />
+          </Button>
+        </Tooltip>
+      </>
+    );
+  }
+  function ActionButton2({row}) {
+    return (
+      <>
+        <Tooltip title="Edit" placement="top-start">
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            style={{ marginLeft: 16, padding: 10 }}
+              onClick={()=>{
+                setBTL(row.BTL)
+                setUpid(row._id)
+                handleOpen1()
+              }}
+          >
+            <AiFillEdit />
+          </Button>
+        </Tooltip>
+        <Tooltip title="Delete" placement="top-start">
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            style={{ marginLeft: 16, padding: 10 }}
+            onClick={async()=>{
+               await axios.delete(`http://localhost:4000/SOBTL/BTL/${row._id}`);
+               getBTLRows()
+              }
+            }
+          >
+            <AiFillDelete />
+          </Button>
+        </Tooltip>
+      </>
+    );
+  }
 
+  useEffect(() => {
+    getSORows();
+    getBTLRows();
+    
+  }, []);
+ 
+  const getSORows = async () => {
+    const ress = await axios.get("http://localhost:4000/SOBTL/showSO");
+    const dataa = await ress.data;
+    setSORow([...dataa]);
+  };
+
+  const getBTLRows = async () => {
+    const res = await axios.get("http://localhost:4000/SOBTL/showBTL");
+    const data = await res.data;
+    setBTLRow([...data]);
+  }
+  const ADDSO = async (e) => {
+    e.preventDefault();
+  
+    if (SO!=""&&GA!=""&&Upid=="") {
+      const Number=SORow.length+1
+      const res = await axios.post("http://localhost:4000/SOBTL/addSO", {
+        Number,GA,SO        
+      });
+      getSORows()
+      setSO("")
+      setGA("")
+    }
+    else if (SO!=""&&GA!=""&&Upid!="") {
+      const res = await axios.put(`http://localhost:4000/SOBTL/SO/${Upid}`, {
+        GA,SO        
+      });
+      getSORows()
+      setSO("")
+      setGA("")
+      setUpid("")
+      setOpen(false)
+    }
+
+    else{
+      alert("missing fields")
+    }
+  }
+  const addBTL = async (e) => {
+    e.preventDefault();
+
+    if (BTL!=""&&Upid=="") {
+      const Number = BTLRow.length+1
+      const res = await axios.post("http://localhost:4000/SOBTL/addBTL", {
+        Number,BTL        
+      });
+      getBTLRows()
+      setBTL("")
+    }
+    else if (BTL!=""&&Upid!="") {
+      const res = await axios.put(`http://localhost:4000/SOBTL/BTL/${Upid}`, {
+        BTL 
+      });
+      getBTLRows()
+      setBTL("")
+      setUpid("")
+      setOpen1(false)
+    }
+    
+    else{
+      alert("missing fields")
+    }
+  }  
   const SOcolumns = [
+    {
+      field: "Number",
+      headerName: "Sr#",
+      width: 300,
+    },
+
     {
       field: "SO",
       headerName: "SO Description",
@@ -96,11 +221,18 @@ export default function SO_BTL_Level() {
       headerName: "Action",
       width: 300,
       editable: false,
-      renderCell: ActionButton,
+      renderCell: ActionButton1,
     },
   ];
 
   const BTLcolumns = [
+    
+    {
+      field: "Number",
+      headerName: "Sr#",
+      width: 200,
+    },
+    
     {
       field: "BTL",
       headerName: "BTL LEVEL",
@@ -112,15 +244,7 @@ export default function SO_BTL_Level() {
       headerName: "Action",
       width: 300,
       editable: false,
-      renderCell: ActionButton,
-    },
-  ];
-
-  const rows = [
-    {
-      id: 1,
-      BTL: "Applying",
-      SO: "Apply knowledge of computing fundamentals, knowledge of a computing specialization, and mathematics, science, and domain knowledge appropriate for the computing specialization to the abstraction and conceptualization of computing models from defined problems and requirements ",
+      renderCell: ActionButton2,
     },
   ];
 
@@ -167,14 +291,27 @@ export default function SO_BTL_Level() {
             aria-describedby="modal-modal-description"
           >
             <Box sx={style}>
-              <form>
+              <form onSubmit={ADDSO}>
                 <Box mb={3} style={{ display: "flex", justifyContent: "end" }}>
                   <CloseIcon
                     onClick={handleClose}
                     style={{ cursor: "pointer", color: "gray" }}
                   />
                 </Box>
-
+                <div>
+                  <FormControl fullWidth size="medium">
+                    <TextField
+                      className="mb-4"
+                      id="outlined-basic"
+                      label="Graduate Outcome"
+                      variant="outlined"
+                      size="small"
+                      fullWidth
+                      value={GA}
+                      onChange={(e) => setGA(e.target.value)}
+                    />
+                  </FormControl>
+                </div>
                 <div>
                   <FormControl fullWidth size="medium">
                     <TextField
@@ -184,8 +321,8 @@ export default function SO_BTL_Level() {
                       variant="outlined"
                       size="small"
                       fullWidth
-                      value={so}
-                      onChange={(e) => setso(e.target.value)}
+                      value={SO}
+                      onChange={(e) => setSO(e.target.value)}
                     />
                   </FormControl>
                 </div>
@@ -197,7 +334,7 @@ export default function SO_BTL_Level() {
                   style={{ marginTop: 16 }}
                 >
                   <AiFillEdit style={{ marginRight: 10 }} />
-                  Add SO
+                  {Upid==""?(<>Add SO</>):(<>Update SO</>)}
                 </Button>
               </form>
             </Box>
@@ -209,7 +346,7 @@ export default function SO_BTL_Level() {
             aria-describedby="modal-modal-description"
           >
             <Box sx={style}>
-              <form>
+              <form onSubmit={addBTL}>
                 <Box mb={3} style={{ display: "flex", justifyContent: "end" }}>
                   <CloseIcon
                     onClick={handleClose1}
@@ -226,8 +363,8 @@ export default function SO_BTL_Level() {
                       variant="outlined"
                       size="small"
                       fullWidth
-                      value={btl}
-                      onChange={(e) => setbtl(e.target.value)}
+                      value={BTL}
+                      onChange={(e) => setBTL(e.target.value)}
                     />
                   </FormControl>
                 </div>
@@ -239,7 +376,7 @@ export default function SO_BTL_Level() {
                   style={{ marginTop: 16 }}
                 >
                   <AiFillEdit style={{ marginRight: 10 }} />
-                  Add BTL LEVEL
+                  {Upid==""?(<>Add BTL LEVEL</>):(<>Update BTL LEVEL</>)}
                 </Button>
               </form>
             </Box>
@@ -249,8 +386,8 @@ export default function SO_BTL_Level() {
               <DataGrid
                 style={{ height: "60vh", width: "100%" }}
                 columns={SOcolumns}
-                rows={rows}
-                // getRowId={(Rows) => Rows._id}
+                rows={SORow}
+                getRowId={(Rows) => Rows._id}
                 pageSize={10}
                 rowsPerPageOptions={[5]}
                 disableSelectionOnClick
@@ -260,8 +397,8 @@ export default function SO_BTL_Level() {
               <DataGrid
                 style={{ height: "60vh", width: "100%" }}
                 columns={BTLcolumns}
-                rows={rows}
-                // getRowId={(Rows) => Rows._id}
+                rows={BTLRow}
+                getRowId={(Rows) => Rows._id}
                 pageSize={10}
                 rowsPerPageOptions={[5]}
                 disableSelectionOnClick
