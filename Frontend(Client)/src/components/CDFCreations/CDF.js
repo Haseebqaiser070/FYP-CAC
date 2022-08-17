@@ -11,6 +11,8 @@ import React, { useEffect, useState, useRef } from "react";
 import "./pdfstyles.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
+import "./Cdfstyles.css";
+import comsatslogo from "../CACMember/comsats_logo.png";
 
 export default function CDF() {
   axios.defaults.withCredentials = true;
@@ -25,7 +27,8 @@ export default function CDF() {
   const { Code,Name } = state.row;
   const [Version, setVersion] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-  const [res, setsresponse] = useState(false);
+  const [res, setresponse] = useState(false);
+  const [Totalteaching,setTotalteaching]=useState(0)
   const [Content, setContent] = useState({
     Code: Code,
     Name: Name,
@@ -38,6 +41,12 @@ export default function CDF() {
     objectiveList: [],
     Books: [],
   });
+  const [CDF, setCDF] = useState(
+{    Topics:[],
+      CLOs:[],
+      textBook:"",
+      referenceBook:""}  )
+
   console.log(Version);
   const navigate = useNavigate();
   const togglePopup = () => {
@@ -65,42 +74,72 @@ export default function CDF() {
       console.log(error);
     }
   };
-
-
-
       useEffect(() => {
         getCat()     
-      //getData();
+        getData();
       }, []);
 
-//   const getData = async () => {
-//     console.log(Code);
-//     const response = await axios.get(
-//       `http://localhost:4000/CourseVersion/all/${Code}`
-//     );
-//     setVersion(response.data);
-//     if (response.data.length > 0) {
-//       setresponse(true);
-//       getContent();
-//     }
-//   };
-//   const getContent = async () => {
-//     const response = await axios.get(
-//       `http://localhost:4000/CourseVersion/Latest/${Code}`
-//     );
-//     setContent(response.data);
-//   };
+  const getData = async () => {
+    console.log(Code);
+    const response = await axios.get(
+      `http://localhost:4000/CDFVerison/all/${Code}`
+    );
+    setVersion(response.data);
+    if (response.data.length > 0) {
+      setresponse(true);
+      getContent();
+    }
+  };
+
+  const[LabCLO,setLabCLO]=useState([])
+  const[TheoryCLO,setTheoryCLO]=useState([])
+  const labsep =()=>{
+    CDF.CLOs.forEach(i=>{
+      var ob = false
+      i.Assignment.forEach(e=>{
+        if(e.title=="Lab Assignments"){
+          obj==true
+        }
+      })
+     if(ob==true||i.Project!=""){
+      setLabCLO([...LabCLO,i])
+     } 
+     else{
+      setTheoryCLO([...TheoryCLO,i])
+     }
+    })
+    
+  
+  }
+  const getContent = async () => {
+    const response = await axios.get(
+      `http://localhost:4000/CDFVerison/Latest/${Code}`
+    );
+    setCDF(response.data);
+    var sum=0
+    if(response.data.Topics.length>0){
+      response.data.Topics.forEach((i)=> {
+        sum=sum+parseInt(i.TeachingHours)
+        })
+      }
+      labsep()
+      setTotalteaching(sum)
+  };
   const Edit = () => {
     state.row.Content = Content;
+    state.row.CDF=CDF
     navigate(`/CAC/CreateCDF/${Code}`, { state: { row: state.row } });
   };
-//   const getCon = async (id) => {
-//     const response = await axios.get(
-//       `http://localhost:4000/CourseVersion/${id}`
-//     );
-//     setContent(response.data);
-//   };
+  const getCon = async (id) => {
+    const response = await axios.get(
+      `http://localhost:4000/CDFVerison/${id}`
+    );
+    setContent(response.data);
+    setTotalteaching(sum)  
+    labsep()
+  };
 console.log("content", Content)
+console.log("CDF", CDF)
   return (
     <div style={{ height: 700, padding: 30, width: "100%" }}>
       <div className="d-flex justify-content-end mb-4">
@@ -169,56 +208,329 @@ console.log("content", Content)
       {!res ? (
         <h3>Empty Repository</h3>
       ) : (
+        
         <div ref={componentRef} className="main">
-
-
-          <div>
-            <div style={{ paddingBottom: 20 }} className="row">
-              <div className="col">
-                <h6>
-                  <b>Course Code: </b> {Code.split("-")[0]}{Code.split("-")[1]}
-                </h6>
+          <div
+            className="d-flex row justify-content-center mb-4"
+            style={{ margin: 30 }}
+          >
+            <div className="col-1">
+              <img src={comsatslogo} width="130px" height="130px"></img>
+            </div>
+            <div className="col-11">
+              <h1>COMSATS University Islamabad</h1>
+              <h1>Department of Computer Science</h1>
+              <h1>Course Description Form (CDF)</h1>
+            </div>
+          </div>
+          <div style={{ borderColor: "#000" }}>
+            <div>
+              <h4
+                style={{ backgroundColor: "#000", color: "#fff", padding: 4 }}
+                className="head"
+              >
+                Course Information
+              </h4>
+            </div>
+            <div>
+              <div className="row">
+                <div className="col">
+                  <h6>
+                    <b>Course Code: {Content.Code} </b>
+                  </h6>
+                </div>
+                <div className="col">
+                  <h6 style={{ paddingBottom: 20, textAlign: "right" }}>
+                    <b>Course Title: {Content.Name}</b>
+                  </h6>
+                </div>
               </div>
-              <div className="col">
-                <h6 style={{ textAlign: "right" }}>
-                  <b>Pre-Requisite: </b>{" "}
-                  {Content.PreRequisites.map((i) => i.Name)}
-                </h6>
+              <div className="row">
+                <div className="col">
+                  <h6 style={{ paddingBottom: 20 }}>
+                    <b>Credit Hour: {Content.Credit+"("+Content.LectureHoursWeek+
+                    ","+Content.LabHoursWeek+")"} </b>
+                  </h6>
+                </div>
+                <div className="col">
+                  <h6 style={{ paddingBottom: 20, textAlign: "right" }}>
+                    <b>Lecture Hours/Week: {Content.LectureHoursWeek}</b>
+                  </h6>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col">
+                  <h6 style={{ paddingBottom: 20 }}>
+                    <b>Lab Hours/Week: {Content.LabHoursWeek}</b>
+                  </h6>
+                </div>
+                <div className="col">
+                  <h6 style={{ textAlign: "right" }}>
+                    <b>Pre-Requisite: {Content.PreRequisites}</b>
+                  </h6>
+                </div>
               </div>
             </div>
-            <h6 style={{ paddingBottom: 20 }}>
-              <b>Course Title: </b> {Name}
-            </h6>
-            <h6 style={{ paddingBottom: 35 }}>
-              <b>Credit Hour: </b>
-              {Content.Credit}
-            </h6>
-          </div>
-          <div style={{ paddingBottom: 15 }}>
-            <h5>Course Objectives: </h5>
-            <ul>
-              {Content.objectiveList.map((i) => {
-                return <li>{i.title}</li>;
-              })}
-            </ul>
-          </div>
-          <div style={{ paddingBottom: 15 }}>
-            <h5>Course Contents: </h5>
-            <p>{Content.catalogue}</p>
-          </div>
-          <div style={{ paddingBottom: 15 }}>
-            <h5>Recommended Books: </h5>
-            <ol>
-              {Content.Books.map((i) => {
-                return (
-                  <li>
-                    {i.BookName}
-                    {i.BookWriter}
-                    {i.BookYear}
-                  </li>
-                );
-              })}
-            </ol>
+            <div>
+              <div>
+                <h4
+                  style={{ backgroundColor: "#000", color: "#fff", padding: 4 }}
+                  className="head"
+                >
+                  Catalogue Description
+                </h4>
+              </div>
+              <p style={{ paddingBottom: 20 }}>
+                {" "}
+                {Content.catalogue}
+              </p>
+            </div>
+            <div style={{ paddingBottom: 20 }}>
+              <div>
+                <h4
+                  style={{ backgroundColor: "#000", color: "#fff", padding: 4 }}
+                  className="head"
+                >
+                  Unit wise Major Topics:
+                </h4>
+              </div>
+              <div>
+                <table className="table table-bordered">
+                  <thead
+                    style={{ backgroundColor: "#f5f5f5", textAlign: "center" }}
+                  >
+                    <tr>
+                      <th>Unit#</th>
+                      <th>Topic</th>
+                      <th>No. of teaching hours</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+        
+
+                { 
+                CDF.Topics.map((i)=>
+                {return(
+                    <>
+                    <tr>
+                      <td style={{ textAlign: "center" }}>{i.Unit}</td>
+                      <td>
+                        {i.Topic}
+                      </td>
+                      <td style={{ textAlign: "center" }}>{i.TeachingHours}</td>
+                    </tr>
+                    </>
+                    )})}
+                    <tr>
+                      <th colSpan={2}>Total Contact Hours</th>
+                      <td style={{ textAlign: "center" }}>{Totalteaching}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div style={{ paddingBottom: 20 }}>
+              <div>
+                <h4
+                  style={{ backgroundColor: "#000", color: "#fff", padding: 4 }}
+                  className="head"
+                >
+                  Mapping of CLOs and SOs
+                </h4>
+              </div>
+              <div>
+                <table className="table table-bordered">
+                  <thead
+                    style={{ backgroundColor: "#f5f5f5", textAlign: "center" }}
+                  >
+                    <tr>
+                      <th className="col-1">Sr.#</th>
+                      <th className="col-1">Unit#</th>
+                      <th className="col-7">Course Learning Outcomes</th>
+                      <th className="col-2">Bloom Taxonomy Learning Level</th>
+                      <th className="col-1">SO</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="py-2" style={{ textAlign: "center" }}>
+                      <th colSpan={5}>CLO’s for Theory</th>
+                    </tr>
+
+                    {TheoryCLO.map(i=>{
+                      var Sos=""
+                      i.So.forEach((e)=>{
+                        console.log("Sos",Sos)
+                        if(Sos==""){
+                          Sos=e.Number
+                        }
+                        else if(Sos.length==1){
+                          Sos=Sos+","+e.Number
+                        }
+                        else if(Sos[Sos.length-2]==","){
+                          if(parseInt(Sos[Sos.length-3])-parseInt(Sos[Sos.length-1])==1
+                          && parseInt(e.Number)-parseInt(Sos[Sos.length-1])==1){
+                            Sos[Sos.length-2]="-"
+                            Sos[Sos.length-1]=e.Number
+                          }
+                          else{
+                            Sos=Sos+","+e.Number
+                          }
+                        }
+                        else if(Sos[Sos.length-2]=="-"){
+                          if(parseInt(Sos[Sos.length-3])-parseInt(Sos[Sos.length-1])==1
+                          && parseInt(e.Number)-parseInt(Sos[Sos.length-1])==1){
+                            Sos[Sos.length-1]=e.Number
+                          }
+                          else{
+                            Sos=Sos+","+e.Number
+                          }
+                        }
+                        
+                      })
+                      return(
+                      <tr>
+                      <td style={{}}>{i.sr}</td>
+                      <td style={{ textAlign: "center" }}>{i.Unit}</td>
+                      <td>
+                        {i.CLO}
+                      </td>
+                      <td
+                        style={{
+                          textAlign: "center",
+                        }}
+                      >
+                        <i>{i.BTL.BTL}</i>
+                      </td>
+                      <td style={{ textAlign: "center" }}>{Sos}</td>
+                      </tr>
+                        )})}
+            
+                      
+                    <tr className="py-2" style={{ textAlign: "center" }}>
+                      <th colSpan={5}>CLO’s for Lab</th>
+                    </tr>
+
+                    {LabCLO.map(i=>{
+                      var Sos=""
+                      i.So.forEach((e)=>{
+                        console.log("Sos",Sos)
+                        if(Sos==""){
+                          Sos=e.Number
+                        }
+                        else if(Sos.length==1){
+                          Sos=Sos+","+e.Number
+                        }
+                        else if(Sos[Sos.length-2]==","){
+                          if(parseInt(Sos[Sos.length-3])-parseInt(Sos[Sos.length-1])==1
+                          && parseInt(e.Number)-parseInt(Sos[Sos.length-1])==1){
+                            Sos[Sos.length-2]="-"
+                            Sos[Sos.length-1]=e.Number
+                          }
+                          else{
+                            Sos=Sos+","+e.Number
+                          }
+                        }
+                        else if(Sos[Sos.length-2]=="-"){
+                          if(parseInt(Sos[Sos.length-3])-parseInt(Sos[Sos.length-1])==1
+                          && parseInt(e.Number)-parseInt(Sos[Sos.length-1])==1){
+                            Sos[Sos.length-1]=e.Number
+                          }
+                          else{
+                            Sos=Sos+","+e.Number
+                          }
+                        }
+                        
+                      })
+                      return(
+                    
+                    <tr>
+                      <td style={{}}>{i.sr}</td>
+                      <td style={{ textAlign: "center" }}>{i.Unit}</td>
+                      <td>{i.CLO}
+                      </td>
+                      <td
+                        style={{
+                          textAlign: "center",
+                        }}
+                      >
+                        <i> {i.BTL.BTL}</i>
+                      </td>
+                      <td style={{ textAlign: "center" }}>{Sos}</td>
+                    </tr>
+                )})}
+                    
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div style={{ paddingBottom: 20 }}>
+              <div>
+                <h4
+                  style={{ backgroundColor: "#000", color: "#fff", padding: 4 }}
+                  className="head"
+                >
+                  CLO Assessment Mechanism
+                </h4>
+              </div>
+              <div>
+                <table className="table table-bordered">
+                  <thead
+                    style={{ backgroundColor: "#f5f5f5", textAlign: "center" }}
+                  >
+                    <tr>
+                      <th className="col-1">Assessment Tools</th>
+                      <th className="col-1">CLO-1</th>
+                      <th className="col-1">CLO-2</th>
+                    </tr>
+                  </thead>
+                  <tbody style={{ textAlign: "center" }}>
+                    <tr>
+                      <td>Quizzes</td>
+                      <td>Quiz 1&2</td>
+                    </tr>
+                    <tr>
+                      <td>Assignments</td>
+                      <td>Assignment 2&3</td>
+                      <td>Lab Assignments</td>
+                    </tr>
+                    <tr>
+                      <td>Mid Term Exam</td>
+                      <td>Mid Term Exam</td>
+                    </tr>
+                    <tr>
+                      <td>Final Term Exam</td>
+                      <td>Final Term Exam</td>
+                      <td>Final Term Exam</td>
+                    </tr>
+                    <tr>
+                      <td>Project</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div>
+              <div>
+                <h4
+                  style={{ backgroundColor: "#000", color: "#fff", padding: 4 }}
+                  className="head"
+                >
+                  Text and Reference Books
+                </h4>
+              </div>
+              <div>
+                <h4>TextBook:</h4>
+                <ol>
+                  <li>Title, Authors, Year</li>
+                </ol>
+
+                <h4>Reference Books:</h4>
+                <ol>
+                  <li>Title, Authors, Year</li>
+                </ol>
+              </div>
+            </div>
           </div>
         </div>
       )}

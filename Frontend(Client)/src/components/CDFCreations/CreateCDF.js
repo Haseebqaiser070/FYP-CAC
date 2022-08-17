@@ -42,27 +42,61 @@ export default function CreateCDF() {
   const [clo, setclo] = useState("");
   const [unit, setunit] = useState([]);
   const [TopicRows, setTopicRows] = useState([]);
-  const [btl, setbtl] = useState("");
-  const [so, setso] = useState("");
+  const [btl, setbtl] = useState([]);
+  const [so, setso] = useState([]);
   const [textBook, settextBook] = useState([]);
   const [referenceBook, setreferenceBook] = useState([]);
   const [Topicsfinal, setTopicsfinal] = useState("");
   const [CLORows, setCLORows] = useState([]);
-
+  const [quizzes,setquizzes] =useState( [
+    { title: "Quiz 1" },
+    { title: "Quiz 2" },
+    { title: "Quiz 3" },
+    { title: "Quiz 4" },
+  ]);
   const { state } = useLocation();
-
+  const [assignments,setassignments] =useState([
+    { title: "Assignment 1" },
+    { title: "Assignment 2" },
+    { title: "Assignment 3" },
+    { title: "Assignment 4" },
+  ]);
+  
   const { row } = state;
   console.log("row: ", row);
-  const getData = async () => {
-    const res = await axios.get("http://localhost:4000/Course/show");
-    const data = await res.data;
-    setCourse([...data]);
-  };
+  // const getData = async () => {
+  //   const res = await axios.get("http://localhost:4000/Course/show");
+  //   const data = await res.data;
+  //   setCourse([...data]);
+  // };
 
   useEffect(() => {
-    getData();
+    // getData();
+    getSORows();
+    getBTLRows();
+    forLab()
+   
   }, []);
+  const [SORow, setSORow] = useState([]);
+  const [BTLRow,setBTLRow] = useState([]);
 
+  const forLab = ()=>{
+    if(parseInt(row.LabHoursWeek)>0){ 
+        setassignments([...assignments,{ title: "Lab Assignments" }])
+      }
+
+  }
+  const getSORows = async () => {
+    const ress = await axios.get("http://localhost:4000/SOBTL/showSO");
+    const dataa = await ress.data;
+    setSORow([...dataa]);
+  };
+
+  const getBTLRows = async () => {
+    const res = await axios.get("http://localhost:4000/SOBTL/showBTL");
+    const data = await res.data;
+    setBTLRow([...data]);
+  }
   const maintopicscolumns = [
     {
       field: "Unit",
@@ -125,16 +159,32 @@ export default function CreateCDF() {
       field: "CLOs",
       headerName: "Course Learning Outcomes",
       flex: 3,
+     
     },
     {
       field: "BTL",
       headerName: "Bloom Taxonomy Learning Level",
       flex: 1,
+      valueGetter: (params) => {
+        return(params?.row?.BTL?.BTL)
+      }
     },
     {
       field: "So",
       headerName: "SO",
       flex: 1,
+      valueGetter: (params) => {
+        var val=""
+        params?.row?.So?.forEach(e => {
+            val=val+e.Number+","
+          
+        });
+        val = val.slice(0,-1)
+        return (
+          val
+        );}
+    
+    
     },
     {
       field: "action",
@@ -220,7 +270,7 @@ export default function CreateCDF() {
     setunit([]);
     setclo("");
     setbtl("");
-    setso("");
+    setso([]);
     setCLORows([...clone]);
   };
 
@@ -231,6 +281,13 @@ export default function CreateCDF() {
     console.log(CLORows);
     console.log(referenceBook);
     console.log(textBook);
+    await axios.post("http://localhost:4000/CDFVerison/add", {
+      Topics:TopicRows,
+      CLOs:CLORows,
+      textBook,
+      referenceBook
+    },{withCredentials:true});
+
   };
 
   return (
@@ -513,9 +570,40 @@ export default function CreateCDF() {
               </div>
             </div>
             <div className="row">
-              <div className="col-9">
-                <FormControl fullWidth size="small">
-                  <TextField
+              {/* <div className="col">
+                  <FormControl fullWidth size="small">
+                    <Autocomplete
+                      style={{ marginBottom: 35 }}
+                      multiple
+                      fullWidth
+                      variant="outlined"
+                      id="tags-standard"
+                      className="mb-4"
+                      options={BTLRow}
+                      size="small"
+                      value={btl}
+                      getOptionLabel={(option) => option.BTL}
+                      defaultValue={null}
+                      onChange={(e, val) => {
+                        setbtl(val);
+                        
+                      }}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          variant="outlined"
+                          label="Add BTL Level"
+                          placeholder="Add BTL Level"
+                        />
+                      )}
+                    />
+                  </FormControl>
+                </div>
+               */}
+              
+                {/*  
+                  <FormControl fullWidth size="small">
+                    <TextField
                     className="mb-4"
                     id="outlined-basic"
                     label="Add BTL Level"
@@ -527,11 +615,67 @@ export default function CreateCDF() {
                       setbtl(e.target.value);
                     }}
                   />
-                </FormControl>
+                </FormControl> */}
+              <div className="col">
+              <FormControl fullWidth size="small">
+                <InputLabel id="demo-simple-select-label">
+                    Select BTL Level
+                </InputLabel>
+                <Select
+                className="mb-4"
+                id="outlined-basic"
+                label="Add BTL Level"
+                variant="outlined"
+                size="small"
+                fullWidth
+                value={btl}
+                onChange={(e) => {
+                  setbtl(e.target.value);
+                }}
+              >
+                {BTLRow.map((a) => {
+                  return (
+                    <MenuItem value={a}>{a.BTL}</MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+            
               </div>
             </div>
             <div className="row">
+              
               <div className="col">
+                  <FormControl fullWidth size="small">
+                    <Autocomplete
+                      style={{ marginBottom: 35 }}
+                      multiple
+                      fullWidth
+                      variant="outlined"
+                      id="tags-standard"
+                      className="mb-4"
+                      options={SORow}
+                      size="small"
+                      value={so}
+                      getOptionLabel={(option) => option.Number}
+                      defaultValue={null}
+                      onChange={(e, val) => {
+                        setso(val);
+                        
+                      }}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          variant="outlined"
+                          label="Add SO"
+                          placeholder="Add SO"
+                        />
+                      )}
+                    />
+                  </FormControl>
+                </div>
+              
+              {/* <div className="col">
                 <FormControl fullWidth size="small">
                   <TextField
                     className="mb-4"
@@ -546,7 +690,7 @@ export default function CreateCDF() {
                     }}
                   />
                 </FormControl>
-              </div>
+              </div> */}
             </div>
             <div>
               <Button
@@ -719,7 +863,7 @@ export default function CreateCDF() {
                     );
                   })}
                 </tr>
-                <tr>
+               {row.LabHoursWeek>0&&<tr>
                   <td>Project</td>
                   {CLORows.map((i, index) => {
                     return (
@@ -744,7 +888,7 @@ export default function CreateCDF() {
                       </th>
                     );
                   })}
-                </tr>
+                </tr>}
               </tbody>
             </table>
           </div>
@@ -829,17 +973,3 @@ export default function CreateCDF() {
     </>
   );
 }
-const quizzes = [
-  { title: "Quiz 1" },
-  { title: "Quiz 2" },
-  { title: "Quiz 3" },
-  { title: "Quiz 4" },
-];
-
-const assignments = [
-  { title: "Assignment 1" },
-  { title: "Assignment 2" },
-  { title: "Assignment 3" },
-  { title: "Assignment 4" },
-  { title: "Lab Assignments" },
-];
