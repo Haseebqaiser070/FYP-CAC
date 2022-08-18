@@ -36,25 +36,27 @@ const style = {
 };
 
 export default function CreateCDF() {
+  const { state } = useLocation();
+  const { row } = state;
+  const navigate = useNavigate();
   const [mainTopic, setmainTopic] = useState("");
   const [subTopic, setsubTopic] = useState([""]);
   const [teachingHours, setteachingHours] = useState("");
   const [clo, setclo] = useState("");
   const [unit, setunit] = useState([]);
-  const [TopicRows, setTopicRows] = useState([]);
+  const [TopicRows, setTopicRows] = useState([...row.CDF.Topics]);
   const [btl, setbtl] = useState([]);
   const [so, setso] = useState([]);
-  const [textBook, settextBook] = useState([]);
-  const [referenceBook, setreferenceBook] = useState([]);
+  const [textBook, settextBook] = useState([...row.CDF.textBook]);
+  const [referenceBook, setreferenceBook] = useState([...row.CDF.referenceBook]);
   const [Topicsfinal, setTopicsfinal] = useState("");
-  const [CLORows, setCLORows] = useState([]);
+  const [CLORows, setCLORows] = useState([...row.CDF.CLOs]);
   const [quizzes,setquizzes] =useState( [
     { title: "Quiz 1" },
     { title: "Quiz 2" },
     { title: "Quiz 3" },
     { title: "Quiz 4" },
   ]);
-  const { state } = useLocation();
   const [assignments,setassignments] =useState([
     { title: "Assignment 1" },
     { title: "Assignment 2" },
@@ -62,7 +64,7 @@ export default function CreateCDF() {
     { title: "Assignment 4" },
   ]);
   
-  const { row } = state;
+
   console.log("row: ", row);
   // const getData = async () => {
   //   const res = await axios.get("http://localhost:4000/Course/show");
@@ -156,7 +158,7 @@ export default function CreateCDF() {
       flex: 1,
     },
     {
-      field: "CLOs",
+      field: "CLO",
       headerName: "Course Learning Outcomes",
       flex: 3,
      
@@ -253,7 +255,7 @@ export default function CreateCDF() {
       {
         sr: "",
         Unit: uns,
-        CLOs: clo,
+        CLO: clo,
         BTL: btl,
         So: so,
         Quizzes: [],
@@ -287,7 +289,11 @@ export default function CreateCDF() {
       textBook,
       referenceBook
     },{withCredentials:true});
-
+    delete row.CDF
+    delete row.Content
+    navigate(
+      `/CAC/CDFCreation/${row.Code}`,
+      { state: { row } },{ replace: true })
   };
 
   return (

@@ -44,8 +44,8 @@ export default function CDF() {
   const [CDF, setCDF] = useState(
 {    Topics:[],
       CLOs:[],
-      textBook:"",
-      referenceBook:""}  )
+      textBook:[],
+      referenceBook:[]}  )
 
   console.log(Version);
   const navigate = useNavigate();
@@ -93,25 +93,24 @@ export default function CDF() {
 
   const[LabCLO,setLabCLO]=useState([])
   const[TheoryCLO,setTheoryCLO]=useState([])
-  const labsep =()=>{
-    CDF.CLOs.forEach(i=>{
-      var ob = false
-      i.Assignment.forEach(e=>{
-        if(e.title=="Lab Assignments"){
-          obj==true
-        }
-      })
-     if(ob==true||i.Project!=""){
-      setLabCLO([...LabCLO,i])
-     } 
-     else{
-      setTheoryCLO([...TheoryCLO,i])
-     }
-    })
-    
-  
-  }
+  // const labsep =()=>{
+  //   CDF.CLOs.forEach(i=>{
+  //     var ob = false
+  //     i.Assignment.forEach(e=>{
+  //       if(e.title=="Lab Assignments"){
+  //         obj==true
+  //       }
+  //     })
+  //    if(ob==true||i.Project!=""){
+  //     setLabCLO([...LabCLO,i])
+  //    } 
+  //    else{
+  //     setTheoryCLO([...TheoryCLO,i])
+  //    }
+  //   })    
+  // }
   const getContent = async () => {
+
     const response = await axios.get(
       `http://localhost:4000/CDFVerison/Latest/${Code}`
     );
@@ -122,7 +121,22 @@ export default function CDF() {
         sum=sum+parseInt(i.TeachingHours)
         })
       }
-      labsep()
+      setLabCLO([])
+      setTheoryCLO([])
+      response.data.CLOs.forEach(i=>{
+        var ob = false
+        i.Assignment.forEach(e=>{
+          if(e.title=="Lab Assignments"){
+            obj==true
+          }
+        })
+       if(ob==true||i.Project!=""){
+        setLabCLO([...LabCLO,i])
+       } 
+       else{
+        setTheoryCLO([...TheoryCLO,i])
+       }
+      })
       setTotalteaching(sum)
   };
   const Edit = () => {
@@ -134,9 +148,26 @@ export default function CDF() {
     const response = await axios.get(
       `http://localhost:4000/CDFVerison/${id}`
     );
-    setContent(response.data);
+    setCDF(response.data);
+    var LabCLOss=[]
+    var TheoryCLOss=[]
+    response.data.CLOs.forEach(i=>{
+      var ob = false
+      i.Assignment.forEach(e=>{
+        if(e.title=="Lab Assignments"){
+          obj==true
+        }
+      })
+     if(ob==true||i.Project!=""){
+      LabCLOss=[...LabCLOss,i]
+     } 
+     else{
+      TheoryCLOss=[...TheoryCLOss,i]
+     }
+    })
+    setLabCLO([...LabCLOss])
+    setTheoryCLO([...TheoryCLOss])
     setTotalteaching(sum)  
-    labsep()
   };
 console.log("content", Content)
 console.log("CDF", CDF)
@@ -399,7 +430,7 @@ console.log("CDF", CDF)
                           textAlign: "center",
                         }}
                       >
-                        <i>{i.BTL.BTL}</i>
+                        <i>{i.BTL.map((e)=>{return(<>{e.BTL}</>)})}</i>
                       </td>
                       <td style={{ textAlign: "center" }}>{Sos}</td>
                       </tr>
@@ -453,7 +484,7 @@ console.log("CDF", CDF)
                           textAlign: "center",
                         }}
                       >
-                        <i> {i.BTL.BTL}</i>
+                        <i>{i.BTL.map((e)=>{return(<>{e.BTL}</>)})}</i>
                       </td>
                       <td style={{ textAlign: "center" }}>{Sos}</td>
                     </tr>
@@ -477,34 +508,44 @@ console.log("CDF", CDF)
                 <table className="table table-bordered">
                   <thead
                     style={{ backgroundColor: "#f5f5f5", textAlign: "center" }}
-                  >
-                    <tr>
-                      <th className="col-1">Assessment Tools</th>
-                      <th className="col-1">CLO-1</th>
-                      <th className="col-1">CLO-2</th>
-                    </tr>
+                  >                    
+                    <th className="col-1">Assessment Tools</th>
+                    {CDF.CLOs.map((i)=>{
+                    return(
+                      <th className="col-1">{i.sr}</th>
+                    )})}
                   </thead>
                   <tbody style={{ textAlign: "center" }}>
                     <tr>
                       <td>Quizzes</td>
-                      <td>Quiz 1&2</td>
+                      {CDF.CLOs.map((i)=>{
+                      return(
+                        <th>{i.Quizzes.map(e=>e.title)}</th>)})}
                     </tr>
                     <tr>
                       <td>Assignments</td>
-                      <td>Assignment 2&3</td>
-                      <td>Lab Assignments</td>
+                      {CDF.CLOs.map((i)=>{
+                      return(
+                        <th>{i.Assignment.map(e=>e.title)}</th>)})}
                     </tr>
                     <tr>
-                      <td>Mid Term Exam</td>
-                      <td>Mid Term Exam</td>
+                    <td>Mid Term Exam</td>
+                    {CDF.CLOs.map((i)=>{
+                      return(
+                        <th>{i.Mid}</th>)})}
                     </tr>
                     <tr>
                       <td>Final Term Exam</td>
-                      <td>Final Term Exam</td>
-                      <td>Final Term Exam</td>
+                      {CDF.CLOs.map((i)=>{
+                      return(
+                        <th>{i.Final}</th>)})}
                     </tr>
                     <tr>
                       <td>Project</td>
+                      {CDF.CLOs.map((i)=>{
+                      return(
+                        <th>{i.Project}</th>)})}
+ 
                     </tr>
                   </tbody>
                 </table>
@@ -522,12 +563,14 @@ console.log("CDF", CDF)
               <div>
                 <h4>TextBook:</h4>
                 <ol>
-                  <li>Title, Authors, Year</li>
+                  {CDF.textBook.map((i)=>{
+                    return(<li>{i.BookName}, {i.BookWriter}, {i.BookYear}</li>)})}
                 </ol>
 
                 <h4>Reference Books:</h4>
                 <ol>
-                  <li>Title, Authors, Year</li>
+                {CDF.referenceBook.map((i)=>{
+                    return(<li>{i.BookName}, {i.BookWriter}, {i.BookYear}</li>)})}
                 </ol>
               </div>
             </div>
