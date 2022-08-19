@@ -121,8 +121,8 @@ export default function CDF() {
         sum=sum+parseInt(i.TeachingHours)
         })
       }
-      setLabCLO([])
-      setTheoryCLO([])
+      var LabCLOss=[]
+      var TheoryCLOss=[]
       response.data.CLOs.forEach(i=>{
         var ob = false
         i.Assignment.forEach(e=>{
@@ -131,12 +131,14 @@ export default function CDF() {
           }
         })
        if(ob==true||i.Project!=""){
-        setLabCLO([...LabCLO,i])
+        LabCLOss=[...LabCLOss,i]
        } 
        else{
-        setTheoryCLO([...TheoryCLO,i])
+        TheoryCLOss=[...TheoryCLOss,i]
        }
       })
+      setLabCLO([...LabCLOss])
+      setTheoryCLO([...TheoryCLOss])
       setTotalteaching(sum)
   };
   const Edit = () => {

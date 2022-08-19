@@ -89,6 +89,11 @@ module.exports.Lock = async (req, res) => {
         console.log(finalSOS)
         res.status(200).json(finalSOS);
       }
+
+
+
+
+      
     } catch (err) {
         res.status(400).json("error");
         console.log(err);

@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
 
 var CDFSchema = new mongoose.Schema({
-
+    Code:{type:String},
     Topics:{
         type:[{
             Unit:{
@@ -34,12 +34,13 @@ var CDFSchema = new mongoose.Schema({
             So: [{
                 type: mongoose.Schema.ObjectId,
                 ref: 'SO',}],
-            Quizzes: [{
+            Quizzes: [{ title:{
                 type:String,
-                required:true},],
+              }}],
             Assignment: [{
-                type:String,
-                required:true},],
+                title:{
+                    type:String,
+                  }},],
             Mid: {
                 type:String,
                 required:true},

@@ -63,6 +63,10 @@ export default function ReturnedTasks() {
                 navigate(`/Admin/SOSReturnedView/${row.Program}`, {
                   replace: true,
                 });}
+              else if(row.taskType=="Create CDF"){
+                navigate(`/Admin/CDFReturnedView/${row.Course.Code}`, {
+                  replace: true,
+                });}
               }
             }
           >

@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
 
 var CDFReturnSchema = new mongoose.Schema({
-
+    Code:{type:String},
     Topics:{
         type:[{
             Unit:{
@@ -35,17 +35,21 @@ var CDFReturnSchema = new mongoose.Schema({
                 type: mongoose.Schema.ObjectId,
                 ref: 'SO',}],
             Quizzes: [{
-                type:String,
-                required:true},],
+                title:{
+                    type:String,
+                    }},],
             Assignment: [{
-                type:String,
-                required:true},],
+                title:{
+                    type:String,
+                    }},],
             Mid: {
                 type:String,
-                required:true},
+                default:""    
+            },
             Final: {
                 type:String,
-                required:true},
+                default:""    
+            },
             Project: {
                 type:String,
                 default:""
@@ -63,7 +67,9 @@ var CDFReturnSchema = new mongoose.Schema({
             },
             BookYear: {
                 type:String,
-            }}
+            }
+        }
+
           ],
         referenceBook:[{
             id:{

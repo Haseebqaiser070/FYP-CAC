@@ -284,6 +284,7 @@ export default function CreateCDF() {
     console.log(referenceBook);
     console.log(textBook);
     await axios.post("http://localhost:4000/CDFVerison/add", {
+      Code:row.Code,
       Topics:TopicRows,
       CLOs:CLORows,
       textBook,

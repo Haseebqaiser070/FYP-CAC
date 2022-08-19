@@ -9,43 +9,51 @@ import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineCheckSquare, AiFillEdit } from "react-icons/ai";
 
-function ActionButtons(props) {
-  const navigate = useNavigate();
-  const { row } = props;
-  return (
-    <div>
-      <Button
-        variant="contained"
-        color="primary"
-        size="small"
-        style={{ marginLeft: 16 }}
-        onClick={()=>{navigate(
-          `/CAC/CDFCreation/${row.Code}`,
-          { state: { row } },{ replace: true })}}
-      >
-        <AiFillEdit style={{ marginRight: 10 }} />
-        CDF
-      </Button>
 
-      <Button
-        variant="contained"
-        color="primary"
-        size="small"
-        style={{ marginLeft: 16 }}
-        // onClick={null}
-      >
-        <AiFillEdit style={{ marginRight: 10 }} />
-        Submit
-      </Button>
-    </div>
-  );
-}
 
 export default function CacCdfTask() {
   const [Rows, setRows] = useState([]);
   useEffect(() => {
     getRepoCourse();
   }, []);
+
+  function ActionButtons(props) {
+    const navigate = useNavigate();
+    const { row } = props;
+    return (
+      <div>
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          style={{ marginLeft: 16 }}
+          onClick={()=>{navigate(
+            `/CAC/CDFCreation/${row.Code}`,
+            { state: { row } },{ replace: true })}}
+        >
+          <AiFillEdit style={{ marginRight: 10 }} />
+          CDF
+        </Button>
+  
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          style={{ marginLeft: 16 }}
+          onClick={async()=>{
+            await axios.post(`http://localhost:4000/CDFCreate/Submit/${row.Code}`,{
+            withCredentials: true,
+            });
+            getRepoCourse()  
+          }}
+        >
+          <AiFillEdit style={{ marginRight: 10 }} />
+          Submit
+        </Button>
+      </div>
+    );
+  }
+
   const getRepoCourse = async () => {
     const response = await axios.get("http://localhost:4000/CDFCreate/get", {
       withCredentials: true,
