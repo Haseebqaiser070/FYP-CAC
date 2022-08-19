@@ -7,6 +7,9 @@ const VersionSOS=require("../../../Models/SOSModels/SOSVersions")
 const SOSdoc=require("../../../Models/SOSModels/SOS")
 const ProgramCourses=require("../../../Models/CourseModels/ProgramWiseCourses")
 const SOSCourse=require("../../../Models/CourseModels/SOSCourse")
+const ReturnedCDF = require("../../../Models/CDFModels/ReturnCDF");
+const CDFdoc = require("../../../Models/CDFModels/CDF");
+const VaersionCDF = require("../../../Models/CDFModels/CDFVersions");
 
 module.exports.Showall = async (req, res) => {
     try {
@@ -23,9 +26,11 @@ module.exports.Showall = async (req, res) => {
     
 module.exports.Lock = async (req, res) => {
     try {
+      
       if (!req.user) return await res.status(401).json("Timed Out");
       if(!req.user.Roles.includes("Admin")) return res.status(401).json("Unautherized");
       const task = await Task.findById(req.params.id).populate("Course");
+      
       if(task.taskType=="Create Catalog Description"||task.taskType=="Update Catalog Description"){
         const obj = await ReturnCourse.findOne({Code:task.Course.Code},{_id:0})
         console.log(obj)
@@ -48,6 +53,7 @@ module.exports.Lock = async (req, res) => {
         console.log(finalcourse)
         res.status(200).json(finalcourse);
       }
+
       else if(task.taskType=="Create SOS"||task.taskType=="Update SOS"){
         console.log("Task",task)
         const obj = await ReturnedSOS.findOne({Program:task.Program}).populate({path:"Categories"
@@ -89,8 +95,30 @@ module.exports.Lock = async (req, res) => {
         console.log(finalSOS)
         res.status(200).json(finalSOS);
       }
-
-
+      
+      else if(task.taskType=="Create CDF"||task.taskType=="Update CDF"){
+        const obj = await ReturnedCDF.findOne({Code:task.Course.Code},{_id:0})
+        console.log(obj)
+        const SOS = await SOSdoc.find({})
+        SOS.forEach(async(i)=>{
+          const CDF = await CDFdoc.create({
+            Program:i.Program,
+            Code: obj.Code,
+            Topics: obj.Topics,
+            CLOs: obj.CLOs,
+            textBook: obj.textBook ,
+            referenceBook:obj.referenceBook
+            })
+            console.log("finalCDF",CDF)
+            }
+          )   
+           
+        await Task.deleteOne({_id:req.params.id});
+        await ReturnedCDF.deleteOne({Code:task.Course.Code})
+        await VaersionCDF.deleteMany({Code:task.Course.Code})
+        console.log(finalcourse)
+        res.status(200).json(finalcourse);
+      }
 
 
       

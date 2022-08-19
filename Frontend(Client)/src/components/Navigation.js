@@ -298,7 +298,12 @@ export default function Navigation() {
                   </div>
                   Course Folder Deadlines
                 </Link>
-
+                <Link class="nav-link sidenavtext " to="AllCDFs">
+                  <div class="sb-nav-link-icon">
+                    <BsFillFilePdfFill color="#fff" />
+                  </div>
+                  CDFs
+                </Link>
                 <Link
                   class="nav-link sidenavtext "
                   to="PendingDeadlineRequests"

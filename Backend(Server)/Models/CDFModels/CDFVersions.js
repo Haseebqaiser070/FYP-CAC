@@ -32,7 +32,7 @@ var CDFVersionsSchema = new mongoose.Schema({
                 ref: 'BTL',}],
             So: [{
                 type: mongoose.Schema.ObjectId,
-                ref: 'SO',}],
+                ref: 'SOO',}],
             Quizzes: {type:[{
                 title:{
                 type:String,

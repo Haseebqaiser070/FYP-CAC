@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var SOSchema = new mongoose.Schema({
+var SOOSchema = new mongoose.Schema({
     
     Number:{
       type:String,
@@ -17,4 +17,4 @@ var SOSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('SO', SOSchema);
+module.exports = mongoose.model('SOO', SOOSchema);

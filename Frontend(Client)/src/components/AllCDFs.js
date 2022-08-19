@@ -8,18 +8,18 @@ import Button from "@mui/material/Button";
 import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
 import { DataGrid } from "@mui/x-data-grid";
 
-export default function AllCourses() {
-  const [SOSs, setSOSs] = useState([]);
+export default function AllCDFs() {
+  const [CDFs, setCDFs] = useState([]);
   axios.defaults.withCredentials = true;
   const navigate = useNavigate();
   useEffect(() => {
-     getSOS();
+     getCDF();
   }, []);
 
-  const getSOS = async () => {
+  const getCDF = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/SOS/show");
-      setSOSs(response.data);
+      const response = await axios.get("http://localhost:4000/CDF/show");
+      setCDFs(response.data);
       console.log(response.data);
     } catch (error) {
       console.log(error);
@@ -27,16 +27,21 @@ export default function AllCourses() {
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:4000/SOS/${id}`);
-    getSOS();
+    await axios.delete(`http://localhost:4000/CDF/${id}`);
+    getCDF();
   };
 
   const columns = [
     {
-      field: "Year",
-      headerName: "Year",
+      field: "Code",
+      headerName: "Code",
       flex: 1,
     },
+    {
+        field: "Name",
+        headerName: "Course Title",
+        flex: 1,
+      },
     {
       field: "Program",
       headerName: "Program",
@@ -59,7 +64,7 @@ export default function AllCourses() {
           size="small"
           style={{ marginLeft: 16 }}
           onClick={() => {
-            navigate(`/Admin/SOSView/${row._id}`, {
+            navigate(`/Admin/CDFsView/${row.Program}/${row.Code}/${row._id}`, {
               replace: true,
             });
           }}
@@ -99,7 +104,7 @@ export default function AllCourses() {
       <DataGrid
         style={{ height: 500, width: "100%" }}
         columns={columns}
-        rows={SOSs}
+        rows={CDFs}
         getRowId={(Rows) => Rows._id}
         pageSize={10}
         rowsPerPageOptions={[5]}

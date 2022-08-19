@@ -1,6 +1,7 @@
 var mongoose = require("mongoose");
 
 var CDFSchema = new mongoose.Schema({
+    Program:{type:String},
     Code:{type:String},
     Topics:{
         type:[{
@@ -33,7 +34,7 @@ var CDFSchema = new mongoose.Schema({
                 ref: 'BTL',}],
             So: [{
                 type: mongoose.Schema.ObjectId,
-                ref: 'SO',}],
+                ref: 'SOO',}],
             Quizzes: [{ title:{
                 type:String,
               }}],
@@ -43,10 +44,12 @@ var CDFSchema = new mongoose.Schema({
                   }},],
             Mid: {
                 type:String,
-                required:true},
+                default:""    
+                },
             Final: {
                 type:String,
-                required:true},
+                default:""    
+                },
             Project: {
                 type:String,
                 default:""},

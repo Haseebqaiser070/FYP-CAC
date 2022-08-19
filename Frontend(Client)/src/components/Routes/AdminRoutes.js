@@ -32,6 +32,8 @@ import SOSReturnedView from "../Admin/SOSReturnedView";
 import SOSFinal from "../Admin/SOSfinal";
 import SO_BTL_Level from "../SOAndBTLLevel";
 import CDFReturnedView from "../Admin/CDFReturnedView";
+import AllCDFs from "../AllCDFs";
+import CDFFinal from "../Admin/CDFfinal"
 function AdminRoutes() {
   return (
     <Routes>
@@ -53,7 +55,11 @@ function AdminRoutes() {
           element={<ViewCacAvailability />}
         />
         <Route path="/AllSchemeofStudies" element={<AllSchemeofStudies />} />
+        <Route path="/AllCDFs" element={<AllCDFs />} />
         <Route path="/SOSView/:id" element={<SOSFinal />} />
+        <Route path="/CDFsView/:Program/:Code/:id" element={<CDFFinal />} />
+       
+       
         <Route path="/Sos" element={<Sos />} />
         <Route path="/InitCourse" element={<CourseRepo />} />
         {/*<Route path="/CdfandSyllabus">

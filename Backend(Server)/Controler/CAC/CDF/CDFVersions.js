@@ -18,7 +18,7 @@ module.exports.ViewAll= async (req,res)=>{
         const user = req.user
         if(!user) return res.status(401).json("unAutherized")      
         const Version = await Versionodoc.find({Code:req.params.Code}).populate({path:"CLOs",populate:{path:"BTL",model:"BTL"}})
-        .populate({path:"CLOs",populate:{path:"So",model:"SO"}}) 
+        .populate({path:"CLOs",populate:{path:"So",model:"SOO"}}) 
         if(!Version)return res.status(404).json("Not Found")
         console.log("Versions",Version)
         await res.status(200).json(Version)
@@ -33,7 +33,7 @@ module.exports.Latest= async (req,res)=>{
         const user = req.user
         if(!user) return res.status(401).json("unAutherized")      
         const Version = await Versionodoc.find({Code:req.params.Code}).populate({path:"CLOs",populate:{path:"BTL",model:"BTL"}})
-        .populate({path:"CLOs",populate:{path:"So",model:"SO"}}) 
+        .populate({path:"CLOs",populate:{path:"So",model:"SOO"}}) 
         if(!Version)return res.status(404).json("Not Found")
         const obj = Version[Version.length - 1]
         console.log("Latest",obj)
@@ -48,7 +48,7 @@ module.exports.ViewOne= async (req,res)=>{
         const user = req.user
         if(!user) return res.status(401).json("unAutherized")      
         const Version = await Versionodoc.findOne({_id:req.params.id}).populate({path:"CLOs",populate:{path:"BTL",model:"BTL"}})
-        .populate({path:"CLOs",populate:{path:"So",model:"SO"}}) 
+        .populate({path:"CLOs",populate:{path:"So",model:"SOO"}}) 
         if(!Version)return res.status(404).json("Not Found")
         console.log("Version1",Version)
         await res.status(200).json(Version)

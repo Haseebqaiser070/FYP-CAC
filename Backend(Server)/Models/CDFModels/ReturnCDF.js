@@ -33,7 +33,7 @@ var CDFReturnSchema = new mongoose.Schema({
                 ref: 'BTL',}],
             So: [{
                 type: mongoose.Schema.ObjectId,
-                ref: 'SO',}],
+                ref: 'SOO',}],
             Quizzes: [{
                 title:{
                     type:String,
