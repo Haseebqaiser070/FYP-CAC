@@ -30,7 +30,6 @@ function ActionButtons(props) {
         color="primary"
         size="small"
         style={{ marginLeft: 16 }}
-        // onClick={null}
       >
         <AiFillEdit style={{ marginRight: 10 }} />
         Add Syllabus

@@ -14,13 +14,20 @@ import SOS from "../SOSCreation/SOS";
 import CDF from "../CDFCreations/CDF";
 import CreateCDF from "../CDFCreations/CreateCDF";
 import CacAvailability from "../CACMember/CacAvailability";
+import CreateSyllabus from "../SyllabusCreations/CreateSyllabus";
+import SyllabusTemplate from "../PdfTemplates/Syllabus";
 
 function CACRoutes() {
   return (
     <Routes>
       <Route path="/" element={<CACnav />}>
         <Route path="/Dashboard" element={<CACDashboard />} />
-        <Route path="/CacCourseTask" Route index element={<CacCourseTask />} />
+        <Route
+          path="/CacCourseTask"
+          Route
+          index
+          element={<SyllabusTemplate />}
+        />
         <Route path="/CourseCreation/:Code" element={<Course />} />
         <Route path="/AddnewCourse/:Code" element={<AddNewCourseDocument />} />
         <Route path="/SOSCreation/:Program" element={<SOS />} />
