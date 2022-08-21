@@ -22,7 +22,7 @@ module.exports.Showall = async (req, res) => {
           
           console.log(i)
 
-          return(i)
+          return({_id:i._id,Program:i.Program,Code:i.Code,Name:coursefilt.Name,Topics:i.Topics,CLOs:i.CLOs,textBook:i.textBook,referenceBook:i.referenceBook})
     })
     console.log("all CDFs", CDFf);
     await res.json(CDFf);
