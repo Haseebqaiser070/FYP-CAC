@@ -170,7 +170,7 @@ export default function SyllabusTemplate() {
                   </tr>
                   <tr>
                     <td style={{ textAlign: "center" }}>1</td>
-                    <td style={{ textAlign: "center" }}>1</td>
+                    <td style={{ textAlign: "center" }}>2</td>
                     <td>
                       Overview of Discrete Structures, and Related Applications.
                     </td>
