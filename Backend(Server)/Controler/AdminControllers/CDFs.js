@@ -16,9 +16,9 @@ module.exports.Showall = async (req, res) => {
                 
             }
           })
-          console.log(coursefilt)
+          console.log(coursefilt.Name)
 
-          i.Name=coursefilt
+          i.Name=coursefilt.Name
           
           console.log(i)
 
