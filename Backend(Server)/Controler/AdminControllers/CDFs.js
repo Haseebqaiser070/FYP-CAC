@@ -1,5 +1,6 @@
 var CDFdoc = require("../../Models/CDFModels/CDF");
 var coursedoc = require("../../Models/CourseModels/Course");
+var CDFgendoc = require("../../Models/CDFModels/CDFGeneral");
 
 module.exports.Showall = async (req, res) => {
   try {
@@ -30,6 +31,22 @@ module.exports.Showall = async (req, res) => {
     console.log(err);
   }
 };
+
+module.exports.Shower = async (req, res) => {
+  try {
+    console.log(req.user)
+    if (!req.user) return await res.json("Timed Out");
+    const CDF = await CDFgendoc.findOne({Code:req.params.Code}).
+    populate({path:"CLOs",populate:{path:"BTL",model:"BTL"}})
+    .populate({path:"CLOs",populate:{path:"So",model:"SOO"}}) 
+    ;
+    console.log("gen CDFs",CDF);
+    await res.json(CDF);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 
 module.exports.ShowOne = async (req, res) => {
   try {

@@ -16,18 +16,13 @@ import CreateCDF from "../CDFCreations/CreateCDF";
 import CacAvailability from "../CACMember/CacAvailability";
 import CreateSyllabus from "../SyllabusCreations/CreateSyllabus";
 import SyllabusTemplate from "../PdfTemplates/Syllabus";
-
+import SyllabusCreation from "../SyllabusCreations/Syllabus";
 function CACRoutes() {
   return (
     <Routes>
       <Route path="/" element={<CACnav />}>
         <Route path="/Dashboard" element={<CACDashboard />} />
-        <Route
-          path="/CacCourseTask"
-          Route
-          index
-          element={<SyllabusTemplate />}
-        />
+        
         <Route path="/CourseCreation/:Code" element={<Course />} />
         <Route path="/AddnewCourse/:Code" element={<AddNewCourseDocument />} />
         <Route path="/SOSCreation/:Program" element={<SOS />} />
@@ -37,6 +32,9 @@ function CACRoutes() {
         <Route path="/CDFCreation/:Code" element={<CDF />} />
         <Route path="/CreateCDF/:Code" element={<CreateCDF />} />
         <Route path="/CacSyllabusTask" Route index element={<CacSyllabus />} />
+        <Route path="/SyllabusCreation/:Code" element={<SyllabusCreation />} />
+        <Route path="/CreateSyllabus/:Code" element={<CreateSyllabus />} />
+
 
         <Route path="/CacAllTasks">
           <Route path=":id" element={<CacAllTasks />} />

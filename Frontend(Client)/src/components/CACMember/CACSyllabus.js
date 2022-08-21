@@ -19,17 +19,13 @@ function ActionButtons(props) {
         color="primary"
         size="small"
         style={{ marginLeft: 16 }}
-        // onClick={}
-      >
-        <AiFillEdit style={{ marginRight: 10 }} />
-        View
-      </Button>
-
-      <Button
-        variant="contained"
-        color="primary"
-        size="small"
-        style={{ marginLeft: 16 }}
+        onClick={() => {
+          navigate(
+            `/CAC/SyllabusCreation/${row.Code}`,
+            { state: { row } },
+            { replace: true }
+          );
+        }}
       >
         <AiFillEdit style={{ marginRight: 10 }} />
         Add Syllabus
@@ -40,7 +36,13 @@ function ActionButtons(props) {
         color="primary"
         size="small"
         style={{ marginLeft: 16 }}
-        // onClick={null}
+        // onClick={() => {
+        //     navigate(
+        //       `/CAC/SyllabusCreation/${row.Code}`,
+        //       { state: { row } },
+        //       { replace: true }
+        //     );
+        //   }}
       >
         <AiFillEdit style={{ marginRight: 10 }} />
         Submit
@@ -56,7 +58,7 @@ export default function CacSyllabus() {
   }, []);
   const getRepoCourse = async () => {
     const response = await axios.get(
-      "http://localhost:4000/SyllabusCreate/get"
+      "http://localhost:4000/SyllabusCreate/get",{withCredentials:true}
     );
     console.log(response.data);
     setRows(response.data);

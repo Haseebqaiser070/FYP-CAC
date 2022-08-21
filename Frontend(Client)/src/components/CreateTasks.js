@@ -72,10 +72,16 @@ export default function CreateTasks(props) {
       {getRepoCourse();}
     else if( props.pre.taskType=="Create CDF")
       {getCources()}
+    else if( props.pre.taskType=="Create Syllabus")
+    {getCDFCources()}
   }, []);
 
     const getCources = async () => {
     const res = await axios.get("http://localhost:4000/RepoCourse/showwithecat");
+    setRepoCourse(res.data);
+  };
+  const getCDFCources = async () => {
+    const res = await axios.get("http://localhost:4000/RepoCourse/showwithCDF");
     setRepoCourse(res.data);
   };
 
@@ -198,7 +204,7 @@ export default function CreateTasks(props) {
                   
                   {
                   props.pre.taskType == "Create Catalog Description"||
-                  props.pre.taskType =="Create CDF" ? (
+                  props.pre.taskType =="Create CDF"||props.pre.taskType =="Create Syllabus" ? (
                   <div className="col">
                   <FormControl fullWidth size="small">
                     <InputLabel id="taskType">Assign Course</InputLabel>

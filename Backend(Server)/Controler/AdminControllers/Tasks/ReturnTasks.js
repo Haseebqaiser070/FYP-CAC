@@ -10,6 +10,7 @@ const SOSCourse=require("../../../Models/CourseModels/SOSCourse")
 const ReturnedCDF = require("../../../Models/CDFModels/ReturnCDF");
 const CDFdoc = require("../../../Models/CDFModels/CDF");
 const VaersionCDF = require("../../../Models/CDFModels/CDFVersions");
+const genCDF = require("../../../Models/CDFModels/CDFGeneral");
 
 module.exports.Showall = async (req, res) => {
     try {
@@ -100,6 +101,13 @@ module.exports.Lock = async (req, res) => {
         const obj = await ReturnedCDF.findOne({Code:task.Course.Code},{_id:0})
         console.log(obj)
         const SOS = await SOSdoc.find({})
+        await genCDF.create({
+          Code: obj.Code,
+          Topics: obj.Topics,
+          CLOs: obj.CLOs,
+          textBook: obj.textBook ,
+          referenceBook:obj.referenceBook
+          })
         SOS.forEach(async(i)=>{
           const CDF = await CDFdoc.create({
             Program:i.Program,
