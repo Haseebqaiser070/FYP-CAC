@@ -12,6 +12,11 @@ const CDFdoc = require("../../../Models/CDFModels/CDF");
 const VaersionCDF = require("../../../Models/CDFModels/CDFVersions");
 const genCDF = require("../../../Models/CDFModels/CDFGeneral");
 
+const ReturnedSyllabus = require("../../../Models/SyallabusModels/ReturnSyllabus");
+const Syllabusdoc = require("../../../Models/SyallabusModels/Syllabus");
+const VaersionSyllabus = require("../../../Models/SyallabusModels/SyllabusVersion");
+const genSyllabus = require("../../../Models/SyallabusModels/SyllabusGeneral");
+
 module.exports.Showall = async (req, res) => {
     try {
       if (!req.user) return await res.status(401).json("Timed Out");
@@ -124,8 +129,39 @@ module.exports.Lock = async (req, res) => {
         await Task.deleteOne({_id:req.params.id});
         await ReturnedCDF.deleteOne({Code:task.Course.Code})
         await VaersionCDF.deleteMany({Code:task.Course.Code})
-        console.log(finalcourse)
-        res.status(200).json(finalcourse);
+        console.log(genCDF)
+        res.status(200).json(genCDF);
+      }
+
+      else if(task.taskType=="Create Syllabus"||task.taskType=="Update Syllabus"){
+        const obj = await ReturnedSyllabus.findOne({Code:task.Course.Code},{_id:0})
+        console.log(obj)
+        const SOS = await SOSdoc.find({})
+        await genSyllabus.create({
+          Code: obj.Code,
+          Topics: obj.Topics,
+          CLOs: obj.CLOs,
+          textBook: obj.textBook ,
+          referenceBook:obj.referenceBook
+          })
+        SOS.forEach(async(i)=>{
+          const Syllabus = await Syllabusdoc.create({
+            Program:i.Program,
+            Code: obj.Code,
+            Topics: obj.Topics,
+            CLOs: obj.CLOs,
+            textBook: obj.textBook ,
+            referenceBook:obj.referenceBook
+            })
+            console.log("finalSyllabus",Syllabus)
+            }
+          )   
+           
+        await Task.deleteOne({_id:req.params.id});
+        await ReturnedSyllabus.deleteOne({Code:task.Course.Code})
+        await VaersionSyllabus.deleteMany({Code:task.Course.Code})
+        console.log(genSyllabus)
+        res.status(200).json(genSyllabus);
       }
 
 

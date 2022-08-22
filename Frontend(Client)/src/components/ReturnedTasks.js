@@ -67,6 +67,10 @@ export default function ReturnedTasks() {
                 navigate(`/Admin/CDFReturnedView/${row.Course.Code}`, {
                   replace: true,
                 });}
+              else if(row.taskType=="Create Syllabus"){
+                navigate(`/Admin/SyllabusReturnedView/${row.Course.Code}`, {
+                  replace: true,
+                });}
               }
             }
           >

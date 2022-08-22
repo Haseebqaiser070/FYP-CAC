@@ -34,6 +34,7 @@ import SO_BTL_Level from "../SOAndBTLLevel";
 import CDFReturnedView from "../Admin/CDFReturnedView";
 import AllCDFs from "../AllCDFs";
 import CDFFinal from "../Admin/CDFfinal"
+import SyllabusReturnedView from "../Admin/SyllabusReturnedView";
 function AdminRoutes() {
   return (
     <Routes>
@@ -47,6 +48,7 @@ function AdminRoutes() {
         <Route path="/CourseReturnedView/:Code" element={<CourseReturnedView />}/>
         <Route path="/SOSReturnedView/:Program" element={<SOSReturnedView />} />
         <Route path="/CDFReturnedView/:Code" element={<CDFReturnedView />} />
+        <Route path="SyllabusReturnedView/:Code"element={<SyllabusReturnedView/>} />
         <Route path="/EditCourse/:id" element={<EditCourseForm />} />
         <Route path="/CreateNewMeeting" element={<CreateNewMeeting />} />
         

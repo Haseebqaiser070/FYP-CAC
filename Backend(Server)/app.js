@@ -23,6 +23,7 @@ var SyllabusCreationRouter = require("./Routes/CAC/SyllabusCreation")
 var SyllabusVersionRouter = require("./Routes/CAC/SyllabusVersion")
 var SOBTLRouter = require("./Routes/AdminRoutes/SOBTL")
 var CDFReturnedRouter = require("./Routes/AdminRoutes/CDF")
+var SyllabusRouter = require("./Routes/AdminRoutes/Syllabus")
 
 var { getUser } = require("./Middleware/User");
 
@@ -42,6 +43,7 @@ app.use("/Meeting", getUser, MeetingRouter);
 app.use("/Category", getUser, CategoryRouter);
 app.use("/SOS", getUser, SOSRouter);
 app.use("/CDF", getUser, CDFReturnedRouter);
+app.use("/Syllabus",  getUser, SyllabusRouter);
 app.use("/RepoCourse", getUser, RepoRouter);
 app.use("/CourseVersion", getUser, CourseVersion);
 app.use("/Task", getUser, TaskRouter);

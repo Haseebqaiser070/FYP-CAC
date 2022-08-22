@@ -36,13 +36,12 @@ function ActionButtons(props) {
         color="primary"
         size="small"
         style={{ marginLeft: 16 }}
-        // onClick={() => {
-        //     navigate(
-        //       `/CAC/SyllabusCreation/${row.Code}`,
-        //       { state: { row } },
-        //       { replace: true }
-        //     );
-        //   }}
+        onClick={() => {
+           await axios.post(
+            `http://localhost:4000/Submit/${Code}`,{withCredentials:true}
+          );
+          getRepoCourse(); 
+        }}
       >
         <AiFillEdit style={{ marginRight: 10 }} />
         Submit
