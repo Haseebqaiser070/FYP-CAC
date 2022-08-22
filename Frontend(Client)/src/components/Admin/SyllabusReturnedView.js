@@ -46,7 +46,6 @@ export default function SyllabusReturnedView() {
   console.log("SO",SO)
 
   useEffect(() => {
-    getData()
     getContent()
     getstuff()
     getCat()

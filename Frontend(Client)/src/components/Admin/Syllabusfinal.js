@@ -8,7 +8,7 @@ import {
 import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 import "./pdfstyles.css";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate,useParams } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
 import comsatslogo from "../CACMember/comsats_logo.png";
 
@@ -41,18 +41,18 @@ export default function SyllabusFinal() {
     objectiveList: [],
     Books: [],
   });
+  console.log("Content",Content,"\n Cat",Cat,"\n CDF",CDF)
   const navigate = useNavigate();
   
   console.log("SO",SO)
 
   useEffect(() => {
-    getData()
     getContent()
     getstuff()
     getCat()
   }, []);
   const getstuff = async()=>{
-    const res = await axios.get(`http://localhost:4000/CDF/shower/${Code}`)
+    const res = await axios.get(`http://localhost:4000/CDF/showOne/${Program}/${Code}`)
     setCDF(res.data)
     var sooo = []
     res.data.CLOs.forEach(e => {
@@ -66,7 +66,7 @@ export default function SyllabusFinal() {
   }
   const getCat = async () => {
     try {
-      const response = await axios.get(`http://localhost:4000/Course/bycode/${Code}`);
+      const response = await axios.get(`http://localhost:4000/ProgramCourses/showcode/${Program}/${Code}`);
       console.log(response.data);
       setCat({
         Code: response.data.Code,
@@ -85,7 +85,7 @@ export default function SyllabusFinal() {
   };
   const getContent = async () => {
     const response = await axios.get(
-      `http://localhost:4000/Syllabus/ReturnedCourse/${Code}`);
+      `http://localhost:4000/Syllabus/${id}`);
     setContent([...response.data.Plan]);
   };
 

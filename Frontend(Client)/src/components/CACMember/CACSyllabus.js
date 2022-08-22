@@ -9,46 +9,6 @@ import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineCheckSquare, AiFillEdit } from "react-icons/ai";
 
-function ActionButtons(props) {
-  const navigate = useNavigate();
-  const { row } = props;
-  return (
-    <div>
-      <Button
-        variant="contained"
-        color="primary"
-        size="small"
-        style={{ marginLeft: 16 }}
-        onClick={() => {
-          navigate(
-            `/CAC/SyllabusCreation/${row.Code}`,
-            { state: { row } },
-            { replace: true }
-          );
-        }}
-      >
-        <AiFillEdit style={{ marginRight: 10 }} />
-        Add Syllabus
-      </Button>
-
-      <Button
-        variant="contained"
-        color="primary"
-        size="small"
-        style={{ marginLeft: 16 }}
-        onClick={() => {
-           await axios.post(
-            `http://localhost:4000/Submit/${Code}`,{withCredentials:true}
-          );
-          getRepoCourse(); 
-        }}
-      >
-        <AiFillEdit style={{ marginRight: 10 }} />
-        Submit
-      </Button>
-    </div>
-  );
-}
 
 export default function CacSyllabus() {
   const [Rows, setRows] = useState([]);
@@ -83,6 +43,50 @@ export default function CacSyllabus() {
       renderCell: ActionButtons,
     },
   ];
+
+  function ActionButtons(props) {
+    const navigate = useNavigate();
+    const { row } = props;
+    return (
+      <div>
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          style={{ marginLeft: 16 }}
+          onClick={() => {
+            navigate(
+              `/CAC/SyllabusCreation/${row.Code}`,
+              { state: { row } },
+              { replace: true }
+            );
+          }}
+        >
+          <AiFillEdit style={{ marginRight: 10 }} />
+          Add Syllabus
+        </Button>
+  
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          style={{ marginLeft: 16 }}
+          onClick={async() => {
+             await axios.post(
+              `http://localhost:4000/SyllabusCreate/Submit/${row.Code}`,{withCredentials:true}
+            );
+            getRepoCourse(); 
+          }}
+        >
+          <AiFillEdit style={{ marginRight: 10 }} />
+          Submit
+        </Button>
+      </div>
+    );
+  }
+  
+
+
   return (
     <div className="container" style={{ width: "100%", padding: 20 }}>
       <h1 className="py-4">

@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 
-var SyllabusVersionSchema = new mongoose.Schema({
+var SyllabusReturnedSchema = new mongoose.Schema({
         Code:{type:String},
         Plan:[{
             lecture:{type:String},
@@ -12,4 +12,4 @@ var SyllabusVersionSchema = new mongoose.Schema({
 
 });
 
-module.exports = mongoose.model("SyllabusVersion", SyllabusVersionSchema);
+module.exports = mongoose.model("SyllabusReturned", SyllabusReturnedSchema);

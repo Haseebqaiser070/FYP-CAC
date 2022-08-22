@@ -50,7 +50,7 @@ module.exports.ShowOne = async (req, res) => {
     if (!req.user) return await res.json("Timed Out");
     const Syllabus = await Syllabusdoc.findById(req.params.id)
     console.log(Syllabus)
-    res.json(Syllabus);
+    await res.json(Syllabus);
   } catch (err) {
     console.log(err);
   }

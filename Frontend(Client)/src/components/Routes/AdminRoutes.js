@@ -35,6 +35,8 @@ import CDFReturnedView from "../Admin/CDFReturnedView";
 import AllCDFs from "../AllCDFs";
 import CDFFinal from "../Admin/CDFfinal"
 import SyllabusReturnedView from "../Admin/SyllabusReturnedView";
+import AllSyllabus from "../AllSyllabus";
+import SyllabusFinal from "../Admin/Syllabusfinal";
 function AdminRoutes() {
   return (
     <Routes>
@@ -51,10 +53,9 @@ function AdminRoutes() {
         <Route path="SyllabusReturnedView/:Code"element={<SyllabusReturnedView/>} />
         <Route path="/EditCourse/:id" element={<EditCourseForm />} />
         <Route path="/CreateNewMeeting" element={<CreateNewMeeting />} />
-        
-        <Route
-          path="/ViewCacMemberAvailabilty"
-          element={<ViewCacAvailability />}
+        <Route path="/AllSyllabus" element={<AllSyllabus />} />
+        <Route path="/SyllabusView/:Program/:Code/:id" element={<SyllabusFinal/>} /> 
+        <Route path="/ViewCacMemberAvailabilty" element={<ViewCacAvailability />}
         />
         <Route path="/AllSchemeofStudies" element={<AllSchemeofStudies />} />
         <Route path="/AllCDFs" element={<AllCDFs />} />

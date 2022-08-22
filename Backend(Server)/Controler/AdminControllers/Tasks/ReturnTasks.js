@@ -11,7 +11,6 @@ const ReturnedCDF = require("../../../Models/CDFModels/ReturnCDF");
 const CDFdoc = require("../../../Models/CDFModels/CDF");
 const VaersionCDF = require("../../../Models/CDFModels/CDFVersions");
 const genCDF = require("../../../Models/CDFModels/CDFGeneral");
-
 const ReturnedSyllabus = require("../../../Models/SyallabusModels/ReturnSyllabus");
 const Syllabusdoc = require("../../../Models/SyallabusModels/Syllabus");
 const VaersionSyllabus = require("../../../Models/SyallabusModels/SyllabusVersion");
@@ -139,8 +138,7 @@ module.exports.Lock = async (req, res) => {
         const SOS = await SOSdoc.find({})
         await genSyllabus.create({
           Code: obj.Code,
-          Topics: obj.Topics,
-          CLOs: obj.CLOs,
+          Plan:obj.Plan,
           textBook: obj.textBook ,
           referenceBook:obj.referenceBook
           })
@@ -148,8 +146,7 @@ module.exports.Lock = async (req, res) => {
           const Syllabus = await Syllabusdoc.create({
             Program:i.Program,
             Code: obj.Code,
-            Topics: obj.Topics,
-            CLOs: obj.CLOs,
+            Plan:obj.Plan,
             textBook: obj.textBook ,
             referenceBook:obj.referenceBook
             })
