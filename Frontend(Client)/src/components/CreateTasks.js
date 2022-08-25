@@ -18,6 +18,8 @@ import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
 import axios from "axios";
 import { Autocomplete } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+
 function TaskDetails() {
   return (
     <div>
@@ -63,28 +65,30 @@ export default function CreateTasks(props) {
       Deadline: "",
       Status: "",
       Course: "",
-      Program:props.pre.Program,
+      Program: props.pre.Program,
     },
   ]);
 
   useEffect(() => {
-    if( props.pre.taskType=="Create Catalog Description")
-      {getRepoCourse();}
-    else if( props.pre.taskType=="Create CDF")
-      {getCources()}
-    else if( props.pre.taskType=="Create Syllabus")
-    {getCDFCources()}
+    if (props.pre.taskType == "Create Catalog Description") {
+      getRepoCourse();
+    } else if (props.pre.taskType == "Create CDF") {
+      getCources();
+    } else if (props.pre.taskType == "Create Syllabus") {
+      getCDFCources();
+    }
   }, []);
 
-    const getCources = async () => {
-    const res = await axios.get("http://localhost:4000/RepoCourse/showwithecat");
+  const getCources = async () => {
+    const res = await axios.get(
+      "http://localhost:4000/RepoCourse/showwithecat"
+    );
     setRepoCourse(res.data);
   };
   const getCDFCources = async () => {
     const res = await axios.get("http://localhost:4000/RepoCourse/showwithCDF");
     setRepoCourse(res.data);
   };
-
 
   const getRepoCourse = async () => {
     const response = await axios.get("http://localhost:4000/RepoCourse/show");
@@ -100,7 +104,7 @@ export default function CreateTasks(props) {
       if (
         e.User == "" ||
         e.Deadline == "" ||
-        e.Status == "" 
+        e.Status == ""
         //||
         // e.Course == ""
       ) {
@@ -144,41 +148,58 @@ export default function CreateTasks(props) {
             {obj.map((e, index) => {
               return (
                 <>
-                  <h4>Task{index + 1}</h4>
-                  {obj.length > 1 && (
-                    <FormControl>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        size="medium"
-                        onClick={() => {
-
-                          const clone = [...obj];
-                          console.log("ondex",index)
-                          if(clone.length==index+1){
-                            console.log("last rm")
-                            clone[index]={
-                                taskType: props.pre.taskType,
-                                User: "",
-                                Deadline: "",
-                                Status: "",
-                                Course: "",
-                                Program:props.pre.Program,
+                  <div className="row my-4">
+                    <div className="col-9">
+                      <h3 style={{ textAlign: "start" }}>
+                        <b>TASK {index + 1} </b>
+                      </h3>
+                    </div>
+                    <div className="col-3">
+                      {obj.length > 1 && (
+                        <FormControl>
+                          <Button
+                            style={{
+                              backgroundColor: "red",
+                              borderRadius: "100px",
+                            }}
+                            variant="contained"
+                            // className="my-4"
+                            color="primary"
+                            size="small"
+                            onClick={() => {
+                              const clone = [...obj];
+                              console.log("ondex", index);
+                              if (clone.length == index + 1) {
+                                console.log("last rm");
+                                clone[index] = {
+                                  taskType: props.pre.taskType,
+                                  User: "",
+                                  Deadline: "",
+                                  Status: "",
+                                  Course: "",
+                                  Program: props.pre.Program,
+                                };
+                              } else if (clone.length != index + 1) {
+                                console.log("not last rm");
+                                clone[index] = clone[index + 1];
                               }
-                            }
-                          else if(clone.length!=index+1){
-                            console.log("not last rm")
-                            clone[index]=clone[index+1]    
-                          }
-                          const a = clone.splice(index, 1);
-                          console.log("aaaaaaaaaaaaa", a, "cloneeeeeee", clone);
-                          setobj([...clone]);
-                        }}
-                      >
-                        remove
-                      </Button>
-                    </FormControl>
-                  )}
+                              const a = clone.splice(index, 1);
+                              console.log(
+                                "aaaaaaaaaaaaa",
+                                a,
+                                "cloneeeeeee",
+                                clone
+                              );
+                              setobj([...clone]);
+                            }}
+                          >
+                            <CloseIcon />
+                          </Button>
+                        </FormControl>
+                      )}
+                    </div>
+                  </div>
+
                   <div className="col">
                     <FormControl fullWidth size="small">
                       <InputLabel id="taskType">Assign Teacher</InputLabel>
@@ -201,76 +222,74 @@ export default function CreateTasks(props) {
                       </Select>
                     </FormControl>
                   </div>
-                  
-                  {
-                  props.pre.taskType == "Create Catalog Description"||
-                  props.pre.taskType =="Create CDF"||props.pre.taskType =="Create Syllabus" ? (
-                  <div className="col">
-                  <FormControl fullWidth size="small">
-                    <InputLabel id="taskType">Assign Course</InputLabel>
-                    <Select
-                      className="mb-4"
-                      labelId="courseAssign"
-                      id="courseAssign"
-                      value={obj[index].Course}
-                      label="Assign Teacher"
-                      onChange={(e) => {
-                        const clone = [...obj];
-                        clone[index].Course = e.target.value;
-                        setobj([...clone]);
-                      }}
-                      autoWidth
-                    >
-                      {RepoCourse.map((a) => {
-                        return (
-                          <MenuItem value={a}>
-                            {a.Code + "  " + a.Name}
+
+                  {props.pre.taskType == "Create Catalog Description" ||
+                  props.pre.taskType == "Create CDF" ||
+                  props.pre.taskType == "Create Syllabus" ? (
+                    <div className="col">
+                      <FormControl fullWidth size="small">
+                        <InputLabel id="taskType">Assign Course</InputLabel>
+                        <Select
+                          className="mb-4"
+                          labelId="courseAssign"
+                          id="courseAssign"
+                          value={obj[index].Course}
+                          label="Assign Teacher"
+                          onChange={(e) => {
+                            const clone = [...obj];
+                            clone[index].Course = e.target.value;
+                            setobj([...clone]);
+                          }}
+                          autoWidth
+                        >
+                          {RepoCourse.map((a) => {
+                            return (
+                              <MenuItem value={a}>
+                                {a.Code + "  " + a.Name}
+                              </MenuItem>
+                            );
+                          })}
+                        </Select>
+                      </FormControl>
+                    </div>
+                  ) : props.pre.taskType == "Create SOS" ? (
+                    <div className="col">
+                      <FormControl fullWidth size="small">
+                        <InputLabel id="taskType">Assign Course</InputLabel>
+                        <Select
+                          className="mb-4"
+                          labelId="courseAssign"
+                          id="courseAssign"
+                          value={obj[index].Program}
+                          label="Assign Teacher"
+                          autoWidth
+                        >
+                          <MenuItem value={props.pre.Program}>
+                            {props.pre.Program}
                           </MenuItem>
-                        );
-                      })}
-                    </Select>
-                  </FormControl>
-                </div>
-                    ):
-                  props.pre.taskType == "Create SOS" ? (
-                <div className="col">
-                  <FormControl fullWidth size="small">
-                    <InputLabel id="taskType">Assign Course</InputLabel>
-                    <Select
-                      className="mb-4"
-                      labelId="courseAssign"
-                      id="courseAssign"
-                      value={obj[index].Program}
-                      label="Assign Teacher"
-                      autoWidth
-                    >
-                      <MenuItem value={props.pre.Program}>
-                        {props.pre.Program}
-                      </MenuItem>  
-                    </Select>
-                  </FormControl>
-                </div>
-                  ) :
-                  props.pre.taskType == "Update SOS" ? (
+                        </Select>
+                      </FormControl>
+                    </div>
+                  ) : props.pre.taskType == "Update SOS" ? (
                     <div>
-                     <div className="col">
-                  <FormControl fullWidth size="small">
-                    <InputLabel id="taskType">Assign Course</InputLabel>
-                    <Select
-                      className="mb-4"
-                      labelId="courseAssign"
-                      id="courseAssign"
-                      value={obj[index].Program}
-                      label="Assign Teacher"
-                      autoWidth
-                    >
-                      <MenuItem value={props.pre.Program}>
-                        {props.pre.Program}
-                      </MenuItem>  
-                    </Select>
-                  </FormControl>
-                </div>
-                </div>
+                      <div className="col">
+                        <FormControl fullWidth size="small">
+                          <InputLabel id="taskType">Assign Course</InputLabel>
+                          <Select
+                            className="mb-4"
+                            labelId="courseAssign"
+                            id="courseAssign"
+                            value={obj[index].Program}
+                            label="Assign Teacher"
+                            autoWidth
+                          >
+                            <MenuItem value={props.pre.Program}>
+                              {props.pre.Program}
+                            </MenuItem>
+                          </Select>
+                        </FormControl>
+                      </div>
+                    </div>
                   ) : props.pre.taskType == "Update CDF" ? (
                     <div>
                       <Autocomplete
@@ -393,7 +412,7 @@ export default function CreateTasks(props) {
                         Deadline: "",
                         Status: "",
                         Course: "",
-                        Program:props.pre.Program,
+                        Program: props.pre.Program,
                       },
                     ]);
                   }}

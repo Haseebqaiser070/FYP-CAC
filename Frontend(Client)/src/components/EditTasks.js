@@ -18,6 +18,8 @@ import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
 import axios from "axios";
 import { Autocomplete } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+
 function TaskDetails() {
   return (
     <div>
@@ -56,19 +58,21 @@ export default function EditTasks(props) {
   axios.defaults.withCredentials = true;
   const [Avail, setAvail] = useState([]);
   const [RepoCourse, setRepoCourse] = useState([]);
-  console.log("pre",props.pre)
+  console.log("pre", props.pre);
   const [obj, setobj] = useState([]);
-  console.log("obj",obj)
-  console.log("RepoCourse",RepoCourse)
-  useEffect(async() => {
-   await  getRepoCourse();
-    await getobj()
+  console.log("obj", obj);
+  console.log("RepoCourse", RepoCourse);
+  useEffect(async () => {
+    await getRepoCourse();
+    await getobj();
   }, []);
-  
-    const getobj = async () => {
-      console.log(props.pre._id)
-    const res = await axios.get(`http://localhost:4000/Task/showOneInit/${props.pre._id}`);
-    setobj([...res.data.Task])
+
+  const getobj = async () => {
+    console.log(props.pre._id);
+    const res = await axios.get(
+      `http://localhost:4000/Task/showOneInit/${props.pre._id}`
+    );
+    setobj([...res.data.Task]);
   };
 
   const getRepoCourse = async () => {
@@ -78,20 +82,27 @@ export default function EditTasks(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(obj)
-    let verify = true
-    obj.forEach(e => {
-      console.log("e",e)
-      if(e.User==""||e.Deadline==""||e.Status==""||e.Course=="") {verify=false}
+    console.log(obj);
+    let verify = true;
+    obj.forEach((e) => {
+      console.log("e", e);
+      if (
+        e.User == "" ||
+        e.Deadline == "" ||
+        e.Status == "" ||
+        e.Course == ""
+      ) {
+        verify = false;
+      }
     });
     if (verify) {
-      console.log("23s")
+      console.log("23s");
       const res = await axios.put("http://localhost:4000/Task/Update", {
         obj,
-        id: props.pre._id
+        id: props.pre._id,
       });
       setobj([]);
-      props.func()
+      props.func();
     } else {
       alert("Empty Field");
     }
@@ -113,211 +124,238 @@ export default function EditTasks(props) {
                 id="outlined-basic"
                 label="Task Type"
                 variant="outlined"
-                value = {props.pre.taskType}
+                value={props.pre.taskType}
                 size="small"
                 fullWidth
               />
             </div>
-    {obj.length>0 && obj.map((oo,index)=>{
-      
-      return(
-                <>
-                <h4>Task{index+1}</h4>{
-                obj.length >1 &&
-                <FormControl>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  size="medium"
-                  onClick={() => {
-                    const clone=[...obj]
-                    const a = clone.splice(index,1)
-                    console.log("aaaaaaaaaaaaa",a , "cloneeeeeee",clone)
-                    setobj([...clone]);
-                  }}
-                >
-                  remove
-                </Button>
-                </FormControl>
-                }                
-      <div className="col">
-          <FormControl fullWidth size="small">
-            <InputLabel id="taskType">Assign Teacher</InputLabel>
-            <Select
-              className="mb-4"
-              labelId="taskType"
-              id="taskType"
-              value={oo.User}
-              label="Assign Teacher"
-              onChange={(e) => {
-                const clone = [...obj]
-                clone[index].User=e.target.value
-                setobj([...clone])
-              }}
-              autoWidth
-            > <MenuItem value={oo.User} selected hidden>{obj[index].User.Name}</MenuItem>;
-              {props.pre.AssignMember.map((a) => {
-                return <MenuItem value={a}>{a.Name}</MenuItem>;
-              })}
-            </Select>
-          </FormControl>
-        </div><div className="col">
-            <FormControl fullWidth size="small">
-              <InputLabel id="taskType">Assign Course</InputLabel>
-              <Select
-                className="mb-4"
-                labelId="courseAssign"
-                id="courseAssign"
-                value={oo.Course}
-                label="Assign Teacher"
-                onChange={(e) => 
-                  {
-                    const clone = [...obj]
-                    clone[index].Course=e.target.value
-                    setobj([...clone])
-                  }}
-                autoWidth
-            > 
-            <MenuItem value={oo.Course} selected hidden>{oo.Course.Code+ " " +oo.Course.Name}</MenuItem>
-        
-                { RepoCourse.length>1 && RepoCourse.map((a) => {
-                  return (
-                    <MenuItem value={a}>{a.Code + "  " + a.Name}</MenuItem>
-                  );
-                })}
-              </Select>
-            </FormControl>
-          </div>
-                {props.pre.taskType =="Create SOS"||props.pre.taskType =="Update SOS"?
-                
-                <div>
-                  <Autocomplete
-                    className="mb-4"
-                    multiple
-                    id="tags-standard"
-                    options={top100Films}
-                    getOptionLabel={(option) => option.title}
-                    defaultValue={[top100Films[13]]}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="outlined"
-                        label="Select SOS"
-                        placeholder="Select SOS"
-                      />
-                    )}
-                  />
-                </div>
-                :props.pre.taskType =="Update CDF"?
-                
-                <div>
-                  <Autocomplete
-                    className="mb-4"
-                    multiple
-                    id="tags-standard"
-                    options={top100Films}
-                    getOptionLabel={(option) => option.title}
-                    defaultValue={[top100Films[13]]}
-                    //   onChange={}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="outlined"
-                        label="Select CDF"
-                        placeholder="Select CDF"
-                      />
-                    )}
-                  />
-                </div>
-                :props.pre.taskType =="Update Syllabus"?
-                <div>
-                  <Autocomplete
-                    className="mb-4"
-                    multiple
-                    id="tags-standard"
-                    options={top100Films}
-                    getOptionLabel={(option) => option.title}
-                    defaultValue={[top100Films[13]]}
-                    //   onChange={}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="outlined"
-                        label="Select Syllabus"
-                        placeholder="Select Syllabus"
-                      />
-                    )}
-                  />
-                </div>
-                :props.pre.taskType =="Update Lab Manual"?
-                  <div>
-                  <Autocomplete
-                    className="mb-4"
-                    multiple
-                    id="tags-standard"
-                    options={top100Films}
-                    getOptionLabel={(option) => option.title}
-                    defaultValue={[top100Films[13]]}
-                    //   onChange={}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="outlined"
-                        label="Select Lab Manual"
-                        placeholder="Select Lab Manual"
-                      />
-                    )}
-                  />
-                </div>
-                
-                :""
-                  }
-                
-                
-                <div className="col">
-                  <FormControl fullWidth size="small">
-                    <InputLabel id="taskType">Status</InputLabel>
-                    <Select
-                      className="mb-4"
-                      labelId="taskType"
-                      id="taskType"
-                      label="Assign Teacher"
-                      autoWidth
-                      value={obj[index].Status}
-                      onChange={(e) => 
-                        {
-                          const clone = [...obj]
-                          clone[index].Status=e.target.value
-                          setobj([...clone])
-                        }}
-                    >
-                    <MenuItem value={oo.Course} selected hidden>{oo.Status}</MenuItem>;
-                      <MenuItem value={"Assigned"}>Assigned</MenuItem>
-                      <MenuItem value={"Revision"}>Revision</MenuItem>
-                    </Select>
-                  </FormControl>
-                </div>
+            {obj.length > 0 &&
+              obj.map((oo, index) => {
+                return (
+                  <>
+                    <div className="row my-4">
+                      <div className="col-8">
+                        <h3 style={{ textAlign: "start" }}>
+                          <b>TASK {index + 1}</b>
+                        </h3>
+                      </div>
+                      <div className="col-4">
+                        {obj.length > 1 && (
+                          <FormControl>
+                            <Button
+                              style={{
+                                backgroundColor: "red",
+                                borderRadius: "100px",
+                              }}
+                              variant="contained"
+                              color="primary"
+                              size="medium"
+                              onClick={() => {
+                                const clone = [...obj];
+                                const a = clone.splice(index, 1);
+                                console.log(
+                                  "aaaaaaaaaaaaa",
+                                  a,
+                                  "cloneeeeeee",
+                                  clone
+                                );
+                                setobj([...clone]);
+                              }}
+                            >
+                              <CloseIcon />
+                            </Button>
+                          </FormControl>
+                        )}
+                      </div>
+                    </div>
 
-                <div>
-                  <label>Deadline</label>
-                  <input
-                    className="mb-4"
-                    // inputProps={{min = new Date.toISOString.slice(0,16)}}
-                    value={oo.Deadline}
-                    onChange={(e) =>
-                      {
-                        const clone = [...obj]
-                        clone[index].Deadline=e.target.value
-                        setobj([...clone])
-                      }}
-                    style={{ width: "100%" }}
-                    type="datetime-local"
-                    placeholder="Deadline"
-                  ></input>
-                </div></>
-    )}
-      )}    
-        </CardContent>
+                    <div className="col">
+                      <FormControl fullWidth size="small">
+                        <InputLabel id="taskType">Assign Teacher</InputLabel>
+                        <Select
+                          className="mb-4"
+                          labelId="taskType"
+                          id="taskType"
+                          value={oo.User}
+                          label="Assign Teacher"
+                          onChange={(e) => {
+                            const clone = [...obj];
+                            clone[index].User = e.target.value;
+                            setobj([...clone]);
+                          }}
+                          autoWidth
+                        >
+                          {" "}
+                          <MenuItem value={oo.User} selected hidden>
+                            {obj[index].User.Name}
+                          </MenuItem>
+                          ;
+                          {props.pre.AssignMember.map((a) => {
+                            return <MenuItem value={a}>{a.Name}</MenuItem>;
+                          })}
+                        </Select>
+                      </FormControl>
+                    </div>
+                    <div className="col">
+                      <FormControl fullWidth size="small">
+                        <InputLabel id="taskType">Assign Course</InputLabel>
+                        <Select
+                          className="mb-4"
+                          labelId="courseAssign"
+                          id="courseAssign"
+                          value={oo.Course}
+                          label="Assign Teacher"
+                          onChange={(e) => {
+                            const clone = [...obj];
+                            clone[index].Course = e.target.value;
+                            setobj([...clone]);
+                          }}
+                          autoWidth
+                        >
+                          <MenuItem value={oo.Course} selected hidden>
+                            {oo.Course.Code + " " + oo.Course.Name}
+                          </MenuItem>
+
+                          {RepoCourse.length > 1 &&
+                            RepoCourse.map((a) => {
+                              return (
+                                <MenuItem value={a}>
+                                  {a.Code + "  " + a.Name}
+                                </MenuItem>
+                              );
+                            })}
+                        </Select>
+                      </FormControl>
+                    </div>
+                    {props.pre.taskType == "Create SOS" ||
+                    props.pre.taskType == "Update SOS" ? (
+                      <div>
+                        <Autocomplete
+                          className="mb-4"
+                          multiple
+                          id="tags-standard"
+                          options={top100Films}
+                          getOptionLabel={(option) => option.title}
+                          defaultValue={[top100Films[13]]}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              variant="outlined"
+                              label="Select SOS"
+                              placeholder="Select SOS"
+                            />
+                          )}
+                        />
+                      </div>
+                    ) : props.pre.taskType == "Update CDF" ? (
+                      <div>
+                        <Autocomplete
+                          className="mb-4"
+                          multiple
+                          id="tags-standard"
+                          options={top100Films}
+                          getOptionLabel={(option) => option.title}
+                          defaultValue={[top100Films[13]]}
+                          //   onChange={}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              variant="outlined"
+                              label="Select CDF"
+                              placeholder="Select CDF"
+                            />
+                          )}
+                        />
+                      </div>
+                    ) : props.pre.taskType == "Update Syllabus" ? (
+                      <div>
+                        <Autocomplete
+                          className="mb-4"
+                          multiple
+                          id="tags-standard"
+                          options={top100Films}
+                          getOptionLabel={(option) => option.title}
+                          defaultValue={[top100Films[13]]}
+                          //   onChange={}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              variant="outlined"
+                              label="Select Syllabus"
+                              placeholder="Select Syllabus"
+                            />
+                          )}
+                        />
+                      </div>
+                    ) : props.pre.taskType == "Update Lab Manual" ? (
+                      <div>
+                        <Autocomplete
+                          className="mb-4"
+                          multiple
+                          id="tags-standard"
+                          options={top100Films}
+                          getOptionLabel={(option) => option.title}
+                          defaultValue={[top100Films[13]]}
+                          //   onChange={}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              variant="outlined"
+                              label="Select Lab Manual"
+                              placeholder="Select Lab Manual"
+                            />
+                          )}
+                        />
+                      </div>
+                    ) : (
+                      ""
+                    )}
+
+                    <div className="col">
+                      <FormControl fullWidth size="small">
+                        <InputLabel id="taskType">Status</InputLabel>
+                        <Select
+                          className="mb-4"
+                          labelId="taskType"
+                          id="taskType"
+                          label="Assign Teacher"
+                          autoWidth
+                          value={obj[index].Status}
+                          onChange={(e) => {
+                            const clone = [...obj];
+                            clone[index].Status = e.target.value;
+                            setobj([...clone]);
+                          }}
+                        >
+                          <MenuItem value={oo.Course} selected hidden>
+                            {oo.Status}
+                          </MenuItem>
+                          ;<MenuItem value={"Assigned"}>Assigned</MenuItem>
+                          <MenuItem value={"Revision"}>Revision</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </div>
+
+                    <div>
+                      <label>Deadline</label>
+                      <input
+                        className="mb-4"
+                        // inputProps={{min = new Date.toISOString.slice(0,16)}}
+                        value={oo.Deadline}
+                        onChange={(e) => {
+                          const clone = [...obj];
+                          clone[index].Deadline = e.target.value;
+                          setobj([...clone]);
+                        }}
+                        style={{ width: "100%" }}
+                        type="datetime-local"
+                        placeholder="Deadline"
+                      ></input>
+                    </div>
+                  </>
+                );
+              })}
+          </CardContent>
           <div className="col">
             <CardActions>
               <Stack>
@@ -326,7 +364,16 @@ export default function EditTasks(props) {
                   color="primary"
                   size="medium"
                   onClick={() => {
-                    setobj([...obj,{taskType:props.pre.taskType,User:"",Deadline:"",Status:"",Course :""}]);
+                    setobj([
+                      ...obj,
+                      {
+                        taskType: props.pre.taskType,
+                        User: "",
+                        Deadline: "",
+                        Status: "",
+                        Course: "",
+                      },
+                    ]);
                   }}
                 >
                   Add

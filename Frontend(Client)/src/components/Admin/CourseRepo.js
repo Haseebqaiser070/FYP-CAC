@@ -15,14 +15,14 @@ import {
   Card,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import CloseIcon from "@mui/icons-material/Close";
 
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 700,
-  height: 300,
+
   bgcolor: "background.paper",
   //   border: "2px solid #000",
 
@@ -201,9 +201,19 @@ export default function CourseRepo() {
                 aria-describedby="modal-modal-description"
               >
                 <Box sx={style}>
+                  <Box
+                    mb={3}
+                    style={{ display: "flex", justifyContent: "end" }}
+                  >
+                    <CloseIcon
+                      onClick={handleClose}
+                      style={{ cursor: "pointer", color: "gray" }}
+                    />
+                  </Box>
                   <h4 style={{ textAlign: "center", marginBottom: 30 }}>
                     Add New Cource
                   </h4>
+
                   <form onSubmit={AddRepoCourse}>
                     <div className="row">
                       <div className="col">

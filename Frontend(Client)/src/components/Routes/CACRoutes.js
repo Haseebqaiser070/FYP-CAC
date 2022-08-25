@@ -22,7 +22,7 @@ function CACRoutes() {
     <Routes>
       <Route path="/" element={<CACnav />}>
         <Route path="/Dashboard" element={<CACDashboard />} />
-        
+        <Route path="/CacCourseTask" Route index element={<CacCourseTask />} />
         <Route path="/CourseCreation/:Code" element={<Course />} />
         <Route path="/AddnewCourse/:Code" element={<AddNewCourseDocument />} />
         <Route path="/SOSCreation/:Program" element={<SOS />} />
@@ -34,7 +34,6 @@ function CACRoutes() {
         <Route path="/CacSyllabusTask" Route index element={<CacSyllabus />} />
         <Route path="/SyllabusCreation/:Code" element={<SyllabusCreation />} />
         <Route path="/CreateSyllabus/:Code" element={<CreateSyllabus />} />
-
 
         <Route path="/CacAllTasks">
           <Route path=":id" element={<CacAllTasks />} />

@@ -55,24 +55,24 @@ export default function ReturnedTasks() {
             size="small"
             style={{ marginLeft: 16, padding: 10 }}
             onClick={() => {
-             if(row.taskType=="Create Catalog Description") {
-              navigate(`/Admin/CourseReturnedView/${row.Course.Code}`, {
-                replace: true,
-              });}
-              else if(row.taskType=="Create SOS"){
+              if (row.taskType == "Create Catalog Description") {
+                navigate(`/Admin/CourseReturnedView/${row.Course.Code}`, {
+                  replace: true,
+                });
+              } else if (row.taskType == "Create SOS") {
                 navigate(`/Admin/SOSReturnedView/${row.Program}`, {
                   replace: true,
-                });}
-              else if(row.taskType=="Create CDF"){
+                });
+              } else if (row.taskType == "Create CDF") {
                 navigate(`/Admin/CDFReturnedView/${row.Course.Code}`, {
                   replace: true,
-                });}
-              else if(row.taskType=="Create Syllabus"){
+                });
+              } else if (row.taskType == "Create Syllabus") {
                 navigate(`/Admin/SyllabusReturnedView/${row.Course.Code}`, {
                   replace: true,
-                });}
+                });
               }
-            }
+            }}
           >
             <AiFillEye />
           </Button>
@@ -148,34 +148,30 @@ export default function ReturnedTasks() {
     {
       field: "taskType",
       headerName: "Task",
-      flex: 1,
+      width: 200,
     },
     {
       field: "User",
       headerName: "Assigned To",
       valueGetter: (params) => params?.row?.User?.Name,
-      flex: 1,
+      width: 170,
     },
-    {
-      field: "Deadline",
-      headerName: "Deadline",
-      flex: 1,
-    },
+
     {
       field: "Status",
       headerName: "Status",
-      flex: 0.5,
+      width: 100,
     },
     {
       field: "Course",
       headerName: "Course",
       valueGetter: (params) => params?.row?.Course?.Name,
-      flex: 1,
+      width: 200,
     },
     {
       field: "Action",
       headerName: "Action",
-      flex: 3,
+      width: 450,
       editable: false,
       renderCell: ActionButtons,
     },

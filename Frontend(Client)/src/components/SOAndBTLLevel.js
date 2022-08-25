@@ -14,9 +14,9 @@ import {
   Tooltip,
 } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
+
 import CloseIcon from "@mui/icons-material/Close";
-import InputLabel from "@mui/material/InputLabel";
+
 import AddIcon from "@mui/icons-material/Add";
 import { Box } from "@mui/system";
 
@@ -35,20 +35,19 @@ const style = {
 export default function SO_BTL_Level() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () =>{
-    setOpen(false)
-    setGA("")
-    setSO("")
-    setUpid("")
-  }
+  const handleClose = () => {
+    setOpen(false);
+    setGA("");
+    setSO("");
+    setUpid("");
+  };
 
   const [open1, setOpen1] = useState(false);
-  const handleOpen1 = () => setOpen1(true)
-   ;
-  const handleClose1 = () =>{
-    setOpen1(false)
-    setBTL("")
-    setUpid("")
+  const handleOpen1 = () => setOpen1(true);
+  const handleClose1 = () => {
+    setOpen1(false);
+    setBTL("");
+    setUpid("");
   };
 
   const [GA, setGA] = useState("");
@@ -57,10 +56,10 @@ export default function SO_BTL_Level() {
   const [SORow, setSORow] = useState("");
   const [BTLRow, setBTLRow] = useState("");
   const [Upid, setUpid] = useState("");
-  
+
   axios.defaults.withCredentials = true;
 
-  function ActionButton1({row}) {
+  function ActionButton1({ row }) {
     return (
       <>
         <Tooltip title="Edit" placement="top-start">
@@ -69,12 +68,12 @@ export default function SO_BTL_Level() {
             color="primary"
             size="small"
             style={{ marginLeft: 16, padding: 10 }}
-              onClick={()=>{
-                setGA(row.GA)
-                setSO(row.SO)
-                setUpid(row._id)
-                handleOpen()
-              }}
+            onClick={() => {
+              setGA(row.GA);
+              setSO(row.SO);
+              setUpid(row._id);
+              handleOpen();
+            }}
           >
             <AiFillEdit />
           </Button>
@@ -85,11 +84,10 @@ export default function SO_BTL_Level() {
             color="primary"
             size="small"
             style={{ marginLeft: 16, padding: 10 }}
-            onClick={async()=>{
+            onClick={async () => {
               await axios.delete(`http://localhost:4000/SOBTL/SO/${row._id}`);
-              getSORows()
-            }
-           }
+              getSORows();
+            }}
           >
             <AiFillDelete />
           </Button>
@@ -97,7 +95,7 @@ export default function SO_BTL_Level() {
       </>
     );
   }
-  function ActionButton2({row}) {
+  function ActionButton2({ row }) {
     return (
       <>
         <Tooltip title="Edit" placement="top-start">
@@ -106,11 +104,11 @@ export default function SO_BTL_Level() {
             color="primary"
             size="small"
             style={{ marginLeft: 16, padding: 10 }}
-              onClick={()=>{
-                setBTL(row.BTL)
-                setUpid(row._id)
-                handleOpen1()
-              }}
+            onClick={() => {
+              setBTL(row.BTL);
+              setUpid(row._id);
+              handleOpen1();
+            }}
           >
             <AiFillEdit />
           </Button>
@@ -121,11 +119,10 @@ export default function SO_BTL_Level() {
             color="primary"
             size="small"
             style={{ marginLeft: 16, padding: 10 }}
-            onClick={async()=>{
-               await axios.delete(`http://localhost:4000/SOBTL/BTL/${row._id}`);
-               getBTLRows()
-              }
-            }
+            onClick={async () => {
+              await axios.delete(`http://localhost:4000/SOBTL/BTL/${row._id}`);
+              getBTLRows();
+            }}
           >
             <AiFillDelete />
           </Button>
@@ -137,9 +134,8 @@ export default function SO_BTL_Level() {
   useEffect(() => {
     getSORows();
     getBTLRows();
-    
   }, []);
- 
+
   const getSORows = async () => {
     const ress = await axios.get("http://localhost:4000/SOBTL/showSO");
     const dataa = await ress.data;
@@ -150,64 +146,62 @@ export default function SO_BTL_Level() {
     const res = await axios.get("http://localhost:4000/SOBTL/showBTL");
     const data = await res.data;
     setBTLRow([...data]);
-  }
+  };
   const ADDSO = async (e) => {
     e.preventDefault();
-  
-    if (SO!=""&&GA!=""&&Upid=="") {
-      const Number=SORow.length+1
-      const res = await axios.post("http://localhost:4000/SOBTL/addSO", {
-        Number,GA,SO        
-      });
-      getSORows()
-      setSO("")
-      setGA("")
-    }
-    else if (SO!=""&&GA!=""&&Upid!="") {
-      const res = await axios.put(`http://localhost:4000/SOBTL/SO/${Upid}`, {
-        GA,SO        
-      });
-      getSORows()
-      setSO("")
-      setGA("")
-      setUpid("")
-      setOpen(false)
-    }
 
-    else{
-      alert("missing fields")
+    if (SO != "" && GA != "" && Upid == "") {
+      const Number = SORow.length + 1;
+      const res = await axios.post("http://localhost:4000/SOBTL/addSO", {
+        Number,
+        GA,
+        SO,
+      });
+      getSORows();
+      setSO("");
+      setGA("");
+    } else if (SO != "" && GA != "" && Upid != "") {
+      const res = await axios.put(`http://localhost:4000/SOBTL/SO/${Upid}`, {
+        GA,
+        SO,
+      });
+      getSORows();
+      setSO("");
+      setGA("");
+      setUpid("");
+      setOpen(false);
+    } else {
+      alert("missing fields");
     }
-  }
+  };
   const addBTL = async (e) => {
     e.preventDefault();
 
-    if (BTL!=""&&Upid=="") {
-      const Number = BTLRow.length+1
+    if (BTL != "" && Upid == "") {
+      const Number = BTLRow.length + 1;
       const res = await axios.post("http://localhost:4000/SOBTL/addBTL", {
-        Number,BTL        
+        Number,
+        BTL,
       });
-      getBTLRows()
-      setBTL("")
-    }
-    else if (BTL!=""&&Upid!="") {
+      getBTLRows();
+      setBTL("");
+    } else if (BTL != "" && Upid != "") {
       const res = await axios.put(`http://localhost:4000/SOBTL/BTL/${Upid}`, {
-        BTL 
+        BTL,
       });
-      getBTLRows()
-      setBTL("")
-      setUpid("")
-      setOpen1(false)
+      getBTLRows();
+      setBTL("");
+      setUpid("");
+      setOpen1(false);
+    } else {
+      alert("missing fields");
     }
-    
-    else{
-      alert("missing fields")
-    }
-  }  
+  };
   const SOcolumns = [
     {
       field: "Number",
       headerName: "Sr#",
-      width: 300,
+      width: 50,
     },
 
     {
@@ -219,20 +213,19 @@ export default function SO_BTL_Level() {
     {
       field: "Action",
       headerName: "Action",
-      width: 300,
+      width: 200,
       editable: false,
       renderCell: ActionButton1,
     },
   ];
 
   const BTLcolumns = [
-    
     {
       field: "Number",
       headerName: "Sr#",
-      width: 200,
+      width: 50,
     },
-    
+
     {
       field: "BTL",
       headerName: "BTL LEVEL",
@@ -242,7 +235,7 @@ export default function SO_BTL_Level() {
     {
       field: "Action",
       headerName: "Action",
-      width: 300,
+      width: 200,
       editable: false,
       renderCell: ActionButton2,
     },
@@ -334,7 +327,7 @@ export default function SO_BTL_Level() {
                   style={{ marginTop: 16 }}
                 >
                   <AiFillEdit style={{ marginRight: 10 }} />
-                  {Upid==""?(<>Add SO</>):(<>Update SO</>)}
+                  {Upid == "" ? <>Add SO</> : <>Update SO</>}
                 </Button>
               </form>
             </Box>
@@ -376,7 +369,7 @@ export default function SO_BTL_Level() {
                   style={{ marginTop: 16 }}
                 >
                   <AiFillEdit style={{ marginRight: 10 }} />
-                  {Upid==""?(<>Add BTL LEVEL</>):(<>Update BTL LEVEL</>)}
+                  {Upid == "" ? <>Add BTL LEVEL</> : <>Update BTL LEVEL</>}
                 </Button>
               </form>
             </Box>

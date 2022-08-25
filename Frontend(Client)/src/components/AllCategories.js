@@ -4,22 +4,14 @@ import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
 import { AiFillEye, AiFillEdit } from "react-icons/ai";
-import Popup from "./AuxillaryComponents/PopupFunction";
+
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+
 import Modal from "@mui/material/Modal";
-import Autocomplete from "@mui/material/Autocomplete";
-import TextField from "@mui/material/TextField";
-import Stack from "@mui/material/Stack";
+import CloseIcon from "@mui/icons-material/Close";
+
 import axios from "axios";
-import {
-  Card,
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-} from "@mui/material";
+import { Card } from "@mui/material";
 
 const style = {
   position: "absolute",
@@ -183,6 +175,12 @@ export default function AllCategories() {
           >
             <Box sx={style}>
               <div className="container">
+                <Box mb={2} style={{ display: "flex", justifyContent: "end" }}>
+                  <CloseIcon
+                    onClick={handleClose}
+                    style={{ cursor: "pointer", color: "gray" }}
+                  />
+                </Box>
                 <div className="row card justify-content-center">
                   <div className="card-header">
                     <h3 className="text-center font-weight-light my-4">

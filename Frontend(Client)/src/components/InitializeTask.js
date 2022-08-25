@@ -21,6 +21,7 @@ import InputLabel from "@mui/material/InputLabel";
 import { Box } from "@mui/system";
 import CreateTasks from "./CreateTasks";
 import EditTasks from "./EditTasks";
+import CloseIcon from "@mui/icons-material/Close";
 
 const style = {
   position: "absolute",
@@ -28,6 +29,7 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 500,
+
   bgcolor: "#fff",
   boxShadow: 24,
   p: 4,
@@ -319,7 +321,19 @@ export default function InitializeTask() {
       >
         <Box sx={style}>
           <div className="container">
-            <div>
+            <Box mb={3} style={{ display: "flex", justifyContent: "end" }}>
+              <CloseIcon
+                onClick={handleClose2}
+                style={{ cursor: "pointer", color: "gray" }}
+              />
+            </Box>
+
+            <div
+              style={{
+                height: "calc(100vh - 56px)",
+                overflow: "auto",
+              }}
+            >
               <CreateTasks
                 pre={Init}
                 func={() => {
@@ -366,7 +380,19 @@ export default function InitializeTask() {
         style={{ overflow: "scroll" }}
       >
         <Box sx={style}>
-          <div className="container">
+          <div
+            className="container"
+            style={{
+              height: "calc(100vh - 56px)",
+              overflow: "auto",
+            }}
+          >
+            <Box mb={3} style={{ display: "flex", justifyContent: "end" }}>
+              <CloseIcon
+                onClick={handleClose4}
+                style={{ cursor: "pointer", color: "gray" }}
+              />
+            </Box>
             <div>
               <EditTasks
                 pre={Init}
@@ -388,6 +414,12 @@ export default function InitializeTask() {
       >
         <Box sx={style}>
           <form onSubmit={handleSubmit}>
+            <Box mb={3} style={{ display: "flex", justifyContent: "end" }}>
+              <CloseIcon
+                onClick={handleClose}
+                style={{ cursor: "pointer", color: "gray" }}
+              />
+            </Box>
             <div>
               <FormControl fullWidth size="small">
                 <InputLabel id="taskType">Task Type</InputLabel>
