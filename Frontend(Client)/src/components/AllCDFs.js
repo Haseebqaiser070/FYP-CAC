@@ -100,7 +100,7 @@ export default function AllCDFs() {
         padding: 20,
       }}
     >
-      <h1 className="py-4">All Courses</h1>
+      <h1 className="py-4">All CDF</h1>
       <DataGrid
         style={{ height: 500, width: "100%" }}
         columns={columns}

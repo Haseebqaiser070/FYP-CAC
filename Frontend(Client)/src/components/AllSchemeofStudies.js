@@ -8,7 +8,7 @@ import Button from "@mui/material/Button";
 import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
 import { DataGrid } from "@mui/x-data-grid";
 
-export default function AllCourses() {
+export default function AllSOS() {
   const [SOSs, setSOSs] = useState([]);
   axios.defaults.withCredentials = true;
   const navigate = useNavigate();
@@ -95,7 +95,7 @@ export default function AllCourses() {
         padding: 20,
       }}
     >
-      <h1 className="py-4">All Courses</h1>
+      <h1 className="py-4">All SOS</h1>
       <DataGrid
         style={{ height: 500, width: "100%" }}
         columns={columns}

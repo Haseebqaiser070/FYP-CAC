@@ -70,7 +70,11 @@ console.log("Course",Courses)
     const response = await axios.get("http://localhost:4000/User/show/Faculty");
     setRows(response.data);
   };
+  const Submitform = async (e) => {
+    e.preventDefault()
+    console.log(obj)
 
+  }
   const columns = [
     {
       field: "Name",
@@ -139,8 +143,8 @@ console.log("Course",Courses)
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box component="form" sx={style}>
-          {obj.map((e, index) => {
+        <Box component="form" sx={style} onSubmit={Submitform}>
+          {obj.map((o, index) => {
             return (
               <>
                 <h4>Assign Course {index + 1}</h4>
@@ -152,15 +156,33 @@ console.log("Course",Courses)
                       color="primary"
                       size="medium"
                       onClick={() => {
-                        const clone = [...obj];
-                        clone[index]={
-                          Program:"",
-                          Course: "",
-                          Section:""
+                        var clone = [...obj];                      
+                        setobj([...clone]);                        
+                        if (clone.length == index + 1) {
+                          console.log("last rm");
+                          clone[index]={
+                            Program:"",
+                            Course: "",
+                            Section:""
+                          }
+                        } else if (clone.length != index + 1) {
+                          clone[index] = clone[index + 1];
                         }
-                        const a = clone.splice(index,1);                        
-                        console.log("aaaaaaaaaaaaa", a, "cloneeeeeee", clone);
-                        setobj([...clone]);
+                        const a = clone.splice(index, 1);
+                        setobj([...clone]);                                          
+                        var clone2 = [...Courses];
+                        if (clone2.length == index + 1) {
+                          console.log("last rm");
+                          clone2[index]=[]
+                        
+                        } else if (clone2.length != index + 1) {
+                          clone2[index] = clone2[index + 1];
+                        }
+                        const b = clone2.splice(index,1);                                                
+                        setCourse([
+                          ...clone2
+                        ]);
+                      
                       }}
                     >
                       remove
@@ -180,7 +202,7 @@ console.log("Course",Courses)
                   }
                   >
                     <option value={obj[index].Program} selected disabled hidden>
-                      {obj[index].Program}
+                      {obj[index].Program!=""?(obj[index].Program):(<>{"Select option"}</>)}
                     </option>
                     {Programdb.map((p) => {
                       return (
@@ -269,6 +291,7 @@ console.log("Course",Courses)
               color="primary"
               size="large"
               width="100"
+              type="submit"
               style={{ marginTop: 10 }}
             >
               Assign Course

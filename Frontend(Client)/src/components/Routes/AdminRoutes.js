@@ -55,8 +55,7 @@ function AdminRoutes() {
         <Route path="/CreateNewMeeting" element={<CreateNewMeeting />} />
         <Route path="/AllSyllabus" element={<AllSyllabus />} />
         <Route path="/SyllabusView/:Program/:Code/:id" element={<SyllabusFinal/>} /> 
-        <Route path="/ViewCacMemberAvailabilty" element={<ViewCacAvailability />}
-        />
+        <Route path="/ViewCacMemberAvailabilty" element={<ViewCacAvailability />} />
         <Route path="/AllSchemeofStudies" element={<AllSchemeofStudies />} />
         <Route path="/AllCDFs" element={<AllCDFs />} />
         <Route path="/SOSView/:id" element={<SOSFinal />} />
@@ -79,16 +78,9 @@ function AdminRoutes() {
         <Route path="/Tasks" element={<Tasks />} />
         <Route path="/InitializeTask" element={<InitializeTask />} />
         <Route path="/profile" element={<Profile />} />
-        <Route
-          path="/CourseFolderDeadlines"
-          element={<CourseFolderDeadlines />}
-        />
+        <Route path="/CourseFolderDeadlines" element={<CourseFolderDeadlines />} />
         <Route path="/CreateSOS" element={<CreateSOS />} />
-        <Route
-          path="/PendingDeadlineRequests"
-          element={<PendingDeadlineRequests />}
-        />
-
+        <Route path="/PendingDeadlineRequests" element={<PendingDeadlineRequests />} />
         <Route path="/ReturnedTasks" element={<ReturnedTasks />} />
       </Route>
     </Routes>

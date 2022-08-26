@@ -1,5 +1,5 @@
 var Syllabusdoc = require("../../Models/SyallabusModels/Syllabus");
-var coursedoc = require("../../Models/CourseModels/Course");
+var coursedoc = require("../../Models/CourseModels/ProgramWiseCourses");
 var Syllabusgendoc = require("../../Models/SyallabusModels/SyllabusGeneral");
 
 module.exports.Showall = async (req, res) => {
