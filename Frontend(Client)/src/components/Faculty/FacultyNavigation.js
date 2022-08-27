@@ -5,14 +5,33 @@ import { Link, Outlet } from "react-router-dom";
 import AvatarMenu from "../AuxillaryComponents/AvatarMenu";
 
 import {
+  BsFillBookFill,
   BsFillHouseDoorFill,
+  BsFillBookmarkPlusFill,
+  BsListCheck,
   BsFillFilePdfFill,
   BsFillFolderFill,
 } from "react-icons/bs";
-import useAuth from "../../MyHooks/useAuth";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import axios from "axios"
+import { useNavigate } from "react-router-dom";
+
 
 export default function FacultyNavigation() {
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [openFolders, setOpenFolders] = React.useState(false);
+  const [Folders, setFolders] = React.useState([]);
+  axios.defaults.withCredentials = true;
+  const navigate = useNavigate();
+  React.useEffect(() => {
+    getData()
+  }, []);
+  console.log(Folders)
+  const getData = async()=>{
+    const res = await axios.get("http://localhost:4000/UserAssigedFolders/showAll")
+    console.log(res.data)
+    setFolders([...res.data])
+  }
 
   return (
     <React.Fragment>
@@ -51,6 +70,50 @@ export default function FacultyNavigation() {
                   </div>
                   Dashboard
                 </Link>
+
+
+
+
+                <div
+                  onClick={() => {
+                    openFolders ? setOpenFolders(false) : setOpenFolders(true);
+                  }}
+                  style={{ cursor: "pointer" }}
+                  class="nav-link sidenavtext"
+                >
+                  <div class="sb-nav-link-icon">
+                    <BsFillBookFill color="#fff" />
+                  </div>
+                  Course Folders
+                  <div style={{ marginLeft: "auto" }} class="sb-nav-link-icon">
+                    {openFolders ? (
+                      <KeyboardArrowUpIcon />
+                    ) : (
+                      <KeyboardArrowDownIcon />
+                    )}
+                  </div>
+                </div>
+                {openFolders && Folders.length>0&&(                  
+                  Folders.map((i)=>{
+
+                    return(
+                  <>
+                    <div
+                      style={{ marginLeft: "12px", fontSize: "14px" }}
+                      class="nav-link sidenavtext "
+                      onClick={() => {
+                        navigate(`/Faculty/CourseFolder/${i._id}`, {
+                          replace: true,
+                        });
+                      }}
+                    >
+                      <div class="sb-nav-link-icon">
+                        <BsListCheck color="#fff" />
+                      </div>
+                      {i.Course.Code} {i.Course.Name}
+                    </div>
+                  </>)})
+                )}
 
                 <Link class="nav-link sidenavtext" to="AllSchemeofStudiesCFE">
                   <div class="sb-nav-link-icon">

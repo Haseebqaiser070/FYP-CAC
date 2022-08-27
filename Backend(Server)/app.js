@@ -2,6 +2,7 @@ var express = require("express");
 var cookieParser = require("cookie-parser");
 var mongoose = require("mongoose");
 var cors = require("cors");
+
 var AuthRouter = require("./Routes/AuthRoutes/Auth");
 var CourseRouter = require("./Routes/AdminRoutes/Courses");
 var FacultyRouter = require("./Routes/AdminRoutes/Faculty");
@@ -25,6 +26,7 @@ var SOBTLRouter = require("./Routes/AdminRoutes/SOBTL")
 var CDFReturnedRouter = require("./Routes/AdminRoutes/CDF")
 var SyllabusRouter = require("./Routes/AdminRoutes/Syllabus")
 var AssignFoldersRouter = require("./Routes/Folders/AssignFolders")
+var UserAssigedFolders = require("./Routes/Folders/UserAssigedFolders")
 
 var { getUser } = require("./Middleware/User");
 
@@ -58,6 +60,7 @@ app.use("/SyllabusCreate", getUser, SyllabusCreationRouter);
 app.use("/SyllabusVerison", getUser, SyllabusVersionRouter);
 app.use("/SOBTL", getUser, SOBTLRouter);
 app.use("/AssginFolders", getUser,AssignFoldersRouter)
+app.use("/UserAssigedFolders",getUser,UserAssigedFolders)
 
 const start = async () => {
   try {

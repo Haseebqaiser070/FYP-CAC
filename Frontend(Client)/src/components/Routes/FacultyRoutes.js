@@ -13,11 +13,7 @@ function FacultyRoutes() {
       <Route path="/" element={<FacultyNavigation />}>
         <Route path="/Dashboard" element={<FacultyDashboard />} />
         <Route path="/Sos" element={<Sos />} />
-
-        <Route path="/CourseFolder">
-          <Route path=":id" element={<CourseFolder />} />
-          <Route index element={<CourseFolder />} />
-        </Route>
+        <Route path="/CourseFolder/:id" element={<CourseFolder />} />
         <Route path="/AllCoursesAssigned">
           <Route path=":id" element={<AllAssignedCourses />} />
           <Route index element={<AllAssignedCourses />} />
