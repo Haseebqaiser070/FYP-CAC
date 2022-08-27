@@ -64,14 +64,14 @@ var UserSchema = new mongoose.Schema({
     CourseFolders:[
         {
         type: mongoose.Schema.ObjectId,
-        ref: 'ProgramCourses',
+        ref: 'Folder',
         default:'none'
         }]
     ,
     EvaluateFolders:[
         {
         type: mongoose.Schema.ObjectId,
-        ref: 'Course',
+        ref: 'Folder',
         default:'none'
         }]
     

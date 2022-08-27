@@ -32,16 +32,22 @@ const style = {
 export default function FacultyMembers() {
   axios.defaults.withCredentials = true;
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () =>{ 
+    setCourse([[]])
+    setUser("")
+    setobj([
+      {
+        Program:"",
+        Course: "",
+        Section:""
+      },
+    ])
+    setOpen(false)
+  };
   const [Rows, setRows] = useState([]);
   const [Courses, setCourse] = useState([[]]);
-  const [AssignCources, setAssignCourses] = useState([]);
-  const [Degree, setDegree] = useState("Degree Program");
   const [Programdb, setProgramdb] = useState([]);
-  const [DegreeLevel, setDegreeLevel] = useState("");
-  const [Section, setSection] = useState("");
-console.log("AssignCources",AssignCources)
+  const [User, setUser] = useState("");
   const [obj, setobj] = useState([
     {
       Program:"",
@@ -73,7 +79,27 @@ console.log("Course",Courses)
   const Submitform = async (e) => {
     e.preventDefault()
     console.log(obj)
-
+    let verify = true;
+    obj.forEach((i) => {
+      console.log("i", i);
+      if (
+        i.Program == "" ||
+        i.Course == "" ||
+        i.Section == ""
+      ) {
+        verify = false;
+      }
+    });
+    if (verify) {
+      await axios.post("http://localhost:4000/AssginFolders/add", {
+        obj,
+        User,
+      });
+      handleClose()
+    } else {
+      alert("Empty Field");
+    }
+    
   }
   const columns = [
     {
@@ -92,14 +118,16 @@ console.log("Course",Courses)
       headerName: "Actions",
       flex: 2,
       editable: false,
-      renderCell: () => (
+      renderCell: ({row}) => (
         <>
           <Button
             variant="contained"
             color="primary"
             size="small"
             style={{ marginLeft: 16 }}
-            onClick={() => setOpen(true)}
+            onClick={() =>{
+              setUser(row)
+              setOpen(true)}}
           >
             <AiFillEdit style={{ marginRight: 10 }} />
             Assign Course
@@ -157,7 +185,6 @@ console.log("Course",Courses)
                       size="medium"
                       onClick={() => {
                         var clone = [...obj];                      
-                        setobj([...clone]);                        
                         if (clone.length == index + 1) {
                           console.log("last rm");
                           clone[index]={
@@ -215,7 +242,7 @@ console.log("Course",Courses)
                 </div>
                 <div className="row">
                   <div className="col">
-                    <Autocomplete
+                    {/* <Autocomplete
                       multiple
                       id="tags-standard"
                       className="mb-4"
@@ -240,7 +267,31 @@ console.log("Course",Courses)
                           placeholder="Assign Cources"
                         />
                       )}
-                    />
+                    /> */}
+
+                    <FormControl fullWidth size="small">
+                      <InputLabel id="taskType">Assign Cources</InputLabel>
+                      <Select
+                        className="mb-4"
+                        labelId="taskType"
+                        id="taskType"
+                        value={obj[index].Course}
+                        label="Assign Course"
+                        onChange={(e) => {
+                          const clone = [...obj];
+                          clone[index].Course = e.target.value;
+                          setobj([...clone]);
+                        }}
+                        autoWidth
+                      >
+                        {Courses[index].map((a) => {
+                          return <MenuItem value={a}>{a.Name}</MenuItem>;
+                        })}
+                      </Select>
+                    </FormControl>
+
+
+
                   </div>
                   <div className="col form-floating mb-3">
                     <input

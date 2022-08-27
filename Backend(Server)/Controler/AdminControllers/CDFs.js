@@ -12,12 +12,13 @@ module.exports.Showall = async (req, res) => {
         const coursefilt = course.find(e=>{
             if(e.Code==i.Code){
               console.log("here")
-              const nam=e
+              const nam=e.Name
               return(nam)
                 
             }
           })
           console.log("\nnames",coursefilt.Name)          
+          i.Name=coursefilt.Name
           return({_id:i._id,Program:i.Program,Code:i.Code,Name:coursefilt.Name,Topics:i.Topics,CLOs:i.CLOs,textBook:i.textBook,referenceBook:i.referenceBook})
     })
     console.log("all CDFs", CDFf);
