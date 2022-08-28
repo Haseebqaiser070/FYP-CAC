@@ -16,7 +16,6 @@ import { Route, Routes } from "react-router-dom";
 import CourseRepo from "../Admin/CourseRepo";
 import FacultyMembers from "../FacultyMember";
 
-import CourseFolderDeadlines from "../CourseFolderDeadlines";
 import Profile from "../AuxillaryComponents/UserProfile";
 
 import CourseReturnedView from "../Admin/CourseReturnedView";
@@ -33,10 +32,12 @@ import SOSFinal from "../Admin/SOSfinal";
 import SO_BTL_Level from "../SOAndBTLLevel";
 import CDFReturnedView from "../Admin/CDFReturnedView";
 import AllCDFs from "../AllCDFs";
-import CDFFinal from "../Admin/CDFfinal"
+import CDFFinal from "../Admin/CDFfinal";
 import SyllabusReturnedView from "../Admin/SyllabusReturnedView";
 import AllSyllabus from "../AllSyllabus";
 import SyllabusFinal from "../Admin/Syllabusfinal";
+import CourseFolderTheory from "../CourseFolderTheory";
+import CourseFolderLab from "../CourseFolderLab";
 function AdminRoutes() {
   return (
     <Routes>
@@ -47,21 +48,35 @@ function AdminRoutes() {
         <Route path="/AddNewCourse" element={<AddNewCourse />} />
         <Route path="/AllCourses" element={<AllCourses />} />
         <Route path="/CourseView/:id" element={<CourseFinal />} />
-        <Route path="/CourseReturnedView/:Code" element={<CourseReturnedView />}/>
+        <Route
+          path="/CourseReturnedView/:Code"
+          element={<CourseReturnedView />}
+        />
         <Route path="/SOSReturnedView/:Program" element={<SOSReturnedView />} />
         <Route path="/CDFReturnedView/:Code" element={<CDFReturnedView />} />
-        <Route path="SyllabusReturnedView/:Code"element={<SyllabusReturnedView/>} />
+        <Route
+          path="SyllabusReturnedView/:Code"
+          element={<SyllabusReturnedView />}
+        />
         <Route path="/EditCourse/:id" element={<EditCourseForm />} />
         <Route path="/CreateNewMeeting" element={<CreateNewMeeting />} />
         <Route path="/AllSyllabus" element={<AllSyllabus />} />
-        <Route path="/SyllabusView/:Program/:Code/:id" element={<SyllabusFinal/>} /> 
-        <Route path="/ViewCacMemberAvailabilty" element={<ViewCacAvailability />} />
+        <Route
+          path="/SyllabusView/:Program/:Code/:id"
+          element={<SyllabusFinal />}
+        />
+        <Route
+          path="/ViewCacMemberAvailabilty"
+          element={<ViewCacAvailability />}
+        />
         <Route path="/AllSchemeofStudies" element={<AllSchemeofStudies />} />
+        <Route path="/CourseFolderTheory" element={<CourseFolderTheory />} />
+        <Route path="/CourseFolderLab" element={<CourseFolderLab />} />
+
         <Route path="/AllCDFs" element={<AllCDFs />} />
         <Route path="/SOSView/:id" element={<SOSFinal />} />
         <Route path="/CDFsView/:Program/:Code/:id" element={<CDFFinal />} />
-       
-       
+
         <Route path="/Sos" element={<Sos />} />
         <Route path="/InitCourse" element={<CourseRepo />} />
         {/*<Route path="/CdfandSyllabus">
@@ -78,9 +93,12 @@ function AdminRoutes() {
         <Route path="/Tasks" element={<Tasks />} />
         <Route path="/InitializeTask" element={<InitializeTask />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/CourseFolderDeadlines" element={<CourseFolderDeadlines />} />
+
         <Route path="/CreateSOS" element={<CreateSOS />} />
-        <Route path="/PendingDeadlineRequests" element={<PendingDeadlineRequests />} />
+        <Route
+          path="/PendingDeadlineRequests"
+          element={<PendingDeadlineRequests />}
+        />
         <Route path="/ReturnedTasks" element={<ReturnedTasks />} />
       </Route>
     </Routes>

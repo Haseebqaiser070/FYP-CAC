@@ -179,6 +179,19 @@ export default function Navigation() {
                   SO and BTL Level
                 </Link>
 
+                <Link class="nav-link sidenavtext " to="CourseFolderTheory">
+                  <div class="sb-nav-link-icon">
+                    <BsFillFilePdfFill color="#fff" />
+                  </div>
+                  Course Folder Theory
+                </Link>
+                <Link class="nav-link sidenavtext " to="CourseFolderLab">
+                  <div class="sb-nav-link-icon">
+                    <BsFillFilePdfFill color="#fff" />
+                  </div>
+                  Course Folder Lab
+                </Link>
+
                 <div
                   onClick={() => {
                     openCourses ? setOpenCourses(false) : setOpenCourses(true);
@@ -292,12 +305,7 @@ export default function Navigation() {
                   </div>
                   Scheme of Studies
                 </Link>
-                <Link class="nav-link sidenavtext " to="CourseFolderDeadlines">
-                  <div class="sb-nav-link-icon">
-                    <BsFillFolderFill color="#fff" />
-                  </div>
-                  Course Folder Deadlines
-                </Link>
+
                 <Link class="nav-link sidenavtext " to="AllCDFs">
                   <div class="sb-nav-link-icon">
                     <BsFillFilePdfFill color="#fff" />
@@ -310,7 +318,7 @@ export default function Navigation() {
                   </div>
                   Syllabus
                 </Link>
-                                
+
                 <Link
                   class="nav-link sidenavtext "
                   to="PendingDeadlineRequests"

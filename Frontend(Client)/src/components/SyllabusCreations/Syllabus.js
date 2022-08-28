@@ -14,7 +14,7 @@ import { useReactToPrint } from "react-to-print";
 import comsatslogo from "../CACMember/comsats_logo.png";
 
 export default function SyllabusCreation() {
-    axios.defaults.withCredentials = true;
+  axios.defaults.withCredentials = true;
   const { state } = useLocation();
   console.log(state);
   const componentRef = useRef();
@@ -27,18 +27,19 @@ export default function SyllabusCreation() {
   const [isOpen, setIsOpen] = useState(false);
   const [res, setresponse] = useState(false);
   const [Content, setContent] = useState([]);
-  const [CDF, setCDF] = useState(
-    {    Topics:[],
-          CLOs:[],
-          textBook:[],
-          referenceBook:[]}  )
-    
+  const [CDF, setCDF] = useState({
+    Topics: [],
+    CLOs: [],
+    textBook: [],
+    referenceBook: [],
+  });
+
   console.log(Version);
-  const [SO, setSO] = useState([])  
+  const [SO, setSO] = useState([]);
   const [Cat, setCat] = useState({
     Code: Code,
     Name: "",
-    Credit:"",
+    Credit: "",
     LectureHoursWeek: "0",
     LabHoursWeek: "0",
     Category: "",
@@ -54,49 +55,52 @@ export default function SyllabusCreation() {
   const handleCloseX = () => {
     setIsOpen(false);
   };
-  console.log("SO",SO)
+  console.log("SO", SO);
 
   useEffect(() => {
-    getData()
-    getContent()
-    getstuff()
-    getCat()
+    getData();
+    getContent();
+    getstuff();
+    getCat();
   }, []);
-  const getstuff = async()=>{
-    const res = await axios.get(`http://localhost:4000/CDF/shower/${Code}`)
-    setCDF(res.data)
-    var sooo = []
-    res.data.CLOs.forEach(e => {
-        e.So.forEach(i=>{
-            if(!sooo.some(e=>e._id==i._id)){                
-                sooo.push(i)    
-            }
-        })
+  const getstuff = async () => {
+    const res = await axios.get(`http://localhost:4000/CDF/shower/${Code}`);
+    setCDF(res.data);
+    var sooo = [];
+    res.data.CLOs.forEach((e) => {
+      e.So.forEach((i) => {
+        if (!sooo.some((e) => e._id == i._id)) {
+          sooo.push(i);
+        }
+      });
     });
-    setSO([...sooo])
-  }
+    setSO([...sooo]);
+  };
   const getCat = async () => {
     try {
-      const response = await axios.get(`http://localhost:4000/Course/bycode/${Code}`);
+      const response = await axios.get(
+        `http://localhost:4000/Course/bycode/${Code}`
+      );
       console.log(response.data);
       setCat({
         Code: response.data.Code,
         Name: response.data.Name,
-        Credit:response.data.Credit,
+        Credit: response.data.Credit,
         LectureHoursWeek: response.data.LectureHoursWeek,
-        LabHoursWeek: response.data.LabHoursWeek,        
+        LabHoursWeek: response.data.LabHoursWeek,
         PreRequisites: response.data.PreRequisites,
         catalogue: response.data.catalogue,
         objectiveList: response.data.objectiveList,
         Books: response.data.Books,
-      })
+      });
     } catch (error) {
       console.log(error);
     }
   };
   const getData = async () => {
     const response = await axios.get(
-      `http://localhost:4000/SyllabusVerison/all/${Code}`);
+      `http://localhost:4000/SyllabusVerison/all/${Code}`
+    );
     setVersion(response.data);
     if (response.data.length > 0) {
       setresponse(true);
@@ -105,7 +109,8 @@ export default function SyllabusCreation() {
   };
   const getContent = async () => {
     const response = await axios.get(
-      `http://localhost:4000/SyllabusVerison/Latest/${Code}`);
+      `http://localhost:4000/SyllabusVerison/Latest/${Code}`
+    );
     setContent([...response.data.Plan]);
   };
   const Edit = () => {
@@ -119,12 +124,9 @@ export default function SyllabusCreation() {
     setContent([...response.data.Plan]);
   };
 
-
-
   return (
-    
-      <div style={{ padding: 30 }}>
-        <div className="d-flex justify-content-end mb-4">
+    <div style={{ padding: 30 }}>
+      <div className="d-flex justify-content-end mb-4">
         <Button
           variant="contained"
           color="primary"
@@ -145,19 +147,19 @@ export default function SyllabusCreation() {
           <AiFillEdit style={{ marginRight: 10 }} />
           Edit
         </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            size="small"
-            style={{ marginLeft: 16 }}
-            onClick={handlePrint}
-          >
-            <AiFillPrinter style={{ marginRight: 10 }} />
-            Print
-          </Button>
-        </div>
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          style={{ marginLeft: 16 }}
+          onClick={handlePrint}
+        >
+          <AiFillPrinter style={{ marginRight: 10 }} />
+          Print
+        </Button>
+      </div>
 
-        {isOpen && (
+      {isOpen && (
         <Popup
           content={
             <>
@@ -174,7 +176,10 @@ export default function SyllabusCreation() {
                   {Version.map((Repo, index) => {
                     return (
                       <tr scope="row" key={Repo._id}>
-                        <td onClick={() => getCon(Repo._id)}>
+                        <td
+                          style={{ cursor: "pointer" }}
+                          onClick={() => getCon(Repo._id)}
+                        >
                           Version: {index + 1}
                         </td>
                       </tr>
@@ -189,10 +194,8 @@ export default function SyllabusCreation() {
       )}
       {!res ? (
         <h3>Empty Repository</h3>
-      ) : 
-        (
-
-        <div ref={componentRef} className="main">
+      ) : (
+        <div ref={componentRef} className="main ">
           <div
             className="d-flex row justify-content-center mb-4"
             style={{ margin: 30 }}
@@ -231,8 +234,15 @@ export default function SyllabusCreation() {
             <div className="row">
               <div className="col">
                 <h6 style={{ paddingBottom: 20 }}>
-                  <b>Credit Hour: {Cat.Credit+"("+Cat.LectureHoursWeek+
-                    ","+Cat.LabHoursWeek+")"} </b>
+                  <b>
+                    Credit Hour:{" "}
+                    {Cat.Credit +
+                      "(" +
+                      Cat.LectureHoursWeek +
+                      "," +
+                      Cat.LabHoursWeek +
+                      ")"}{" "}
+                  </b>
                 </h6>
               </div>
               <div className="col">
@@ -263,9 +273,7 @@ export default function SyllabusCreation() {
                 Catalogue Description
               </h4>
             </div>
-            <p style={{ paddingBottom: 20 }}>
-              {" "}{Cat.catalogue}
-            </p>
+            <p style={{ paddingBottom: 20 }}> {Cat.catalogue}</p>
           </div>
 
           <div>
@@ -279,15 +287,26 @@ export default function SyllabusCreation() {
             </div>
             <div>
               <h4>TextBook:</h4>
-              <ol>{
-              CDF.textBook.map(i=>{return(<li>{i.BookName} {i.BookWriter} {i.BookYear}</li>)
-              })}                
+              <ol>
+                {CDF.textBook.map((i) => {
+                  return (
+                    <li>
+                      {i.BookName} {i.BookWriter} {i.BookYear}
+                    </li>
+                  );
+                })}
               </ol>
 
               <h4>Reference Books:</h4>
-              <ol>{
-              CDF.referenceBook.map(i=>{return(<li>{i.BookName} {i.BookWriter} {i.BookYear}</li>)
-              })}</ol>
+              <ol>
+                {CDF.referenceBook.map((i) => {
+                  return (
+                    <li>
+                      {i.BookName} {i.BookWriter} {i.BookYear}
+                    </li>
+                  );
+                })}
+              </ol>
             </div>
           </div>
           {/* Weekwise plan  */}
@@ -313,18 +332,20 @@ export default function SyllabusCreation() {
                   </tr>
                 </thead>
                 <tbody>
-                 {Content.map((i)=>{
-                    return(   
-                        <tr>
-                            <td style={{ textAlign: "center" }}>{i.lecture}</td>
-                            <td style={{ textAlign: "center" }}>{i.CDFUnit}</td>
-                            <td>
-                            {i.topics}
-                            </td>
-                            <td>{i.material.split("-").map((e)=>{return(<>{e}</>)})}</td>
-                        </tr>
-                    )})
-                }
+                  {Content.map((i) => {
+                    return (
+                      <tr>
+                        <td style={{ textAlign: "center" }}>{i.lecture}</td>
+                        <td style={{ textAlign: "center" }}>{i.CDFUnit}</td>
+                        <td>{i.topics}</td>
+                        <td>
+                          {i.material.split("-").map((e) => {
+                            return <>{e}</>;
+                          })}
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
@@ -352,12 +373,14 @@ export default function SyllabusCreation() {
                   </tr>
                 </thead>
                 <tbody>
-                  {SO.map(i=>{return(<tr>
-                    <td style={{ textAlign: "center" }}>{i.Number}</td>
-                    <td>
-                    {i.SO}
-                    </td>
-                  </tr>)})}                  
+                  {SO.map((i) => {
+                    return (
+                      <tr>
+                        <td style={{ textAlign: "center" }}>{i.Number}</td>
+                        <td>{i.SO}</td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
@@ -386,55 +409,61 @@ export default function SyllabusCreation() {
                   </tr>
                 </thead>
                 <tbody>
-                {CDF.CLOs.map(i=>{
-                      let Sos="string"
-                      i.So.forEach((e)=>{
-                        console.log("Sos",Sos)
-                        if(Sos==""){
-                          Sos=e.Number
+                  {CDF.CLOs.map((i) => {
+                    let Sos = "string";
+                    i.So.forEach((e) => {
+                      console.log("Sos", Sos);
+                      if (Sos == "") {
+                        Sos = e.Number;
+                      } else if (Sos.length == 1) {
+                        Sos = Sos + "," + e.Number;
+                      } else if (Sos[Sos.length - 2] == ",") {
+                        if (
+                          parseInt(Sos[Sos.length - 3]) -
+                            parseInt(Sos[Sos.length - 1]) ==
+                            1 &&
+                          parseInt(e.Number) - parseInt(Sos[Sos.length - 1]) ==
+                            1
+                        ) {
+                          Sos[Sos.length - 2] = "-";
+                          Sos[Sos.length - 1] = e.Number;
+                        } else {
+                          Sos = Sos + "," + e.Number;
                         }
-                        else if(Sos.length == 1){
-                          Sos=Sos+","+e.Number
+                      } else if (Sos[Sos.length - 2] == "-") {
+                        if (
+                          parseInt(Sos[Sos.length - 3]) -
+                            parseInt(Sos[Sos.length - 1]) ==
+                            1 &&
+                          parseInt(e.Number) - parseInt(Sos[Sos.length - 1]) ==
+                            1
+                        ) {
+                          Sos[Sos.length - 1] = e.Number;
+                        } else {
+                          Sos = Sos + "," + e.Number;
                         }
-                        else if(Sos[Sos.length-2]==","){
-                          if(parseInt(Sos[Sos.length-3])-parseInt(Sos[Sos.length-1])==1
-                          && parseInt(e.Number)-parseInt(Sos[Sos.length-1])==1){
-                            Sos[Sos.length-2]="-"
-                            Sos[Sos.length-1]=e.Number
-                          }
-                          else{
-                            Sos=Sos+","+e.Number
-                          }
-                        }
-                        else if(Sos[Sos.length-2]=="-"){
-                          if(parseInt(Sos[Sos.length-3])-parseInt(Sos[Sos.length-1])==1
-                          && parseInt(e.Number)-parseInt(Sos[Sos.length-1])==1){
-                            Sos[Sos.length-1]=e.Number
-                          }
-                          else{
-                            Sos=Sos+","+e.Number
-                          }
-                        }
-                        
-                      })
-                      return(
-                    
-                    <tr>
-                      <td style={{}}>{i.sr}</td>
-                      <td style={{ textAlign: "center" }}>{i.Unit}</td>
-                      <td>{i.CLO}
-                      </td>
-                      <td
-                        style={{
-                          textAlign: "center",
-                        }}
-                      >
-                        <i>{i.BTL.map((e)=>{return(<>{e.BTL}</>)})}</i>
-                      </td>
-                      <td style={{ textAlign: "center" }}>{Sos}</td>
-                    </tr>
-                )})}
-                    
+                      }
+                    });
+                    return (
+                      <tr>
+                        <td style={{}}>{i.sr}</td>
+                        <td style={{ textAlign: "center" }}>{i.Unit}</td>
+                        <td>{i.CLO}</td>
+                        <td
+                          style={{
+                            textAlign: "center",
+                          }}
+                        >
+                          <i>
+                            {i.BTL.map((e) => {
+                              return <>{e.BTL}</>;
+                            })}
+                          </i>
+                        </td>
+                        <td style={{ textAlign: "center" }}>{Sos}</td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
@@ -455,49 +484,48 @@ export default function SyllabusCreation() {
                 >
                   <tr>
                     <th className="col-1">Assessment Tools</th>
-                    {CDF.CLOs.map((i)=>{
-                    return(
-                      <th className="col-1">{i.sr}</th>
-                    )})}
-                    </tr>
-                  </thead>
-                  <tbody style={{ textAlign: "center" }}>
-                    <tr>
-                      <td>Quizzes</td>
-                      {CDF.CLOs.map((i)=>{
-                      return(
-                        <th>{i.Quizzes.map(e=>e.title)}</th>)})}
-                    </tr>
-                    <tr>
-                      <td>Assignments</td>
-                      {CDF.CLOs.map((i)=>{
-                      return(
-                        <th>{i.Assignment.map(e=>e.title)}</th>)})}
-                    </tr>
-                    <tr>
+                    {CDF.CLOs.map((i) => {
+                      return <th className="col-1">{i.sr}</th>;
+                    })}
+                  </tr>
+                </thead>
+                <tbody style={{ textAlign: "center" }}>
+                  <tr>
+                    <td>Quizzes</td>
+                    {CDF.CLOs.map((i) => {
+                      return <th>{i.Quizzes.map((e) => e.title)}</th>;
+                    })}
+                  </tr>
+                  <tr>
+                    <td>Assignments</td>
+                    {CDF.CLOs.map((i) => {
+                      return <th>{i.Assignment.map((e) => e.title)}</th>;
+                    })}
+                  </tr>
+                  <tr>
                     <td>Mid Term Exam</td>
-                    {CDF.CLOs.map((i)=>{
-                      return(
-                        <th>{i.Mid}</th>)})}
-                    </tr>
-                    <tr>
-                      <td>Final Term Exam</td>
-                      {CDF.CLOs.map((i)=>{
-                      return(
-                        <th>{i.Final}</th>)})}
-                    </tr>
-                    <tr>
-                      <td>Project</td>
-                      {CDF.CLOs.map((i)=>{
-                      return(
-                        <th>{i.Project}</th>)})}
- 
-                    </tr>
-                  </tbody>
+                    {CDF.CLOs.map((i) => {
+                      return <th>{i.Mid}</th>;
+                    })}
+                  </tr>
+                  <tr>
+                    <td>Final Term Exam</td>
+                    {CDF.CLOs.map((i) => {
+                      return <th>{i.Final}</th>;
+                    })}
+                  </tr>
+                  <tr>
+                    <td>Project</td>
+                    {CDF.CLOs.map((i) => {
+                      return <th>{i.Project}</th>;
+                    })}
+                  </tr>
+                </tbody>
               </table>
             </div>
           </div>
-        </div>)
-      }
-      </div>)
+        </div>
+      )}
+    </div>
+  );
 }

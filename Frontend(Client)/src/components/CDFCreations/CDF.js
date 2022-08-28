@@ -24,15 +24,15 @@ export default function CDF() {
     content: () => componentRef.current,
   });
 
-  const { Code,Name } = state.row;
+  const { Code, Name } = state.row;
   const [Version, setVersion] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [res, setresponse] = useState(false);
-  const [Totalteaching,setTotalteaching]=useState(0)
+  const [Totalteaching, setTotalteaching] = useState(0);
   const [Content, setContent] = useState({
     Code: Code,
     Name: Name,
-    Credit:"",
+    Credit: "",
     LectureHoursWeek: "0",
     LabHoursWeek: "0",
     Category: "",
@@ -41,11 +41,12 @@ export default function CDF() {
     objectiveList: [],
     Books: [],
   });
-  const [CDF, setCDF] = useState(
-{    Topics:[],
-      CLOs:[],
-      textBook:[],
-      referenceBook:[]}  )
+  const [CDF, setCDF] = useState({
+    Topics: [],
+    CLOs: [],
+    textBook: [],
+    referenceBook: [],
+  });
 
   console.log(Version);
   const navigate = useNavigate();
@@ -57,27 +58,29 @@ export default function CDF() {
   };
   const getCat = async () => {
     try {
-      const response = await axios.get(`http://localhost:4000/Course/bycode/${Code}`);
+      const response = await axios.get(
+        `http://localhost:4000/Course/bycode/${Code}`
+      );
       console.log(response.data);
       setContent({
         Code: response.data.Code,
         Name: response.data.Name,
-        Credit:response.data.Credit,
+        Credit: response.data.Credit,
         LectureHoursWeek: response.data.LectureHoursWeek,
-        LabHoursWeek: response.data.LabHoursWeek,        
+        LabHoursWeek: response.data.LabHoursWeek,
         PreRequisites: response.data.PreRequisites,
         catalogue: response.data.catalogue,
         objectiveList: response.data.objectiveList,
         Books: response.data.Books,
-      })
+      });
     } catch (error) {
       console.log(error);
     }
   };
-      useEffect(() => {
-        getCat()     
-        getData();
-      }, []);
+  useEffect(() => {
+    getCat();
+    getData();
+  }, []);
 
   const getData = async () => {
     console.log(Code);
@@ -91,8 +94,8 @@ export default function CDF() {
     }
   };
 
-  const[LabCLO,setLabCLO]=useState([])
-  const[TheoryCLO,setTheoryCLO]=useState([])
+  const [LabCLO, setLabCLO] = useState([]);
+  const [TheoryCLO, setTheoryCLO] = useState([]);
   // const labsep =()=>{
   //   CDF.CLOs.forEach(i=>{
   //     var ob = false
@@ -103,76 +106,71 @@ export default function CDF() {
   //     })
   //    if(ob==true||i.Project!=""){
   //     setLabCLO([...LabCLO,i])
-  //    } 
+  //    }
   //    else{
   //     setTheoryCLO([...TheoryCLO,i])
   //    }
-  //   })    
+  //   })
   // }
   const getContent = async () => {
-
     const response = await axios.get(
       `http://localhost:4000/CDFVerison/Latest/${Code}`
     );
     setCDF(response.data);
-    var sum=0
-    if(response.data.Topics.length>0){
-      response.data.Topics.forEach((i)=> {
-        sum=sum+parseInt(i.TeachingHours)
-        })
+    var sum = 0;
+    if (response.data.Topics.length > 0) {
+      response.data.Topics.forEach((i) => {
+        sum = sum + parseInt(i.TeachingHours);
+      });
+    }
+    var LabCLOss = [];
+    var TheoryCLOss = [];
+    response.data.CLOs.forEach((i) => {
+      var ob = false;
+      i.Assignment.forEach((e) => {
+        if (e.title == "Lab Assignments") {
+          obj == true;
+        }
+      });
+      if (ob == true || i.Project != "") {
+        LabCLOss = [...LabCLOss, i];
+      } else {
+        TheoryCLOss = [...TheoryCLOss, i];
       }
-      var LabCLOss=[]
-      var TheoryCLOss=[]
-      response.data.CLOs.forEach(i=>{
-        var ob = false
-        i.Assignment.forEach(e=>{
-          if(e.title=="Lab Assignments"){
-            obj==true
-          }
-        })
-       if(ob==true||i.Project!=""){
-        LabCLOss=[...LabCLOss,i]
-       } 
-       else{
-        TheoryCLOss=[...TheoryCLOss,i]
-       }
-      })
-      setLabCLO([...LabCLOss])
-      setTheoryCLO([...TheoryCLOss])
-      setTotalteaching(sum)
+    });
+    setLabCLO([...LabCLOss]);
+    setTheoryCLO([...TheoryCLOss]);
+    setTotalteaching(sum);
   };
   const Edit = () => {
     state.row.Content = Content;
-    state.row.CDF=CDF
+    state.row.CDF = CDF;
     navigate(`/CAC/CreateCDF/${Code}`, { state: { row: state.row } });
   };
   const getCon = async (id) => {
-    const response = await axios.get(
-      `http://localhost:4000/CDFVerison/${id}`
-    );
+    const response = await axios.get(`http://localhost:4000/CDFVerison/${id}`);
     setCDF(response.data);
-    var LabCLOss=[]
-    var TheoryCLOss=[]
-    response.data.CLOs.forEach(i=>{
-      var ob = false
-      i.Assignment.forEach(e=>{
-        if(e.title=="Lab Assignments"){
-          obj==true
+    var LabCLOss = [];
+    var TheoryCLOss = [];
+    response.data.CLOs.forEach((i) => {
+      var ob = false;
+      i.Assignment.forEach((e) => {
+        if (e.title == "Lab Assignments") {
+          obj == true;
         }
-      })
-     if(ob==true||i.Project!=""){
-      LabCLOss=[...LabCLOss,i]
-     } 
-     else{
-      TheoryCLOss=[...TheoryCLOss,i]
-     }
-    })
-    setLabCLO([...LabCLOss])
-    setTheoryCLO([...TheoryCLOss])
-    setTotalteaching(sum)  
+      });
+      if (ob == true || i.Project != "") {
+        LabCLOss = [...LabCLOss, i];
+      } else {
+        TheoryCLOss = [...TheoryCLOss, i];
+      }
+    });
+    setLabCLO([...LabCLOss]);
+    setTheoryCLO([...TheoryCLOss]);
+    setTotalteaching(sum);
   };
-console.log("content", Content)
-console.log("CDF", CDF)
+  console.log("content", Content);
+  console.log("CDF", CDF);
   return (
     <div style={{ height: 700, padding: 30, width: "100%" }}>
       <div className="d-flex justify-content-end mb-4">
@@ -225,7 +223,10 @@ console.log("CDF", CDF)
                   {Version.map((Repo, index) => {
                     return (
                       <tr scope="row" key={Repo._id}>
-                        <td onClick={() => getCon(Repo._id)}>
+                        <td
+                          style={{ cursor: "pointer" }}
+                          onClick={() => getCon(Repo._id)}
+                        >
                           Version: {index + 1}
                         </td>
                       </tr>
@@ -241,7 +242,6 @@ console.log("CDF", CDF)
       {!res ? (
         <h3>Empty Repository</h3>
       ) : (
-        
         <div ref={componentRef} className="main">
           <div
             className="d-flex row justify-content-center mb-4"
@@ -281,8 +281,15 @@ console.log("CDF", CDF)
               <div className="row">
                 <div className="col">
                   <h6 style={{ paddingBottom: 20 }}>
-                    <b>Credit Hour: {Content.Credit+"("+Content.LectureHoursWeek+
-                    ","+Content.LabHoursWeek+")"} </b>
+                    <b>
+                      Credit Hour:{" "}
+                      {Content.Credit +
+                        "(" +
+                        Content.LectureHoursWeek +
+                        "," +
+                        Content.LabHoursWeek +
+                        ")"}{" "}
+                    </b>
                   </h6>
                 </div>
                 <div className="col">
@@ -313,10 +320,7 @@ console.log("CDF", CDF)
                   Catalogue Description
                 </h4>
               </div>
-              <p style={{ paddingBottom: 20 }}>
-                {" "}
-                {Content.catalogue}
-              </p>
+              <p style={{ paddingBottom: 20 }}> {Content.catalogue}</p>
             </div>
             <div style={{ paddingBottom: 20 }}>
               <div>
@@ -339,21 +343,19 @@ console.log("CDF", CDF)
                     </tr>
                   </thead>
                   <tbody>
-        
-
-                { 
-                CDF.Topics.map((i)=>
-                {return(
-                    <>
-                    <tr>
-                      <td style={{ textAlign: "center" }}>{i.Unit}</td>
-                      <td>
-                        {i.Topic}
-                      </td>
-                      <td style={{ textAlign: "center" }}>{i.TeachingHours}</td>
-                    </tr>
-                    </>
-                    )})}
+                    {CDF.Topics.map((i) => {
+                      return (
+                        <>
+                          <tr>
+                            <td style={{ textAlign: "center" }}>{i.Unit}</td>
+                            <td>{i.Topic}</td>
+                            <td style={{ textAlign: "center" }}>
+                              {i.TeachingHours}
+                            </td>
+                          </tr>
+                        </>
+                      );
+                    })}
                     <tr>
                       <th colSpan={2}>Total Contact Hours</th>
                       <td style={{ textAlign: "center" }}>{Totalteaching}</td>
@@ -389,110 +391,125 @@ console.log("CDF", CDF)
                       <th colSpan={5}>CLO’s for Theory</th>
                     </tr>
 
-                    {TheoryCLO.map(i=>{
-                      var Sos=""
-                      i.So.forEach((e)=>{
-                        console.log("Sos",Sos)
-                        if(Sos==""){
-                          Sos=e.Number
-                        }
-                        else if(Sos.length==1){
-                          Sos=Sos+","+e.Number
-                        }
-                        else if(Sos[Sos.length-2]==","){
-                          if(parseInt(Sos[Sos.length-3])-parseInt(Sos[Sos.length-1])==1
-                          && parseInt(e.Number)-parseInt(Sos[Sos.length-1])==1){
-                            Sos[Sos.length-2]="-"
-                            Sos[Sos.length-1]=e.Number
+                    {TheoryCLO.map((i) => {
+                      var Sos = "";
+                      i.So.forEach((e) => {
+                        console.log("Sos", Sos);
+                        if (Sos == "") {
+                          Sos = e.Number;
+                        } else if (Sos.length == 1) {
+                          Sos = Sos + "," + e.Number;
+                        } else if (Sos[Sos.length - 2] == ",") {
+                          if (
+                            parseInt(Sos[Sos.length - 3]) -
+                              parseInt(Sos[Sos.length - 1]) ==
+                              1 &&
+                            parseInt(e.Number) -
+                              parseInt(Sos[Sos.length - 1]) ==
+                              1
+                          ) {
+                            Sos[Sos.length - 2] = "-";
+                            Sos[Sos.length - 1] = e.Number;
+                          } else {
+                            Sos = Sos + "," + e.Number;
                           }
-                          else{
-                            Sos=Sos+","+e.Number
+                        } else if (Sos[Sos.length - 2] == "-") {
+                          if (
+                            parseInt(Sos[Sos.length - 3]) -
+                              parseInt(Sos[Sos.length - 1]) ==
+                              1 &&
+                            parseInt(e.Number) -
+                              parseInt(Sos[Sos.length - 1]) ==
+                              1
+                          ) {
+                            Sos[Sos.length - 1] = e.Number;
+                          } else {
+                            Sos = Sos + "," + e.Number;
                           }
                         }
-                        else if(Sos[Sos.length-2]=="-"){
-                          if(parseInt(Sos[Sos.length-3])-parseInt(Sos[Sos.length-1])==1
-                          && parseInt(e.Number)-parseInt(Sos[Sos.length-1])==1){
-                            Sos[Sos.length-1]=e.Number
-                          }
-                          else{
-                            Sos=Sos+","+e.Number
-                          }
-                        }
-                        
-                      })
-                      return(
-                      <tr>
-                      <td style={{}}>{i.sr}</td>
-                      <td style={{ textAlign: "center" }}>{i.Unit}</td>
-                      <td>
-                        {i.CLO}
-                      </td>
-                      <td
-                        style={{
-                          textAlign: "center",
-                        }}
-                      >
-                        <i>{i.BTL.map((e)=>{return(<>{e.BTL}</>)})}</i>
-                      </td>
-                      <td style={{ textAlign: "center" }}>{Sos}</td>
-                      </tr>
-                        )})}
-            
-                      
+                      });
+                      return (
+                        <tr>
+                          <td style={{}}>{i.sr}</td>
+                          <td style={{ textAlign: "center" }}>{i.Unit}</td>
+                          <td>{i.CLO}</td>
+                          <td
+                            style={{
+                              textAlign: "center",
+                            }}
+                          >
+                            <i>
+                              {i.BTL.map((e) => {
+                                return <>{e.BTL}</>;
+                              })}
+                            </i>
+                          </td>
+                          <td style={{ textAlign: "center" }}>{Sos}</td>
+                        </tr>
+                      );
+                    })}
+
                     <tr className="py-2" style={{ textAlign: "center" }}>
                       <th colSpan={5}>CLO’s for Lab</th>
                     </tr>
 
-                    {LabCLO.map(i=>{
-                      var Sos=""
-                      i.So.forEach((e)=>{
-                        console.log("Sos",Sos)
-                        if(Sos==""){
-                          Sos=e.Number
-                        }
-                        else if(Sos.length==1){
-                          Sos=Sos+","+e.Number
-                        }
-                        else if(Sos[Sos.length-2]==","){
-                          if(parseInt(Sos[Sos.length-3])-parseInt(Sos[Sos.length-1])==1
-                          && parseInt(e.Number)-parseInt(Sos[Sos.length-1])==1){
-                            Sos[Sos.length-2]="-"
-                            Sos[Sos.length-1]=e.Number
+                    {LabCLO.map((i) => {
+                      var Sos = "";
+                      i.So.forEach((e) => {
+                        console.log("Sos", Sos);
+                        if (Sos == "") {
+                          Sos = e.Number;
+                        } else if (Sos.length == 1) {
+                          Sos = Sos + "," + e.Number;
+                        } else if (Sos[Sos.length - 2] == ",") {
+                          if (
+                            parseInt(Sos[Sos.length - 3]) -
+                              parseInt(Sos[Sos.length - 1]) ==
+                              1 &&
+                            parseInt(e.Number) -
+                              parseInt(Sos[Sos.length - 1]) ==
+                              1
+                          ) {
+                            Sos[Sos.length - 2] = "-";
+                            Sos[Sos.length - 1] = e.Number;
+                          } else {
+                            Sos = Sos + "," + e.Number;
                           }
-                          else{
-                            Sos=Sos+","+e.Number
+                        } else if (Sos[Sos.length - 2] == "-") {
+                          if (
+                            parseInt(Sos[Sos.length - 3]) -
+                              parseInt(Sos[Sos.length - 1]) ==
+                              1 &&
+                            parseInt(e.Number) -
+                              parseInt(Sos[Sos.length - 1]) ==
+                              1
+                          ) {
+                            Sos[Sos.length - 1] = e.Number;
+                          } else {
+                            Sos = Sos + "," + e.Number;
                           }
                         }
-                        else if(Sos[Sos.length-2]=="-"){
-                          if(parseInt(Sos[Sos.length-3])-parseInt(Sos[Sos.length-1])==1
-                          && parseInt(e.Number)-parseInt(Sos[Sos.length-1])==1){
-                            Sos[Sos.length-1]=e.Number
-                          }
-                          else{
-                            Sos=Sos+","+e.Number
-                          }
-                        }
-                        
-                      })
-                      return(
-                    
-                    <tr>
-                      <td style={{}}>{i.sr}</td>
-                      <td style={{ textAlign: "center" }}>{i.Unit}</td>
-                      <td>{i.CLO}
-                      </td>
-                      <td
-                        style={{
-                          textAlign: "center",
-                        }}
-                      >
-                        <i>{i.BTL.map((e)=>{return(<>{e.BTL}</>)})}</i>
-                      </td>
-                      <td style={{ textAlign: "center" }}>{Sos}</td>
-                    </tr>
-                )})}
-                    
-
+                      });
+                      return (
+                        <tr>
+                          <td style={{}}>{i.sr}</td>
+                          <td style={{ textAlign: "center" }}>{i.Unit}</td>
+                          <td>{i.CLO}</td>
+                          <td
+                            style={{
+                              textAlign: "center",
+                            }}
+                          >
+                            <i>
+                              {i.BTL.map((e) => {
+                                return <>{e.BTL}</>;
+                              })}
+                            </i>
+                          </td>
+                          <td style={{ textAlign: "center" }}>{Sos}</td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
@@ -510,44 +527,42 @@ console.log("CDF", CDF)
                 <table className="table table-bordered">
                   <thead
                     style={{ backgroundColor: "#f5f5f5", textAlign: "center" }}
-                  >                    
+                  >
                     <th className="col-1">Assessment Tools</th>
-                    {CDF.CLOs.map((i)=>{
-                    return(
-                      <th className="col-1">{i.sr}</th>
-                    )})}
+                    {CDF.CLOs.map((i) => {
+                      return <th className="col-1">{i.sr}</th>;
+                    })}
                   </thead>
                   <tbody style={{ textAlign: "center" }}>
                     <tr>
                       <td>Quizzes</td>
-                      {CDF.CLOs.map((i)=>{
-                      return(
-                        <th>{i.Quizzes.map(e=>e.title)}</th>)})}
+                      {CDF.CLOs.map((i) => {
+                        return <th>{i.Quizzes.map((e) => e.title)}</th>;
+                      })}
                     </tr>
                     <tr>
                       <td>Assignments</td>
-                      {CDF.CLOs.map((i)=>{
-                      return(
-                        <th>{i.Assignment.map(e=>e.title)}</th>)})}
+                      {CDF.CLOs.map((i) => {
+                        return <th>{i.Assignment.map((e) => e.title)}</th>;
+                      })}
                     </tr>
                     <tr>
-                    <td>Mid Term Exam</td>
-                    {CDF.CLOs.map((i)=>{
-                      return(
-                        <th>{i.Mid}</th>)})}
+                      <td>Mid Term Exam</td>
+                      {CDF.CLOs.map((i) => {
+                        return <th>{i.Mid}</th>;
+                      })}
                     </tr>
                     <tr>
                       <td>Final Term Exam</td>
-                      {CDF.CLOs.map((i)=>{
-                      return(
-                        <th>{i.Final}</th>)})}
+                      {CDF.CLOs.map((i) => {
+                        return <th>{i.Final}</th>;
+                      })}
                     </tr>
                     <tr>
                       <td>Project</td>
-                      {CDF.CLOs.map((i)=>{
-                      return(
-                        <th>{i.Project}</th>)})}
- 
+                      {CDF.CLOs.map((i) => {
+                        return <th>{i.Project}</th>;
+                      })}
                     </tr>
                   </tbody>
                 </table>
@@ -565,14 +580,24 @@ console.log("CDF", CDF)
               <div>
                 <h4>TextBook:</h4>
                 <ol>
-                  {CDF.textBook.map((i)=>{
-                    return(<li>{i.BookName}, {i.BookWriter}, {i.BookYear}</li>)})}
+                  {CDF.textBook.map((i) => {
+                    return (
+                      <li>
+                        {i.BookName}, {i.BookWriter}, {i.BookYear}
+                      </li>
+                    );
+                  })}
                 </ol>
 
                 <h4>Reference Books:</h4>
                 <ol>
-                {CDF.referenceBook.map((i)=>{
-                    return(<li>{i.BookName}, {i.BookWriter}, {i.BookYear}</li>)})}
+                  {CDF.referenceBook.map((i) => {
+                    return (
+                      <li>
+                        {i.BookName}, {i.BookWriter}, {i.BookYear}
+                      </li>
+                    );
+                  })}
                 </ol>
               </div>
             </div>

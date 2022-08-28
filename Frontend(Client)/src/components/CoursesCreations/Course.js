@@ -22,7 +22,7 @@ export default function Course() {
     content: () => componentRef.current,
   });
 
-  const { Code, Name, } = state.row;
+  const { Code, Name } = state.row;
   const [Version, setVersion] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [res, setresponse] = useState(false);
@@ -77,7 +77,7 @@ export default function Course() {
     );
     setContent(response.data);
   };
-console.log("content", Content)
+  console.log("content", Content);
   return (
     <div style={{ height: 700, padding: 30, width: "100%" }}>
       <div className="d-flex justify-content-end mb-4">
@@ -130,7 +130,10 @@ console.log("content", Content)
                   {Version.map((Repo, index) => {
                     return (
                       <tr scope="row" key={Repo._id}>
-                        <td onClick={() => getCon(Repo._id)}>
+                        <td
+                          style={{ cursor: "pointer" }}
+                          onClick={() => getCon(Repo._id)}
+                        >
                           Version: {index + 1}
                         </td>
                       </tr>
@@ -147,13 +150,12 @@ console.log("content", Content)
         <h3>Empty Repository</h3>
       ) : (
         <div ref={componentRef} className="main">
-
-
           <div>
             <div style={{ paddingBottom: 20 }} className="row">
               <div className="col">
                 <h6>
-                  <b>Course Code: </b> {Code.split("-")[0]}{Code.split("-")[1]}
+                  <b>Course Code: </b> {Code.split("-")[0]}
+                  {Code.split("-")[1]}
                 </h6>
               </div>
               <div className="col">

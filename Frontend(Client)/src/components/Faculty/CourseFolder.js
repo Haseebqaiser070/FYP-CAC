@@ -22,9 +22,52 @@ export default function CourseFolder() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const [open1, setOpen1] = useState(false);
+  const handleOpen1 = () => setOpen1(true);
+  const handleClose1 = () => setOpen1(false);
+
+  const [open2, setOpen2] = useState(false);
+  const handleOpen2 = () => setOpen2(true);
+  const handleClose2 = () => setOpen2(false);
+
   return (
     <div class="container" style={{ height: 700, width: "100%", padding: 20 }}>
       <h1 style={{ marginBottom: 30 }}>Course Folder Maintainence</h1>
+
+      <Modal
+        open={open1}
+        onClose={handleClose1}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <form>
+            <div class="mb-3">
+              <label class="form-label" for="customFile">
+                <b>Upload ICEF</b>
+              </label>
+              <input type="file" class="form-control" id="customFile" />
+            </div>
+          </form>
+        </Box>
+      </Modal>
+      <Modal
+        open={open2}
+        onClose={handleClose2}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <form>
+            <div class="mb-3">
+              <label class="form-label" for="customFile">
+                <b>Upload OBE</b>
+              </label>
+              <input type="file" class="form-control" id="customFile" />
+            </div>
+          </form>
+        </Box>
+      </Modal>
       <Modal
         open={open}
         onClose={handleClose}
@@ -64,6 +107,13 @@ export default function CourseFolder() {
             <div class="mb-3">
               <label class="form-label" for="customFile">
                 <b>Upload Solution</b>
+              </label>
+              <input type="file" class="form-control" id="customFile" />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="customFile">
+                <b>Upload Award List</b>
               </label>
               <input type="file" class="form-control" id="customFile" />
             </div>
@@ -221,6 +271,26 @@ export default function CourseFolder() {
                     onClick={handleOpen}
                   >
                     Terminal Exam
+                  </button>
+                </td>
+                <td className="d-grid py-2 px-2">
+                  <button
+                    class="btn py-2  btn-block btn-primary"
+                    id="quiz1"
+                    type="button"
+                    onClick={handleOpen1}
+                  >
+                    ICEF
+                  </button>
+                </td>
+                <td className="d-grid py-2 px-2">
+                  <button
+                    class="btn py-2  btn-block btn-primary"
+                    id="quiz1"
+                    type="button"
+                    onClick={handleOpen2}
+                  >
+                    OBE
                   </button>
                 </td>
                 <td className="d-grid py-4 px-2">
