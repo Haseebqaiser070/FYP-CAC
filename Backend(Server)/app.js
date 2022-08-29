@@ -27,6 +27,7 @@ var CDFReturnedRouter = require("./Routes/AdminRoutes/CDF")
 var SyllabusRouter = require("./Routes/AdminRoutes/Syllabus")
 var AssignFoldersRouter = require("./Routes/Folders/AssignFolders")
 var UserAssigedFolders = require("./Routes/Folders/UserAssigedFolders")
+var ContentFolder = require("./Routes/AdminRoutes/FolderContents")
 
 var { getUser } = require("./Middleware/User");
 
@@ -59,8 +60,9 @@ app.use("/CDFVerison", getUser, CDFVersionRouter);
 app.use("/SyllabusCreate", getUser, SyllabusCreationRouter);
 app.use("/SyllabusVerison", getUser, SyllabusVersionRouter);
 app.use("/SOBTL", getUser, SOBTLRouter);
-app.use("/AssginFolders", getUser,AssignFoldersRouter)
-app.use("/UserAssigedFolders",getUser,UserAssigedFolders)
+app.use("/AssginFolders", getUser, AssignFoldersRouter);
+app.use("/UserAssigedFolders", getUser, UserAssigedFolders);
+app.use("/Content", getUser, ContentFolder);
 
 const start = async () => {
   try {
