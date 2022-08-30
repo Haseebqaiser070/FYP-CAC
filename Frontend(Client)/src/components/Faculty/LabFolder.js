@@ -3,6 +3,7 @@ import "../css/styles.css";
 import Button from "@mui/material/Button";
 import Popup from "../AuxillaryComponents/PopupFunction";
 import { Box, Card, Modal } from "@mui/material";
+import axios from "axios";
 
 const style = {
   position: "absolute",
@@ -18,6 +19,8 @@ const style = {
 };
 
 export default function LabFolder() {
+  axios.defaults.withCredentials = true;
+
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);

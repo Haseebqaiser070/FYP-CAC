@@ -79,8 +79,8 @@ console.log("Course",Courses)
   };
   const[up,setup]=useState(false)
   //-------------
-  const getobjs=async()=>{
-    const response = await axios.get("http://localhost:4000/UserAssigedFolders/showAll");
+  const getobjs=async(id)=>{
+    const response = await axios.get(`http://localhost:4000/UserAssigedFolders/showAllbyid/${id}`);
     const col=await Promise.all(response.data.filter((i)=>{
       if(i.LabTheory!="Lab"){
         return({
@@ -88,9 +88,17 @@ console.log("Course",Courses)
           Course: i.Course,
           Section:i.Section
         })
+        
+      }
+    }))
+    const col2=await Promise.all(col.map(async(i)=>{
+      if(i.LabTheory!="Lab"){
+        const res = await axios.get(`http://localhost:4000/ProgramCourses/show/${i.Program}`);
+        return(res.data)        
       }
     }))
     setobj([...col]);
+    setCourse([...col2])
     setup(true)
   }
   const Submitform = async (e) => {
@@ -114,8 +122,15 @@ console.log("Course",Courses)
         User,
       });
     }
+    else{
+      await axios.post("http://localhost:4000/AssginFolders/add2", {
+        obj,
+        User,
+      });
+    }
       getData()
       handleClose()
+
     } else {
       alert("Empty Field");
     }
@@ -159,7 +174,7 @@ console.log("Course",Courses)
             style={{ marginLeft: 16 }}
             onClick={() =>{
               setUser(row)
-              getobjs()
+              getobjs(row._id)
               setOpen(true)}}
           >
             <AiFillEdit style={{ marginRight: 10 }} />
@@ -253,6 +268,7 @@ console.log("Course",Courses)
                 <div className="form-floating mb-4">
                   <select
                     class="form-select"
+                    label="Assign Program"
                     onChange={(e) =>{
                       const clone=[...obj]
                       clone[index].Program=e.target.value
@@ -262,7 +278,7 @@ console.log("Course",Courses)
                   }
                   >
                     <option value={obj[index].Program} selected disabled hidden>
-                      {obj[index].Program!=""?(obj[index].Program):(<>Select option</>)}
+                      {obj[index].Program!=""&&obj[index].Program}
                     </option>
                     {Programdb.map((p) => {
                       return (
@@ -316,7 +332,10 @@ console.log("Course",Courses)
                           setobj([...clone]);
                         }}
                         autoWidth
-                      >
+                      > 
+                      <option value={obj[index].Course} selected disabled hidden>
+                        {obj[index].Course!=""&&obj[index].Course.Name}
+                      </option>
                         {Courses[index].map((a) => {
                           return <MenuItem value={a}>{a.Name}</MenuItem>;
                         })}
