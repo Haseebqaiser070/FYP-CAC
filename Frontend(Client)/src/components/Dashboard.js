@@ -1,68 +1,131 @@
+import { Button, Card } from "@mui/material";
 import React from "react";
 import "./css/styles.css";
 
 export default function Dashboard() {
   return (
     <div
-      className="container-fluid px-4"
-      style={{ height: 700, width: "100%", padding: 20 }}
+      style={{
+        width: "100%",
+        padding: 30,
+      }}
     >
-      <h1 className="mt-4">Dashboard</h1>
-      <ol className="breadcrumb mb-4">
-        <li className="breadcrumb-item active">Dashboard</li>
-      </ol>
-      <div className="row">
-        <div className="col-xl-3 col-md-6">
-          <div className="card bg-primary text-white mb-4">
-            <div className="card-body">Primary Card</div>
-            <div className="card-footer d-flex align-items-center justify-content-between">
-              <a className="small text-white stretched-link" href="#">
-                View Details
-              </a>
-              <div className="small text-white">
-                <i className="fas fa-angle-right"></i>
-              </div>
-            </div>
+      <h1 className="py-4 my-2">
+        <b>DASHBOARD</b>
+      </h1>
+
+      <div>
+        <Card style={{ padding: 25 }}>
+          <h4 style={{ fontSize: "18px" }} className="mb-4">
+            Upcoming Meetings
+          </h4>
+          <div className="table-responsive my-4">
+            <table
+              className="table table-hover"
+              style={{ textAlign: "center" }}
+            >
+              <thead style={{ backgroundColor: "#1565C0", color: "#fff" }}>
+                <th className="col-4">Meeting Subject</th>
+                <th className="col-3">Date</th>
+                <th className="col-4">Members</th>
+              </thead>
+              <tbody style={{ backgroundColor: "#f5f5f5" }}>
+                <tr>
+                  <td>Create SOS for Computer Science</td>
+                  <td>31-08-2022</td>
+                  <td>Tanveer Ahmed, Rizwan Rashid</td>
+                </tr>
+                <tr>
+                  <td>Create SOS for Computer Science</td>
+                  <td>31-08-2022</td>
+                  <td>Tanveer Ahmed, Rizwan Rashid</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
+        </Card>
+      </div>
+
+      <div className="row" style={{ marginTop: 30 }}>
+        <div className="col">
+          <Card style={{ padding: 25 }}>
+            <h4 style={{ fontSize: "18px" }} className="mb-4">
+              Task Assigned
+            </h4>
+            <div className="table-responsive my-4">
+              <table
+                className="table table-hover"
+                style={{ textAlign: "center" }}
+              >
+                <thead style={{ backgroundColor: "#1565C0", color: "#fff" }}>
+                  <th className="col-4">Task Type</th>
+                  <th className="col-3">Date</th>
+                  <th className="col-4">Members</th>
+                </thead>
+                <tbody style={{ backgroundColor: "#f5f5f5" }}>
+                  <tr>
+                    <td>Create CDF</td>
+                    <td>31-08-2022</td>
+                    <td>Tanveer Ahmed, Rizwan Rashid</td>
+                  </tr>
+                  <tr>
+                    <td>Create CDF</td>
+                    <td>31-08-2022</td>
+                    <td>Tanveer Ahmed, Rizwan Rashid</td>
+                  </tr>
+                </tbody>
+              </table>
+              <Button
+                variant="contained"
+                color="primary"
+                size="small"
+
+                // onClick={handleOpen1}
+              >
+                View All
+              </Button>
+            </div>
+          </Card>
         </div>
-        <div className="col-xl-3 col-md-6">
-          <div className="card bg-warning text-white mb-4">
-            <div className="card-body">Warning Card</div>
-            <div className="card-footer d-flex align-items-center justify-content-between">
-              <a className="small text-white stretched-link" href="#">
-                View Details
-              </a>
-              <div className="small text-white">
-                <i className="fas fa-angle-right"></i>
-              </div>
+        <div className="col">
+          <Card style={{ padding: 25 }}>
+            <h4 style={{ fontSize: "18px" }} className="mb-4">
+              Returned Tasks
+            </h4>
+            <div className="table-responsive my-4">
+              <table
+                className="table table-hover"
+                style={{ textAlign: "center" }}
+              >
+                <thead style={{ backgroundColor: "#1565C0", color: "#fff" }}>
+                  <th className="col-4">Task Type</th>
+                  <th className="col-3">Date</th>
+                  <th className="col-4">Members</th>
+                </thead>
+                <tbody style={{ backgroundColor: "#f5f5f5" }}>
+                  <tr>
+                    <td>Create CDF</td>
+                    <td>31-08-2022</td>
+                    <td>Tanveer Ahmed, Rizwan Rashid</td>
+                  </tr>
+                  <tr>
+                    <td>Create CDF</td>
+                    <td>31-08-2022</td>
+                    <td>Tanveer Ahmed, Rizwan Rashid</td>
+                  </tr>
+                </tbody>
+              </table>
+              <Button
+                variant="contained"
+                color="primary"
+                size="small"
+
+                // onClick={handleOpen1}
+              >
+                View All
+              </Button>
             </div>
-          </div>
-        </div>
-        <div className="col-xl-3 col-md-6">
-          <div className="card bg-success text-white mb-4">
-            <div className="card-body">Success Card</div>
-            <div className="card-footer d-flex align-items-center justify-content-between">
-              <a className="small text-white stretched-link" href="#">
-                View Details
-              </a>
-              <div className="small text-white">
-                <i className="fas fa-angle-right"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="col-xl-3 col-md-6">
-          <div className="card bg-danger text-white mb-4">
-            <div className="card-body">Danger Card</div>
-            <div className="card-footer d-flex align-items-center justify-content-between">
-              <a className="small text-white stretched-link" href="#">
-                View Details
-              </a>
-              <div className="small text-white">
-                <i className="fas fa-angle-right"></i>
-              </div>
-            </div>
-          </div>
+          </Card>
         </div>
       </div>
     </div>

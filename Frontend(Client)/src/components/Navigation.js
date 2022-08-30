@@ -54,6 +54,9 @@ const style = {
 
 export default function Navigation() {
   const [openCourses, setOpenCourses] = useState(false);
+  const [openSoBtl, setOpenSoBtl] = useState(false);
+  const [openFolder, setOpenFolder] = useState(false);
+  const [openDocument, setOpenDocument] = useState(false);
   const [openTasks, setOpenTasks] = useState(false);
   const [openUsers, setOpenUsers] = useState(false);
   const [openMeeting, setOpenMeeting] = useState(false);
@@ -112,18 +115,6 @@ export default function Navigation() {
                 </span>
                 <b>Add Faculty</b>
               </Button>
-              {/* <button
-                style={{ backgroundColor: "#fff", color: "#0054a6" }}
-                className="btn btn-primary"
-                id="btnNavbarSearch"
-                type="button"
-                onClick={() => setOpen(true)}
-              >
-                <span style={{ marginRight: 10 }}>
-                  <BsFillPersonPlusFill />
-                </span>
-                <b>Add Faculty</b>
-              </button> */}
 
               <Modal
                 open={open}
@@ -172,25 +163,104 @@ export default function Navigation() {
                   Add Program
                 </Link>
 
-                <Link class="nav-link sidenavtext " to="SOandBTL">
+                <div
+                  onClick={() => {
+                    openSoBtl ? setOpenSoBtl(false) : setOpenSoBtl(true);
+                  }}
+                  style={{ cursor: "pointer" }}
+                  class="nav-link sidenavtext"
+                >
                   <div class="sb-nav-link-icon">
-                    <BsFillFilePdfFill color="#fff" />
+                    <BsFillBookFill color="#fff" />
                   </div>
-                  SO and BTL Level
-                </Link>
+                  SO & BTL Level
+                  <div style={{ marginLeft: "auto" }} class="sb-nav-link-icon">
+                    {openSoBtl ? (
+                      <KeyboardArrowUpIcon />
+                    ) : (
+                      <KeyboardArrowDownIcon />
+                    )}
+                  </div>
+                </div>
+                {openSoBtl && (
+                  <>
+                    <Link
+                      class="nav-link sidenavtext "
+                      to="SO"
+                      style={{ marginLeft: "12px", fontSize: "14px" }}
+                    >
+                      <div class="sb-nav-link-icon">
+                        <BsFillFilePdfFill color="#fff" />
+                      </div>
+                      Student Outcomes
+                    </Link>
 
-                <Link class="nav-link sidenavtext " to="CourseFolderTheory">
+                    <Link
+                      class="nav-link sidenavtext "
+                      to="BTLLevel"
+                      style={{ marginLeft: "12px", fontSize: "14px" }}
+                    >
+                      <div class="sb-nav-link-icon">
+                        <BsFillFilePdfFill color="#fff" />
+                      </div>
+                      BTL Level
+                    </Link>
+                  </>
+                )}
+
+                <div
+                  onClick={() => {
+                    openFolder ? setOpenFolder(false) : setOpenFolder(true);
+                  }}
+                  style={{ cursor: "pointer" }}
+                  class="nav-link sidenavtext"
+                >
                   <div class="sb-nav-link-icon">
-                    <BsFillFilePdfFill color="#fff" />
+                    <BsFillBookFill color="#fff" />
                   </div>
-                  Course Folder Theory
-                </Link>
-                <Link class="nav-link sidenavtext " to="CourseFolderLab">
-                  <div class="sb-nav-link-icon">
-                    <BsFillFilePdfFill color="#fff" />
+                  Course Folder
+                  <div style={{ marginLeft: "auto" }} class="sb-nav-link-icon">
+                    {openFolder ? (
+                      <KeyboardArrowUpIcon />
+                    ) : (
+                      <KeyboardArrowDownIcon />
+                    )}
                   </div>
-                  Course Folder Lab
-                </Link>
+                </div>
+                {openFolder && (
+                  <>
+                    <Link
+                      class="nav-link sidenavtext "
+                      to="CourseFolderTheory"
+                      style={{ marginLeft: "12px", fontSize: "14px" }}
+                    >
+                      <div class="sb-nav-link-icon">
+                        <BsFillFilePdfFill color="#fff" />
+                      </div>
+                      Course Folder Theory
+                    </Link>
+                    <Link
+                      class="nav-link sidenavtext "
+                      to="CourseFolderLab"
+                      style={{ marginLeft: "12px", fontSize: "14px" }}
+                    >
+                      <div class="sb-nav-link-icon">
+                        <BsFillFilePdfFill color="#fff" />
+                      </div>
+                      Course Folder Lab
+                    </Link>
+                    <Link
+                      class="nav-link sidenavtext "
+                      to="PendingDeadlineRequests"
+                      style={{ marginLeft: "12px", fontSize: "14px" }}
+                    >
+                      <div class="sb-nav-link-icon">
+                        <BsFillFolderFill color="#fff" />
+                      </div>
+                      Pending Deadline Requests
+                    </Link>
+                  </>
+                )}
 
                 <div
                   onClick={() => {
@@ -299,35 +369,62 @@ export default function Navigation() {
                   </>
                 )}
 
-                <Link class="nav-link sidenavtext " to="AllSchemeofStudies">
-                  <div class="sb-nav-link-icon">
-                    <BsFillFilePdfFill color="#fff" />
-                  </div>
-                  Scheme of Studies
-                </Link>
-
-                <Link class="nav-link sidenavtext " to="AllCDFs">
-                  <div class="sb-nav-link-icon">
-                    <BsFillFilePdfFill color="#fff" />
-                  </div>
-                  CDFs
-                </Link>
-                <Link class="nav-link sidenavtext " to="AllSyllabus">
-                  <div class="sb-nav-link-icon">
-                    <BsFillFilePdfFill color="#fff" />
-                  </div>
-                  Syllabus
-                </Link>
-
-                <Link
-                  class="nav-link sidenavtext "
-                  to="PendingDeadlineRequests"
+                <div
+                  onClick={() => {
+                    openDocument
+                      ? setOpenDocument(false)
+                      : setOpenDocument(true);
+                  }}
+                  style={{ cursor: "pointer" }}
+                  class="nav-link sidenavtext"
                 >
                   <div class="sb-nav-link-icon">
-                    <BsFillFolderFill color="#fff" />
+                    <BsFillBookFill color="#fff" />
                   </div>
-                  Pending Deadline Requests
-                </Link>
+                  Degree Documents
+                  <div style={{ marginLeft: "auto" }} class="sb-nav-link-icon">
+                    {openDocument ? (
+                      <KeyboardArrowUpIcon />
+                    ) : (
+                      <KeyboardArrowDownIcon />
+                    )}
+                  </div>
+                </div>
+                {openDocument && (
+                  <>
+                    <Link
+                      class="nav-link sidenavtext "
+                      to="AllSchemeofStudies"
+                      style={{ marginLeft: "12px", fontSize: "14px" }}
+                    >
+                      <div class="sb-nav-link-icon">
+                        <BsFillFilePdfFill color="#fff" />
+                      </div>
+                      Scheme of Studies
+                    </Link>
+
+                    <Link
+                      class="nav-link sidenavtext "
+                      to="AllCDFs"
+                      style={{ marginLeft: "12px", fontSize: "14px" }}
+                    >
+                      <div class="sb-nav-link-icon">
+                        <BsFillFilePdfFill color="#fff" />
+                      </div>
+                      CDFs
+                    </Link>
+                    <Link
+                      class="nav-link sidenavtext "
+                      to="AllSyllabus"
+                      style={{ marginLeft: "12px", fontSize: "14px" }}
+                    >
+                      <div class="sb-nav-link-icon">
+                        <BsFillFilePdfFill color="#fff" />
+                      </div>
+                      Syllabus
+                    </Link>
+                  </>
+                )}
 
                 <div
                   onClick={() => {

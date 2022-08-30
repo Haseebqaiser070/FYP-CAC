@@ -32,7 +32,7 @@ const style = {
   boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
 };
 
-export default function SO_BTL_Level() {
+export default function SO_Level() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
@@ -42,19 +42,11 @@ export default function SO_BTL_Level() {
     setUpid("");
   };
 
-  const [open1, setOpen1] = useState(false);
-  const handleOpen1 = () => setOpen1(true);
-  const handleClose1 = () => {
-    setOpen1(false);
-    setBTL("");
-    setUpid("");
-  };
-
   const [GA, setGA] = useState("");
   const [SO, setSO] = useState("");
-  const [BTL, setBTL] = useState("");
+
   const [SORow, setSORow] = useState("");
-  const [BTLRow, setBTLRow] = useState("");
+
   const [Upid, setUpid] = useState("");
 
   axios.defaults.withCredentials = true;
@@ -95,45 +87,9 @@ export default function SO_BTL_Level() {
       </>
     );
   }
-  function ActionButton2({ row }) {
-    return (
-      <>
-        <Tooltip title="Edit" placement="top-start">
-          <Button
-            variant="contained"
-            color="primary"
-            size="small"
-            style={{ marginLeft: 16, padding: 10 }}
-            onClick={() => {
-              setBTL(row.BTL);
-              setUpid(row._id);
-              handleOpen1();
-            }}
-          >
-            <AiFillEdit />
-          </Button>
-        </Tooltip>
-        <Tooltip title="Delete" placement="top-start">
-          <Button
-            variant="contained"
-            color="primary"
-            size="small"
-            style={{ marginLeft: 16, padding: 10 }}
-            onClick={async () => {
-              await axios.delete(`http://localhost:4000/SOBTL/BTL/${row._id}`);
-              getBTLRows();
-            }}
-          >
-            <AiFillDelete />
-          </Button>
-        </Tooltip>
-      </>
-    );
-  }
 
   useEffect(() => {
     getSORows();
-    getBTLRows();
   }, []);
 
   const getSORows = async () => {
@@ -142,11 +98,6 @@ export default function SO_BTL_Level() {
     setSORow([...dataa]);
   };
 
-  const getBTLRows = async () => {
-    const res = await axios.get("http://localhost:4000/SOBTL/showBTL");
-    const data = await res.data;
-    setBTLRow([...data]);
-  };
   const ADDSO = async (e) => {
     e.preventDefault();
 
@@ -174,70 +125,26 @@ export default function SO_BTL_Level() {
       alert("missing fields");
     }
   };
-  const addBTL = async (e) => {
-    e.preventDefault();
 
-    if (BTL != "" && Upid == "") {
-      const Number = BTLRow.length + 1;
-      const res = await axios.post("http://localhost:4000/SOBTL/addBTL", {
-        Number,
-        BTL,
-      });
-      getBTLRows();
-      setBTL("");
-    } else if (BTL != "" && Upid != "") {
-      const res = await axios.put(`http://localhost:4000/SOBTL/BTL/${Upid}`, {
-        BTL,
-      });
-      getBTLRows();
-      setBTL("");
-      setUpid("");
-      setOpen1(false);
-    } else {
-      alert("missing fields");
-    }
-  };
   const SOcolumns = [
     {
       field: "Number",
       headerName: "Sr#",
-      width: 50,
+      flex: 1,
     },
 
     {
       field: "SO",
       headerName: "SO Description",
-      width: 300,
+      flex: 4,
     },
 
     {
       field: "Action",
       headerName: "Action",
-      width: 200,
+      flex: 2,
       editable: false,
       renderCell: ActionButton1,
-    },
-  ];
-
-  const BTLcolumns = [
-    {
-      field: "Number",
-      headerName: "Sr#",
-      width: 50,
-    },
-
-    {
-      field: "BTL",
-      headerName: "BTL LEVEL",
-      width: 200,
-    },
-
-    {
-      field: "Action",
-      headerName: "Action",
-      width: 200,
-      editable: false,
-      renderCell: ActionButton2,
     },
   ];
 
@@ -252,7 +159,7 @@ export default function SO_BTL_Level() {
       >
         <Card style={{ padding: 50, borderRadius: 30 }}>
           <h1 className="py-4 my-2">
-            <b>ADD SO AND BTL LEVELS</b>
+            <b>ADD SO</b>
           </h1>
           <div className="d-flex justify-content-end mb-4 pb-2">
             <Button
@@ -264,16 +171,6 @@ export default function SO_BTL_Level() {
             >
               <AddIcon style={{ marginRight: "6px" }} />
               ADD NEW SO
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              size="medium"
-              style={{ marginTop: 16 }}
-              onClick={handleOpen1}
-            >
-              <AddIcon style={{ marginRight: "6px" }} />
-              ADD NEW BTL Level
             </Button>
           </div>
 
@@ -332,71 +229,17 @@ export default function SO_BTL_Level() {
               </form>
             </Box>
           </Modal>
-          <Modal
-            open={open1}
-            onClose={handleClose1}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box sx={style}>
-              <form onSubmit={addBTL}>
-                <Box mb={3} style={{ display: "flex", justifyContent: "end" }}>
-                  <CloseIcon
-                    onClick={handleClose1}
-                    style={{ cursor: "pointer", color: "gray" }}
-                  />
-                </Box>
 
-                <div>
-                  <FormControl fullWidth size="medium">
-                    <TextField
-                      className="mb-4"
-                      id="outlined-basic"
-                      label="BTL Level"
-                      variant="outlined"
-                      size="small"
-                      fullWidth
-                      value={BTL}
-                      onChange={(e) => setBTL(e.target.value)}
-                    />
-                  </FormControl>
-                </div>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  size="small"
-                  type="submit"
-                  style={{ marginTop: 16 }}
-                >
-                  <AiFillEdit style={{ marginRight: 10 }} />
-                  {Upid == "" ? <>Add BTL LEVEL</> : <>Update BTL LEVEL</>}
-                </Button>
-              </form>
-            </Box>
-          </Modal>
-          <div className="row">
-            <div className="col-md-6">
-              <DataGrid
-                style={{ height: "60vh", width: "100%" }}
-                columns={SOcolumns}
-                rows={SORow}
-                getRowId={(Rows) => Rows._id}
-                pageSize={10}
-                rowsPerPageOptions={[5]}
-                disableSelectionOnClick
-              />
-            </div>
-            <div className="col-md-6">
-              <DataGrid
-                style={{ height: "60vh", width: "100%" }}
-                columns={BTLcolumns}
-                rows={BTLRow}
-                getRowId={(Rows) => Rows._id}
-                pageSize={10}
-                rowsPerPageOptions={[5]}
-                disableSelectionOnClick
-              />
-            </div>
+          <div>
+            <DataGrid
+              style={{ height: "60vh", width: "100%" }}
+              columns={SOcolumns}
+              rows={SORow}
+              getRowId={(Rows) => Rows._id}
+              pageSize={10}
+              rowsPerPageOptions={[5]}
+              disableSelectionOnClick
+            />
           </div>
         </Card>
       </div>

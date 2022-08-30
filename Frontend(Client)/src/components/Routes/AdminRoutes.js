@@ -29,7 +29,6 @@ import CreateSOS from "../SOSCreation/CreateSOS";
 import AllCourses from "../AllCourses";
 import SOSReturnedView from "../Admin/SOSReturnedView";
 import SOSFinal from "../Admin/SOSfinal";
-import SO_BTL_Level from "../SOAndBTLLevel";
 import CDFReturnedView from "../Admin/CDFReturnedView";
 import AllCDFs from "../AllCDFs";
 import CDFFinal from "../Admin/CDFfinal";
@@ -38,6 +37,8 @@ import AllSyllabus from "../AllSyllabus";
 import SyllabusFinal from "../Admin/Syllabusfinal";
 import CourseFolderTheory from "../CourseFolderTheory";
 import CourseFolderLab from "../CourseFolderLab";
+import BTLLevel from "../BTLLevel";
+import SO_Level from "../SOAndBTLLevel";
 function AdminRoutes() {
   return (
     <Routes>
@@ -89,7 +90,9 @@ function AdminRoutes() {
         <Route path="/Evaluators" element={<Evaluators />} />
         <Route path="/CourseFolder" element={<CourseFolder />} />
         <Route path="/AddProgram" element={<AddProgram />} />
-        <Route path="/SOandBTL" element={<SO_BTL_Level />} />
+        <Route path="/SO" element={<SO_Level />} />
+        <Route path="/BTLLevel" element={<BTLLevel />} />
+
         <Route path="/Tasks" element={<Tasks />} />
         <Route path="/InitializeTask" element={<InitializeTask />} />
         <Route path="/profile" element={<Profile />} />
