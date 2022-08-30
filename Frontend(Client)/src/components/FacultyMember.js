@@ -43,6 +43,7 @@ export default function FacultyMembers() {
       },
     ])
     setOpen(false)
+    setup(false)
   };
   const [Rows, setRows] = useState([]);
   const [Courses, setCourse] = useState([[]]);
@@ -76,6 +77,22 @@ console.log("Course",Courses)
     const response = await axios.get("http://localhost:4000/User/show/Faculty");
     setRows(response.data);
   };
+  const[up,setup]=useState(false)
+  //-------------
+  const getobjs=async()=>{
+    const response = await axios.get("http://localhost:4000/UserAssigedFolders/showAll");
+    const col=await Promise.all(response.data.filter((i)=>{
+      if(i.LabTheory!="Lab"){
+        return({
+          Program:i.Program,
+          Course: i.Course,
+          Section:i.Section
+        })
+      }
+    }))
+    setobj([...col]);
+    setup(true)
+  }
   const Submitform = async (e) => {
     e.preventDefault()
     console.log(obj)
@@ -91,10 +108,13 @@ console.log("Course",Courses)
       }
     });
     if (verify) {
+      if(!up){
       await axios.post("http://localhost:4000/AssginFolders/add", {
         obj,
         User,
       });
+    }
+      getData()
       handleClose()
     } else {
       alert("Empty Field");
@@ -120,7 +140,7 @@ console.log("Course",Courses)
       editable: false,
       renderCell: ({row}) => (
         <>
-          <Button
+          {row.CourseFolders.length<1?(<Button
             variant="contained"
             color="primary"
             size="small"
@@ -131,7 +151,20 @@ console.log("Course",Courses)
           >
             <AiFillEdit style={{ marginRight: 10 }} />
             Assign Course
-          </Button>
+          </Button>):
+          (<Button
+            variant="contained"
+            color="primary"
+            size="small"
+            style={{ marginLeft: 16 }}
+            onClick={() =>{
+              setUser(row)
+              getobjs()
+              setOpen(true)}}
+          >
+            <AiFillEdit style={{ marginRight: 10 }} />
+            Edit Course
+          </Button>)}
           <Button
             variant="contained"
             color="primary"
@@ -229,7 +262,7 @@ console.log("Course",Courses)
                   }
                   >
                     <option value={obj[index].Program} selected disabled hidden>
-                      {obj[index].Program!=""?(obj[index].Program):(<>{"Select option"}</>)}
+                      {obj[index].Program!=""?(obj[index].Program):(<>Select option</>)}
                     </option>
                     {Programdb.map((p) => {
                       return (

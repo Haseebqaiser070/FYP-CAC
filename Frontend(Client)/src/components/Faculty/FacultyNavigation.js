@@ -104,15 +104,20 @@ export default function FacultyNavigation() {
                           }}
                           class="nav-link sidenavtext "
                           onClick={() => {
-                            navigate(`/Faculty/CourseFolder/${i._id}`, {
+                            if(i.LabTheory=="Theory"){
+                            navigate(`/Faculty/CourseFolder/${i._id}`,{ state: {i} }, {
                               replace: true,
-                            });
+                            })}
+                            if(i.LabTheory=="Lab"){
+                              navigate(`/Faculty/LabFolder/${i._id}`,{ state: {i} }, {
+                                replace: true,
+                              })}
                           }}
                         >
                           <div class="sb-nav-link-icon">
                             <BsListCheck color="#fff" />
                           </div>
-                          {i.Course.Code} {i.Course.Name}
+                          {i.Course.Code} {i.Course.Name} {i.LabTheory=="Lab"&&"("+i.LabTheory+")"}
                         </div>
                       </>
                     );

@@ -17,7 +17,7 @@ const style = {
   p: 4,
 };
 
-export default function CourseFolder() {
+export default function LabFolder() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -33,33 +33,19 @@ export default function CourseFolder() {
   const [folders, setfolders] = useState("");
 
   useEffect(()=>{
-    
-    getTheory()
+    getLab()
   },[])
-  
+ 
   const[Assignments1,setAssignments1]=useState([])
   const[Assignments2,setAssignments2]=useState([])
-  const[Quiz1,setQuiz1]=useState([])
-  const[Quiz2,setQuiz2]=useState([])
   
-  const getTheory = async () => {
+  const getLab = async () => {
     const res = await axios.get(
-      "http://localhost:4000/Content/showTheory"
+      "http://localhost:4000/Content/showLab"
     );
     setfolders(res.data);  
-    var quiz1= [];
     var assignments1= [];
-    var quiz2= [];
-    var assignments2= [];
-  
-    for (var i=1;i<=parseInt(res.data.Round1.Quiz)+parseInt(res.data.Round2.Quiz); i++) {
-        if(i<=parseInt(res.data.Round1.Quiz)){
-          quiz1.push(i);
-        }
-        else{
-          quiz2.push(i);
-        }
-      } 
+    var assignments2= [];  
     for (var i=1;i<=parseInt(res.data.Round1.Assignment)+parseInt(res.data.Round2.Assignment); i++) {
       if(i<=parseInt(res.data.Round1.Assignment)){
         assignments1.push(i);
@@ -68,11 +54,8 @@ export default function CourseFolder() {
         assignments2.push(i);
       }
     }
-    setQuiz1([...quiz1])
-    setQuiz2([...quiz2])
     setAssignments1([...assignments1])
     setAssignments2([...assignments2])
-
   };
 
   return (
@@ -189,22 +172,7 @@ export default function CourseFolder() {
                   >
                     Deadline: 07/13/2022 04:38 PM
                   </h4>
-                </th>
-                {Quiz1.map((i)=>{return(
-                    <td className="d-grid py-2 px-2">
-                    <button
-                      class="btn btn-block py-2 btn-primary"
-                      id="quiz1"
-                      type="button"
-                      onClick={handleOpen}
-                    >
-                      Quiz {i}
-                    </button>                
-                    </td>)
-                    })
-                  }
-                    
-                  
+                </th>                  
                 {Assignments1.map((i)=>{return(
                      <td className="d-grid py-2 px-2">
                      <button
@@ -218,7 +186,7 @@ export default function CourseFolder() {
                    </td>)
                     })
                   }
-            {folders!=""&&folders.Round1.MidorSessioanls=="Mid"?(
+              {folders!=""&&folders.Round1.MidorSessioanls=="Mid"?(
                 <td className="d-grid py-2 px-2">
                   <button
                     class="btn btn-block py-2 btn-primary"
@@ -276,21 +244,7 @@ export default function CourseFolder() {
                   >
                     Deadline: 07/13/2022 04:38 PM
                   </h4>
-                </th>
-                {Quiz2.map((i)=>{return(
-                    <td className="d-grid py-2 px-2">
-                    <button
-                      class="btn btn-block py-2 btn-primary"
-                      id="quiz2"
-                      type="button"
-                      onClick={handleOpen}
-                    >
-                      Quiz {i}
-                    </button>                
-                    </td>)
-                    })
-                  }
-                    
+                </th>                    
                   
                 {Assignments2.map((i)=>{return(
                      <td className="d-grid py-2 px-2">

@@ -47,6 +47,10 @@ var FolderSchema = new mongoose.Schema({
         default:"none"
         }
     ],
+    LabTheory:{
+        type:String,
+        default:""
+    },
     LectureDeliveryRecord:{
         type:String,
         default:""
@@ -54,8 +58,11 @@ var FolderSchema = new mongoose.Schema({
     ICEF:{
         type:String,
         default:""
-    }
-        
+    },
+    Obe:{
+        type:String,
+        default:""
+    }   
 });
 
 module.exports = mongoose.model('Folder', FolderSchema);
