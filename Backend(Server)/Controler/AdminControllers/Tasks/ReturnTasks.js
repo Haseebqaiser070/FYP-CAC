@@ -22,7 +22,7 @@ module.exports.Showall = async (req, res) => {
       if(!req.user.Roles.includes("Admin")) return res.status(401).json("Unautherized");
       const task = await Task.find({Status:req.params.status}).populate("User").populate("Course");     
       console.log(task)
-      res.status(200).json(task);
+      await res.status(200).json(task);
     } catch (err) {
         res.status(400).json("error");
         console.log(err);
@@ -56,7 +56,7 @@ module.exports.Lock = async (req, res) => {
         await ReturnCourse.deleteOne({Code:task.Course.Code})
         await VersionCourse.deleteMany({Code:task.Course.Code})
         console.log(finalcourse)
-        res.status(200).json(finalcourse);
+        await res.status(200).json(finalcourse);
       }
 
       else if(task.taskType=="Create SOS"||task.taskType=="Update SOS"){
@@ -98,7 +98,7 @@ module.exports.Lock = async (req, res) => {
         await VersionSOS.deleteMany({Program:task.Program})
         await SOSCourse.deleteMany({Program:task.Program})
         console.log(finalSOS)
-        res.status(200).json(finalSOS);
+        await res.status(200).json(finalSOS);
       }
       
       else if(task.taskType=="Create CDF"||task.taskType=="Update CDF"){
@@ -158,7 +158,7 @@ module.exports.Lock = async (req, res) => {
         await ReturnedSyllabus.deleteOne({Code:task.Course.Code})
         await VaersionSyllabus.deleteMany({Code:task.Course.Code})
         console.log(genSyllabus)
-        res.status(200).json(genSyllabus);
+        await res.status(200).json(genSyllabus);
       }
 
 

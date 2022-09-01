@@ -33,6 +33,7 @@ export default function FacultyMembers() {
   axios.defaults.withCredentials = true;
   const [open, setOpen] = useState(false);
   const handleClose = () =>{ 
+    setOpen(false)
     setCourse([[]])
     setUser("")
     setobj([
@@ -42,7 +43,8 @@ export default function FacultyMembers() {
         Section:""
       },
     ])
-    setOpen(false)
+    setCourse([[]])
+
     setup(false)
   };
   const [Rows, setRows] = useState([]);
@@ -91,15 +93,16 @@ console.log("Course",Courses)
         
       }
     }))
-    const col2=await Promise.all(col.map(async(i)=>{
+    const col2=await Promise.all(await col.map(async(i)=>{
       if(i.LabTheory!="Lab"){
         const res = await axios.get(`http://localhost:4000/ProgramCourses/show/${i.Program}`);
-        return(res.data)        
+        return([...res.data])        
       }
     }))
-    setobj([...col]);
     setCourse([...col2])
+    setobj([...col]);
     setup(true)
+    setOpen(true)
   }
   const Submitform = async (e) => {
     e.preventDefault()
@@ -175,7 +178,7 @@ console.log("Course",Courses)
             onClick={() =>{
               setUser(row)
               getobjs(row._id)
-              setOpen(true)}}
+              }}
           >
             <AiFillEdit style={{ marginRight: 10 }} />
             Edit Course
@@ -333,8 +336,8 @@ console.log("Course",Courses)
                         }}
                         autoWidth
                       > 
-                      <option value={obj[index].Course} selected disabled hidden>
-                        {obj[index].Course!=""&&obj[index].Course.Name}
+                      <option value={obj[index]?.Course} selected disabled hidden>
+                        {obj[index]?.Course!=""&&obj[index]?.Course?.Name}
                       </option>
                         {Courses[index].map((a) => {
                           return <MenuItem value={a}>{a.Name}</MenuItem>;
