@@ -76,6 +76,22 @@ export default function CourseFolder() {
     setAssignments2([...assignments2])
 
   };
+  const [fileBase64String, setFileBase64String] = useState("");
+console.log("fileBase64String",fileBase64String)
+  const encodeFileBase64 = (file) => {
+    var reader = new FileReader();
+    console.log("file",file)
+    
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        var Base64 = reader.result;
+        console.log("Base64",Base64);
+        setFileBase64String(Base64);
+      };
+      reader.onerror = (error) => {
+        console.log("error: ", error);
+    }
+  };
 
   return (
     <div class="container" style={{ height: 700, width: "100%", padding: 20 }}>
@@ -126,43 +142,43 @@ export default function CourseFolder() {
             <div class="mb-3">
               <label class="form-label" for="customFile">
                 <b>Upload Best</b>
-              </label>
-              <input type="file" class="form-control" id="customFile" />
+              </label>{/*accept=".txt"*/}
+              <input type="file" class="form-control"  id="customFile"  onChange={(e)=>{encodeFileBase64(e.target.files[0])}} />
             </div>
 
             <div class="mb-3">
               <label class="form-label" for="customFile">
                 <b>Upload Average</b>
               </label>
-              <input type="file" class="form-control" id="customFile" />
+              <input type="file" class="form-control" id="customFile"  onChange={(e)=>{encodeFileBase64(e.target.files[0])}}/>
             </div>
 
             <div class="mb-3">
-              <label class="form-label" for="customFile">
+              <label class="form-label" for="customFile" onChange={(e)=>{encodeFileBase64(e.target.files[0])}}>
                 <b>Upload Worst</b>
               </label>
-              <input type="file" class="form-control" id="customFile" />
+              <input type="file" class="form-control" id="customFile" onChange={(e)=>{encodeFileBase64(e.target.files[0])}}/>
             </div>
 
             <div class="mb-3">
               <label class="form-label" for="customFile">
                 <b>Upload Question Paper</b>
               </label>
-              <input type="file" class="form-control" id="customFile" />
+              <input type="file" class="form-control" id="customFile" onChange={(e)=>{encodeFileBase64(e.target.files)}} />
             </div>
 
             <div class="mb-3">
               <label class="form-label" for="customFile">
                 <b>Upload Solution</b>
               </label>
-              <input type="file" class="form-control" id="customFile" />
+              <input type="file" class="form-control" id="customFile" onChange={(e)=>{encodeFileBase64(e.target.files)}}/>
             </div>
 
             <div class="mb-3">
               <label class="form-label" for="customFile">
                 <b>Upload Award List</b>
               </label>
-              <input type="file" class="form-control" id="customFile" />
+              <input type="file" class="form-control" id="customFile" onChange={(e)=>{encodeFileBase64(e.target.files)}}/>
             </div>
 
             <div class="d-grid">
