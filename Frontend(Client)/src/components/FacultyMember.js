@@ -34,8 +34,6 @@ export default function FacultyMembers() {
   const [open, setOpen] = useState(false);
   const handleClose = () =>{ 
     setOpen(false)
-    setCourse([[]])
-    setUser("")
     setobj([
       {
         Program:"",
@@ -43,8 +41,8 @@ export default function FacultyMembers() {
         Section:""
       },
     ])
+    setUser("")
     setCourse([[]])
-
     setup(false)
   };
   const [Rows, setRows] = useState([]);
