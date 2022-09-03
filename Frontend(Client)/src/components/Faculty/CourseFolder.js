@@ -2,8 +2,9 @@ import React, { useState,useEffect } from "react";
 import "../css/styles.css";
 import Button from "@mui/material/Button";
 import Popup from "../AuxillaryComponents/PopupFunction";
-import { Box, Card, Modal } from "@mui/material";
+import { Box, Card, CardMedia,Modal } from "@mui/material";
 import axios from "axios";
+import { Viewer,Worker } from '@react-pdf-viewer/core';
 
 const style = {
   position: "absolute",
@@ -76,23 +77,107 @@ export default function CourseFolder() {
     setAssignments2([...assignments2])
 
   };
+  const[Title,setTitle]=useState("")
+  const quiztitle=(num)=>{
+    var t = "Quiz "+num
+    setTitle(t)
+  }
+  const Assignmenttitle=(num)=>{
+    var t = "Assignment "+num
+    setTitle(t)
+  }
+  const Midtitle=()=>{
+    var t = "Mid"
+    setTitle(t)
+  }
+  const Sess1=()=>{
+    var t = "Sessional 1"
+    setTitle(t)
+  }
+  const Sess2=()=>{
+    var t = "Sessional 2"
+    setTitle(t)
+  }
+  const Final=()=>{
+    var t = "Terminal"
+    setTitle(t)
+  }
+
+  const [Question, setQuestion] = useState("");
+  const [Awardlist, setAwardlist] = useState("");
+  const [Best, setBest] = useState("");
+  const [Average, setAverage] = useState("");
+  const [Worst, setWorst] = useState("");
+  const [Solution, setSolution] = useState("");
+  const [Question1, setQuestion1] = useState("");
+  const [Awardlist1, setAwardlist1] = useState("");
+  const [Best1, setBest1] = useState("");
+  const [Average1, setAverage1] = useState("");
+  const [Worst1, setWorst1] = useState("");
+  const [Solution1, setSolution1] = useState("");
+
   const [fileBase64String, setFileBase64String] = useState("");
-console.log("fileBase64String",fileBase64String)
-  const encodeFileBase64 = (file) => {
+  console.log("fileBase64String",fileBase64String)
+  const encodeFileBase64 = (file,ty) => {
     var reader = new FileReader();
-    console.log("file",file)
-    
+    console.log("\nfile",file)
+    console.log("\nty",ty)
+
       reader.readAsDataURL(file);
       reader.onload = () => {
         var Base64 = reader.result;
         console.log("Base64",Base64);
+        if(ty=="Question"){
+          //setQuestion1([file.name]);
+          setQuestion(Base64)}
+        else if(ty=="Awardlist"){
+         // setAwardlist1([file.name]);
+          setAwardlist(Base64)}
+        else if(ty=="Best"){
+          setBest1(file)
+          setBest(Base64)}
+        else if(ty=="Average"){
+          setAverage1(file);
+          setAverage(Base64)}
+        else if(ty=="Worst"){
+          setWorst1(file);
+          setWorst(Base64)}
+        else if(ty=="Solution"){
+          setSolution1({name:file.name});
+          setSolution(Base64)}
         setFileBase64String(Base64);
       };
+      var a =base64toData()
+      const url = URL.createObjectURL(a);
+      console.log("\nurl",url)
+      const pdf =url.substring(url.indexOf(":") + 1)
+      setDecoded(pdf)
+
       reader.onerror = (error) => {
         console.log("error: ", error);
     }
   };
+  const [Decoded, setDecoded] = useState("");
+console.log("\nDecoded",Decoded)
 
+  const base64toData = () => {
+    const base64WithoutPrefix = fileBase64String.substring(fileBase64String.indexOf(",") + 1)
+    const bytes = atob(base64WithoutPrefix)
+    let length = bytes.length;
+    let out = new Uint8Array(length);
+
+    while (length--) {
+        out[length] = bytes.charCodeAt(length);
+    }
+
+    return new Blob([out], { type: 'application/pdf' });
+    // return(ecodeURIComponent(bytes.split("")
+    // .map((c)=> {
+    //   return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+    // })
+    // .join("")
+    // ))
+  };
   return (
     <div class="container" style={{ height: 700, width: "100%", padding: 20 }}>
       <h1 style={{ marginBottom: 30 }}>Course Folder Maintainence</h1>
@@ -142,43 +227,43 @@ console.log("fileBase64String",fileBase64String)
             <div class="mb-3">
               <label class="form-label" for="customFile">
                 <b>Upload Best</b>
-              </label>{/*accept=".txt"*/}
-              <input type="file" class="form-control"  id="customFile"  onChange={(e)=>{encodeFileBase64(e.target.files[0])}} />
+              </label>
+              <input type="file" class="form-control"  id="customFile" onChange={(e)=>{encodeFileBase64(e.target.files[0],"Best")}} />
             </div>
 
             <div class="mb-3">
               <label class="form-label" for="customFile">
                 <b>Upload Average</b>
               </label>
-              <input type="file" class="form-control" id="customFile"  onChange={(e)=>{encodeFileBase64(e.target.files[0])}}/>
+              <input type="file" class="form-control" id="customFile" onChange={(e)=>{encodeFileBase64(e.target.files[0],"Average")}}/>
             </div>
 
             <div class="mb-3">
-              <label class="form-label" for="customFile" onChange={(e)=>{encodeFileBase64(e.target.files[0])}}>
+              <label class="form-label" for="customFile">
                 <b>Upload Worst</b>
               </label>
-              <input type="file" class="form-control" id="customFile" onChange={(e)=>{encodeFileBase64(e.target.files[0])}}/>
+              <input type="file" class="form-control" id="customFile" onChange={(e)=>{encodeFileBase64(e.target.files[0],"Worst")}}/>
             </div>
 
             <div class="mb-3">
               <label class="form-label" for="customFile">
                 <b>Upload Question Paper</b>
               </label>
-              <input type="file" class="form-control" id="customFile" onChange={(e)=>{encodeFileBase64(e.target.files)}} />
+              <input type="file" class="form-control" id="customFile" onChange={(e)=>{encodeFileBase64(e.target.files[0],"Question")}} />
             </div>
 
             <div class="mb-3">
               <label class="form-label" for="customFile">
                 <b>Upload Solution</b>
               </label>
-              <input type="file" class="form-control" id="customFile" onChange={(e)=>{encodeFileBase64(e.target.files)}}/>
+              <input type="file" class="form-control" id="customFile" onChange={(e)=>{encodeFileBase64(e.target.files[0],"Solution")}}/>
             </div>
 
             <div class="mb-3">
               <label class="form-label" for="customFile">
                 <b>Upload Award List</b>
               </label>
-              <input type="file" class="form-control" id="customFile" onChange={(e)=>{encodeFileBase64(e.target.files)}}/>
+              <input type="file" class="form-control" id="customFile" onChange={(e)=>{encodeFileBase64(e.target.files[0],"Awardlist")}}/>
             </div>
 
             <div class="d-grid">
@@ -214,7 +299,9 @@ console.log("fileBase64String",fileBase64String)
                       class="btn btn-block py-2 btn-primary"
                       id="quiz1"
                       type="button"
-                      onClick={handleOpen}
+                      onClick={()=>{
+                        quiztitle(i)
+                        handleOpen()}}
                     >
                       Quiz {i}
                     </button>                
@@ -229,7 +316,9 @@ console.log("fileBase64String",fileBase64String)
                        class="btn btn-block py-2 btn-primary"
                        id="assignmet1"
                        type="button"
-                       onClick={handleOpen}
+                       onClick={()=>{
+                        Assignmenttitle(i)
+                        handleOpen()}}
                      >
                        Assignment {i}
                      </button>
@@ -242,7 +331,9 @@ console.log("fileBase64String",fileBase64String)
                     class="btn btn-block py-2 btn-primary"
                     id="Mid"
                     type="button"
-                    onClick={handleOpen}
+                    onClick={()=>{
+                      Midtitle()
+                      handleOpen()}}
                   >
                     Midterm Exam
                   </button>
@@ -252,7 +343,9 @@ console.log("fileBase64String",fileBase64String)
                     class="btn btn-block py-2 btn-primary"
                     id="Sessional1"
                     type="button"
-                    onClick={handleOpen}
+                    onClick={()=>{
+                      Sess1()
+                      handleOpen()}}
                   >
                     Sessional 1
                   </button>
@@ -262,7 +355,9 @@ console.log("fileBase64String",fileBase64String)
                   class="btn btn-block py-2 btn-primary"
                   id="Sessional2"
                   type="button"
-                  onClick={handleOpen}
+                  onClick={()=>{
+                    Sess2()
+                    handleOpen()}}
                 >
                   Sessional 2
                 </button>
@@ -301,7 +396,9 @@ console.log("fileBase64String",fileBase64String)
                       class="btn btn-block py-2 btn-primary"
                       id="quiz2"
                       type="button"
-                      onClick={handleOpen}
+                      onClick={()=>{
+                        quiztitle(i)
+                        handleOpen()}}
                     >
                       Quiz {i}
                     </button>                
@@ -316,7 +413,9 @@ console.log("fileBase64String",fileBase64String)
                        class="btn btn-block py-2 btn-primary"
                        id="assignmet2"
                        type="button"
-                       onClick={handleOpen}
+                       onClick={()=>{
+                        Assignmenttitle(i)
+                        handleOpen()}}
                      >
                        Assignment {i}
                      </button>
@@ -329,7 +428,9 @@ console.log("fileBase64String",fileBase64String)
                     class="btn py-2  btn-block btn-primary"
                     id="quiz1"
                     type="button"
-                    onClick={handleOpen}
+                    onClick={()=>{
+                      Final()
+                      handleOpen()}}
                   >
                     Terminal Exam
                   </button>
@@ -369,6 +470,26 @@ console.log("fileBase64String",fileBase64String)
           </div>
         </tbody>
       </table>
-    </div>
+ {Decoded!=""?(  
+ <>
+ <div
+    style={{
+        border: '1px solid rgba(0, 0, 0, 0.3)',
+        height: '750px',
+    }}
+>    <Worker workerUrl="https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js">
+    <Viewer  fileUrl={Decoded} />
+    </Worker>
+</div>
+					<Card sx={{ maxWidth: 824 }}>
+						<CardMedia
+							className="cardmedia"
+							component="iframe"
+							Height="1056px"
+							src={Decoded}
+						/>
+					</Card>				
+    </>
+    ):(<>NO</>)}</div>
   );
 }

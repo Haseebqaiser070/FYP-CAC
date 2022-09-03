@@ -24,24 +24,64 @@ var FolderSchema = new mongoose.Schema({
                 required:true
             },
             Question:{
-                type: String, 
-                required:true
+                Name:{
+                    type: String, 
+                    required:true    
+                },
+                Base64:{
+                    type: String, 
+                    required:true
+                }
+            },
+            Solution:{
+                Name:{
+                    type: String, 
+                    required:true    
+                },
+                Base64:{
+                    type: String, 
+                    required:true
+                }
             },
             Awardlist:{
-                type: String, 
-                required:true
+                Name:{
+                    type: String, 
+                    required:true    
+                },
+                Base64:{
+                    type: String, 
+                    required:true
+                }
             },
             Best:{
-                type: String, 
-                required:true
+                Name:{
+                    type: String, 
+                    required:true    
+                },
+                Base64:{
+                    type: String, 
+                    required:true
+                }
             },
             Average:{
-                type: String, 
-                required:true
+                Name:{
+                    type: String, 
+                    required:true    
+                },
+                Base64:{
+                    type: String, 
+                    required:true
+                }
             },
             Worst:{
-                type: String, 
-                required:true
+                Name:{
+                    type: String, 
+                    required:true    
+                },
+                Base64:{
+                    type: String, 
+                    required:true
+                }
             }
         },
         default:"none"
