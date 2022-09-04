@@ -28,14 +28,16 @@ var SyllabusRouter = require("./Routes/AdminRoutes/Syllabus")
 var AssignFoldersRouter = require("./Routes/Folders/AssignFolders")
 var UserAssigedFolders = require("./Routes/Folders/UserAssigedFolders")
 var ContentFolder = require("./Routes/AdminRoutes/FolderContents")
+var FacultyFolders = require("./Routes/Folders/FacultyFolders")
 
 var { getUser } = require("./Middleware/User");
 
 var app = express();
 
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb', extended: false }));
+
 app.use(cookieParser());
 
 app.use("/Auth", AuthRouter);
@@ -63,6 +65,7 @@ app.use("/SOBTL", getUser, SOBTLRouter);
 app.use("/AssginFolders", getUser, AssignFoldersRouter);
 app.use("/UserAssigedFolders", getUser, UserAssigedFolders);
 app.use("/Content", getUser, ContentFolder);
+app.use("/Folders", getUser, FacultyFolders);
 
 const start = async () => {
   try {

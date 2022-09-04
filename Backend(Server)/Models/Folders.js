@@ -102,7 +102,16 @@ var FolderSchema = new mongoose.Schema({
     Obe:{
         type:String,
         default:""
-    }   
+    },
+    Round1:{
+        type:Boolean,
+        default:false
+    },
+    Round2:{
+        type:Boolean,
+        default:false
+    },
+       
 });
 
 module.exports = mongoose.model('Folder', FolderSchema);

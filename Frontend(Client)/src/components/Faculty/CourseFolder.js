@@ -5,6 +5,7 @@ import Popup from "../AuxillaryComponents/PopupFunction";
 import { Box, Card, CardMedia,Modal } from "@mui/material";
 import axios from "axios";
 import { Viewer,Worker } from '@react-pdf-viewer/core';
+import { useLocation, useNavigate,useParams } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -21,7 +22,8 @@ const style = {
 
 export default function CourseFolder() {
   axios.defaults.withCredentials = true;
-  
+  const { id } = useParams()
+
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -128,22 +130,22 @@ export default function CourseFolder() {
         var Base64 = reader.result;
         console.log("Base64",Base64);
         if(ty=="Question"){
-          //setQuestion1([file.name]);
+          setQuestion1(file.name);
           setQuestion(Base64)}
         else if(ty=="Awardlist"){
-         // setAwardlist1([file.name]);
+         setAwardlist1(file.name);
           setAwardlist(Base64)}
         else if(ty=="Best"){
-          setBest1(file)
+          setBest1(file.name)
           setBest(Base64)}
         else if(ty=="Average"){
-          setAverage1(file);
+          setAverage1(file.name);
           setAverage(Base64)}
         else if(ty=="Worst"){
-          setWorst1(file);
+          setWorst1(file.name);
           setWorst(Base64)}
         else if(ty=="Solution"){
-          setSolution1({name:file.name});
+          setSolution1(file.name);
           setSolution(Base64)}
         setFileBase64String(Base64);
       };
@@ -162,7 +164,10 @@ console.log("\nDecoded",Decoded)
 
   const base64toData = () => {
     const base64WithoutPrefix = fileBase64String.substring(fileBase64String.indexOf(",") + 1)
+    // const base64WithoutPrefix = fileBase64String.substr('data:application/pdf;base64,'.length);
+
     const bytes = atob(base64WithoutPrefix)
+    console.log("atob",bytes)
     let length = bytes.length;
     let out = new Uint8Array(length);
 
@@ -178,6 +183,164 @@ console.log("\nDecoded",Decoded)
     // .join("")
     // ))
   };
+  useEffect(() => {
+    getFolderData();
+  }, []);
+  const [Folder,setFolder]=useState({files:[],ICEF:"",Obe:""})
+  
+  const getFolderData = async () => {
+    const res = await axios.get(
+      `http://localhost:4000/Folders/showOne/${id}`
+    );
+    console.log(res.data);
+    setFolder(res.data);
+  };
+
+
+  const Submit1 = async(e) => {
+    e.preventDefault();
+    if(Question1!=""&&Question!=""&&Awardlist1!=""&&Awardlist!=""
+    &&Best1!=""&&Best!=""&&Average1!=""&&Average!=""
+    &&Worst1!=""&&Worst!=""&&Solution1!=""&&Solution!=""){
+      
+      console.log("Title",Title)
+      console.log("Question1,Question",Question1,Question)
+      console.log("Awardlist1,Awardlist",Awardlist1,Awardlist)
+      console.log("Best1,Best",Best1,Best)
+      console.log("Average1,Average",Average1,Average)
+      console.log("Worst1,Worst",Worst1,Worst)
+      console.log("Solution1,Solution",Solution1,Solution)
+      const res = await axios.put(`http://localhost:4000/Folders/add/${id}`, {
+        Title,
+        Question:{
+          Name:Question1,
+          Base64:Question
+        },
+        Best:{
+          Name:Best1,
+          Base64:Best1
+        },
+        Average:{
+          Name:Average1,
+          Base64:Average
+        },
+        Worst:{
+          Name:Worst1,
+          Base64:Worst
+        },
+        Solution:{
+          Name:Solution1,
+          Base64:Solution
+        },
+        Awardlist:{
+          Name:Awardlist1,
+          Base64:Awardlist
+        },
+      });
+      getFolderData()
+      handleClose()
+    }
+    else{
+      alert("upload all required files")
+    }
+  }
+  const SubmitR1  = () => {
+    var Round1 = true
+    Quiz1.forEach((i)=>{
+       var res = Folder.files.find(obj => {
+        var t = "Quiz "+i
+        obj.Title == t 
+       })
+       if(res==undefined){
+          Round1=false
+        }
+      })
+      Assignments1.forEach((i)=>{
+        var res = Folder.files.find(obj => {
+         var t = "Assignment "+i
+         obj.Title == t 
+        })
+        if(res==undefined){
+           Round1=false
+         }
+       }) 
+       if(folders.Round1.MidorSessioanls=="Mid"){
+         var res = Folder.files.find(obj => {
+          var t = "Mid"
+          obj.Title == t 
+         })
+         if(res==undefined){
+            Round1=false
+          }}
+        else if(folders.Round1.MidorSessioanls=="Sessional"){
+        var res = Folder.files.find(obj => {
+          var t = "Sessional 1"
+          obj.Title == t 
+         })
+         if(res==undefined){
+            Round1=false
+          }        
+          var res2 = Folder.files.find(obj => {
+            var t = "Sessional 2"
+            obj.Title == t 
+           })
+           if(res2==undefined){
+              Round1=false
+            }
+        }
+      if(Round1){
+        console.log("Round1",{Round1:true})    
+      }
+      else{
+        alert("Enter all required documents for Round 1")
+      }
+    }
+
+  
+  const SubmitR2  = () => {
+
+    var Round2 = true
+    Quiz2.forEach((i)=>{
+       var res = Folder.files.find(obj => {
+        var t = "Quiz "+i
+        obj.Title == t 
+       })
+       if(res==undefined){
+        Round2=false
+        }
+      })
+      Assignments2.forEach((i)=>{
+        var res = Folder.files.find(obj => {
+         var t = "Assignment "+i
+         obj.Title == t 
+        })
+        if(res==undefined){
+          Round2=false
+         }
+       }) 
+        var res = Folder.files.find(obj => {
+          var t = "Terminal"
+          obj.Title == t 
+         })
+         if(res==undefined){
+            Round2=false}
+      if(Folder.ICEF==""){
+        Round2=false}
+      if(Folder.Obe==""){
+        Round2=false}
+            
+      if(Round2){
+        console.log("Round2",{Round2:true})
+      
+      }
+      else{
+        alert("Enter all required documents for Round 2")
+      }
+  
+    }
+
+
+  
   return (
     <div class="container" style={{ height: 700, width: "100%", padding: 20 }}>
       <h1 style={{ marginBottom: 30 }}>Course Folder Maintainence</h1>
@@ -223,7 +386,7 @@ console.log("\nDecoded",Decoded)
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <form>
+          <form onSubmit={Submit1}>
             <div class="mb-3">
               <label class="form-label" for="customFile">
                 <b>Upload Best</b>
@@ -267,9 +430,13 @@ console.log("\nDecoded",Decoded)
             </div>
 
             <div class="d-grid">
-              <a class="btn btn-primary btn-block" href="login.html">
-                SUBMIT
-              </a>
+            <button
+              class="btn btn-block py-2 btn-primary"
+              id="quiz1"
+              type="submit"              
+              >
+                  Submit
+                </button>
             </div>
           </form>
         </Box>
@@ -302,8 +469,12 @@ console.log("\nDecoded",Decoded)
                       onClick={()=>{
                         quiztitle(i)
                         handleOpen()}}
-                    >
-                      Quiz {i}
+                    >{
+                      Folder.files.find(obj => {
+                      var t = "Quiz "+i
+                      return obj.Title == t 
+                     })?(<> Quiz {i} (Submited)</>):
+                      (<> Quiz {i}</>)}
                     </button>                
                     </td>)
                     })
@@ -320,7 +491,13 @@ console.log("\nDecoded",Decoded)
                         Assignmenttitle(i)
                         handleOpen()}}
                      >
-                       Assignment {i}
+                      {
+                      Folder.files.find(obj => {
+                      var t = "Assignment "+i
+                      return obj.Title == t 
+                      })?(<> Assignment {i} {i} (Submited)</>):
+                      (<> Assignment {i}</>)}
+                       
                      </button>
                    </td>)
                     })
@@ -334,8 +511,13 @@ console.log("\nDecoded",Decoded)
                     onClick={()=>{
                       Midtitle()
                       handleOpen()}}
-                  >
-                    Midterm Exam
+                  >{Folder.files.find(obj => {
+                    var t = "Mid"
+                    return obj.Title == t 
+                   })?(<> Midterm Exam (Submited)</>):
+                    (<> Midterm Exam</>)}
+            
+                    
                   </button>
                 </td>):(<>
                 <td className="d-grid py-2 px-2">
@@ -347,7 +529,11 @@ console.log("\nDecoded",Decoded)
                       Sess1()
                       handleOpen()}}
                   >
-                    Sessional 1
+                    {Folder.files.find(obj => {
+                    var t = "Sessional 1"
+                    return obj.Title == t 
+                   })?(<> Sessional 1 (Submited)</>):
+                    (<> Sessional 1 </>)}
                   </button>
                 </td>
                 <td className="d-grid py-2 px-2">
@@ -359,16 +545,20 @@ console.log("\nDecoded",Decoded)
                     Sess2()
                     handleOpen()}}
                 >
-                  Sessional 2
+                  {Folder.files.find(obj => {
+                    var t = "Sessional 1"
+                    return obj.Title == t 
+                   })?(<> Sessional 2 (Submited)</>):
+                    (<> Sessional 2</>)}
+            
                 </button>
               </td>
               </>)}
                 <td className="d-grid py-4 px-2">
                   <button
                     class="btn btn-block py-2 btn-primary"
-                    id="quiz1"
                     type="button"
-                    // onClick={handleOpen}
+                    onClick={SubmitR1}
                   >
                     Submit
                   </button>
@@ -399,8 +589,13 @@ console.log("\nDecoded",Decoded)
                       onClick={()=>{
                         quiztitle(i)
                         handleOpen()}}
-                    >
-                      Quiz {i}
+                    >{
+                      Folder.files.find(obj => {
+                      var t = "Quiz "+i
+                      return obj.Title == t 
+                      })?(<> Quiz {i} (Submited)</>):
+                      (<> Quiz {i}</>)}
+                     
                     </button>                
                     </td>)
                     })
@@ -417,7 +612,13 @@ console.log("\nDecoded",Decoded)
                         Assignmenttitle(i)
                         handleOpen()}}
                      >
-                       Assignment {i}
+                       {
+                      Folder.files.find(obj => {
+                      var t = "Assignment "+i
+                      return obj.Title == t 
+                      })?(<> Assignment {i} {i} (Submited)</>):
+                      (<> Assignment {i}</>)}
+
                      </button>
                    </td>)
                     })
@@ -432,7 +633,12 @@ console.log("\nDecoded",Decoded)
                       Final()
                       handleOpen()}}
                   >
-                    Terminal Exam
+                  {Folder.files.find(obj => {
+                    var t = "Terminal"
+                    return obj.Title == t 
+                    })?(<> Terminal Exam (Submited)</>):
+                    (<> Terminal Exam </>)}
+                    
                   </button>
                 </td>
                 <td className="d-grid py-2 px-2">
@@ -441,8 +647,7 @@ console.log("\nDecoded",Decoded)
                     id="quiz1"
                     type="button"
                     onClick={handleOpen1}
-                  >
-                    ICEF
+                  > {Folder.ICEF==""?(<>ICEF</>):(<>ICEF (Submited)</>)}
                   </button>
                 </td>
                 <td className="d-grid py-2 px-2">
@@ -452,7 +657,8 @@ console.log("\nDecoded",Decoded)
                     type="button"
                     onClick={handleOpen2}
                   >
-                    OBE
+                   {Folder.Obe==""?(<>OBE</>):(<>OBE (Submited)</>)}
+                    
                   </button>
                 </td>
                 <td className="d-grid py-4 px-2">
@@ -460,7 +666,7 @@ console.log("\nDecoded",Decoded)
                     class="btn btn-block py-2 btn-primary"
                     id="quiz1"
                     type="button"
-                    // onClick={handleOpen}
+                    onClick={SubmitR2}
                   >
                     Submit
                   </button>

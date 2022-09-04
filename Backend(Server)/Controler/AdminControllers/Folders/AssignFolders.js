@@ -1,6 +1,5 @@
 var Folderdoc = require("../../../Models/Folders");
 var Userdoc = require("../../../Models/User");
-var mongoose = require('mongoose');
 
 module.exports.Add = async (req, res) => {
   try {
