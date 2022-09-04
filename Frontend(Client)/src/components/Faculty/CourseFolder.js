@@ -117,7 +117,9 @@ export default function CourseFolder() {
   const [Average1, setAverage1] = useState("");
   const [Worst1, setWorst1] = useState("");
   const [Solution1, setSolution1] = useState("");
-
+  const [ICEF, setICEF] = useState("");
+  const [Obe, setObe] = useState("");
+  
   const [fileBase64String, setFileBase64String] = useState("");
   console.log("fileBase64String",fileBase64String)
   const encodeFileBase64 = (file,ty) => {
@@ -147,6 +149,10 @@ export default function CourseFolder() {
         else if(ty=="Solution"){
           setSolution1(file.name);
           setSolution(Base64)}
+        else if(ty=="ICEF"){
+          setICEF(Base64)}
+        else if(ty=="Obe"){
+          setObe(Base64)}
         setFileBase64String(Base64);
       };
       var a =base64toData()
@@ -196,7 +202,22 @@ console.log("\nDecoded",Decoded)
     setFolder(res.data);
   };
 
-
+  const SubmitICEF = async(e) => {
+    e.preventDefault();
+    const res = await axios.put(`http://localhost:4000/Folders/addICEF/${id}`, {
+      ICEF:ICEF
+      })
+      getFolderData()
+      handleClose()
+  }
+  const SubmitObe = async(e) => {
+    e.preventDefault();
+    const res = await axios.put(`http://localhost:4000/Folders/addObe/${id}`, {
+      Obe:Obe
+      })
+      getFolderData()
+      handleClose()
+  }
   const Submit1 = async(e) => {
     e.preventDefault();
     if(Question1!=""&&Question!=""&&Awardlist1!=""&&Awardlist!=""
@@ -244,7 +265,7 @@ console.log("\nDecoded",Decoded)
       alert("upload all required files")
     }
   }
-  const SubmitR1  = () => {
+  const SubmitR1  = async() => {
     var Round1 = true
     Quiz1.forEach((i)=>{
        var res = Folder.files.find(obj => {
@@ -290,6 +311,10 @@ console.log("\nDecoded",Decoded)
         }
       if(Round1){
         console.log("Round1",{Round1:true})    
+        const res = await axios.put(`http://localhost:4000/Folders/SubmitaRound/${id}`, {
+          Round:"Round1"    
+        })
+        getFolderData()
       }
       else{
         alert("Enter all required documents for Round 1")
@@ -297,7 +322,7 @@ console.log("\nDecoded",Decoded)
     }
 
   
-  const SubmitR2  = () => {
+  const SubmitR2  = async() => {
 
     var Round2 = true
     Quiz2.forEach((i)=>{
@@ -331,7 +356,10 @@ console.log("\nDecoded",Decoded)
             
       if(Round2){
         console.log("Round2",{Round2:true})
-      
+        const res = await axios.put(`http://localhost:4000/Folders/SubmitaRound/${id}`, {
+          Round:"Round2"    
+        })
+        getFolderData()
       }
       else{
         alert("Enter all required documents for Round 2")
@@ -352,12 +380,21 @@ console.log("\nDecoded",Decoded)
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <form>
+          <form onSubmit={SubmitICEF}>
             <div class="mb-3">
               <label class="form-label" for="customFile">
                 <b>Upload ICEF</b>
               </label>
-              <input type="file" class="form-control" id="customFile" />
+              <input type="file" class="form-control" id="customFile" onChange={(e)=>{encodeFileBase64(e.target.files[0],"ICEF")}}/>
+            </div>
+            <div class="d-grid">
+            <button
+              class="btn btn-block py-2 btn-primary"
+              id="quiz1"
+              type="submit"              
+              >
+                  Submit
+                </button>
             </div>
           </form>
         </Box>
@@ -369,12 +406,21 @@ console.log("\nDecoded",Decoded)
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <form>
+          <form onSubmit={SubmitObe}>
             <div class="mb-3">
               <label class="form-label" for="customFile">
                 <b>Upload OBE</b>
               </label>
-              <input type="file" class="form-control" id="customFile" />
+              <input type="file" class="form-control" id="customFile" onChange={(e)=>{encodeFileBase64(e.target.files[0],"Obe")}}/>
+            </div>
+            <div class="d-grid">
+            <button
+              class="btn btn-block py-2 btn-primary"
+              id="quiz1"
+              type="submit"              
+              >
+                  Submit
+                </button>
             </div>
           </form>
         </Box>
@@ -495,7 +541,7 @@ console.log("\nDecoded",Decoded)
                       Folder.files.find(obj => {
                       var t = "Assignment "+i
                       return obj.Title == t 
-                      })?(<> Assignment {i} {i} (Submited)</>):
+                      })?(<> Assignment {i} (Submited)</>):
                       (<> Assignment {i}</>)}
                        
                      </button>
@@ -616,7 +662,7 @@ console.log("\nDecoded",Decoded)
                       Folder.files.find(obj => {
                       var t = "Assignment "+i
                       return obj.Title == t 
-                      })?(<> Assignment {i} {i} (Submited)</>):
+                      })?(<> Assignment {i} (Submited)</>):
                       (<> Assignment {i}</>)}
 
                      </button>

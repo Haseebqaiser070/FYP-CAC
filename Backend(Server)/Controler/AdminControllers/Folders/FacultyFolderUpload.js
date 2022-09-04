@@ -8,6 +8,7 @@ module.exports.Add = async (req, res) => {
     const isalready = old.files.find(obj => {
         return obj.Title === req.body.Title
       })
+      console.log("isalready",isalready)
     if(isalready!=undefined){
         const fils = old.files.map((x)=>{
             if(x.Title==req.body.Title){
@@ -49,6 +50,71 @@ module.exports.Add = async (req, res) => {
     console.log(err);
   }
 };
+
+module.exports.SubmitaRound = async (req, res) => {
+    
+    try {
+        console.log(req.user)
+        if (!req.user) return await res.json("Timed Out");
+        if (!req.user.Roles.includes("Faculty")) return await res.status(401).json("UnAutherized");
+        try {        
+          if(req.body.Round=="Round1"){  
+          const up = await Folderdoc.findOneAndUpdate({_id:req.params.id},{Round1:true});
+          console.log("CourseFolder",up)
+          await res.status(200).json(up)
+        }
+        else if(req.body.Round=="Round2"){  
+            const up = await Folderdoc.findOneAndUpdate({_id:req.params.id},{Round2:true});
+            console.log("CourseFolder",up)
+            await res.status(200).json(up)
+          }
+        }catch (err) {
+            console.log(err);
+            await res.status(400).json("error")    
+        }  
+      } catch (err) {
+        console.log(err);
+      }    
+
+}
+
+module.exports.ICEFSubimt = async (req, res) => {
+    
+    try {
+        console.log(req.user)
+        if (!req.user) return await res.json("Timed Out");
+        if (!req.user.Roles.includes("Faculty")) return await res.status(401).json("UnAutherized");
+        try {                   
+            const up = await Folderdoc.findOneAndUpdate({_id:req.params.id},{ICEF:req.body.ICEF});
+            console.log("CourseFolder",up)
+            await res.status(200).json(up)
+        }catch (err) {
+            console.log(err);
+            await res.status(400).json("error")    
+        }  
+      } catch (err) {
+        console.log(err);
+      }    
+}
+
+module.exports.ObeSubimt = async (req, res) => {
+    
+    try {
+        console.log(req.user)
+        if (!req.user) return await res.json("Timed Out");
+        if (!req.user.Roles.includes("Faculty")) return await res.status(401).json("UnAutherized");        
+        try {                   
+            const up = await Folderdoc.findOneAndUpdate({_id:req.params.id},{Obe:req.body.Obe});
+            console.log("CourseFolder",up)
+            await res.status(200).json(up)
+        }catch (err) {
+            console.log(err);
+            await res.status(400).json("error")    
+        }  
+      } catch (err) {
+        console.log(err);
+      }    
+}
 
 module.exports.showOne = async (req, res) => {
     
