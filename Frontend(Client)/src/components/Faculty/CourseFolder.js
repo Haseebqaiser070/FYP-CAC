@@ -122,6 +122,8 @@ export default function CourseFolder() {
   
   const [fileBase64String, setFileBase64String] = useState("");
   console.log("fileBase64String",fileBase64String)
+  
+  //----------
   const encodeFileBase64 = (file,ty) => {
     var reader = new FileReader();
     console.log("\nfile",file)
@@ -738,7 +740,7 @@ console.log("\nDecoded",Decoded)
 							className="cardmedia"
 							component="iframe"
 							Height="1056px"
-							src={Decoded}
+							src={fileBase64String}
 						/>
 					</Card>				
     </>
