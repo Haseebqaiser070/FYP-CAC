@@ -194,7 +194,7 @@ console.log("\nDecoded",Decoded)
   useEffect(() => {
     getFolderData();
   }, []);
-  const [Folder,setFolder]=useState({files:[],ICEF:"",Obe:""})
+  const [Folder,setFolder]=useState({files:[],ICEF:null,Obe:null})
   
   const getFolderData = async () => {
     const res = await axios.get(
@@ -695,7 +695,7 @@ console.log("\nDecoded",Decoded)
                     id="quiz1"
                     type="button"
                     onClick={handleOpen1}
-                  > {Folder.ICEF==""?(<>ICEF</>):(<>ICEF (Submited)</>)}
+                  > {Folder.ICEF==null?(<>ICEF</>):(<>ICEF (Submited)</>)}
                   </button>
                 </td>
                 <td className="d-grid py-2 px-2">
@@ -705,7 +705,7 @@ console.log("\nDecoded",Decoded)
                     type="button"
                     onClick={handleOpen2}
                   >
-                   {Folder.Obe==""?(<>OBE</>):(<>OBE (Submited)</>)}
+                   {Folder.Obe==null?(<>OBE</>):(<>OBE (Submited)</>)}
                     
                   </button>
                 </td>

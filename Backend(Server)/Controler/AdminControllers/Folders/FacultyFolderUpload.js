@@ -1,4 +1,5 @@
 var Folderdoc = require("../../../Models/Folders");
+var Base64doc = require("../../../Models/Base64");
 
 module.exports.Add = async (req, res) => {
   try {
@@ -10,9 +11,24 @@ module.exports.Add = async (req, res) => {
       })
       console.log("isalready",isalready)
     if(isalready!=undefined){
-        const fils = old.files.map((x)=>{
-            if(x.Title==req.body.Title){
-                return({
+        const fils =await Promise.all( old.files.map(async(x)=>{
+          if(x.Title==req.body.Title){            
+
+            await Base64doc.deleteOne({_id:x.Question.Base64})
+            await Base64doc.deleteOne({_id:x.Solution.Base64})
+            await Base64doc.deleteOne({_id:x.Awardlist.Base64})
+            await Base64doc.deleteOne({_id:x.Best.Base64})
+            await Base64doc.deleteOne({_id:x.Average.Base64})
+            await Base64doc.deleteOne({_id:x.Worst.Base64})
+                    
+            req.body.Question.Base64 = await Base64doc.create({pdf:req.body.Question.Base64})
+            req.body.Solution.Base64 = await Base64doc.create({pdf:req.body.Solution.Base64})
+            req.body.Awardlist.Base64 = await Base64doc.create({pdf:req.body.Awardlist.Base64})
+            req.body.Best.Base64 = await Base64doc.create({pdf:req.body.Best.Base64})
+            req.body.Average.Base64 = await Base64doc.create({pdf:req.body.Average.Base64})
+            req.body.Worst.Base64 = await Base64doc.create({pdf:req.body.Worst.Base64})     
+                         
+            return({
                     Title:req.body.Title,
                     Question:req.body.Question,
                     Solution:req.body.Solution,
@@ -26,10 +42,16 @@ module.exports.Add = async (req, res) => {
             else{
                 return x
             }
-        })
+        }))
         old.files=fils
     }
     else{
+          req.body.Question.Base64 = await Base64doc.create({pdf:req.body.Question.Base64})
+          req.body.Solution.Base64 = await Base64doc.create({pdf:req.body.Solution.Base64})
+          req.body.Awardlist.Base64 = await Base64doc.create({pdf:req.body.Awardlist.Base64})
+          req.body.Best.Base64 = await Base64doc.create({pdf:req.body.Best.Base64})
+          req.body.Average.Base64 = await Base64doc.create({pdf:req.body.Average.Base64})
+          req.body.Worst.Base64 = await Base64doc.create({pdf:req.body.Worst.Base64})            
         const obj = {
             Title:req.body.Title,
             Question:req.body.Question,
@@ -85,7 +107,14 @@ module.exports.ICEFSubimt = async (req, res) => {
         if (!req.user) return await res.json("Timed Out");
         if (!req.user.Roles.includes("Faculty")) return await res.status(401).json("UnAutherized");
         try {                   
-            const up = await Folderdoc.findOneAndUpdate({_id:req.params.id},{ICEF:req.body.ICEF});
+          const old = await Folderdoc.findById(req.params.id)    
+          if(old.ICEF!=null){
+            var r = await Base64doc.deleteOne({_id:old.ICEF})
+            console.log("deleted",r)
+          }
+          const II = await Base64doc.create({pdf:req.body.ICEF})            
+          
+          const up = await Folderdoc.findOneAndUpdate({_id:req.params.id},{ICEF:II});
             console.log("CourseFolder",up)
             await res.status(200).json(up)
         }catch (err) {
@@ -104,7 +133,13 @@ module.exports.ObeSubimt = async (req, res) => {
         if (!req.user) return await res.json("Timed Out");
         if (!req.user.Roles.includes("Faculty")) return await res.status(401).json("UnAutherized");        
         try {                   
-            const up = await Folderdoc.findOneAndUpdate({_id:req.params.id},{Obe:req.body.Obe});
+          if(old.Obe!=null){
+            var r = await Base64doc.deleteOne({_id:old.Obe})
+            console.log("erwefz",r)
+          }
+          const II = await Base64doc.create({pdf:req.body.Obe})            
+            
+          const up = await Folderdoc.findOneAndUpdate({_id:req.params.id},{Obe:II});
             console.log("CourseFolder",up)
             await res.status(200).json(up)
         }catch (err) {

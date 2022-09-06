@@ -28,9 +28,9 @@ var FolderSchema = new mongoose.Schema({
                     type: String, 
                     required:true    
                 },
-                Base64:{
-                    type: String, 
-                    required:true
+                Base64:{                    
+                    type: mongoose.Schema.ObjectId,
+                    ref: 'Base64'
                 }
             },
             Solution:{
@@ -38,9 +38,9 @@ var FolderSchema = new mongoose.Schema({
                     type: String, 
                     required:true    
                 },
-                Base64:{
-                    type: String, 
-                    required:true
+                Base64:{                    
+                    type: mongoose.Schema.ObjectId,
+                    ref: 'Base64'
                 }
             },
             Awardlist:{
@@ -48,9 +48,9 @@ var FolderSchema = new mongoose.Schema({
                     type: String, 
                     required:true    
                 },
-                Base64:{
-                    type: String, 
-                    required:true
+                Base64:{                    
+                    type: mongoose.Schema.ObjectId,
+                    ref: 'Base64'
                 }
             },
             Best:{
@@ -58,9 +58,9 @@ var FolderSchema = new mongoose.Schema({
                     type: String, 
                     required:true    
                 },
-                Base64:{
-                    type: String, 
-                    required:true
+                Base64:{                    
+                    type: mongoose.Schema.ObjectId,
+                    ref: 'Base64'
                 }
             },
             Average:{
@@ -68,9 +68,9 @@ var FolderSchema = new mongoose.Schema({
                     type: String, 
                     required:true    
                 },
-                Base64:{
-                    type: String, 
-                    required:true
+                Base64:{                    
+                    type: mongoose.Schema.ObjectId,
+                    ref: 'Base64'
                 }
             },
             Worst:{
@@ -78,9 +78,9 @@ var FolderSchema = new mongoose.Schema({
                     type: String, 
                     required:true    
                 },
-                Base64:{
-                    type: String, 
-                    required:true
+                Base64:{                    
+                    type: mongoose.Schema.ObjectId,
+                    ref: 'Base64'
                 }
             }
         },
@@ -91,17 +91,23 @@ var FolderSchema = new mongoose.Schema({
         type:String,
         default:""
     },
-    LectureDeliveryRecord:{
-        type:String,
-        default:""
+    LectureDeliveryRecord:{                    
+        type: mongoose.Schema.ObjectId,
+        ref: 'Base64',
+        default:null
+
     },
-    ICEF:{
-        type:String,
-        default:""
+    ICEF:{                    
+        type: mongoose.Schema.ObjectId,
+        ref: 'Base64',
+        default:null
+
     },
-    Obe:{
-        type:String,
-        default:""
+    Obe:{                    
+        type: mongoose.Schema.ObjectId,
+        ref: 'Base64',
+        default:null
+
     },
     Round1:{
         type:Boolean,

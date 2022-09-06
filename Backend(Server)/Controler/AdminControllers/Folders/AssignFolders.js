@@ -6,7 +6,7 @@ module.exports.Add = async (req, res) => {
     if (!req.user) return await res.status(401).json("Timed Out");
     if (!req.user.Roles.includes("Admin")) return await res.status(401).json("UnAutherized");
     var Folders = []
-    console.log(req.body.obj)
+    console.log("\nobj",req.body.obj)
     await Promise.all(req.body.obj.map(async(e)=>{
      try{
         
@@ -16,9 +16,6 @@ module.exports.Add = async (req, res) => {
             User:req.body.User,
             files:[],
             LabTheory:"Theory",
-            LectureDeliveryRecord:"",
-            ICEF:"",
-            Obe:""
         })
         console.log("\n\nfold",fold)
         Folders.push(fold)            
@@ -30,9 +27,6 @@ module.exports.Add = async (req, res) => {
             User:req.body.User,
             files:[],
             LabTheory:"Lab",
-            LectureDeliveryRecord:"",
-            ICEF:"",
-            Obe:""          
           })
           Folders.push(foldlab)
           console.log("\n\foldlab",foldlab)
@@ -102,9 +96,6 @@ module.exports.Add2 = async (req, res) => {
         User:req.body.User,
         files:[],
         LabTheory:"Theory",
-        LectureDeliveryRecord:"",
-        ICEF:"",
-        Obe:""
     })
     Folders.push(fold)            
     if(e.Course.LabHoursWeek!="0"){            
@@ -114,9 +105,6 @@ module.exports.Add2 = async (req, res) => {
         User:req.body.User,
         files:[],
         LabTheory:"Lab",
-        LectureDeliveryRecord:"",
-        ICEF:"",
-        Obe:""          
       })
       Folders.push(foldlab)
       }}
