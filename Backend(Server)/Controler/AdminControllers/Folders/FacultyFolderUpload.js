@@ -132,7 +132,8 @@ module.exports.ObeSubimt = async (req, res) => {
         console.log(req.user)
         if (!req.user) return await res.json("Timed Out");
         if (!req.user.Roles.includes("Faculty")) return await res.status(401).json("UnAutherized");        
-        try {                   
+        try {        
+          const old = await Folderdoc.findById(req.params.id)               
           if(old.Obe!=null){
             var r = await Base64doc.deleteOne({_id:old.Obe})
             console.log("erwefz",r)

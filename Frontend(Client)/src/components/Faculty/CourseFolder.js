@@ -210,7 +210,7 @@ console.log("\nDecoded",Decoded)
       ICEF:ICEF
       })
       getFolderData()
-      handleClose()
+      handleClose1()
   }
   const SubmitObe = async(e) => {
     e.preventDefault();
@@ -218,7 +218,7 @@ console.log("\nDecoded",Decoded)
       Obe:Obe
       })
       getFolderData()
-      handleClose()
+      handleClose2()
   }
   const Submit1 = async(e) => {
     e.preventDefault();
