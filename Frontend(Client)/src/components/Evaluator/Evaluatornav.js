@@ -21,7 +21,7 @@ export default function FacultyNavigation() {
       <div class="bg">
         <nav class="sb-topnav navbar navbar-expand navbar-dark ">
           <a class="navbar-brand ps-3" to="/Dashboard">
-            <b>Evaluator</b>
+            <b>EVALUATOR DASHBOARD</b>
           </a>
           <button
             class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"

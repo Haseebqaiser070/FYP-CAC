@@ -250,7 +250,7 @@ export default function CreateSOS() {
           <TextField
             className="mb-4"
             id="outlined-basic"
-            label="SOS Year"
+            label="SOS Title"
             variant="outlined"
             size="medium"
             fullWidth
