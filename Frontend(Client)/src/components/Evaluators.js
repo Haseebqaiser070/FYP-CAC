@@ -85,7 +85,7 @@ export default function Evaluators() {
     const response = await axios.get(`http://localhost:4000/EvalFolders/showAllbyid/${id}`);
     const col=await Promise.all(await response.data.map(async(i)=>{
        return({
-         Faculty:i.User,
+         Faculty:i.Folder.User,
          Folders: i.Folder
        })              
     }))  
@@ -93,6 +93,7 @@ export default function Evaluators() {
       const res = await axios.get(`http://localhost:4000/UserAssigedFolders/showAllbyid/${i.Faculty._id}`);
       return([...res.data])              
     }))
+    console.log("col2",col2)
     setUserFolders([...col2])
     setobj([...col]);
     setup(true)
@@ -294,7 +295,7 @@ export default function Evaluators() {
                         autoWidth
                       > 
                       <option value={obj[index]?.Folders} selected disabled hidden>
-                        {obj[index]?.Folders!=""&&(obj[index]?.Folders?.Course?.Code+" "+obj[index]?.Folders?.Course.Name+" "+obj[index]?.Folders?.LabTheory=="Lab"&&"("+obj[index]?.Folders?.LabTheory+")")}
+                        {obj[index]?.Folders!=""&&obj[index]?.Folders?.Course?.Code+" "+obj[index]?.Folders?.Course.Name+" "+obj[index]?.Folders?.LabTheory=="Lab"&&"("+obj[index]?.Folders?.LabTheory+")"}
                       </option>
                         {UserFolders.length > 0 && UserFolders[index].map((a) => {
                           return(
