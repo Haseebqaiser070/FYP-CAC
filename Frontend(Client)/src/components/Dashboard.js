@@ -8,9 +8,10 @@ export default function Dashboard() {
       style={{
         width: "100%",
         padding: 30,
+        backgroundColor: "#f5f5f5",
       }}
     >
-      <h1 className="py-4 my-2">
+      <h1 className="pb-4 my-2">
         <b>DASHBOARD</b>
       </h1>
 

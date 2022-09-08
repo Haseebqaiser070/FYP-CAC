@@ -87,7 +87,7 @@ export default function Navigation() {
       >
         <nav className="sb-topnav navbar navbar-expand navbar-dark ">
           <a className="navbar-brand ps-3" to="/Dashboard">
-            <b>Admin</b>
+            <b>ADMIN DASHBOARD</b>
           </a>
           <button
             className="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0"

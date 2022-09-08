@@ -39,6 +39,7 @@ import CourseFolderTheory from "../CourseFolderTheory";
 import CourseFolderLab from "../CourseFolderLab";
 import BTLLevel from "../BTLLevel";
 import SO_Level from "../SOAndBTLLevel";
+import CreateSOS1 from "../SOSCreation/CreateSos1";
 function AdminRoutes() {
   return (
     <Routes>
