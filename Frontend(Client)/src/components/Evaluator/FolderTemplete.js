@@ -12,10 +12,25 @@ import SendIcon from "@mui/icons-material/Send";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import StarBorder from "@mui/icons-material/StarBorder";
+import axios from "axios"
+import { useLocation, useNavigate,useParams } from "react-router-dom";
 
 export default function FolderTemplete() {
   const [open, setOpen] = React.useState(true);
-
+  axios.defaults.withCredentials = true;
+  const { id } = useParams()
+  useEffect(() => {
+    getFolderData();
+  }, []);
+  //const [Folder,setFolder]=useState({folder:{files:[],ICEF:null,Obe:null}})
+  
+  const getFolderData = async () => {
+    const res = await axios.get(
+      `http://localhost:4000/EvalFolders/showComp/${id}`
+    );
+    console.log(res.data);
+    setFolder(res.data);
+  };
   const handleClick = () => {
     setOpen(!open);
   };
