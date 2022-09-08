@@ -267,8 +267,8 @@ export default function Evaluators() {
                     }
                   }
                   >
-                    <option value={obj[index].Faculty} selected disabled hidden>
-                      {obj[index].Faculty!=""&&obj[index].Faculty}
+                    <option value={obj[index].Faculty._id} selected disabled hidden>
+                      {obj[index].Faculty!=""&&obj[index].Faculty.Name}
                     </option>
                     {FacUsers.map((p) => {
                       return (
@@ -294,9 +294,9 @@ export default function Evaluators() {
                         }}
                         autoWidth
                       > 
-                      <option value={obj[index]?.Folders} selected disabled hidden>
-                        {obj[index]?.Folders!=""&&obj[index]?.Folders?.Course?.Code+" "+obj[index]?.Folders?.Course.Name+" "+obj[index]?.Folders?.LabTheory=="Lab"&&"("+obj[index]?.Folders?.LabTheory+")"}
-                      </option>
+                      <MenuItem value={obj[index]?.Folders} selected disabled hidden>
+                        {obj[index]?.Folders!=""&&(obj[index]?.Folders?.Course?.Code+" "+obj[index]?.Folders?.Course.Name+" "+obj[index]?.Folders?.LabTheory=="Lab"&&"("+obj[index]?.Folders?.LabTheory+")")}
+                      </MenuItem>
                         {UserFolders.length > 0 && UserFolders[index].map((a) => {
                           return(
                           <MenuItem value={a}>{a?.Course?.Code} {a?.Course?.Name} {a?.LabTheory=="Lab"&&"("+a?.LabTheory+")"}

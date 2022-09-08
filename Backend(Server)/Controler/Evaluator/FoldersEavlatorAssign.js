@@ -46,7 +46,9 @@ module.exports.Add2 = async (req, res) => {
         try{
          var check=false 
         req.body.obj.forEach((e)=>{
-          if(i.Folder==e.Folder._id){
+          console.log("e",e);
+          
+          if(i.Folder==e.Folders._id){
             check = true
           }
         })
@@ -54,7 +56,9 @@ module.exports.Add2 = async (req, res) => {
           Folders.push(i)      
         }
         else{
-          await Evaldoc.deleteOne({_id:i._id}) 
+          console.log("i",i);
+          var r = await Evaldoc.deleteOne({_id:i._id}) 
+          console.log(r);
         }
       }  
     
