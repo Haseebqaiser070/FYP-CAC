@@ -30,33 +30,47 @@ const style = {
 };
 
 export default function Evaluators() {
+  axios.defaults.withCredentials = true;
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () =>{ 
+    setOpen(false)
+    setobj([
+      {
+        Faculty: "",
+        Folders: "",
+      },
+    ])
+    setUser("")
+    setUserFolders([[]])
+    setup(false)
+  };  
+  const [up,setup] = useState(false);
+  const [User, setUser] = useState("");
   const [Rows, setRows] = useState([]);
-  const [Courses, setCourse] = useState([]);
-  const [AssignCources, setAssignCourses] = useState([]);
-  const [Degree, setDegree] = useState("Degree Program");
-  const [Programdb, setProgramdb] = useState([]);
-  const [DegreeLevel, setDegreeLevel] = useState("");
-  const [Section, setSection] = useState("");
-
+  const [FacUsers, setFacUsers] = useState([]);
   const [obj, setobj] = useState([
     {
-      DegreeLevel: "",
-      Degree: "",
-      AssignCources: "",
+      Faculty: "",
+      Folders: "",
     },
   ]);
+  const [UserFolders,setUserFolders] = useState([[]]);
 
-  const getPrograms = async () => {
-    const res = await axios.get("http://localhost:4000/Program/show");
-    setProgramdb(res.data);
+  const getUsers = async () => {
+    const res = await axios.get("http://localhost:4000/User/show/Faculty");
+    setFacUsers(res.data);
   };
-
+  const getUserFolds = async (index,id) => {
+    const res = await axios.get(`http://localhost:4000/UserAssigedFolders/showAllbyid/${id}`);
+    const clone=[...UserFolders]
+    console.log("res.data",res.data)
+    clone[index]=res.data
+    setUserFolders([...clone])
+  };
   console.log(Rows);
   useEffect(() => {
-    getPrograms();
+    getUsers();
     getData();
   }, []);
   const getData = async () => {
@@ -66,6 +80,57 @@ export default function Evaluators() {
     setRows(response.data);
   };
 
+  const getobjs= async(id)=>{
+    console.log("id",id)
+    const response = await axios.get(`http://localhost:4000/EvalFolders/showAllbyid/${id}`);
+    const col=await Promise.all(await response.data.map(async(i)=>{
+       return({
+         Faculty:i.User,
+         Folders: i.Folder
+       })              
+    }))  
+    const col2=await Promise.all(await col.map(async(i)=>{
+      const res = await axios.get(`http://localhost:4000/UserAssigedFolders/showAllbyid/${i.Faculty._id}`);
+      return([...res.data])              
+    }))
+    setUserFolders([...col2])
+    setobj([...col]);
+    setup(true)
+    setOpen(true)
+  }
+  const Submitform = async (e) => {
+    e.preventDefault()
+    console.log("obj",obj)
+    let verify = true;
+    obj.forEach((i) => {
+      console.log("i", i);
+      if (
+        i.Faculty == "" ||
+        i.Folders == ""
+      ) {
+        verify = false;
+      }
+    });
+    if (verify) {
+      if(!up){
+      await axios.post("http://localhost:4000/EvalFolders/add", {
+        obj,
+        User,
+      });
+    }
+    else{
+      await axios.post("http://localhost:4000/EvalFolders/add2", {
+        obj,
+        User,
+      });
+    }
+      getData()
+      handleClose()
+
+    } else {
+      alert("Empty Field");
+    }    
+  }
   const columns = [
     {
       field: "Name",
@@ -83,18 +148,33 @@ export default function Evaluators() {
       headerName: "Actions",
       flex: 2,
       editable: false,
-      renderCell: () => (
+      renderCell: ({row}) => (
         <>
-          <Button
+          {row.EvaluateFolders.length<1?(<Button
             variant="contained"
             color="primary"
             size="small"
             style={{ marginLeft: 16 }}
-            onClick={() => setOpen(true)}
+            onClick={() =>{
+              setUser(row)
+              setOpen(true)}}
           >
             <AiFillEdit style={{ marginRight: 10 }} />
             Assign Course
-          </Button>
+          </Button>):
+          (<Button
+            variant="contained"
+            color="primary"
+            size="small"
+            style={{ marginLeft: 16 }}
+            onClick={async() =>{
+              setUser(row)
+              await getobjs(row._id)
+              }}
+          >
+            <AiFillEdit style={{ marginRight: 10 }} />
+            Edit Course
+          </Button>)}
         </>
       ),
     },
@@ -125,7 +205,7 @@ export default function Evaluators() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box component="form" sx={style}>
+        <Box component="form" sx={style} onSubmit={Submitform}>
           {obj.map((e, index) => {
             return (
               <>
@@ -138,88 +218,93 @@ export default function Evaluators() {
                       color="primary"
                       size="medium"
                       onClick={() => {
-                        const clone = [...obj];
-                        const a = clone.splice(index, 1);
-                        console.log("aaaaaaaaaaaaa", a, "cloneeeeeee", clone);
-                        setobj([...clone]);
+                        {() => {
+                          var clone = [...obj];                      
+                          if (clone.length == index + 1) {
+                            console.log("last rm");
+                            clone[index]=  {
+                              Faculty: "",
+                              Folders: "",
+                            }
+                          } 
+                          else if (clone.length != index + 1) {
+                            clone[index] = clone[index + 1];
+                          }
+                          const a = clone.splice(index, 1);
+                          setobj([...clone]);                                          
+                          var clone2 = [...UserFolders];
+                          if (clone2.length == index + 1) {
+                            console.log("last rm");
+                            clone2[index]=[]
+                          
+                          } else if (clone2.length != index + 1) {
+                            clone2[index] = clone2[index + 1];
+                          }
+                          const b = clone2.splice(index,1);                                                
+                          setUserFolders([
+                            ...clone2
+                          ]);
+                        
+                        }}
                       }}
                     >
                       remove
                     </Button>
                   </FormControl>
                 )}
-                <FormControl fullWidth size="small">
-                  <InputLabel id="taskType">Select Degree</InputLabel>
-                  <Select
-                    className="mb-4"
-                    labelId="selectdegree"
-                    id="selectdegree"
-                    value={obj[index].DegreeLevel}
-                    label="Select Degree"
-                    onChange={(e) => {
-                      const clone = [...obj];
-                      clone[index].DegreeLevel = e.target.value;
-                      setobj([...clone]);
-                    }}
-                    autoWidth
-                  >
-                    <MenuItem value={"BS"}>BS</MenuItem>
-                    <MenuItem value={"MS"}>MS</MenuItem>
-                    <MenuItem value={"p.hd"}>P.hd</MenuItem>
-                  </Select>
-                </FormControl>
+
+
                 <div className="form-floating mb-4">
                   <select
                     class="form-select"
-                    onChange={(e) => setDegree(e.target.value)}
+                    label="Assign Program"
+                    onChange={(e) =>{
+                      const clone=[...obj]
+                      clone[index].Faculty = e.target.value;
+                      setobj([...clone]);                    
+                      getUserFolds(index,e.target.value)
+                    }
+                  }
                   >
-                    <option value={Degree} selected disabled hidden>
-                      {Degree}
+                    <option value={obj[index].Faculty} selected disabled hidden>
+                      {obj[index].Faculty!=""&&obj[index].Faculty}
                     </option>
-                    {Programdb.map((p) => {
+                    {FacUsers.map((p) => {
                       return (
                         <option value={p._id}>
-                          {p.PDegree} {p.Program}
+                          {p.Name}
                         </option>
                       );
                     })}
                   </select>
+
+                  <FormControl fullWidth size="small">
+                      <InputLabel id="taskType">Assign Folder</InputLabel>
+                      <Select
+                        className="mb-4"
+                        labelId="taskType"
+                        id="taskType"
+                        value={obj[index].Folders}
+                        label="Assign Course"
+                        onChange={(e) => {
+                          const clone = [...obj];
+                          clone[index].Folders = e.target.value;
+                          setobj([...clone]);
+                        }}
+                        autoWidth
+                      > 
+                      <option value={obj[index]?.Folders} selected disabled hidden>
+                        {obj[index]?.Folders!=""&&(obj[index]?.Folders?.Course?.Code+" "+obj[index]?.Folders?.Course.Name+" "+obj[index]?.Folders?.LabTheory=="Lab"&&"("+obj[index]?.Folders?.LabTheory+")")}
+                      </option>
+                        {UserFolders.length > 0 && UserFolders[index].map((a) => {
+                          return(
+                          <MenuItem value={a}>{a?.Course?.Code} {a?.Course?.Name} {a?.LabTheory=="Lab"&&"("+a?.LabTheory+")"}
+                          </MenuItem>)
+                        })}
+                      </Select>
+                    </FormControl>
                 </div>
-                <Autocomplete
-                  multiple
-                  id="tags-standard"
-                  className="mb-4"
-                  value={AssignCources}
-                  options={Courses}
-                  getOptionLabel={(option) => option.Name}
-                  defaultValue={null}
-                  onChange={(e, val) => setAssignCourses(val)}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      variant="outlined"
-                      label="Assign Cources"
-                      placeholder="Assign Cources"
-                    />
-                  )}
-                />
-                <div className="form-floating mb-3">
-                  <input
-                    className="form-control"
-                    id="inputName"
-                    type="text"
-                    value={obj[index].Section}
-                    onChange={(e) => {
-                      const clone = [...obj];
-                      clone[index].Section = e.target.value;
-                      setobj([...clone]);
-                    }}
-                    required
-                  />
-                  <label htmlFor="text" className="form-label">
-                    Section
-                  </label>
-                </div>
+
               </>
             );
           })}
@@ -231,14 +316,17 @@ export default function Evaluators() {
               width="100"
               style={{ marginTop: 10, marginRight: 20 }}
               onClick={() => {
-                setobj([
-                  ...obj,
-                  {
-                    DegreeLevel: "",
-                    Degree: "",
-                    AssignCources: "",
-                  },
-                ]);
+                  setobj([
+                    ...obj,
+                    {
+                      Faculty: "",
+                      Folders: "",
+                    }
+                  ]);
+                  setUserFolders([
+                    ...Courses,
+                    []
+                  ]);
               }}
             >
               Add another Course
@@ -248,6 +336,7 @@ export default function Evaluators() {
               color="primary"
               size="large"
               width="100"
+              type="submit"
               style={{ marginTop: 10 }}
             >
               Assign Course

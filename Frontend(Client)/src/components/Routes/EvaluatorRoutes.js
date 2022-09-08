@@ -12,7 +12,7 @@ function EvaluatorRoutes() {
     <Routes>
       <Route path="/" element={<Evaluatornav />}>
         <Route path="/Dashboard" element={<FolderEvaluation />} />
-        <Route path="/FolderTemplete" element={<FolderTemplete />} />
+        <Route path="/FolderTemplete/:id" element={<FolderTemplete />} />
         <Route path="/sos" element={<Sos />} />
       </Route>
     </Routes>

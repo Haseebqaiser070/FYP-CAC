@@ -1,8 +1,6 @@
 import React from "react";
 import "../css/styles.css";
 import { Link, Outlet } from "react-router-dom";
-
-import axios from "axios";
 import AvatarMenu from "../AuxillaryComponents/AvatarMenu";
 
 import {
@@ -12,10 +10,35 @@ import {
   BsFillGearFill,
   BsFillPeopleFill,
   BsFillBookFill,
+  BsFillHouseDoorFill,
+  BsFillBookmarkPlusFill,
+  BsListCheck,
+  BsFillFilePdfFill,
+  BsFillFolderFill,
+
 } from "react-icons/bs";
 import useAuth from "../../MyHooks/useAuth";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function FacultyNavigation() {
+  const [openFolders, setOpenFolders] = React.useState(false);
+  const [Folders, setFolders] = React.useState([]);
+  axios.defaults.withCredentials = true;
+  const navigate = useNavigate();
+  React.useEffect(() => {
+    getData();
+  }, []);
+  console.log(Folders);
+  const getData = async () => {
+    const res = await axios.get(
+      "http://localhost:4000/EvalFolders/showAll"
+    );
+    console.log(res.data);
+    setFolders([...res.data]);
+  };
   return (
     <React.Fragment>
       <div class="bg">
@@ -60,6 +83,57 @@ export default function FacultyNavigation() {
                   </div>
                   Evaluate Folder
                 </Link>
+                <div
+                  onClick={() => {
+                    openFolders ? setOpenFolders(false) : setOpenFolders(true);
+                  }}
+                  style={{ cursor: "pointer" }}
+                  class="nav-link sidenavtext"
+                >
+                  <div class="sb-nav-link-icon">
+                    <BsFillBookFill color="#fff" />
+                  </div>
+                  Evaluate Folders
+                  <div style={{ marginLeft: "auto" }} class="sb-nav-link-icon">
+                    {openFolders ? (
+                      <KeyboardArrowUpIcon />
+                    ) : (
+                      <KeyboardArrowDownIcon />
+                    )}
+                  </div>
+                </div>
+                {openFolders &&
+                  Folders.length > 0 &&
+                  Folders.map((i) => {
+                    return (
+                      <>
+                        <div
+                          style={{
+                            marginLeft: "12px",
+                            fontSize: "14px",
+                            cursor: "pointer",
+                          }}
+                          class="nav-link sidenavtext "
+                          onClick={() => {
+                            if(i.LabTheory=="Theory"){
+                            navigate(`/Evaluator/FolderTemplete/${i._id}`,{ state: {i} }, {
+                              replace: true,
+                            })}
+                            if(i.LabTheory=="Lab"){
+                              navigate(`/Evaluator/FolderTemplete/${i._id}`,{ state: {i} }, {
+                                replace: true,
+                              })}
+                          }}
+                        >
+                          <div class="sb-nav-link-icon">
+                            <BsListCheck color="#fff" />
+                          </div>
+                          {i.Folder.Course.Code} {i.Folder.Course.Name} {i.Folder.LabTheory=="Lab"&&"("+i.Folders.LabTheory+")"}
+                        </div>
+                      </>
+                    );
+                  })}
+
                 <Link class="nav-link sidenavtext " to="FolderTemplete">
                   <div class="sb-nav-link-icon">
                     <BsBuilding color="#fff" />

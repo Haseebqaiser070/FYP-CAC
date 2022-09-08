@@ -134,8 +134,7 @@ console.log("Course",Courses)
 
     } else {
       alert("Empty Field");
-    }
-    
+    }    
   }
   const columns = [
     {

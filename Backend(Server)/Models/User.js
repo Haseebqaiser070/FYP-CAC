@@ -71,7 +71,7 @@ var UserSchema = new mongoose.Schema({
     EvaluateFolders:[
         {
         type: mongoose.Schema.ObjectId,
-        ref: 'Folder',
+        ref: 'Eval',
         default:'none'
         }]
     

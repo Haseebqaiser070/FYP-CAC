@@ -29,6 +29,7 @@ var AssignFoldersRouter = require("./Routes/Folders/AssignFolders")
 var UserAssigedFolders = require("./Routes/Folders/UserAssigedFolders")
 var ContentFolder = require("./Routes/AdminRoutes/FolderContents")
 var FacultyFolders = require("./Routes/Folders/FacultyFolders")
+var EvalFolders = require("./Routes/Folders/EvaluatorFolder")
 
 var { getUser } = require("./Middleware/User");
 
@@ -66,6 +67,7 @@ app.use("/AssginFolders", getUser, AssignFoldersRouter);
 app.use("/UserAssigedFolders", getUser, UserAssigedFolders);
 app.use("/Content", getUser, ContentFolder);
 app.use("/Folders", getUser, FacultyFolders);
+app.use("/EvalFolders", getUser, EvalFolders);
 
 const start = async () => {
   try {
