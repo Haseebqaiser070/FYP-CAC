@@ -104,20 +104,31 @@ export default function FacultyNavigation() {
                           }}
                           class="nav-link sidenavtext "
                           onClick={() => {
-                            if(i.LabTheory=="Theory"){
-                            navigate(`/Faculty/CourseFolder/${i._id}`,{ state: {i} }, {
-                              replace: true,
-                            })}
-                            if(i.LabTheory=="Lab"){
-                              navigate(`/Faculty/LabFolder/${i._id}`,{ state: {i} }, {
-                                replace: true,
-                              })}
+                            if (i.LabTheory == "Theory") {
+                              navigate(
+                                `/Faculty/CourseFolder/${i._id}`,
+                                { state: { i } },
+                                {
+                                  replace: true,
+                                }
+                              );
+                            }
+                            if (i.LabTheory == "Lab") {
+                              navigate(
+                                `/Faculty/LabFolder/${i._id}`,
+                                { state: { i } },
+                                {
+                                  replace: true,
+                                }
+                              );
+                            }
                           }}
                         >
                           <div class="sb-nav-link-icon">
                             <BsListCheck color="#fff" />
                           </div>
-                          {i.Course.Code} {i.Course.Name} {i.LabTheory=="Lab"&&"("+i.LabTheory+")"}
+                          {i.Course.Code} {i.Course.Name}{" "}
+                          {i.LabTheory == "Lab" && "(" + i.LabTheory + ")"}
                         </div>
                       </>
                     );
@@ -128,20 +139,6 @@ export default function FacultyNavigation() {
                     <BsFillFilePdfFill color="#fff" />
                   </div>
                   All Scheme of Studies
-                </Link>
-
-                <Link class="nav-link sidenavtext" to="AllCoursesAssigned">
-                  <div class="sb-nav-link-icon">
-                    <BsFillFolderFill color="#fff" />
-                  </div>
-                  All Courses Assigned
-                </Link>
-
-                <Link class="nav-link sidenavtext" to="CourseFolder">
-                  <div class="sb-nav-link-icon">
-                    <BsFillFolderFill color="#fff" />
-                  </div>
-                  Course Folder
                 </Link>
               </div>
               <div

@@ -9,6 +9,23 @@ import { useReactToPrint } from "react-to-print";
 import comsatslogo from "../CACMember/comsats_logo.png";
 
 export default function SyllabusTemplate() {
+  const pageStyle = `
+  @page {
+    size: 80mm 50mm;
+  }
+
+  @media all {
+    .pagebreak {
+      display: none;
+    }
+  }
+
+  @media print {
+    .pagebreak {
+      page-break-before: always;
+    }
+  }
+`;
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
@@ -23,21 +40,20 @@ export default function SyllabusTemplate() {
             size="small"
             style={{ marginLeft: 16 }}
             onClick={handlePrint}
+            pageStyle
           >
             <AiFillPrinter style={{ marginRight: 10 }} />
             Print
           </Button>
         </div>
-        <div ref={componentRef} className="main">
-          <div
-            className="d-flex row justify-content-center mb-4"
-            style={{ margin: 30 }}
-          >
-            <div className="col-1">
+
+        <div ref={componentRef} pageStyle={pageStyle}>
+          <div className="d-flex row justify-content-center mb-4">
+            <div className="col-2">
               <img src={comsatslogo} width="130px" height="130px"></img>
             </div>
 
-            <div className="col-11">
+            <div className="col-10" style={{ textAlign: "left" }}>
               <h1>COMSATS University Islamabad</h1>
               <h1>Department of Computer Science</h1>
               <h1>Course Description Form (CDF)</h1>

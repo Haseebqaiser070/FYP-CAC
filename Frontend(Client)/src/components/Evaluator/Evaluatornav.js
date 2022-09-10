@@ -15,7 +15,6 @@ import {
   BsListCheck,
   BsFillFilePdfFill,
   BsFillFolderFill,
-
 } from "react-icons/bs";
 import useAuth from "../../MyHooks/useAuth";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
@@ -33,9 +32,7 @@ export default function FacultyNavigation() {
   }, []);
   console.log(Folders);
   const getData = async () => {
-    const res = await axios.get(
-      "http://localhost:4000/EvalFolders/showAll"
-    );
+    const res = await axios.get("http://localhost:4000/EvalFolders/showAll");
     console.log(res.data);
     setFolders([...res.data]);
   };
@@ -77,12 +74,6 @@ export default function FacultyNavigation() {
                   Dashboard
                 </Link> */}
 
-                <Link class="nav-link sidenavtext " to="sos">
-                  <div class="sb-nav-link-icon">
-                    <BsBuilding color="#fff" />
-                  </div>
-                  Evaluate Folder
-                </Link>
                 <div
                   onClick={() => {
                     openFolders ? setOpenFolders(false) : setOpenFolders(true);
@@ -115,31 +106,36 @@ export default function FacultyNavigation() {
                           }}
                           class="nav-link sidenavtext "
                           onClick={() => {
-                            if(i.Folder.LabTheory=="Theory"){
-                            navigate(`/Evaluator/FolderTemplete/${i._id}`,{ state: {i} }, {
-                              replace: true,
-                            })}
-                            if(i.Folder.LabTheory=="Lab"){
-                              navigate(`/Evaluator/FolderTemplete/${i._id}`,{ state: {i} }, {
-                                replace: true,
-                              })}
+                            if (i.Folder.LabTheory == "Theory") {
+                              navigate(
+                                `/Evaluator/FolderTemplete/${i._id}`,
+                                { state: { i } },
+                                {
+                                  replace: true,
+                                }
+                              );
+                            }
+                            if (i.Folder.LabTheory == "Lab") {
+                              navigate(
+                                `/Evaluator/FolderTemplete/${i._id}`,
+                                { state: { i } },
+                                {
+                                  replace: true,
+                                }
+                              );
+                            }
                           }}
                         >
                           <div class="sb-nav-link-icon">
                             <BsListCheck color="#fff" />
                           </div>
-                          {i.Folder.Course.Code} {i.Folder.Course.Name} {i.Folder?.LabTheory=="Lab"&&"("+i.Folder?.LabTheory+")"}
+                          {i.Folder.Course.Code} {i.Folder.Course.Name}{" "}
+                          {i.Folder?.LabTheory == "Lab" &&
+                            "(" + i.Folder?.LabTheory + ")"}
                         </div>
                       </>
                     );
                   })}
-
-                <Link class="nav-link sidenavtext " to="FolderTemplete">
-                  <div class="sb-nav-link-icon">
-                    <BsBuilding color="#fff" />
-                  </div>
-                  Evaluate Folder Templete
-                </Link>
               </div>
               <div
                 style={{ position: "fixed", left: "8px", bottom: "8px" }}

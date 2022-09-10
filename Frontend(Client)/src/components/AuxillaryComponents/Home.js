@@ -9,15 +9,28 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import comsats from "../css/comsats.jpg";
 import { BsFillPersonPlusFill } from "react-icons/bs";
-import { Button } from "@mui/material";
+import { Box, Button, Modal } from "@mui/material";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 export default function Home() {
-  const [isOpen, setIsOpen] = React.useState(false);
-  const togglePopup = () => {
-    setIsOpen(!isOpen);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => {
+    setOpen(false);
   };
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
+
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 800,
+    bgcolor: "#fff",
+    boxShadow: 24,
+    p: 4,
+    boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+  };
 
   return (
     <div>
@@ -62,7 +75,7 @@ export default function Home() {
                   class="btn btn-primary"
                   id="btnNavbarSearch"
                   type="button"
-                  onClick={togglePopup}
+                  onClick={handleOpen}
                 >
                   <span style={{ marginRight: 10 }}>
                     <BsFillPersonPlusFill />
@@ -80,16 +93,16 @@ export default function Home() {
         </div>
       </header>
 
-      {isOpen && (
-        <Popup
-          content={
-            <>
-              <Login />
-            </>
-          }
-          handleClose={togglePopup}
-        />
-      )}
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Login />
+        </Box>
+      </Modal>
 
       <div className="row section">
         <div className="col-8">

@@ -124,6 +124,23 @@ export default function SyllabusCreation() {
     setContent([...response.data.Plan]);
   };
 
+  const pageStyle = `
+  @page {
+    size: 80mm 50mm;
+  }
+
+  @media all {
+    .pagebreak {
+      display: none;
+    }
+  }
+
+  @media print {
+    .pagebreak {
+      page-break-before: always;
+    }
+  }
+`;
   return (
     <div style={{ padding: 30 }}>
       <div className="d-flex justify-content-end mb-4">
@@ -195,7 +212,7 @@ export default function SyllabusCreation() {
       {!res ? (
         <h3>Empty Repository</h3>
       ) : (
-        <div ref={componentRef} className="main ">
+        <div ref={componentRef} pageStyle={pageStyle} className="main ">
           <div
             className="d-flex row justify-content-center mb-4"
             style={{ margin: 30 }}

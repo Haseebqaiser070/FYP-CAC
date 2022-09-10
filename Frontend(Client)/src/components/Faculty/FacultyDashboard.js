@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../css/styles.css";
 import logo from "./comsats_logo.png";
 import { DataGrid } from "@mui/x-data-grid";
+import { Button, Card } from "@mui/material";
 
 export default function FacultyDashboard() {
   const [Rows, setRows] = useState([]);
@@ -39,38 +40,131 @@ export default function FacultyDashboard() {
   ];
   return (
     <div style={{ height: 760, width: "100%", padding: 30 }}>
-      <div d-flex justify-content-center>
-        <div className="row  align-items-center">
-          <div className="col-2">
-            <img src={logo} alt="Logo" height={130} width={130} />
+      <div className="row mt-4 mb-4">
+        <div className="row mb-4 py-4">
+          <div className="col">
+            <Card
+              style={{
+                backgroundColor: "#1565C0",
+                color: "#fff",
+                padding: 25,
+                borderRadius: "10px",
+              }}
+            >
+              <p style={{ textAlign: "center", fontSize: "13px" }}>
+                BS COMPUTER SCIENCE
+              </p>
+              <h3>INTRODUCTION TO ICT</h3>
+            </Card>
           </div>
-          <div className="col-10">
-            <h2>
-              <b>Comsats University Islamabad</b>
-            </h2>
+          <div className="col">
+            <Card
+              style={{
+                backgroundColor: "#1565C0",
+                color: "#fff",
+                padding: 25,
+                borderRadius: "10px",
+              }}
+            >
+              <p style={{ textAlign: "center", fontSize: "13px" }}>
+                BS COMPUTER SCIENCE
+              </p>
+              <h3>INTRODUCTION TO ICT</h3>
+            </Card>
+          </div>
+          <div className="col">
+            <Card
+              style={{
+                backgroundColor: "#1565C0",
+                color: "#fff",
+                padding: 25,
+                borderRadius: "10px",
+              }}
+            >
+              <p style={{ textAlign: "center", fontSize: "13px" }}>
+                BS COMPUTER SCIENCE
+              </p>
+              <h3>INTRODUCTION TO ICT</h3>
+            </Card>
           </div>
         </div>
       </div>
-      <div className="mt-4 mb-4">
-        <h4 style={{ textAlign: "left" }}>
-          <b>Name: </b>Rizwan rashid
-        </h4>
-        <h4 style={{ textAlign: "left" }}>
-          <b>Course Assigned: </b>Intro to ICT
-        </h4>
+
+      <div style={{ marginTop: 30 }}>
+        <div>
+          <Card style={{ padding: 25, marginBottom: 25 }}>
+            <h4 style={{ fontSize: "18px" }} className="mb-4">
+              CDF of Courses
+            </h4>
+            <div className="table-responsive my-4">
+              <table
+                className="table table-hover"
+                style={{ textAlign: "center" }}
+              >
+                <thead style={{ backgroundColor: "#1565C0", color: "#fff" }}>
+                  <th className="col-4">Program</th>
+                  <th className="col-3">Course</th>
+                  <th className="col-4">Action</th>
+                </thead>
+                <tbody style={{ backgroundColor: "#f5f5f5" }}>
+                  <tr>
+                    <td>BS Computer Science</td>
+                    <td>Introduction to ICT</td>
+                    <td>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        size="small"
+
+                        // onClick={handleOpen1}
+                      >
+                        View
+                      </Button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </Card>
+        </div>
+        <div>
+          <Card style={{ padding: 25 }}>
+            <h4 style={{ fontSize: "18px" }} className="mb-4">
+              Syllabus of Courses
+            </h4>
+            <div className="table-responsive my-4">
+              <table
+                className="table table-hover"
+                style={{ textAlign: "center" }}
+              >
+                <thead style={{ backgroundColor: "#1565C0", color: "#fff" }}>
+                  <th className="col-4">Program</th>
+                  <th className="col-3">Course</th>
+                  <th className="col-4">Action</th>
+                </thead>
+                <tbody style={{ backgroundColor: "#f5f5f5" }}>
+                  <tr>
+                    <td>BS Computer Science</td>
+                    <td>Introduction to ICT</td>
+                    <td>
+                      {" "}
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        size="small"
+
+                        // onClick={handleOpen1}
+                      >
+                        View
+                      </Button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </Card>
+        </div>
       </div>
-      {/* <div>
-        <h2 style={{ textAlign: "left", marginTop: 20 }}>Deadlines</h2>
-        <DataGrid
-          style={{ height: 400, width: "100%" }}
-          columns={columns}
-          getRowId={(Rows) => Rows._id}
-          rows={Rows}
-          pageSize={10}
-          rowsPerPageOptions={[5]}
-          disableSelectionOnClick
-        />
-      </div> */}
     </div>
   );
 }
