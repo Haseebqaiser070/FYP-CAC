@@ -6,7 +6,7 @@ import axios from "axios";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
-import { Button } from "@mui/material";
+import { Button, InputAdornment } from "@mui/material";
 
 export default function Register() {
   const [FirstName, setFirstName] = useState("");
@@ -61,7 +61,9 @@ export default function Register() {
         <div className="col-lg-12">
           <div className=" border-0  mt-3">
             <div>
-              <h3 className="text-center font-weight-bold my-4">Add Faculty</h3>
+              <h2 className="text-center font-weight-bold my-4">
+                Register Faculty
+              </h2>
             </div>
             <div>
               <form onSubmit={hanleSubmit}>
@@ -100,7 +102,7 @@ export default function Register() {
                       <input
                         className="form-control"
                         id="inputPhoneNo"
-                        type="number"
+                        type="tel"
                         placeholder="Enter your phone nmber"
                         value={Phone}
                         onChange={(e) => setPhone(e.target.value)}
@@ -157,7 +159,13 @@ export default function Register() {
 
                 <div className="row mb-3"></div>
                 <div className="mt-4 mb-0">
-                  <Button variant="contained" color="primary" type="submit">
+                  <Button
+                    style={{ backgroundColor: "#4b2980" }}
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                  >
                     Submit
                   </Button>
                 </div>

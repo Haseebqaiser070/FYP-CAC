@@ -25,7 +25,7 @@ export default function Dashboard() {
               className="table table-hover"
               style={{ textAlign: "center" }}
             >
-              <thead style={{ backgroundColor: "#1565C0", color: "#fff" }}>
+              <thead style={{ backgroundColor: "#00447f", color: "#fff" }}>
                 <th className="col-4">Meeting Subject</th>
                 <th className="col-3">Date</th>
                 <th className="col-4">Members</th>
@@ -58,7 +58,7 @@ export default function Dashboard() {
                 className="table table-hover"
                 style={{ textAlign: "center" }}
               >
-                <thead style={{ backgroundColor: "#1565C0", color: "#fff" }}>
+                <thead style={{ backgroundColor: "#00447f", color: "#fff" }}>
                   <th className="col-4">Task Type</th>
                   <th className="col-3">Date</th>
                   <th className="col-4">Members</th>
@@ -98,7 +98,7 @@ export default function Dashboard() {
                 className="table table-hover"
                 style={{ textAlign: "center" }}
               >
-                <thead style={{ backgroundColor: "#1565C0", color: "#fff" }}>
+                <thead style={{ backgroundColor: "#00447f", color: "#fff" }}>
                   <th className="col-4">Task Type</th>
                   <th className="col-3">Date</th>
                   <th className="col-4">Members</th>

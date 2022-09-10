@@ -58,7 +58,7 @@ export default function AccountMenu() {
             aria-expanded={open ? "true" : undefined}
           >
             <Avatar sx={{ width: 35, height: 35, backgroundColor: "#fff" }}>
-              <PersonIcon sx={{ color: "#0054a6" }} fontSize="medium" />
+              <PersonIcon sx={{ color: "#00447f" }} fontSize="medium" />
             </Avatar>
           </IconButton>
         </Tooltip>

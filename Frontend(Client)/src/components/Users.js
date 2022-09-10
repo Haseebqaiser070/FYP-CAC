@@ -8,7 +8,14 @@ import axios from "axios";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
-import { Box, Modal, Switch } from "@mui/material";
+import {
+  Box,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  Modal,
+  Switch,
+} from "@mui/material";
 import UserCards from "./AuxillaryComponents/UserCards";
 
 const modalstyle = {
@@ -39,6 +46,15 @@ export default function Users() {
 
   const [AssignCources, setAssignCourse] = useState([]);
   const [Courses, setCourse] = useState([]);
+  const [openDialog, setOpenDialog] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
   axios.defaults.withCredentials = true;
   useEffect(() => {
     getData();
@@ -67,6 +83,7 @@ export default function Users() {
   const handleDelete = async (id) => {
     await axios.delete(`http://localhost:4000/User/${id}`);
     getData();
+    handleCloseDialog();
   };
   const Update = async (e) => {
     e.preventDefault();
@@ -299,11 +316,30 @@ export default function Users() {
                     color="primary"
                     size="small"
                     style={{ marginLeft: 16 }}
-                    onClick={() => handleDelete(Usermember._id)}
+                    onClick={handleClickOpen}
                   >
                     <AiFillDelete style={{ marginRight: 10 }} />
                     Delete
                   </Button>
+                  <Dialog
+                    open={openDialog}
+                    onClose={handleCloseDialog}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                  >
+                    <DialogTitle id="alert-dialog-title">
+                      {"Are you sure to delete the user?"}
+                    </DialogTitle>
+
+                    <DialogActions>
+                      <Button onClick={() => handleDelete(Usermember._id)}>
+                        Yes
+                      </Button>
+                      <Button onClick={handleCloseDialog} autoFocus>
+                        No
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
                 </td>
               </tr>
             );

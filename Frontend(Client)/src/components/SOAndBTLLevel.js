@@ -130,19 +130,19 @@ export default function SO_Level() {
     {
       field: "Number",
       headerName: "Sr#",
-      flex: 1,
+      width: "70",
     },
 
     {
       field: "SO",
       headerName: "SO Description",
-      flex: 4,
+      width: "500",
     },
 
     {
       field: "Action",
       headerName: "Action",
-      flex: 2,
+      width: "200",
       editable: false,
       renderCell: ActionButton1,
     },

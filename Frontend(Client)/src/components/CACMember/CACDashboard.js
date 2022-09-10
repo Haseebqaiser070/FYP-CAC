@@ -3,6 +3,7 @@ import "../css/styles.css";
 import logo from "./comsats_logo.png";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
+import { Card } from "@mui/material";
 export default function CACDashboard() {
   const [Rows, setRows] = useState("");
 
@@ -19,59 +20,55 @@ export default function CACDashboard() {
     {
       field: "taskType",
       headerName: "Task",
-      flex: 1,
+      width: "200",
     },
 
     {
       field: "Deadline",
       headerName: "Deadline",
-      flex: 1,
+      width: "150",
     },
     {
       field: "Status",
       headerName: "Status",
-      flex: 1,
+      width: "150",
+      headerClassName: "gridHeader",
     },
     {
       field: "Program",
       headerName: "Program",
-      flex: 1,
+      width: "200",
     },
     {
       field: "Course",
       headerName: "Course",
       valueGetter: (params) => params?.row?.Course?.Name,
-      flex: 1,
+      width: "200",
     },
   ];
 
   return (
-    <div style={{ height: 760, width: "100%", padding: 30 }}>
-      <div d-flex justify-content-center>
-        <div className="row  align-items-center">
-          <div className="col-2">
-            <img src={logo} alt="Logo" height={130} width={130} />
+    <div style={{ width: "100%", padding: 30, backgroundColor: "#f5f5f5" }}>
+      <h1 className="pb-4 my-2">
+        <b>DASHBOARD</b>
+      </h1>
+      <div style={{ padding: 20 }}>
+        <Card style={{ padding: 25 }}>
+          <h4 style={{ fontSize: "18px" }} className="mb-4">
+            All Ongoing Tasks
+          </h4>
+          <div>
+            <DataGrid
+              style={{ height: 400, width: "100%" }}
+              columns={columns}
+              getRowId={(Rows) => Rows._id}
+              rows={Rows}
+              pageSize={10}
+              rowsPerPageOptions={[5]}
+              disableSelectionOnClick
+            />
           </div>
-          <div className="col-10">
-            <h2>
-              <b>Comsats University Islamabad</b>
-            </h2>
-          </div>
-        </div>
-      </div>
-
-      <div className="row" style={{ padding: 20 }}>
-        <div>
-          <DataGrid
-            style={{ height: 400, width: "100%" }}
-            columns={columns}
-            getRowId={(Rows) => Rows._id}
-            rows={Rows}
-            pageSize={10}
-            rowsPerPageOptions={[5]}
-            disableSelectionOnClick
-          />
-        </div>
+        </Card>
       </div>
     </div>
   );

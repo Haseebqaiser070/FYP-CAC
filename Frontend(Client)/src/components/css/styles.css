@@ -12081,7 +12081,7 @@ body {
 }
 
 .bg {
-  background-color: #0054a6;
+  background-color: #00447f;
 }
 
 .sidenavtext {
@@ -12138,7 +12138,7 @@ textarea {
   width: 100%;
 }
 
-header {
+/* header {
   background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.6)),
     url("./comsats.jpg");
   height: 70vh;
@@ -12152,7 +12152,7 @@ header {
   left: 50%;
   transform: translate(-50%, -50%);
   color: #fff;
-}
+} */
 
 .section {
   padding: 50px;
@@ -12180,4 +12180,14 @@ header {
     rgba(251, 194, 235, 1),
     rgba(166, 193, 238, 1)
   );
+}
+
+.header {
+  height: 70vh;
+  background-size: cover;
+  background-position: center;
+}
+
+.gridHeader{
+  background-color: "#00447f";
 }

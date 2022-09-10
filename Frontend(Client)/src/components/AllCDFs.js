@@ -7,13 +7,25 @@ import axios from "axios";
 import Button from "@mui/material/Button";
 import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
 import { DataGrid } from "@mui/x-data-grid";
+import { Dialog, DialogActions, DialogTitle } from "@mui/material";
 
 export default function AllCDFs() {
   const [CDFs, setCDFs] = useState([]);
   axios.defaults.withCredentials = true;
   const navigate = useNavigate();
+
+  const [openDialog, setOpenDialog] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
   useEffect(() => {
-     getCDF();
+    getCDF();
   }, []);
 
   const getCDF = async () => {
@@ -29,6 +41,7 @@ export default function AllCDFs() {
   const handleDelete = async (id) => {
     await axios.delete(`http://localhost:4000/CDF/${id}`);
     getCDF();
+    handleCloseDialog();
   };
 
   const columns = [
@@ -38,10 +51,10 @@ export default function AllCDFs() {
       flex: 1,
     },
     {
-        field: "Name",
-        headerName: "Course Title",
-        flex: 1,
-      },
+      field: "Name",
+      headerName: "Course Title",
+      flex: 1,
+    },
     {
       field: "Program",
       headerName: "Program",
@@ -78,11 +91,28 @@ export default function AllCDFs() {
           color="primary"
           size="small"
           style={{ marginLeft: 16 }}
-          onClick={() => handleDelete(row._id)}
+          onClick={handleClickOpen}
         >
           <AiFillDelete style={{ marginRight: 10 }} />
           Delete
         </Button>
+        <Dialog
+          open={openDialog}
+          onClose={handleCloseDialog}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Are you sure to delete the CDF?"}
+          </DialogTitle>
+
+          <DialogActions>
+            <Button onClick={() => handleDelete(row._id)}>Yes</Button>
+            <Button onClick={handleCloseDialog} autoFocus>
+              No
+            </Button>
+          </DialogActions>
+        </Dialog>
       </>
     );
   }

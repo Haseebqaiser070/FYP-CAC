@@ -8,12 +8,24 @@ import Button from "@mui/material/Button";
 import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
 import { DataGrid } from "@mui/x-data-grid";
 import { Card } from "@mui/material";
+import { Dialog, DialogActions, DialogTitle } from "@mui/material";
 
 export default function AllCourses() {
   const [Course, setCourse] = useState([]);
   const [id, setid] = useState("");
 
   const navigate = useNavigate();
+
+  const [openDialog, setOpenDialog] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
   useEffect(async () => {
     await getCourse();
   }, []);
@@ -31,6 +43,7 @@ export default function AllCourses() {
   const handleDelete = async (id) => {
     await axios.delete(`http://localhost:4000/Course/${id}`);
     getCourse();
+    handleCloseDialog();
   };
   const handleUpdate = (id) => {
     navigate(`/admin/EditCourse/${id}`, { replace: true });
@@ -109,11 +122,28 @@ export default function AllCourses() {
           color="primary"
           size="small"
           style={{ marginLeft: 16 }}
-          onClick={() => handleDelete(row._id)}
+          onClick={handleClickOpen}
         >
           <AiFillDelete style={{ marginRight: 10 }} />
           Delete
         </Button>
+        <Dialog
+          open={openDialog}
+          onClose={handleCloseDialog}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Are you sure to delete the course?"}
+          </DialogTitle>
+
+          <DialogActions>
+            <Button onClick={() => handleDelete(row._id)}>Yes</Button>
+            <Button onClick={handleCloseDialog} autoFocus>
+              No
+            </Button>
+          </DialogActions>
+        </Dialog>
       </>
     );
   }

@@ -52,13 +52,6 @@ export default function CACnav() {
                   Dashboard
                 </Link>
 
-                <Link class="nav-link sidenavtext" to="CacAllTasks">
-                  <div class="sb-nav-link-icon">
-                    <BsFillFilterCircleFill color="#fff" />
-                  </div>
-                  All Ongoing Tasks
-                </Link>
-
                 <Link class="nav-link sidenavtext" to="CacCourseTask">
                   <div class="sb-nav-link-icon">
                     <BsFilePersonFill color="#fff" />

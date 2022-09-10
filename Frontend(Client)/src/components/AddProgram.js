@@ -5,13 +5,23 @@ import { useParams } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
-import { Autocomplete, Card, MenuItem, Modal, TextField } from "@mui/material";
+import {
+  Autocomplete,
+  Card,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  MenuItem,
+  Modal,
+  TextField,
+} from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import CloseIcon from "@mui/icons-material/Close";
 import InputLabel from "@mui/material/InputLabel";
 import AddIcon from "@mui/icons-material/Add";
 import { Box } from "@mui/system";
+import SimpleSnackbar from "./AuxillaryComponents/DeleteSnack";
 
 export default function AddProgram() {
   const [rows, setRows] = useState([]);
@@ -74,6 +84,16 @@ export default function AddProgram() {
     }
   };
 
+  const [openDialog, setOpenDialog] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
   const style = {
     position: "absolute",
     top: "50%",
@@ -127,14 +147,37 @@ export default function AddProgram() {
           color="primary"
           size="small"
           style={{ marginLeft: 16 }}
-          onClick={async () => {
-            await axios.delete(`http://localhost:4000/Program/${row._id}`);
-            getRows();
-          }}
+          onClick={handleClickOpen}
         >
           <AiFillDelete style={{ marginRight: 10 }} />
           Delete
         </Button>
+
+        <Dialog
+          open={openDialog}
+          onClose={handleCloseDialog}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Are you sure to delete the program?"}
+          </DialogTitle>
+
+          <DialogActions>
+            <Button
+              onClick={async () => {
+                await axios.delete(`http://localhost:4000/Program/${row._id}`);
+                getRows();
+                handleCloseDialog();
+              }}
+            >
+              Yes
+            </Button>
+            <Button onClick={handleCloseDialog} autoFocus>
+              No
+            </Button>
+          </DialogActions>
+        </Dialog>
       </>
     );
   }
@@ -184,13 +227,13 @@ export default function AddProgram() {
                     <FormControl fullWidth size="small">
                       <InputLabel id="taskType">Select Degree</InputLabel>
                       <Select
+                        fullWidth
                         className="mb-4"
                         labelId="selectdegree"
                         id="selectdegree"
                         value={Degree}
                         label="Select Degree"
                         onChange={(e) => setDegree(e.target.value)}
-                        autoWidth
                       >
                         <MenuItem value={"BS"}>BS</MenuItem>
                         <MenuItem value={"MS"}>MS</MenuItem>

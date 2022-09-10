@@ -12,6 +12,7 @@ import CloseIcon from "@mui/icons-material/Close";
 
 import axios from "axios";
 import { Card } from "@mui/material";
+import { Dialog, DialogActions, DialogTitle } from "@mui/material";
 
 const style = {
   position: "absolute",
@@ -53,6 +54,15 @@ export default function AllCategories() {
   //   const res = await axios.get("http://localhost:4000/Program/show");
   //   setProgramdb(res.data);
   // };
+  const [openDialog, setOpenDialog] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
   function ActionButton(props) {
     const { row } = props;
     return (
@@ -73,17 +83,35 @@ export default function AllCategories() {
           color="primary"
           size="small"
           style={{ marginLeft: 16 }}
-          onClick={() => handleDelete(row._id)}
+          onClick={handleClickOpen}
         >
           <AiFillEdit style={{ marginRight: 10 }} />
           Delete
         </Button>
+        <Dialog
+          open={openDialog}
+          onClose={handleCloseDialog}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Are you sure to delete the category?"}
+          </DialogTitle>
+
+          <DialogActions>
+            <Button onClick={() => handleDelete(row._id)}>Yes</Button>
+            <Button onClick={handleCloseDialog} autoFocus>
+              No
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     );
   }
   const handleDelete = async (id) => {
     await axios.delete(`http://localhost:4000/Category/${id}`);
     getRows();
+    handleCloseDialog();
   };
   const Update = async (id) => {
     const res = await axios.get(`http://localhost:4000/Category/${id}`);

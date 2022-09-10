@@ -7,13 +7,25 @@ import axios from "axios";
 import Button from "@mui/material/Button";
 import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
 import { DataGrid } from "@mui/x-data-grid";
+import { Dialog, DialogActions, DialogTitle } from "@mui/material";
 
 export default function AllSOS() {
   const [SOSs, setSOSs] = useState([]);
   axios.defaults.withCredentials = true;
   const navigate = useNavigate();
+
+  const [openDialog, setOpenDialog] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
   useEffect(() => {
-     getSOS();
+    getSOS();
   }, []);
 
   const getSOS = async () => {
@@ -29,6 +41,7 @@ export default function AllSOS() {
   const handleDelete = async (id) => {
     await axios.delete(`http://localhost:4000/SOS/${id}`);
     getSOS();
+    handleCloseDialog();
   };
 
   const columns = [
@@ -73,11 +86,28 @@ export default function AllSOS() {
           color="primary"
           size="small"
           style={{ marginLeft: 16 }}
-          onClick={() => handleDelete(row._id)}
+          onClick={handleClickOpen}
         >
           <AiFillDelete style={{ marginRight: 10 }} />
           Delete
         </Button>
+        <Dialog
+          open={openDialog}
+          onClose={handleCloseDialog}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Are you sure to delete the SOS?"}
+          </DialogTitle>
+
+          <DialogActions>
+            <Button onClick={() => handleDelete(row._id)}>Yes</Button>
+            <Button onClick={handleCloseDialog} autoFocus>
+              No
+            </Button>
+          </DialogActions>
+        </Dialog>
       </>
     );
   }
@@ -95,7 +125,7 @@ export default function AllSOS() {
         padding: 20,
       }}
     >
-      <h1 className="py-4">All SOS</h1>
+      <h1 className="py-4">All Scheme of Studies</h1>
       <DataGrid
         style={{ height: 500, width: "100%" }}
         columns={columns}

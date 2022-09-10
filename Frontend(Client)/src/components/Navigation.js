@@ -44,9 +44,9 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 700,
+  width: 500,
   bgcolor: "background.paper",
-  //   border: "2px solid #000",
+  borderRadius: "5px",
 
   boxShadow: 24,
   p: 4,
@@ -102,7 +102,7 @@ export default function Navigation() {
                 fullWidth
                 style={{
                   backgroundColor: "#fff",
-                  color: "#1565C0",
+                  color: "#00447f",
                 }}
                 variant="contained"
                 color="primary"

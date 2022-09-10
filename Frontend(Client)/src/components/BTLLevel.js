@@ -208,12 +208,12 @@ export default function BTLLevel() {
 
         <div>
           <DataGrid
-            style={{ height: "60vh", width: "100%" }}
+            style={{ height: "50vh", width: "100%" }}
             columns={BTLcolumns}
             rows={BTLRow}
             getRowId={(Rows) => Rows._id}
-            pageSize={10}
-            rowsPerPageOptions={[5]}
+            pageSize={4}
+            rowsPerPageOptions={[4]}
             disableSelectionOnClick
           />
         </div>
