@@ -12191,3 +12191,14 @@ textarea {
 .gridHeader{
   background-color: "#00447f";
 }
+
+.muibtn{
+  background-color: #4b2980;
+  color: "#fff";
+
+}
+
+.sectionnav {
+  scrollbar-color: #6969dd #e0e0e0;
+  scrollbar-width: thin;
+}

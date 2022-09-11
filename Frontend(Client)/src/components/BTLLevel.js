@@ -142,11 +142,11 @@ export default function BTLLevel() {
     <div
       style={{
         width: "100%",
-        padding: 50,
+        padding: 40,
         backgroundColor: "#f5f5f5",
       }}
     >
-      <Card style={{ padding: 50, borderRadius: 30 }}>
+      <Card style={{ padding: 30, borderRadius: 10 }}>
         <h1 className="py-4 my-2">
           <b>ADD BTL LEVELS</b>
         </h1>

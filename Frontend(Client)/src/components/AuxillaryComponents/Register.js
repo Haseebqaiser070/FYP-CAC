@@ -7,6 +7,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import { Button, InputAdornment } from "@mui/material";
+import comsatslogo from "../CACMember/comsats_logo.png";
 
 export default function Register() {
   const [FirstName, setFirstName] = useState("");
@@ -60,6 +61,9 @@ export default function Register() {
       <div className="row ">
         <div className="col-lg-12">
           <div className=" border-0  mt-3">
+            <div className="text-center ">
+              <img src={comsatslogo} width="100px" height="100px"></img>
+            </div>
             <div>
               <h2 className="text-center font-weight-bold my-4">
                 Register Faculty
@@ -158,7 +162,7 @@ export default function Register() {
                 </div>
 
                 <div className="row mb-3"></div>
-                <div className="mt-4 mb-0">
+                <div className="mt-2 mb-0">
                   <Button
                     style={{ backgroundColor: "#4b2980" }}
                     fullWidth

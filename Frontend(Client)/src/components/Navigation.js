@@ -138,7 +138,7 @@ export default function Navigation() {
             style={{
               boxShadow: "rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px",
             }}
-            className="sb-sidenav accordion bg"
+            className="sb-sidenav accordion bg "
             id="sidenavAccordion"
           >
             <div
@@ -146,7 +146,7 @@ export default function Navigation() {
                 height: "calc(100vh - 56px)",
                 overflow: "auto",
               }}
-              className="sb-sidenav-menu"
+              className="sb-sidenav-menu "
             >
               <div className="nav">
                 <div className="sb-sidenav-menu-heading"></div>

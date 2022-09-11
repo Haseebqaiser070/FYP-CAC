@@ -152,20 +152,20 @@ export default function AllCourses() {
     <div
       style={{
         width: "100%",
-        padding: 50,
+        padding: 40,
         backgroundColor: "#f5f5f5",
       }}
     >
-      <Card style={{ padding: 50, borderRadius: 30 }}>
+      <Card style={{ padding: 30, borderRadius: 10 }}>
         <h1 className="py-4 my-2">
           <b>ALL COURSES</b>
         </h1>
         <DataGrid
-          style={{ height: 500, width: "100%" }}
+          style={{ height: "60vh", width: "100%" }}
           columns={columns}
           rows={Course}
           getRowId={(Rows) => Rows._id}
-          pageSize={10}
+          pageSize={5}
           rowsPerPageOptions={[5]}
           disableSelectionOnClick
         />

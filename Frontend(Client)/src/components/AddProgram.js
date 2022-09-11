@@ -21,7 +21,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import InputLabel from "@mui/material/InputLabel";
 import AddIcon from "@mui/icons-material/Add";
 import { Box } from "@mui/system";
-import SimpleSnackbar from "./AuxillaryComponents/DeleteSnack";
+import PositionedSnackbar from "./AuxillaryComponents/DeleteSnack";
 
 export default function AddProgram() {
   const [rows, setRows] = useState([]);
@@ -106,6 +106,10 @@ export default function AddProgram() {
     boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
   };
 
+  const btnstyle = {
+    backgroundColor: "#4b2980",
+    color: "#fff",
+  };
   const columns = [
     {
       field: "Degree",
@@ -187,20 +191,21 @@ export default function AddProgram() {
       <div
         style={{
           width: "100%",
-          padding: 50,
+          padding: 40,
           backgroundColor: "#f5f5f5",
         }}
       >
-        <Card style={{ padding: 50, borderRadius: 30 }}>
+        <Card style={{ padding: 30, borderRadius: 10 }}>
           <h1>
-            <b>Add Degree Program</b>
+            <b>DEGREE PROGRAM</b>
           </h1>
           <div className="d-flex justify-content-end mb-4">
             <Button
               variant="contained"
+              className="mb-2 muibtn"
               color="primary"
               size="small"
-              style={{ marginTop: 16 }}
+              style={{ marginTop: 20 }}
               onClick={handleOpen}
             >
               <AddIcon style={{ marginRight: "6px" }} />
@@ -222,6 +227,7 @@ export default function AddProgram() {
                     style={{ cursor: "pointer", color: "gray" }}
                   />
                 </Box>
+                <h4 className="mb-4">ADD NEW PROGRAM</h4>
                 <div className="col">
                   {!up ? (
                     <FormControl fullWidth size="small">
@@ -277,25 +283,27 @@ export default function AddProgram() {
                   </FormControl>
                 </div>
                 <Button
+                  fullWidth
+                  className="mt-2 muibtn"
                   variant="contained"
                   color="primary"
                   size="small"
                   type="submit"
                   style={{ marginTop: 16 }}
                 >
-                  <AiFillEdit style={{ marginRight: 10 }} />
-                  Add Program
+                  <AddIcon style={{ marginRight: 10 }} />
+                  Add New Program
                 </Button>
               </form>
             </Box>
           </Modal>
           <div>
             <DataGrid
-              style={{ height: "70vh", width: "100%" }}
+              style={{ height: "60vh", width: "100%" }}
               columns={columns}
               rows={rows}
               getRowId={(Rows) => Rows._id}
-              pageSize={10}
+              pageSize={5}
               rowsPerPageOptions={[5]}
               disableSelectionOnClick
             />

@@ -145,7 +145,7 @@ export default function AllCategories() {
     {
       field: "CategoryName",
       headerName: "Category",
-      flex: 1,
+      flex: 2,
     },
 
     {
@@ -175,11 +175,11 @@ export default function AllCategories() {
     <div
       style={{
         width: "100%",
-        padding: 50,
+        padding: 40,
         backgroundColor: "#f5f5f5",
       }}
     >
-      <Card style={{ padding: 50, borderRadius: 30 }}>
+      <Card style={{ padding: 30, borderRadius: 10 }}>
         <h1 className="py-4 my-2">
           <b>COURSE CATEGORIES</b>
         </h1>
@@ -267,11 +267,11 @@ export default function AllCategories() {
 
         <div>
           <DataGrid
-            style={{ height: 400, width: "100%" }}
+            style={{ height: "60vh", width: "100%" }}
             columns={columns}
             getRowId={(Rows) => Rows._id}
             rows={Rows}
-            pageSize={10}
+            pageSize={5}
             rowsPerPageOptions={[5]}
             disableSelectionOnClick
           />

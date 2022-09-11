@@ -39,90 +39,80 @@ export default function CourseFolderTheory() {
   const [open1, setOpen1] = useState(false);
   const handleClose1 = () => setOpen1(false);
   axios.defaults.withCredentials = true;
-  const onsubmit1=async(e)=>{
+  const onsubmit1 = async (e) => {
     e.preventDefault();
-    if(!isNaN(Quiz1)&&!isNaN(Assignments1)){
+    if (!isNaN(Quiz1) && !isNaN(Assignments1)) {
       const res = await axios.post("http://localhost:4000/Content/Theory", {
-        Round:"Round1",
-        obj:{
-          Quiz:Quiz1,
-          Assignment:Assignments1
+        Round: "Round1",
+        obj: {
+          Quiz: Quiz1,
+          Assignment: Assignments1,
         },
       });
+    } else {
+      alert("inValid Input");
     }
-    else{
-      alert("inValid Input")
-    }
-  }
-  const onsubmit2=async(e)=>{
+  };
+  const onsubmit2 = async (e) => {
     e.preventDefault();
-    if(!isNaN(Quiz2)&&!isNaN(Assignments2)){
+    if (!isNaN(Quiz2) && !isNaN(Assignments2)) {
       const res = await axios.post("http://localhost:4000/Content/Theory", {
-        Round:"Round2",
-        obj:{
-          Quiz:Quiz2,
-          Assignment:Assignments2
+        Round: "Round2",
+        obj: {
+          Quiz: Quiz2,
+          Assignment: Assignments2,
         },
       });
+    } else {
+      alert("inValid Input");
     }
-    else{
-      alert("inValid Input")
-    }
-  
-  }
-  useEffect(()=>{
-    getTheory()
-  },[])
+  };
+  useEffect(() => {
+    getTheory();
+  }, []);
   const getTheory = async () => {
-    const res = await axios.get(
-      "http://localhost:4000/Content/showTheory"
-    );
+    const res = await axios.get("http://localhost:4000/Content/showTheory");
     setQuiz1(res.data.Round1.Quiz);
     setQuiz2(res.data.Round2.Quiz);
     setAssignments1(res.data.Round1.Assignment);
     setAssignments2(res.data.Round2.Assignment);
-    setMidSessional(res.data.Round1.MidorSessioanls)
+    setMidSessional(res.data.Round1.MidorSessioanls);
   };
-  const onsubmit3=async()=>{
+  const onsubmit3 = async () => {
     if (MidSessional == "Mid") {
       await axios.put("http://localhost:4000/Content/TheoryMidSes", {
-        MidSessional:"Sessional"
+        MidSessional: "Sessional",
       });
-
     } else if (MidSessional == "Sessional") {
       await axios.put("http://localhost:4000/Content/TheoryMidSes", {
-        MidSessional:"Mid"
+        MidSessional: "Mid",
       });
     }
-    getTheory()
-
-  }
+    getTheory();
+  };
 
   return (
     <div
       style={{
         width: "100%",
-        padding: 50,
+        padding: 40,
         backgroundColor: "#f5f5f5",
       }}
     >
-      <Card style={{ padding: 50, borderRadius: 30 }}>
+      <Card style={{ padding: 40, borderRadius: 10 }}>
         <h1 className="mb-4 pb-4">
           <b>Define Course Folder Theory</b>
         </h1>
         <FormControlLabel
           className="py-4"
-          control={<Switch
-            checked={
-              MidSessional=="Mid"
-                ? true
-                : false
-            }
-            onChange={async() => {
-                await onsubmit3()
-              
-            }}
-          />} 
+          control={
+            <Switch
+              checked={MidSessional == "Mid" ? true : false}
+              onChange={async () => {
+                await onsubmit3();
+              }}
+            />
+          }
           label="MidTerm"
         />
         <div className="row">
@@ -131,39 +121,39 @@ export default function CourseFolderTheory() {
               Round 1
             </h2>
             <form onSubmit={onsubmit1}>
-            <FormControl fullWidth size="small">
-              <TextField
-                className="mb-4"
-                id="outlined-basic"
-                label="Enter no of Quizes"
-                variant="outlined"
+              <FormControl fullWidth size="small">
+                <TextField
+                  className="mb-4"
+                  id="outlined-basic"
+                  label="Enter no of Quizes"
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                  value={Quiz1}
+                  onChange={(e) => setQuiz1(e.target.value)}
+                />
+              </FormControl>
+              <FormControl fullWidth size="small">
+                <TextField
+                  className="mb-4"
+                  id="outlined-basic"
+                  label="Enter no of Assignments"
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                  value={Assignments1}
+                  onChange={(e) => setAssignments1(e.target.value)}
+                />
+              </FormControl>
+              <Button
+                variant="contained"
+                color="primary"
                 size="small"
-                fullWidth
-                value={Quiz1}
-                onChange={(e) => setQuiz1(e.target.value)}
-              />
-            </FormControl>
-            <FormControl fullWidth size="small">
-              <TextField
-                className="mb-4"
-                id="outlined-basic"
-                label="Enter no of Assignments"
-                variant="outlined"
-                size="small"
-                fullWidth
-                value={Assignments1}
-                onChange={(e) => setAssignments1(e.target.value)}
-              />
-            </FormControl>
-            <Button
-              variant="contained"
-              color="primary"
-              size="small"
-              style={{ marginTop: 5 }}
-              type="submit"
-            >
-              Submit
-            </Button>
+                style={{ marginTop: 5 }}
+                type="submit"
+              >
+                Submit
+              </Button>
             </form>
             <div style={{ marginTop: 30 }}>
               <h4 style={{ color: "red", marginTop: 20 }}>
@@ -265,39 +255,39 @@ export default function CourseFolderTheory() {
               Round 2
             </h2>
             <form onSubmit={onsubmit2}>
-            <FormControl fullWidth size="small">
-              <TextField
-                className="mb-4"
-                id="outlined-basic"
-                label="Enter no of Quizes"
-                variant="outlined"
+              <FormControl fullWidth size="small">
+                <TextField
+                  className="mb-4"
+                  id="outlined-basic"
+                  label="Enter no of Quizes"
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                  value={Quiz2}
+                  onChange={(e) => setQuiz2(e.target.value)}
+                />
+              </FormControl>
+              <FormControl fullWidth size="small">
+                <TextField
+                  className="mb-4"
+                  id="outlined-basic"
+                  label="Enter no of Assignments"
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                  value={Assignments2}
+                  onChange={(e) => setAssignments2(e.target.value)}
+                />
+              </FormControl>
+              <Button
+                variant="contained"
+                color="primary"
                 size="small"
-                fullWidth
-                value={Quiz2}
-                onChange={(e) => setQuiz2(e.target.value)}
-              />
-            </FormControl>
-            <FormControl fullWidth size="small">
-              <TextField
-                className="mb-4"
-                id="outlined-basic"
-                label="Enter no of Assignments"
-                variant="outlined"
-                size="small"
-                fullWidth
-                value={Assignments2}
-                onChange={(e) => setAssignments2(e.target.value)}
-              />
-            </FormControl>
-            <Button
-              variant="contained"
-              color="primary"
-              size="small"
-              style={{ marginTop: 5 }}
-              type="submit"
-            >
-              Submit
-            </Button>
+                style={{ marginTop: 5 }}
+                type="submit"
+              >
+                Submit
+              </Button>
             </form>
             <div style={{ marginTop: 30 }}>
               <h4 style={{ color: "red", marginTop: 20 }}>

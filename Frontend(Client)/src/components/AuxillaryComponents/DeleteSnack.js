@@ -1,47 +1,52 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
-import IconButton from "@mui/material/IconButton";
-import CloseIcon from "@mui/icons-material/Close";
+import { Alert } from "@mui/material";
 
-export default function SimpleSnackbar() {
-  const [open, setOpen] = React.useState(false);
+export default function PositionedSnackbar() {
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: "top",
+    horizontal: "center",
+  });
 
-  const handleClick = () => {
-    setOpen(true);
+  const { vertical, horizontal, open } = state;
+
+  const handleClick = (newState) => () => {
+    setState({ open: true, ...newState });
   };
 
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setOpen(false);
+  const handleClose = () => {
+    setState({ ...state, open: false });
   };
 
-  const action = (
+  const buttons = (
     <React.Fragment>
-      <IconButton
-        size="small"
-        aria-label="close"
-        color="inherit"
-        onClick={handleClose}
+      <Button
+        onClick={handleClick({
+          vertical: "top",
+          horizontal: "center",
+        })}
       >
-        <CloseIcon fontSize="small" />
-      </IconButton>
+        Top-Center
+      </Button>
     </React.Fragment>
   );
 
   return (
     <div>
-      {/* <Button onClick={handleClick}>Open simple snackbar</Button> */}
+      {buttons}
       <Snackbar
+        anchorOrigin={{ vertical, horizontal }}
         open={open}
-        autoHideDuration={6000}
+        autoHideDuration={2000}
         onClose={handleClose}
-        message="Deleted"
-        action={action}
-      />
+        key={vertical + horizontal}
+      >
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+          Added Successfully!
+        </Alert>
+      </Snackbar>
     </div>
   );
 }
