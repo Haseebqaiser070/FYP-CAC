@@ -36,6 +36,7 @@ var ProgramCoursesSchema = new mongoose.Schema({
 
   catalogue: {
     type: String,
+    default:""
   },
   objectiveList: {
     type: [
@@ -46,9 +47,9 @@ var ProgramCoursesSchema = new mongoose.Schema({
         title: {
           type: String,
         },
+        default:""
       },
     ],
-    required: true,
   },
   Books: [
     {

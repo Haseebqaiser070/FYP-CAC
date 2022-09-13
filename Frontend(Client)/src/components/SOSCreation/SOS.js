@@ -67,8 +67,11 @@ export default function SOS() {
     setContent(response.data);
   };
   const Edit = () => {
+    
+    console.log("Content",Content)
     state.row.Content = Content;
-    navigate(`/CAC/CreateSOS/${Program}`, { state: { row: state.row } });
+    console.log("state.row.Content",state.row.Content)
+    navigate(`/CAC/CreateSOS/${Program}/1`, { state: { row: state.row } });
   };
   const getCon = async (id) => {
     const response = await axios.get(`http://localhost:4000/SOSVerison/${id}`);

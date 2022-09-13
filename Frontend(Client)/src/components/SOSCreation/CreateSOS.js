@@ -29,8 +29,6 @@ const style = {
   p: 4,
 };
 
-function setPrerequisites() {}
-
 export default function CreateSOS() {
   const navigate = useNavigate();
   const { state } = useLocation();
@@ -51,12 +49,13 @@ export default function CreateSOS() {
   console.log("Course", Courses);
 
   console.log("CATS", Categories);
+  console.log("Content",Content)
 
   const [AssignCategory, setAssignCategory] = useState([""]);
 
   const [AssignPrerequisite, setAssignPrerequisite] = useState([]);
   const [opts, setopts] = useState([]);
-
+console.log("Category",Category)
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
   const settracks = (clone) => {
@@ -75,8 +74,8 @@ export default function CreateSOS() {
   const getCategory = async () => {
     const res = await axios.get("http://localhost:4000/Category/show");
     const data = await res.data;
-    console.log(data);
-    setCategory([...data]);
+    console.log("data",data);
+    setCategory([...res.data]);
   };
   const getData = async () => {
     const res = await axios.get("http://localhost:4000/Course/show");
@@ -296,7 +295,7 @@ export default function CreateSOS() {
                 }}
                 autoWidth
               >
-                {Category.map((a) => {
+                {Category?.map((a) => {
                   return (
                     <MenuItem value={a.CategoryName}>{a.CategoryName}</MenuItem>
                   );
@@ -336,7 +335,7 @@ export default function CreateSOS() {
             </Button>
           </div>
         </div>
-        {Categories.map((obj, index) => {
+        {Categories?.map((obj, index) => {
           return (
             <div>
               <div className="my-3">
