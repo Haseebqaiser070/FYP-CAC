@@ -1,6 +1,7 @@
 import {
   Button,
   Card,
+  CardMedia,
   FormControl,
   FormControlLabel,
   FormLabel,
@@ -20,8 +21,9 @@ export default function FolderTemplete() {
   useEffect(() => {
     getFolderData();
   }, []);
-  //const [Folder,setFolder]=useState({folder:{files:[],ICEF:null,Obe:null}})
+  const [Folder,setFolder]=useState({files:[],ICEF:null,Obe:null})
 
+  console.log("Folder: ",Folder)
   const getFolderData = async () => {
     const res = await axios.get(
       `http://localhost:4000/EvalFolders/showComp/${id}`
@@ -64,27 +66,60 @@ export default function FolderTemplete() {
               <p className="mb-4 pb-4">Insert Delivery Record pdf here</p>
             </div>
           </div>
-          <div>
-            <h1
-              style={{
-                backgroundColor: "#35d764",
-                paddingTop: "30%",
-                paddingBottom: "30%",
-              }}
-            >
-              Assignments
-            </h1>
+          {Folder.files.length>0&&Folder.files.map((i)=>{
+            return(
+          <div>            
             <div style={{ marginTop: 50 }}>
-              <h3 className="mb-4 pb-4">Assignment No. </h3>
+              <h3 className="mb-4 pb-4">{i.Title}</h3>
               <p>Insert Assignment PDF here</p>
-              <Card
-                style={{
-                  backgroundColor: "#f5f5f5",
-                  padding: 30,
-                  marginTop: 60,
-                  marginBottom: 20,
-                }}
-              >
+              <Card sx={{ maxWidth: 824 }}>
+              <CardMedia
+                className="cardmedia"
+                component="iframe"
+                Height="1056px"
+                src={i.Question.Base64.pdf}
+              />
+              </Card>    
+              <Card sx={{ maxWidth: 824 }}>
+              <CardMedia
+                className="cardmedia"
+                component="iframe"
+                Height="1056px"
+                src={i.Solution.Base64.pdf}
+              />
+              </Card>    
+              <Card sx={{ maxWidth: 824 }}>
+              <CardMedia
+                className="cardmedia"
+                component="iframe"
+                Height="1056px"
+                src={i.Best.Base64.pdf}
+              />
+              </Card>    
+              <Card sx={{ maxWidth: 824 }}>
+              <CardMedia
+                className="cardmedia"
+                component="iframe"
+                Height="1056px"
+                src={i.Average.Base64.pdf}
+              />
+              </Card>    
+              <Card sx={{ maxWidth: 824 }}>
+              <CardMedia
+                className="cardmedia"
+                component="iframe"
+                Height="1056px"
+                src={i.Worst.Base64.pdf}
+              />
+              </Card>    
+              <Card sx={{ maxWidth: 824 }}>
+              <CardMedia
+                className="cardmedia"
+                component="iframe"
+                Height="1056px"
+                src={i.Awardlist.Base64.pdf}
+              />
+              </Card>         
                 <div className="row">
                   <div className="col">
                     <TextField
@@ -97,7 +132,8 @@ export default function FolderTemplete() {
                       // onChange={
 
                       // }
-                    />
+                    />  
+                  
                   </div>
                   <div className="col mb-4 pl-4 ml-4">
                     <FormControl>
@@ -196,10 +232,9 @@ export default function FolderTemplete() {
                     Submit
                   </Button>
                 </div>
-              </Card>
             </div>
-          </div>
-          <div>
+          </div>)})}
+          {/* <div>
             <h1
               style={{
                 backgroundColor: "#ffd700",
@@ -333,8 +368,8 @@ export default function FolderTemplete() {
                 </div>
               </Card>
             </div>
-          </div>
-          <div>
+          </div> */}
+          {/* <div>
             <h1
               style={{
                 backgroundColor: "#fe5381",
@@ -361,7 +396,7 @@ export default function FolderTemplete() {
             <div style={{ marginTop: 50 }}>
               <p className="mb-4 pb-4">Insert Terminal pdf here</p>
             </div>
-          </div>
+          </div> */}
           <div>
             <h1
               style={{
@@ -372,9 +407,27 @@ export default function FolderTemplete() {
             >
               Outcome Based Education
             </h1>
+            {Folder.Obe==null?(<p>no OBE</p>):(<Card sx={{ maxWidth: 824 }}>
+              <CardMedia
+                className="cardmedia"
+                component="iframe"
+                Height="1056px"
+                src={Folder.Obe.pdf}
+              />
+              </Card>    )
+              }
             <div style={{ marginTop: 50 }}>
-              <h3 className="mb-4 pb-4">ICEF FORM</h3>
-              <p>Insert ICEF pdf here</p>
+              <h3 className="mb-4 pb-4">ICEF</h3>
+              {Folder.ICEF==null?(<p>No ICEF</p>):(<Card sx={{ maxWidth: 824 }}>
+              <CardMedia
+                className="cardmedia"
+                component="iframe"
+                Height="1056px"
+                src={Folder.ICEF.pdf}
+              />
+              </Card>    )
+              }
+              <p>{}</p>
             </div>
           </div>
         </div>

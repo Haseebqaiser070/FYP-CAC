@@ -64,7 +64,16 @@ export default function SOS() {
     const response = await axios.get(
       `http://localhost:4000/SOSVerison/Latest/${Program}`
     );
-    setContent(response.data);
+    if(response.data!=undefined){
+      setContent(response.data);
+    }
+    else{
+      setContent({
+        Program: "",
+        Year: "",
+        Categories: []
+      });
+    }
   };
   const Edit = () => {
     
