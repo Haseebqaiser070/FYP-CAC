@@ -19,6 +19,7 @@ import CloseIcon from "@mui/icons-material/Close";
 
 import AddIcon from "@mui/icons-material/Add";
 import { Box } from "@mui/system";
+import { muibtn } from "./style";
 
 const style = {
   position: "absolute",
@@ -59,7 +60,7 @@ export default function SO_Level() {
             variant="contained"
             color="primary"
             size="small"
-            style={{ marginLeft: 16, padding: 10 }}
+            style={{ backgroundColor: "#4b2980", marginLeft: 16, padding: 10 }}
             onClick={() => {
               setGA(row.GA);
               setSO(row.SO);
@@ -75,7 +76,7 @@ export default function SO_Level() {
             variant="contained"
             color="primary"
             size="small"
-            style={{ marginLeft: 16, padding: 10 }}
+            style={{ backgroundColor: "#4b2980", marginLeft: 16, padding: 10 }}
             onClick={async () => {
               await axios.delete(`http://localhost:4000/SOBTL/SO/${row._id}`);
               getSORows();
@@ -166,7 +167,7 @@ export default function SO_Level() {
               variant="contained"
               color="primary"
               size="medium"
-              style={{ marginTop: 16, marginRight: 15 }}
+              style={muibtn}
               onClick={handleOpen}
             >
               <AddIcon style={{ marginRight: "6px" }} />
@@ -188,6 +189,7 @@ export default function SO_Level() {
                     style={{ cursor: "pointer", color: "gray" }}
                   />
                 </Box>
+                <h4 className="mb-4">ADD NEW STUDENT OUTCOME</h4>
                 <div>
                   <FormControl fullWidth size="medium">
                     <TextField
@@ -205,6 +207,8 @@ export default function SO_Level() {
                 <div>
                   <FormControl fullWidth size="medium">
                     <TextField
+                      multiline={true}
+                      rows={4}
                       className="mb-4"
                       id="outlined-basic"
                       label="SO Description"
@@ -217,13 +221,14 @@ export default function SO_Level() {
                   </FormControl>
                 </div>
                 <Button
+                  fullWidth
                   variant="contained"
                   color="primary"
                   size="small"
                   type="submit"
-                  style={{ marginTop: 16 }}
+                  style={muibtn}
                 >
-                  <AiFillEdit style={{ marginRight: 10 }} />
+                  <AddIcon style={{ marginRight: 10 }} />
                   {Upid == "" ? <>Add SO</> : <>Update SO</>}
                 </Button>
               </form>

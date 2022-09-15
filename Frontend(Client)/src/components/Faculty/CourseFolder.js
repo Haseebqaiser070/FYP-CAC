@@ -36,6 +36,10 @@ export default function CourseFolder() {
   const handleOpen2 = () => setOpen2(true);
   const handleClose2 = () => setOpen2(false);
 
+  const [open3, setOpen3] = useState(false);
+  const handleOpen3 = () => setOpen3(true);
+  const handleClose3 = () => setOpen3(false);
+
   const [folders, setfolders] = useState("");
 
   useEffect(() => {
@@ -110,6 +114,7 @@ export default function CourseFolder() {
     setTitle(t);
   };
 
+  const [LectureDelivery, setLectureDelivery] = useState("");
   const [Question, setQuestion] = useState("");
   const [Awardlist, setAwardlist] = useState("");
   const [Best, setBest] = useState("");
@@ -391,6 +396,40 @@ export default function CourseFolder() {
   return (
     <div class="container" style={{ height: 700, width: "100%", padding: 20 }}>
       <h1 style={{ marginBottom: 30 }}>Course Folder Maintainence</h1>
+
+      <Modal
+        open={open3}
+        onClose={handleClose3}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <form>
+            <div class="mb-3">
+              <label class="form-label" for="customFile">
+                <b>Upload Lecture Delivery Record</b>
+              </label>
+              <input
+                type="file"
+                class="form-control"
+                id="customFile"
+                // onChange={(e) => {
+                //   encodeFileBase64(e.target.files[0], "ICEF");
+                // }}
+              />
+            </div>
+            <div class="d-grid">
+              <button
+                class="btn btn-block py-2 btn-primary"
+                id="quiz1"
+                type="submit"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+        </Box>
+      </Modal>
 
       <Modal
         open={open1}
@@ -796,6 +835,20 @@ export default function CourseFolder() {
                     class="btn py-2  btn-block btn-primary"
                     id="quiz1"
                     type="button"
+                    onClick={handleOpen3}
+                  >
+                    {Folder.Obe == null ? (
+                      <>Lecture Delivery Record</>
+                    ) : (
+                      <>Lecture Delivery Record (Submited)</>
+                    )}
+                  </button>
+                </td>
+                <td className="d-grid py-2 px-2">
+                  <button
+                    class="btn py-2  btn-block btn-primary"
+                    id="quiz1"
+                    type="button"
                     onClick={handleOpen1}
                   >
                     {" "}
@@ -812,6 +865,7 @@ export default function CourseFolder() {
                     {Folder.Obe == null ? <>OBE</> : <>OBE (Submited)</>}
                   </button>
                 </td>
+
                 <td className="d-grid py-4 px-2">
                   <button
                     class="btn btn-block py-2 btn-primary"

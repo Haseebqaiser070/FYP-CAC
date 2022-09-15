@@ -37,24 +37,30 @@ export default function UserCards(props) {
     setEvaluator(count3);
     console.log(response.data);
   };
+  const style = {
+    backgroundColor: "#4b2980",
+    color: "#fff",
+    padding: 20,
+    borderRadius: 7,
+  };
   return (
     <div style={{ marginTop: 50, marginBottom: 80 }}>
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={2}>
           <Grid item xs={4}>
-            <Item>
+            <Item style={style}>
               <h1>{CAC}</h1>
               <h5>TOTAL CAC MEMBERS</h5>
             </Item>
           </Grid>
           <Grid item xs={4}>
-            <Item>
+            <Item style={style}>
               <h1>{Faculty}</h1>
               <h5>TOTAL FACULTY MEMBERS</h5>
             </Item>
           </Grid>
           <Grid item xs={4}>
-            <Item>
+            <Item style={style}>
               <h1>{Evaluator}</h1>
               <h5>Total EVALUATORS</h5>
             </Item>

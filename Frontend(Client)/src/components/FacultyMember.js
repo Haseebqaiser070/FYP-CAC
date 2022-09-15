@@ -15,6 +15,7 @@ import {
   TextField,
 } from "@mui/material";
 import Select from "@mui/material/Select";
+import { muiAbtn, muibtn } from "./style";
 
 const style = {
   position: "absolute",
@@ -32,18 +33,18 @@ const style = {
 export default function FacultyMembers() {
   axios.defaults.withCredentials = true;
   const [open, setOpen] = useState(false);
-  const handleClose = () =>{ 
-    setOpen(false)
+  const handleClose = () => {
+    setOpen(false);
     setobj([
       {
-        Program:"",
+        Program: "",
         Course: "",
-        Section:""
+        Section: "",
       },
-    ])
-    setUser("")
-    setCourse([[]])
-    setup(false)
+    ]);
+    setUser("");
+    setCourse([[]]);
+    setup(false);
   };
   const [Rows, setRows] = useState([]);
   const [Courses, setCourse] = useState([[]]);
@@ -51,9 +52,9 @@ export default function FacultyMembers() {
   const [User, setUser] = useState("");
   const [obj, setobj] = useState([
     {
-      Program:"",
+      Program: "",
       Course: "",
-      Section:""
+      Section: "",
     },
   ]);
 
@@ -61,13 +62,15 @@ export default function FacultyMembers() {
     const res = await axios.get("http://localhost:4000/SOS/Programs");
     setProgramdb(res.data);
   };
-  const getProgramCourses = async (index,Program) => {
-    const res = await axios.get(`http://localhost:4000/ProgramCourses/show/${Program}`);
-    const clone=[...Courses]
-    clone[index]=res.data
-    setCourse([...clone])
+  const getProgramCourses = async (index, Program) => {
+    const res = await axios.get(
+      `http://localhost:4000/ProgramCourses/show/${Program}`
+    );
+    const clone = [...Courses];
+    clone[index] = res.data;
+    setCourse([...clone]);
   };
-console.log("Course",Courses)
+  console.log("Course", Courses);
   console.log(Rows);
   useEffect(() => {
     getPrograms();
@@ -77,75 +80,76 @@ console.log("Course",Courses)
     const response = await axios.get("http://localhost:4000/User/show/Faculty");
     setRows(response.data);
   };
-  const[up,setup]=useState(false)
+  const [up, setup] = useState(false);
   //-------------
-  const getobjs=async(id)=>{
-    const response = await axios.get(`http://localhost:4000/UserAssigedFolders/showAllbyid/${id}`);
-    const col=await Promise.all(response.data.filter((i)=>{
-      if(i.LabTheory!="Lab"){
-        return({
-          Program:i.Program,
-          Course: i.Course,
-          Section:i.Section
-        })
-        
-      }
-    }))
-    const col2=await Promise.all(await col.map(async(i)=>{
-      if(i.LabTheory!="Lab"){
-        const res = await axios.get(`http://localhost:4000/ProgramCourses/show/${i.Program}`);
-        return([...res.data])        
-      }
-    }))
-    setCourse([...col2])
+  const getobjs = async (id) => {
+    const response = await axios.get(
+      `http://localhost:4000/UserAssigedFolders/showAllbyid/${id}`
+    );
+    const col = await Promise.all(
+      response.data.filter((i) => {
+        if (i.LabTheory != "Lab") {
+          return {
+            Program: i.Program,
+            Course: i.Course,
+            Section: i.Section,
+          };
+        }
+      })
+    );
+    const col2 = await Promise.all(
+      await col.map(async (i) => {
+        if (i.LabTheory != "Lab") {
+          const res = await axios.get(
+            `http://localhost:4000/ProgramCourses/show/${i.Program}`
+          );
+          return [...res.data];
+        }
+      })
+    );
+    setCourse([...col2]);
     setobj([...col]);
-    setup(true)
-    setOpen(true)
-  }
+    setup(true);
+    setOpen(true);
+  };
   const Submitform = async (e) => {
-    e.preventDefault()
-    console.log(obj)
+    e.preventDefault();
+    console.log(obj);
     let verify = true;
     obj.forEach((i) => {
       console.log("i", i);
-      if (
-        i.Program == "" ||
-        i.Course == "" ||
-        i.Section == ""
-      ) {
+      if (i.Program == "" || i.Course == "" || i.Section == "") {
         verify = false;
       }
     });
     if (verify) {
-      if(!up){
-      await axios.post("http://localhost:4000/AssginFolders/add", {
-        obj,
-        User,
-      });
-    }
-    else{
-      await axios.post("http://localhost:4000/AssginFolders/add2", {
-        obj,
-        User,
-      });
-    }
-      getData()
-      handleClose()
-
+      if (!up) {
+        await axios.post("http://localhost:4000/AssginFolders/add", {
+          obj,
+          User,
+        });
+      } else {
+        await axios.post("http://localhost:4000/AssginFolders/add2", {
+          obj,
+          User,
+        });
+      }
+      getData();
+      handleClose();
     } else {
       alert("Empty Field");
-    }    
-  }
+    }
+  };
   const columns = [
     {
       field: "Name",
       headerName: "Name",
-      flex: 1,
+      flex: 2,
     },
     {
       field: "Email",
       headerName: "Email",
-      flex: 1,
+      flex: 3,
     },
 
     {
@@ -153,42 +157,37 @@ console.log("Course",Courses)
       headerName: "Actions",
       flex: 2,
       editable: false,
-      renderCell: ({row}) => (
+      renderCell: ({ row }) => (
         <>
-          {row.CourseFolders.length<1?(<Button
-            variant="contained"
-            color="primary"
-            size="small"
-            style={{ marginLeft: 16 }}
-            onClick={() =>{
-              setUser(row)
-              setOpen(true)}}
-          >
-            <AiFillEdit style={{ marginRight: 10 }} />
-            Assign Course
-          </Button>):
-          (<Button
-            variant="contained"
-            color="primary"
-            size="small"
-            style={{ marginLeft: 16 }}
-            onClick={() =>{
-              setUser(row)
-              getobjs(row._id)
+          {row.CourseFolders.length < 1 ? (
+            <Button
+              variant="contained"
+              color="primary"
+              size="small"
+              style={muiAbtn}
+              onClick={() => {
+                setUser(row);
+                setOpen(true);
               }}
-          >
-            <AiFillEdit style={{ marginRight: 10 }} />
-            Edit Course
-          </Button>)}
-          <Button
-            variant="contained"
-            color="primary"
-            size="small"
-            style={{ marginLeft: 16 }}
-          >
-            <AiFillEdit style={{ marginRight: 10 }} />
-            Set as Evaluator
-          </Button>
+            >
+              <AiFillEdit style={{ marginRight: 10 }} />
+              Assign Course
+            </Button>
+          ) : (
+            <Button
+              variant="contained"
+              color="primary"
+              size="small"
+              style={muiAbtn}
+              onClick={() => {
+                setUser(row);
+                getobjs(row._id);
+              }}
+            >
+              <AiFillEdit style={{ marginRight: 10 }} />
+              Edit Course
+            </Button>
+          )}
         </>
       ),
     },
@@ -223,7 +222,7 @@ console.log("Course",Courses)
           {obj.map((o, index) => {
             return (
               <>
-                <h4>Assign Course {index + 1}</h4>
+                <h4 className="mb-4">ASSIGN COURSE {index + 1}</h4>
                 {obj.length > 1 && (
                   <FormControl>
                     <Button
@@ -231,33 +230,30 @@ console.log("Course",Courses)
                       variant="contained"
                       color="primary"
                       size="medium"
+                      style={muibtn}
                       onClick={() => {
-                        var clone = [...obj];                      
+                        var clone = [...obj];
                         if (clone.length == index + 1) {
                           console.log("last rm");
-                          clone[index]={
-                            Program:"",
+                          clone[index] = {
+                            Program: "",
                             Course: "",
-                            Section:""
-                          }
+                            Section: "",
+                          };
                         } else if (clone.length != index + 1) {
                           clone[index] = clone[index + 1];
                         }
                         const a = clone.splice(index, 1);
-                        setobj([...clone]);                                          
+                        setobj([...clone]);
                         var clone2 = [...Courses];
                         if (clone2.length == index + 1) {
                           console.log("last rm");
-                          clone2[index]=[]
-                        
+                          clone2[index] = [];
                         } else if (clone2.length != index + 1) {
                           clone2[index] = clone2[index + 1];
                         }
-                        const b = clone2.splice(index,1);                                                
-                        setCourse([
-                          ...clone2
-                        ]);
-                      
+                        const b = clone2.splice(index, 1);
+                        setCourse([...clone2]);
                       }}
                     >
                       remove
@@ -265,27 +261,23 @@ console.log("Course",Courses)
                   </FormControl>
                 )}
 
-                <div className="form-floating mb-4">
+                <div className=" mb-4">
                   <select
                     class="form-select"
+                    placeholder="Select Program"
                     label="Assign Program"
-                    onChange={(e) =>{
-                      const clone=[...obj]
-                      clone[index].Program=e.target.value
-                      setobj([...clone])
-                      getProgramCourses(index,e.target.value)
-                    }
-                  }
+                    onChange={(e) => {
+                      const clone = [...obj];
+                      clone[index].Program = e.target.value;
+                      setobj([...clone]);
+                      getProgramCourses(index, e.target.value);
+                    }}
                   >
                     <option value={obj[index].Program} selected disabled hidden>
-                      {obj[index].Program!=""&&obj[index].Program}
+                      {obj[index].Program != "" && obj[index].Program}
                     </option>
                     {Programdb.map((p) => {
-                      return (
-                        <option value={p}>
-                          {p}
-                        </option>
-                      );
+                      return <option value={p}>{p}</option>;
                     })}
                   </select>
                 </div>
@@ -332,18 +324,20 @@ console.log("Course",Courses)
                           setobj([...clone]);
                         }}
                         autoWidth
-                      > 
-                      <option value={obj[index]?.Course} selected disabled hidden>
-                        {obj[index]?.Course!=""&&obj[index]?.Course?.Name}
-                      </option>
+                      >
+                        <option
+                          value={obj[index]?.Course}
+                          selected
+                          disabled
+                          hidden
+                        >
+                          {obj[index]?.Course != "" && obj[index]?.Course?.Name}
+                        </option>
                         {Courses[index].map((a) => {
                           return <MenuItem value={a}>{a.Name}</MenuItem>;
                         })}
                       </Select>
                     </FormControl>
-
-
-
                   </div>
                   <div className="col form-floating mb-3">
                     <input
@@ -351,7 +345,7 @@ console.log("Course",Courses)
                       id="inputName"
                       type="text"
                       value={obj[index].Section}
-                      onChange={(e) => {      
+                      onChange={(e) => {
                         const clone = [...obj];
                         clone[index].Section = e.target.value;
                         setobj([...clone]);
@@ -371,20 +365,21 @@ console.log("Course",Courses)
               color="primary"
               size="large"
               width="100"
-              style={{ marginTop: 10, marginRight: 20 }}
+              style={{
+                backgroundColor: "#4b2980",
+                marginTop: 10,
+                marginRight: 20,
+              }}
               onClick={() => {
                 setobj([
                   ...obj,
                   {
-                    Program:"",
+                    Program: "",
                     Course: "",
-                    Section:""
+                    Section: "",
                   },
                 ]);
-                setCourse([
-                  ...Courses,
-                  []
-                ]);
+                setCourse([...Courses, []]);
               }}
             >
               Add another Course
@@ -395,7 +390,7 @@ console.log("Course",Courses)
               size="large"
               width="100"
               type="submit"
-              style={{ marginTop: 10 }}
+              style={{ backgroundColor: "#4b2980", marginTop: 10 }}
             >
               Assign Course
             </Button>

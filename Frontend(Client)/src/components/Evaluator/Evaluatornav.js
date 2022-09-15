@@ -136,6 +136,13 @@ export default function FacultyNavigation() {
                       </>
                     );
                   })}
+
+                <Link class="nav-link sidenavtext " to="EvaluatedFolders">
+                  <div class="sb-nav-link-icon">
+                    <BsBuilding color="#fff" />
+                  </div>
+                  Evaluated Folders
+                </Link>
               </div>
               <div
                 style={{ position: "fixed", left: "8px", bottom: "8px" }}

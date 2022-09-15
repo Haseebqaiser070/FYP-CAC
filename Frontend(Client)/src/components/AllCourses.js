@@ -9,6 +9,7 @@ import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
 import { DataGrid } from "@mui/x-data-grid";
 import { Card } from "@mui/material";
 import { Dialog, DialogActions, DialogTitle } from "@mui/material";
+import { muiAbtn } from "./style";
 
 export default function AllCourses() {
   const [Course, setCourse] = useState([]);
@@ -63,7 +64,7 @@ export default function AllCourses() {
     {
       field: "Name",
       headerName: "Course Name",
-      width: 300,
+      width: 350,
     },
     {
       field: "CreditHours",
@@ -78,7 +79,7 @@ export default function AllCourses() {
           ")"
         );
       },
-      width: 150,
+      width: 170,
     },
     {
       field: "Action",
@@ -95,7 +96,7 @@ export default function AllCourses() {
           variant="contained"
           color="primary"
           size="small"
-          style={{ marginLeft: 16 }}
+          style={muiAbtn}
           onClick={() => {
             navigate(`/Admin/CourseView/${row._id}`, {
               replace: true,
@@ -110,7 +111,7 @@ export default function AllCourses() {
           variant="contained"
           color="primary"
           size="small"
-          style={{ marginLeft: 16 }}
+          style={muiAbtn}
           onClick={() => handleUpdate(row._id)}
         >
           <AiFillEdit style={{ marginRight: 10 }} />
@@ -121,7 +122,7 @@ export default function AllCourses() {
           variant="contained"
           color="primary"
           size="small"
-          style={{ marginLeft: 16 }}
+          style={muiAbtn}
           onClick={handleClickOpen}
         >
           <AiFillDelete style={{ marginRight: 10 }} />

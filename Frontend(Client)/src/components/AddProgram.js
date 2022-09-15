@@ -22,6 +22,7 @@ import InputLabel from "@mui/material/InputLabel";
 import AddIcon from "@mui/icons-material/Add";
 import { Box } from "@mui/system";
 import PositionedSnackbar from "./AuxillaryComponents/DeleteSnack";
+import { muiAbtn, muibtn } from "./style";
 
 export default function AddProgram() {
   const [rows, setRows] = useState([]);
@@ -106,10 +107,6 @@ export default function AddProgram() {
     boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
   };
 
-  const btnstyle = {
-    backgroundColor: "#4b2980",
-    color: "#fff",
-  };
   const columns = [
     {
       field: "Degree",
@@ -125,6 +122,7 @@ export default function AddProgram() {
       field: "Action",
       headerName: "Action",
       flex: 1,
+
       editable: false,
       renderCell: ActionButton,
     },
@@ -137,7 +135,7 @@ export default function AddProgram() {
           variant="contained"
           color="primary"
           size="small"
-          style={{ marginLeft: 16 }}
+          style={muiAbtn}
           onClick={() => {
             setid(row._id);
             Update();
@@ -150,7 +148,7 @@ export default function AddProgram() {
           variant="contained"
           color="primary"
           size="small"
-          style={{ marginLeft: 16 }}
+          style={muiAbtn}
           onClick={handleClickOpen}
         >
           <AiFillDelete style={{ marginRight: 10 }} />
@@ -205,7 +203,7 @@ export default function AddProgram() {
               className="mb-2 muibtn"
               color="primary"
               size="small"
-              style={{ marginTop: 20 }}
+              style={muibtn}
               onClick={handleOpen}
             >
               <AddIcon style={{ marginRight: "6px" }} />
@@ -289,7 +287,7 @@ export default function AddProgram() {
                   color="primary"
                   size="small"
                   type="submit"
-                  style={{ marginTop: 16 }}
+                  style={muibtn}
                 >
                   <AddIcon style={{ marginRight: 10 }} />
                   Add New Program

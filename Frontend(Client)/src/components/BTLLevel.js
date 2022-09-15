@@ -19,6 +19,7 @@ import CloseIcon from "@mui/icons-material/Close";
 
 import AddIcon from "@mui/icons-material/Add";
 import { Box } from "@mui/system";
+import { muibtn } from "./style";
 
 const style = {
   position: "absolute",
@@ -54,7 +55,7 @@ export default function BTLLevel() {
             variant="contained"
             color="primary"
             size="small"
-            style={{ marginLeft: 16, padding: 10 }}
+            style={{ backgroundColor: "#4b2980", marginLeft: 16, padding: 10 }}
             onClick={() => {
               setBTL(row.BTL);
               setUpid(row._id);
@@ -69,7 +70,7 @@ export default function BTLLevel() {
             variant="contained"
             color="primary"
             size="small"
-            style={{ marginLeft: 16, padding: 10 }}
+            style={{ backgroundColor: "#4b2980", marginLeft: 16, padding: 10 }}
             onClick={async () => {
               await axios.delete(`http://localhost:4000/SOBTL/BTL/${row._id}`);
               getBTLRows();
@@ -120,19 +121,19 @@ export default function BTLLevel() {
     {
       field: "Number",
       headerName: "Sr#",
-      flex: 1,
+      width: "100",
     },
 
     {
       field: "BTL",
       headerName: "BTL LEVEL",
-      flex: 2,
+      width: "700",
     },
 
     {
       field: "Action",
       headerName: "Action",
-      flex: 2,
+      width: "200",
       editable: false,
       renderCell: ActionButton2,
     },
@@ -156,7 +157,7 @@ export default function BTLLevel() {
             variant="contained"
             color="primary"
             size="medium"
-            style={{ marginTop: 16 }}
+            style={muibtn}
             onClick={handleOpen1}
           >
             <AddIcon style={{ marginRight: "6px" }} />
@@ -177,7 +178,7 @@ export default function BTLLevel() {
                   style={{ cursor: "pointer", color: "gray" }}
                 />
               </Box>
-
+              <h4 className="mb-4">ADD NEW BTL LEVEL</h4>
               <div>
                 <FormControl fullWidth size="medium">
                   <TextField
@@ -193,11 +194,12 @@ export default function BTLLevel() {
                 </FormControl>
               </div>
               <Button
+                fullWidth
                 variant="contained"
                 color="primary"
                 size="small"
                 type="submit"
-                style={{ marginTop: 16 }}
+                style={muibtn}
               >
                 <AiFillEdit style={{ marginRight: 10 }} />
                 {Upid == "" ? <>Add BTL LEVEL</> : <>Update BTL LEVEL</>}

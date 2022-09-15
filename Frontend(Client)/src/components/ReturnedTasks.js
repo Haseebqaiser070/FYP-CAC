@@ -4,7 +4,12 @@ import axios from "axios";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { DataGrid } from "@mui/x-data-grid";
-import { AiFillEye, AiFillEdit, AiOutlineUnorderedList } from "react-icons/ai";
+import {
+  AiFillEye,
+  AiFillEdit,
+  AiOutlineUnorderedList,
+  AiFillLock,
+} from "react-icons/ai";
 import {
   Box,
   FormControl,
@@ -53,7 +58,7 @@ export default function ReturnedTasks() {
             variant="contained"
             color="primary"
             size="small"
-            style={{ marginLeft: 16, padding: 10 }}
+            style={{ backgroundColor: "#4b2980", marginLeft: 16, padding: 10 }}
             onClick={() => {
               if (row.taskType == "Create Catalog Description") {
                 navigate(`/Admin/CourseReturnedView/${row.Course.Code}`, {
@@ -82,7 +87,7 @@ export default function ReturnedTasks() {
             variant="contained"
             color="primary"
             size="small"
-            style={{ marginLeft: 16, padding: 10 }}
+            style={{ backgroundColor: "#4b2980", marginLeft: 16, padding: 10 }}
             // onClick={}
           >
             <AiFillEdit />
@@ -93,20 +98,20 @@ export default function ReturnedTasks() {
           variant="contained"
           color="primary"
           size="small"
-          style={{ marginLeft: 16 }}
+          style={{ backgroundColor: "#4b2980", marginLeft: 16 }}
           onClick={async () => {
             await axios.post(`http://localhost:4000/Task/lock/${row._id}`);
             getData();
           }}
         >
-          <AiFillEdit style={{ marginRight: 10 }} />
+          <AiFillLock style={{ marginRight: 10 }} />
           Lock
         </Button>
         <Button
           variant="contained"
           color="primary"
           size="small"
-          style={{ marginLeft: 16 }}
+          style={{ backgroundColor: "#4b2980", marginLeft: 16 }}
           onClick={() => setOpen(true)}
         >
           <AiFillEdit style={{ marginRight: 10 }} />

@@ -64,22 +64,20 @@ export default function SOS() {
     const response = await axios.get(
       `http://localhost:4000/SOSVerison/Latest/${Program}`
     );
-    if(response.data!=undefined){
+    if (response.data != undefined) {
       setContent(response.data);
-    }
-    else{
+    } else {
       setContent({
         Program: "",
         Year: "",
-        Categories: []
+        Categories: [],
       });
     }
   };
   const Edit = () => {
-    
-    console.log("Content",Content)
+    console.log("Content", Content);
     state.row.Content = Content;
-    console.log("state.row.Content",state.row.Content)
+    console.log("state.row.Content", state.row.Content);
     navigate(`/CAC/CreateSOS/${Program}/1`, { state: { row: state.row } });
   };
   const getCon = async (id) => {

@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import CloseIcon from "@mui/icons-material/Close";
+import { muiAbtn, muibtn } from "../style";
 
 const style = {
   position: "absolute",
@@ -149,7 +150,7 @@ export default function CourseRepo() {
           variant="contained"
           color="primary"
           size="small"
-          style={{ marginLeft: 16 }}
+          style={muiAbtn}
           onClick={() => handleUpdate(row)}
         >
           <AiFillEdit style={{ marginRight: 10 }} />
@@ -159,7 +160,7 @@ export default function CourseRepo() {
           variant="contained"
           color="primary"
           size="small"
-          style={{ marginLeft: 16 }}
+          style={muiAbtn}
           onClick={() => handleDelete(row._id)}
         >
           <AiFillDelete style={{ marginRight: 10 }} />
@@ -190,6 +191,7 @@ export default function CourseRepo() {
               color="primary"
               size="medium"
               onClick={() => setOpen(true)}
+              style={muibtn}
             >
               Initialize New Course
             </Button>
@@ -210,9 +212,7 @@ export default function CourseRepo() {
                       style={{ cursor: "pointer", color: "gray" }}
                     />
                   </Box>
-                  <h4 style={{ textAlign: "center", marginBottom: 30 }}>
-                    Add New Cource
-                  </h4>
+                  <h4 className="mb-4">INITIALIZE NEW COURSE</h4>
 
                   <form onSubmit={AddRepoCourse}>
                     <div className="row">
@@ -268,6 +268,7 @@ export default function CourseRepo() {
                                 label="Code"
                                 variant="outlined"
                                 size="small"
+                                maxlength={4}
                                 fullWidth
                                 value={SufCode}
                                 onChange={(e) => setSufCode(e.target.value)}
@@ -293,12 +294,17 @@ export default function CourseRepo() {
                       </div>
                     </div>
 
-                    <input
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      style={muibtn}
                       type="submit"
                       name="submit"
                       value="Submit"
                       class="btn btn-primary ms-auto me-0 me-md-3 my-2 my-md-0"
-                    />
+                    >
+                      Submit
+                    </Button>
                   </form>
                 </Box>
               </Modal>

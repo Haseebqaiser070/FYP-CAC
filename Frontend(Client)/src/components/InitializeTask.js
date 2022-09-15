@@ -22,6 +22,7 @@ import { Box } from "@mui/system";
 import CreateTasks from "./CreateTasks";
 import EditTasks from "./EditTasks";
 import CloseIcon from "@mui/icons-material/Close";
+import { muiAbtn, muibtn } from "./style";
 
 const style = {
   position: "absolute",
@@ -189,7 +190,7 @@ export default function InitializeTask() {
             variant="contained"
             color="primary"
             size="small"
-            style={{ marginRight: 10 }}
+            style={muiAbtn}
             onClick={() => {
               setInit(row);
               setOpen4(true);
@@ -203,7 +204,7 @@ export default function InitializeTask() {
             variant="contained"
             color="primary"
             size="small"
-            style={{ marginLeft: 16 }}
+            style={muiAbtn}
             onClick={() => {
               setInit(row);
               setOpen2(true);
@@ -218,7 +219,7 @@ export default function InitializeTask() {
           variant="contained"
           color="primary"
           size="small"
-          style={{ marginLeft: 16, padding: 5 }}
+          style={{ backgroundColor: "#4b2980", marginLeft: 16, padding: 5 }}
           onClick={() => {
             ups(row._id);
             setTasks(row.Task);
@@ -234,7 +235,11 @@ export default function InitializeTask() {
               variant="contained"
               color="primary"
               size="small"
-              style={{ marginLeft: 16, padding: 10 }}
+              style={{
+                backgroundColor: "#4b2980",
+                marginLeft: 16,
+                padding: 10,
+              }}
               onClick={() => {
                 Getss(row._id);
                 setOpen1(true);
@@ -249,7 +254,7 @@ export default function InitializeTask() {
             variant="contained"
             color="primary"
             size="small"
-            style={{ marginLeft: 16, padding: 10 }}
+            style={{ backgroundColor: "#4b2980", marginLeft: 16, padding: 10 }}
             onClick={async () => {
               await axios.delete(
                 `http://localhost:4000/Task/deleteInit/${row._id}`
@@ -303,13 +308,14 @@ export default function InitializeTask() {
 
       <div className="d-flex justify-content-end mb-4">
         <Button
+          style={muibtn}
           variant="contained"
           color="primary"
           size="small"
           onClick={handleOpen}
         >
           <AiFillEdit style={{ marginRight: 10 }} />
-          Initialize Task
+          Initialize New Task
         </Button>
       </div>
       <Modal
@@ -321,7 +327,7 @@ export default function InitializeTask() {
       >
         <Box sx={style}>
           <div className="container">
-            <Box mb={3} style={{ display: "flex", justifyContent: "end" }}>
+            <Box mb={1} style={{ display: "flex", justifyContent: "end" }}>
               <CloseIcon
                 onClick={handleClose2}
                 style={{ cursor: "pointer", color: "gray" }}
@@ -330,7 +336,7 @@ export default function InitializeTask() {
 
             <div
               style={{
-                height: "calc(100vh - 56px)",
+                height: "calc(100vh - 20vh)",
                 overflow: "auto",
               }}
             >
@@ -420,6 +426,7 @@ export default function InitializeTask() {
                 style={{ cursor: "pointer", color: "gray" }}
               />
             </Box>
+            <h4 className="mb-4">INITIALIZE NEW TASK</h4>
             <div>
               <FormControl fullWidth size="small">
                 <InputLabel id="taskType">Task Type</InputLabel>
@@ -496,6 +503,8 @@ export default function InitializeTask() {
               </FormControl>
             </div>
             <Button
+              fullWidth
+              style={muibtn}
               variant="contained"
               color="primary"
               size="small"
@@ -516,6 +525,13 @@ export default function InitializeTask() {
       >
         <Box sx={style}>
           <form onSubmit={updateSubmit}>
+            <Box mb={1} style={{ display: "flex", justifyContent: "end" }}>
+              <CloseIcon
+                onClick={handleClose3}
+                style={{ cursor: "pointer", color: "gray" }}
+              />
+            </Box>
+            <h4 className="mb-4 pb-3">EDIT INITIALIZED TASKS</h4>
             <div>
               <FormControl fullWidth size="small">
                 <InputLabel id="taskType">Task Type</InputLabel>
@@ -592,9 +608,11 @@ export default function InitializeTask() {
               color="primary"
               size="small"
               type="submit"
+              fullWidth
+              style={muibtn}
             >
               <AiFillEdit style={{ marginRight: 10 }} />
-              Initialize Task
+              EDIt Initialized Task
             </Button>
           </form>
         </Box>

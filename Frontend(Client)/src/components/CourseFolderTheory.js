@@ -16,6 +16,7 @@ import Select from "@mui/material/Select";
 import InputLabel from "@mui/material/InputLabel";
 import { AiFillEdit, AiOutlineFieldTime } from "react-icons/ai";
 import axios from "axios";
+import { muibtn } from "./style";
 
 const modalstyle = {
   position: "absolute",
@@ -117,9 +118,7 @@ export default function CourseFolderTheory() {
         />
         <div className="row">
           <div className="col">
-            <h2 className="my-4" style={{ textAlign: "left" }}>
-              Round 1
-            </h2>
+            <h2 className="mb-4 pb-4">ROUND 1</h2>
             <form onSubmit={onsubmit1}>
               <FormControl fullWidth size="small">
                 <TextField
@@ -146,10 +145,11 @@ export default function CourseFolderTheory() {
                 />
               </FormControl>
               <Button
+                fullWidth
                 variant="contained"
                 color="primary"
                 size="small"
-                style={{ marginTop: 5 }}
+                style={muibtn}
                 type="submit"
               >
                 Submit
@@ -171,16 +171,6 @@ export default function CourseFolderTheory() {
                 >
                   <AiOutlineFieldTime style={{ marginRight: 10 }} />
                   Add Due Date
-                </Button>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  size="small"
-                  style={{ marginLeft: 16 }}
-                  onClick={() => setOpen1(true)}
-                >
-                  <AiFillEdit style={{ marginRight: 10 }} />
-                  Edit Due Date
                 </Button>
               </div>
               <Modal
@@ -215,45 +205,10 @@ export default function CourseFolderTheory() {
                   </div>
                 </Box>
               </Modal>
-
-              <Modal
-                open={open1}
-                onClose={handleClose1}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-              >
-                <Box sx={modalstyle}>
-                  <div style={{ marginBottom: 10 }}>
-                    <label style={{ display: "block" }} for="title">
-                      <b>Select Date & Time</b>
-                    </label>
-                    <input
-                      name="time"
-                      // onChange={handleData}
-                      style={{ width: "100%" }}
-                      type="datetime-local"
-                      // value={data.time}
-                    ></input>
-
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      size="small"
-                      style={{ marginTop: 16 }}
-                      // onClick={}
-                    >
-                      <AiFillEdit style={{ marginRight: 10 }} />
-                      Edit Due Date
-                    </Button>
-                  </div>
-                </Box>
-              </Modal>
             </div>
           </div>
-          <div className="col">
-            <h2 className="my-4" style={{ textAlign: "left" }}>
-              Round 2
-            </h2>
+          <div className="col ms-4">
+            <h2 className="mb-4 pb-4">ROUND 2</h2>
             <form onSubmit={onsubmit2}>
               <FormControl fullWidth size="small">
                 <TextField
@@ -280,10 +235,11 @@ export default function CourseFolderTheory() {
                 />
               </FormControl>
               <Button
+                fullWidth
                 variant="contained"
                 color="primary"
                 size="small"
-                style={{ marginTop: 5 }}
+                style={muibtn}
                 type="submit"
               >
                 Submit
@@ -304,17 +260,7 @@ export default function CourseFolderTheory() {
                   onClick={() => setOpen1(true)}
                 >
                   <AiOutlineFieldTime style={{ marginRight: 10 }} />
-                  Add Due Date
-                </Button>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  size="small"
-                  style={{ marginLeft: 16 }}
-                  onClick={() => setOpen1(true)}
-                >
-                  <AiFillEdit style={{ marginRight: 10 }} />
-                  Edit Due Date
+                  ADD DUE DATE
                 </Button>
               </div>
               <Modal
@@ -344,40 +290,7 @@ export default function CourseFolderTheory() {
                       // onClick={}
                     >
                       <AiOutlineFieldTime style={{ marginRight: 10 }} />
-                      Add Due Date
-                    </Button>
-                  </div>
-                </Box>
-              </Modal>
-
-              <Modal
-                open={open1}
-                onClose={handleClose1}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-              >
-                <Box sx={modalstyle}>
-                  <div style={{ marginBottom: 10 }}>
-                    <label style={{ display: "block" }} for="title">
-                      <b>Select Date & Time</b>
-                    </label>
-                    <input
-                      name="time"
-                      // onChange={handleData}
-                      style={{ width: "100%" }}
-                      type="datetime-local"
-                      // value={data.time}
-                    ></input>
-
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      size="small"
-                      style={{ marginTop: 16 }}
-                      // onClick={}
-                    >
-                      <AiFillEdit style={{ marginRight: 10 }} />
-                      Edit Due Date
+                      Submit
                     </Button>
                   </div>
                 </Box>

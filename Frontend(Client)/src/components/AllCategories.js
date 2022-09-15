@@ -13,6 +13,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
 import { Card } from "@mui/material";
 import { Dialog, DialogActions, DialogTitle } from "@mui/material";
+import { muiAbtn, muibtn } from "./style";
+import PositionedSnackbar from "./AuxillaryComponents/DeleteSnack";
 
 const style = {
   position: "absolute",
@@ -71,7 +73,7 @@ export default function AllCategories() {
           variant="contained"
           color="primary"
           size="small"
-          style={{ marginLeft: 16 }}
+          style={muiAbtn}
           //  onClick={Update(Rows._id)}
         >
           <AiFillEdit style={{ marginRight: 10 }} />
@@ -82,7 +84,7 @@ export default function AllCategories() {
           variant="contained"
           color="primary"
           size="small"
-          style={{ marginLeft: 16 }}
+          style={muiAbtn}
           onClick={handleClickOpen}
         >
           <AiFillEdit style={{ marginRight: 10 }} />
@@ -190,6 +192,7 @@ export default function AllCategories() {
             color="primary"
             size="small"
             onClick={handleOpen}
+            style={muibtn}
           >
             <AiFillEdit style={{ marginRight: 10 }} />
             Add Categories
@@ -264,7 +267,6 @@ export default function AllCategories() {
             </Box>
           </Modal>
         </div>
-
         <div>
           <DataGrid
             style={{ height: "60vh", width: "100%" }}

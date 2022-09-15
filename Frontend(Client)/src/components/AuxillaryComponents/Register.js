@@ -44,7 +44,7 @@ export default function Register() {
         setEmail("");
         setPhone("");
         setPassword("");
-        setRoles("");
+        setRoles([]);
       } catch (err) {
         if ((err.response.data = "Email")) {
           alert("User with this Email already Exists");
@@ -121,6 +121,7 @@ export default function Register() {
                       options={userRoles}
                       getOptionLabel={(option) => option}
                       defaultValue={[]}
+                      value={Roles}
                       onChange={(e, val) => setRoles(val)}
                       renderInput={(params) => (
                         <TextField

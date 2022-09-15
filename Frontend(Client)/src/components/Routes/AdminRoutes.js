@@ -40,6 +40,7 @@ import CourseFolderLab from "../CourseFolderLab";
 import BTLLevel from "../BTLLevel";
 import SO_Level from "../SOAndBTLLevel";
 import CreateSOS1 from "../SOSCreation/CreateSos1";
+import AllCourseFolder from "../AllCourseFolder";
 function AdminRoutes() {
   return (
     <Routes>
@@ -63,6 +64,8 @@ function AdminRoutes() {
         <Route path="/EditCourse/:id" element={<EditCourseForm />} />
         <Route path="/CreateNewMeeting" element={<CreateNewMeeting />} />
         <Route path="/AllSyllabus" element={<AllSyllabus />} />
+        <Route path="/AllCourseFolder" element={<AllCourseFolder />} />
+
         <Route
           path="/SyllabusView/:Program/:Code/:id"
           element={<SyllabusFinal />}

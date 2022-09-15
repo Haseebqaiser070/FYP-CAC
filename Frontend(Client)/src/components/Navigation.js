@@ -231,6 +231,16 @@ export default function Navigation() {
                   <>
                     <Link
                       class="nav-link sidenavtext "
+                      to="AllCourseFolder"
+                      style={{ marginLeft: "12px", fontSize: "14px" }}
+                    >
+                      <div class="sb-nav-link-icon">
+                        <BsFillFilePdfFill color="#fff" />
+                      </div>
+                      All Course Folders
+                    </Link>
+                    <Link
+                      class="nav-link sidenavtext "
                       to="CourseFolderTheory"
                       style={{ marginLeft: "12px", fontSize: "14px" }}
                     >

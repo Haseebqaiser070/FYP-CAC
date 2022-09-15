@@ -17,6 +17,7 @@ import {
   Switch,
 } from "@mui/material";
 import UserCards from "./AuxillaryComponents/UserCards";
+import { muiAbtn } from "./style";
 
 const modalstyle = {
   position: "absolute",
@@ -156,7 +157,7 @@ export default function Users() {
                     variant="contained"
                     color="primary"
                     size="small"
-                    style={{ marginLeft: 16 }}
+                    style={muiAbtn}
                     onClick={() => BeforeUp(Usermember)}
                   >
                     <AiFillEdit style={{ marginRight: 10 }} />
@@ -315,7 +316,7 @@ export default function Users() {
                     variant="contained"
                     color="primary"
                     size="small"
-                    style={{ marginLeft: 16 }}
+                    style={muiAbtn}
                     onClick={handleClickOpen}
                   >
                     <AiFillDelete style={{ marginRight: 10 }} />

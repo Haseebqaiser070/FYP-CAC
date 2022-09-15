@@ -75,7 +75,7 @@ export default function PendingDeadlineRequests() {
   const columns = [
     {
       field: "Faculty Member Name",
-      headerName: "Faculty Member Name",
+      headerName: "Faculty Member",
       flex: 1,
     },
 

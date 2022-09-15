@@ -8,6 +8,7 @@ import Button from "@mui/material/Button";
 import { AiFillDelete, AiFillEdit, AiFillEye } from "react-icons/ai";
 import { DataGrid } from "@mui/x-data-grid";
 import { Dialog, DialogActions, DialogTitle } from "@mui/material";
+import { muiAbtn } from "./style";
 
 export default function AllSyllabus() {
   const [Syllabus, setSyllabus] = useState([]);
@@ -73,7 +74,7 @@ export default function AllSyllabus() {
           variant="contained"
           color="primary"
           size="small"
-          style={{ marginLeft: 16 }}
+          style={muiAbtn}
           onClick={() => {
             navigate(
               `/Admin/SyllabusView/${row.Program}/${row.Code}/${row._id}`,
@@ -91,7 +92,7 @@ export default function AllSyllabus() {
           variant="contained"
           color="primary"
           size="small"
-          style={{ marginLeft: 16 }}
+          style={muiAbtn}
           onClick={handleClickOpen}
         >
           <AiFillDelete style={{ marginRight: 10 }} />
