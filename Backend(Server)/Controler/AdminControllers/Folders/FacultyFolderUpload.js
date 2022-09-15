@@ -151,7 +151,31 @@ module.exports.ObeSubimt = async (req, res) => {
         console.log(err);
       }    
 }
-
+module.exports.LecSubimt = async (req, res) => {
+    
+  try {
+      console.log(req.user)
+      if (!req.user) return await res.json("Timed Out");
+      if (!req.user.Roles.includes("Faculty")) return await res.status(401).json("UnAutherized");        
+      try {        
+        const old = await Folderdoc.findById(req.params.id)               
+        if(old.LectureDeliveryRecord!=null){
+          var r = await Base64doc.deleteOne({_id:old.LectureDeliveryRecord})
+          console.log("erwefz",r)
+        }
+        const II = await Base64doc.create({pdf:req.body.LectureDeliveryRecord})            
+          
+        const up = await Folderdoc.findOneAndUpdate({_id:req.params.id},{Obe:II});
+          console.log("CourseFolder",up)
+          await res.status(200).json(up)
+      }catch (err) {
+          console.log(err);
+          await res.status(400).json("error")    
+      }  
+    } catch (err) {
+      console.log(err);
+    }    
+}
 module.exports.showOne = async (req, res) => {
     
     try {

@@ -22,6 +22,9 @@ const style = {
 export default function LabFolder() {
   axios.defaults.withCredentials = true;
   const { id } = useParams()
+  const [open3, setOpen3] = useState(false);
+  const handleOpen3 = () => setOpen3(true);
+  const handleClose3 = () => setOpen3(false);
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -85,7 +88,8 @@ export default function LabFolder() {
     var t = "Terminal"
     setTitle(t)
   }
- 
+
+  const [LectureDeliveryRecord,setLectureDeliveryRecord] = useState("");
   const [Question, setQuestion] = useState("");
   const [Awardlist, setAwardlist] = useState("");
   const [Best, setBest] = useState("");
@@ -134,6 +138,9 @@ export default function LabFolder() {
           setICEF(Base64)}
         else if(ty=="Obe"){
           setObe(Base64)}
+        else if (ty == "LectureDeliveryRecord"){
+          setLectureDeliveryRecord(Base64);
+        }
         setFileBase64String(Base64);
       };
       var a =base64toData()
@@ -199,6 +206,14 @@ console.log("\nDecoded",Decoded)
       getFolderData()
       handleClose2()
       }
+  const SubmitLec = async (e) => {
+    e.preventDefault();
+    const res = await axios.put(`http://localhost:4000/Folders/addLec/${id}`, {
+      LectureDeliveryRecord : LectureDeliveryRecord,
+    });
+    getFolderData();
+    handleClose2();
+  };
   const Submit1 = async(e) => {
     e.preventDefault();
     if(Question1!=""&&Question!=""&&Awardlist1!=""&&Awardlist!=""
@@ -220,7 +235,7 @@ console.log("\nDecoded",Decoded)
         },
         Best:{
           Name:Best1,
-          Base64:Best1
+          Base64:Best
         },
         Average:{
           Name:Average1,
@@ -354,6 +369,39 @@ console.log("\nDecoded",Decoded)
   return (
     <div class="container" style={{ height: 700, width: "100%", padding: 20 }}>
       <h1 style={{ marginBottom: 30 }}>Course Folder Maintainence</h1>
+      <Modal
+        open={open3}
+        onClose={handleClose3}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <form onSubmit={SubmitLec}>
+            <div class="mb-3">
+              <label class="form-label" for="customFile">
+                <b>Upload Lecture Delivery Record</b>
+              </label>
+              <input
+                type="file"
+                class="form-control"
+                id="customFile"
+                onChange={(e) => {
+                  encodeFileBase64(e.target.files[0], "LectureDeliveryRecord");
+                }}
+              />
+            </div>
+            <div class="d-grid">
+              <button
+                class="btn btn-block py-2 btn-primary"
+                id="quiz1"
+                type="submit"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+        </Box>
+      </Modal>
 
       <Modal
         open={open1}
@@ -609,7 +657,6 @@ console.log("\nDecoded",Decoded)
                    </td>)
                     })
                   }
-
                 <td className="d-grid py-2 px-2">
                   <button
                     class="btn py-2  btn-block btn-primary"
@@ -625,6 +672,20 @@ console.log("\nDecoded",Decoded)
                     })?(<> Terminal Exam (Submited)</>):
                     (<> Terminal Exam </>)}
                     
+                  </button>
+                </td>
+                <td className="d-grid py-2 px-2">
+                  <button
+                    class="btn py-2  btn-block btn-primary"
+                    id="quiz1"
+                    type="button"
+                    onClick={handleOpen3}
+                  >
+                    {Folder.LectureDeliveryRecord == null ? (
+                      <>Lecture Delivery Record</>
+                    ) : (
+                      <>Lecture Delivery Record (Submited)</>
+                    )}
                   </button>
                 </td>
                 <td className="d-grid py-2 px-2">

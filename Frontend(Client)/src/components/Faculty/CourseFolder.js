@@ -114,7 +114,7 @@ export default function CourseFolder() {
     setTitle(t);
   };
 
-  const [LectureDelivery, setLectureDelivery] = useState("");
+  const [LectureDeliveryRecord, setLectureDeliveryRecord] = useState("");
   const [Question, setQuestion] = useState("");
   const [Awardlist, setAwardlist] = useState("");
   const [Best, setBest] = useState("");
@@ -165,6 +165,9 @@ export default function CourseFolder() {
         setICEF(Base64);
       } else if (ty == "Obe") {
         setObe(Base64);
+      }
+      else if (ty == "LectureDeliveryRecord"){
+        setLectureDeliveryRecord(Base64);
       }
       setFileBase64String(Base64);
     };
@@ -231,6 +234,14 @@ export default function CourseFolder() {
     getFolderData();
     handleClose2();
   };
+  const SubmitLec = async (e) => {
+    e.preventDefault();
+    const res = await axios.put(`http://localhost:4000/Folders/addLec/${id}`, {
+      LectureDeliveryRecord : LectureDeliveryRecord,
+    });
+    getFolderData();
+    handleClose2();
+  };
   const Submit1 = async (e) => {
     e.preventDefault();
     if (
@@ -262,7 +273,7 @@ export default function CourseFolder() {
         },
         Best: {
           Name: Best1,
-          Base64: Best1,
+          Base64: Best,
         },
         Average: {
           Name: Average1,
@@ -404,7 +415,7 @@ export default function CourseFolder() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <form>
+          <form onSubmit={SubmitLec}>
             <div class="mb-3">
               <label class="form-label" for="customFile">
                 <b>Upload Lecture Delivery Record</b>
@@ -413,9 +424,9 @@ export default function CourseFolder() {
                 type="file"
                 class="form-control"
                 id="customFile"
-                // onChange={(e) => {
-                //   encodeFileBase64(e.target.files[0], "ICEF");
-                // }}
+                onChange={(e) => {
+                  encodeFileBase64(e.target.files[0], "LectureDeliveryRecord");
+                }}
               />
             </div>
             <div class="d-grid">
@@ -837,7 +848,7 @@ export default function CourseFolder() {
                     type="button"
                     onClick={handleOpen3}
                   >
-                    {Folder.Obe == null ? (
+                    {Folder.LectureDeliveryRecord == null ? (
                       <>Lecture Delivery Record</>
                     ) : (
                       <>Lecture Delivery Record (Submited)</>

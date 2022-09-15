@@ -21,7 +21,7 @@ export default function FolderTemplete() {
   useEffect(() => {
     getFolderData();
   }, []);
-  const [Folder, setFolder] = useState({ files: [], ICEF: null, Obe: null });
+  const [Folder, setFolder] = useState({ files: [], ICEF: null, Obe: null, LectureDeliveryRecord: null });
 
   console.log("Folder: ", Folder);
   const getFolderData = async () => {
@@ -55,13 +55,28 @@ export default function FolderTemplete() {
           >
             Lecture Delivery Record
           </h1>
-          <div style={{ marginTop: 50 }}>
-            <p className="mb-4 pb-4">Insert Delivery Record pdf here</p>
-          </div>
+          {/* {Folder.LectureDeliveryRecord==null?(<p>No Lecture Delivery Record</p>):<div style={{ marginTop: 50 }}>
+          <Card sx={{ maxWidth: "100%", marginTop: 0 }}>
+                    <h2
+                      className="my-4 py-4"
+                      style={{ textTransform: "uppercase" }}
+                    >
+                      LectureDeliveryRecord
+                    </h2>
+                    <CardMedia
+                      className="cardmedia"
+                      component="iframe"
+                      Height="1056px"
+                      src={Folder.LectureDeliveryRecord.Base64.pdf}
+                    />
+                  </Card>
+          </div>} */}
         </div>
         {Folder.files.length > 0 &&
           Folder.files.map((i) => {
+            if(i.Title.includes("Quiz")){
             return (
+              
               <div>
                 <div style={{ marginTop: 50 }}>
                   <h1
@@ -283,7 +298,692 @@ export default function FolderTemplete() {
                   </div>
                 </div>
               </div>
-            );
+            );}
+          })}
+          
+          {Folder.files.length > 0 &&
+          Folder.files.map((i) => {
+            if(i.Title.includes("Assignment")){
+            return (
+              
+              <div>
+                <div style={{ marginTop: 50 }}>
+                  <h1
+                    className="mb-4 pb-4"
+                    style={{
+                      padding: 10,
+                      backgroundColor: "#4b2980",
+                      color: "#fff",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {i.Title}
+                  </h1>
+                  <Card sx={{ maxWidth: "100%", marginTop: 0 }}>
+                    <h2
+                      className="my-4 py-4"
+                      style={{ textTransform: "uppercase" }}
+                    >
+                      {i.Title} Question Paper
+                    </h2>
+                    <CardMedia
+                      className="cardmedia"
+                      component="iframe"
+                      Height="1056px"
+                      src={i.Question.Base64.pdf}
+                    />
+                  </Card>
+                  <Card sx={{ maxWidth: "100%", marginTop: 20 }}>
+                    <h2
+                      className="my-4 py-4"
+                      style={{ textTransform: "uppercase" }}
+                    >
+                      {i.Title} Solution
+                    </h2>
+                    <CardMedia
+                      className="cardmedia"
+                      component="iframe"
+                      Height="1056px"
+                      src={i.Solution.Base64.pdf}
+                    />
+                  </Card>
+                  <Card sx={{ maxWidth: "100%", marginTop: 20 }}>
+                    <h2
+                      className="my-4 py-4"
+                      style={{ textTransform: "uppercase" }}
+                    >
+                      {i.Title} (Best)
+                    </h2>
+                    <CardMedia
+                      className="cardmedia"
+                      component="iframe"
+                      Height="1056px"
+                      src={i.Best.Base64.pdf}
+                    />
+                  </Card>
+                  <Card sx={{ maxWidth: "100%", marginTop: 20 }}>
+                    <h2
+                      className="my-4 py-4"
+                      style={{ textTransform: "uppercase" }}
+                    >
+                      {i.Title} (Average)
+                    </h2>
+                    <CardMedia
+                      className="cardmedia"
+                      component="iframe"
+                      Height="1056px"
+                      src={i.Average.Base64.pdf}
+                    />
+                  </Card>
+                  <Card sx={{ maxWidth: "100%", marginTop: 20 }}>
+                    <h2
+                      className="my-4 py-4"
+                      style={{ textTransform: "uppercase" }}
+                    >
+                      {i.Title} (Worst)
+                    </h2>
+                    <CardMedia
+                      className="cardmedia"
+                      component="iframe"
+                      Height="1056px"
+                      src={i.Worst.Base64.pdf}
+                    />
+                  </Card>
+                  <Card sx={{ maxWidth: "100%", marginTop: 20 }}>
+                    <h2
+                      className="my-4 py-4"
+                      style={{ textTransform: "uppercase" }}
+                    >
+                      {i.Title} Award List
+                    </h2>
+                    <CardMedia
+                      className="cardmedia"
+                      component="iframe"
+                      Height="1056px"
+                      src={i.Awardlist.Base64.pdf}
+                    />
+                  </Card>
+                  <div
+                    style={{
+                      backgroundColor: "#fff",
+                      marginTop: 35,
+                      marginBottom: 35,
+                      padding: 35,
+                      paddingBottom: 35,
+                    }}
+                  >
+                    <h2 className="my-4 py-4">{i.Title} Evalution</h2>
+                    <div className="row ">
+                      <div className="col">
+                        <TextField
+                          className="mb-4"
+                          label="CLO NO iN CDF"
+                          variant="outlined"
+                          size="small"
+                          fullWidth
+                          // value={}
+                          // onChange={
+
+                          // }
+                        />
+                      </div>
+                      <div className="col mb-4 pl-4 ml-4">
+                        <FormControl>
+                          <FormLabel>Is it have correct Mapping?</FormLabel>
+                          <RadioGroup
+                            row
+                            aria-labelledby="demo-radio-buttons-group-label"
+                            defaultValue="female"
+                            name="radio-buttons-group"
+                          >
+                            <FormControlLabel
+                              value="yes"
+                              control={<Radio size="small" />}
+                              label="Yes"
+                            />
+                            <FormControlLabel
+                              value="no"
+                              control={<Radio size="small" />}
+                              label="No"
+                            />
+                          </RadioGroup>
+                        </FormControl>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col">
+                        <TextField
+                          className="mb-4"
+                          label="BTL LEVEL iN CDF"
+                          variant="outlined"
+                          size="small"
+                          fullWidth
+                          // value={}
+                          // onChange={
+
+                          // }
+                        />
+                      </div>
+                      <div className="col mb-4">
+                        <FormControl>
+                          <FormLabel>Is it have correct BTL Level ?</FormLabel>
+                          <RadioGroup
+                            row
+                            aria-labelledby="demo-radio-buttons-group-label"
+                            defaultValue="female"
+                            name="radio-buttons-group"
+                          >
+                            <FormControlLabel
+                              value="yes"
+                              control={<Radio size="small" />}
+                              label="Yes"
+                            />
+                            <FormControlLabel
+                              value="no"
+                              control={<Radio size="small" />}
+                              label="No"
+                            />
+                          </RadioGroup>
+                        </FormControl>
+                      </div>
+                    </div>
+                    <div>
+                      <TextField
+                        multiline={true}
+                        rows={2}
+                        label="Other Comments:"
+                        className="mb-4"
+                        variant="outlined"
+                        size="small"
+                        fullWidth
+                        // value={}
+                        // onChange={
+
+                        // }
+                      />
+                      <TextField
+                        multiline={true}
+                        rows={3}
+                        label="Feedback:"
+                        className="mb-4"
+                        variant="outlined"
+                        size="small"
+                        fullWidth
+                        // value={}
+                        // onChange={
+
+                        // }
+                      />
+                      <Button
+                        style={{ float: "right" }}
+                        variant="contained"
+                        color="primary"
+                        size="small"
+                        type="submit"
+                      >
+                        Submit
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );}
+          })}
+        {Folder.files.length > 0 &&
+          Folder.files.map((i) => {
+            if(i.Title.includes("Terminal")){
+            return (
+              
+              <div>
+                <div style={{ marginTop: 50 }}>
+                  <h1
+                    className="mb-4 pb-4"
+                    style={{
+                      padding: 10,
+                      backgroundColor: "#4b2980",
+                      color: "#fff",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {i.Title}
+                  </h1>
+                  <Card sx={{ maxWidth: "100%", marginTop: 0 }}>
+                    <h2
+                      className="my-4 py-4"
+                      style={{ textTransform: "uppercase" }}
+                    >
+                      {i.Title} Question Paper
+                    </h2>
+                    <CardMedia
+                      className="cardmedia"
+                      component="iframe"
+                      Height="1056px"
+                      src={i.Question.Base64.pdf}
+                    />
+                  </Card>
+                  <Card sx={{ maxWidth: "100%", marginTop: 20 }}>
+                    <h2
+                      className="my-4 py-4"
+                      style={{ textTransform: "uppercase" }}
+                    >
+                      {i.Title} Solution
+                    </h2>
+                    <CardMedia
+                      className="cardmedia"
+                      component="iframe"
+                      Height="1056px"
+                      src={i.Solution.Base64.pdf}
+                    />
+                  </Card>
+                  <Card sx={{ maxWidth: "100%", marginTop: 20 }}>
+                    <h2
+                      className="my-4 py-4"
+                      style={{ textTransform: "uppercase" }}
+                    >
+                      {i.Title} (Best)
+                    </h2>
+                    <CardMedia
+                      className="cardmedia"
+                      component="iframe"
+                      Height="1056px"
+                      src={i.Best.Base64.pdf}
+                    />
+                  </Card>
+                  <Card sx={{ maxWidth: "100%", marginTop: 20 }}>
+                    <h2
+                      className="my-4 py-4"
+                      style={{ textTransform: "uppercase" }}
+                    >
+                      {i.Title} (Average)
+                    </h2>
+                    <CardMedia
+                      className="cardmedia"
+                      component="iframe"
+                      Height="1056px"
+                      src={i.Average.Base64.pdf}
+                    />
+                  </Card>
+                  <Card sx={{ maxWidth: "100%", marginTop: 20 }}>
+                    <h2
+                      className="my-4 py-4"
+                      style={{ textTransform: "uppercase" }}
+                    >
+                      {i.Title} (Worst)
+                    </h2>
+                    <CardMedia
+                      className="cardmedia"
+                      component="iframe"
+                      Height="1056px"
+                      src={i.Worst.Base64.pdf}
+                    />
+                  </Card>
+                  <Card sx={{ maxWidth: "100%", marginTop: 20 }}>
+                    <h2
+                      className="my-4 py-4"
+                      style={{ textTransform: "uppercase" }}
+                    >
+                      {i.Title} Award List
+                    </h2>
+                    <CardMedia
+                      className="cardmedia"
+                      component="iframe"
+                      Height="1056px"
+                      src={i.Awardlist.Base64.pdf}
+                    />
+                  </Card>
+                  <div
+                    style={{
+                      backgroundColor: "#fff",
+                      marginTop: 35,
+                      marginBottom: 35,
+                      padding: 35,
+                      paddingBottom: 35,
+                    }}
+                  >
+                    <h2 className="my-4 py-4">{i.Title} Evalution</h2>
+                    <div className="row ">
+                      <div className="col">
+                        <TextField
+                          className="mb-4"
+                          label="CLO NO iN CDF"
+                          variant="outlined"
+                          size="small"
+                          fullWidth
+                          // value={}
+                          // onChange={
+
+                          // }
+                        />
+                      </div>
+                      <div className="col mb-4 pl-4 ml-4">
+                        <FormControl>
+                          <FormLabel>Is it have correct Mapping?</FormLabel>
+                          <RadioGroup
+                            row
+                            aria-labelledby="demo-radio-buttons-group-label"
+                            defaultValue="female"
+                            name="radio-buttons-group"
+                          >
+                            <FormControlLabel
+                              value="yes"
+                              control={<Radio size="small" />}
+                              label="Yes"
+                            />
+                            <FormControlLabel
+                              value="no"
+                              control={<Radio size="small" />}
+                              label="No"
+                            />
+                          </RadioGroup>
+                        </FormControl>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col">
+                        <TextField
+                          className="mb-4"
+                          label="BTL LEVEL iN CDF"
+                          variant="outlined"
+                          size="small"
+                          fullWidth
+                          // value={}
+                          // onChange={
+
+                          // }
+                        />
+                      </div>
+                      <div className="col mb-4">
+                        <FormControl>
+                          <FormLabel>Is it have correct BTL Level ?</FormLabel>
+                          <RadioGroup
+                            row
+                            aria-labelledby="demo-radio-buttons-group-label"
+                            defaultValue="female"
+                            name="radio-buttons-group"
+                          >
+                            <FormControlLabel
+                              value="yes"
+                              control={<Radio size="small" />}
+                              label="Yes"
+                            />
+                            <FormControlLabel
+                              value="no"
+                              control={<Radio size="small" />}
+                              label="No"
+                            />
+                          </RadioGroup>
+                        </FormControl>
+                      </div>
+                    </div>
+                    <div>
+                      <TextField
+                        multiline={true}
+                        rows={2}
+                        label="Other Comments:"
+                        className="mb-4"
+                        variant="outlined"
+                        size="small"
+                        fullWidth
+                        // value={}
+                        // onChange={
+
+                        // }
+                      />
+                      <TextField
+                        multiline={true}
+                        rows={3}
+                        label="Feedback:"
+                        className="mb-4"
+                        variant="outlined"
+                        size="small"
+                        fullWidth
+                        // value={}
+                        // onChange={
+
+                        // }
+                      />
+                      <Button
+                        style={{ float: "right" }}
+                        variant="contained"
+                        color="primary"
+                        size="small"
+                        type="submit"
+                      >
+                        Submit
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );}
+          })}
+          {Folder.files.length > 0 &&
+          Folder.files.map((i) => {
+            if(i.Title.includes("Mid")||i.Title.includes("Sessional")){
+            return (
+              
+              <div>
+                <div style={{ marginTop: 50 }}>
+                  <h1
+                    className="mb-4 pb-4"
+                    style={{
+                      padding: 10,
+                      backgroundColor: "#4b2980",
+                      color: "#fff",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {i.Title}
+                  </h1>
+                  <Card sx={{ maxWidth: "100%", marginTop: 0 }}>
+                    <h2
+                      className="my-4 py-4"
+                      style={{ textTransform: "uppercase" }}
+                    >
+                      {i.Title} Question Paper
+                    </h2>
+                    <CardMedia
+                      className="cardmedia"
+                      component="iframe"
+                      Height="1056px"
+                      src={i.Question.Base64.pdf}
+                    />
+                  </Card>
+                  <Card sx={{ maxWidth: "100%", marginTop: 20 }}>
+                    <h2
+                      className="my-4 py-4"
+                      style={{ textTransform: "uppercase" }}
+                    >
+                      {i.Title} Solution
+                    </h2>
+                    <CardMedia
+                      className="cardmedia"
+                      component="iframe"
+                      Height="1056px"
+                      src={i.Solution.Base64.pdf}
+                    />
+                  </Card>
+                  <Card sx={{ maxWidth: "100%", marginTop: 20 }}>
+                    <h2
+                      className="my-4 py-4"
+                      style={{ textTransform: "uppercase" }}
+                    >
+                      {i.Title} (Best)
+                    </h2>
+                    <CardMedia
+                      className="cardmedia"
+                      component="iframe"
+                      Height="1056px"
+                      src={i.Best.Base64.pdf}
+                    />
+                  </Card>
+                  <Card sx={{ maxWidth: "100%", marginTop: 20 }}>
+                    <h2
+                      className="my-4 py-4"
+                      style={{ textTransform: "uppercase" }}
+                    >
+                      {i.Title} (Average)
+                    </h2>
+                    <CardMedia
+                      className="cardmedia"
+                      component="iframe"
+                      Height="1056px"
+                      src={i.Average.Base64.pdf}
+                    />
+                  </Card>
+                  <Card sx={{ maxWidth: "100%", marginTop: 20 }}>
+                    <h2
+                      className="my-4 py-4"
+                      style={{ textTransform: "uppercase" }}
+                    >
+                      {i.Title} (Worst)
+                    </h2>
+                    <CardMedia
+                      className="cardmedia"
+                      component="iframe"
+                      Height="1056px"
+                      src={i.Worst.Base64.pdf}
+                    />
+                  </Card>
+                  <Card sx={{ maxWidth: "100%", marginTop: 20 }}>
+                    <h2
+                      className="my-4 py-4"
+                      style={{ textTransform: "uppercase" }}
+                    >
+                      {i.Title} Award List
+                    </h2>
+                    <CardMedia
+                      className="cardmedia"
+                      component="iframe"
+                      Height="1056px"
+                      src={i.Awardlist.Base64.pdf}
+                    />
+                  </Card>
+                  <div
+                    style={{
+                      backgroundColor: "#fff",
+                      marginTop: 35,
+                      marginBottom: 35,
+                      padding: 35,
+                      paddingBottom: 35,
+                    }}
+                  >
+                    <h2 className="my-4 py-4">{i.Title} Evalution</h2>
+                    <div className="row ">
+                      <div className="col">
+                        <TextField
+                          className="mb-4"
+                          label="CLO NO iN CDF"
+                          variant="outlined"
+                          size="small"
+                          fullWidth
+                          // value={}
+                          // onChange={
+
+                          // }
+                        />
+                      </div>
+                      <div className="col mb-4 pl-4 ml-4">
+                        <FormControl>
+                          <FormLabel>Is it have correct Mapping?</FormLabel>
+                          <RadioGroup
+                            row
+                            aria-labelledby="demo-radio-buttons-group-label"
+                            defaultValue="female"
+                            name="radio-buttons-group"
+                          >
+                            <FormControlLabel
+                              value="yes"
+                              control={<Radio size="small" />}
+                              label="Yes"
+                            />
+                            <FormControlLabel
+                              value="no"
+                              control={<Radio size="small" />}
+                              label="No"
+                            />
+                          </RadioGroup>
+                        </FormControl>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col">
+                        <TextField
+                          className="mb-4"
+                          label="BTL LEVEL iN CDF"
+                          variant="outlined"
+                          size="small"
+                          fullWidth
+                          // value={}
+                          // onChange={
+
+                          // }
+                        />
+                      </div>
+                      <div className="col mb-4">
+                        <FormControl>
+                          <FormLabel>Is it have correct BTL Level ?</FormLabel>
+                          <RadioGroup
+                            row
+                            aria-labelledby="demo-radio-buttons-group-label"
+                            defaultValue="female"
+                            name="radio-buttons-group"
+                          >
+                            <FormControlLabel
+                              value="yes"
+                              control={<Radio size="small" />}
+                              label="Yes"
+                            />
+                            <FormControlLabel
+                              value="no"
+                              control={<Radio size="small" />}
+                              label="No"
+                            />
+                          </RadioGroup>
+                        </FormControl>
+                      </div>
+                    </div>
+                    <div>
+                      <TextField
+                        multiline={true}
+                        rows={2}
+                        label="Other Comments:"
+                        className="mb-4"
+                        variant="outlined"
+                        size="small"
+                        fullWidth
+                        // value={}
+                        // onChange={
+
+                        // }
+                      />
+                      <TextField
+                        multiline={true}
+                        rows={3}
+                        label="Feedback:"
+                        className="mb-4"
+                        variant="outlined"
+                        size="small"
+                        fullWidth
+                        // value={}
+                        // onChange={
+
+                        // }
+                      />
+                      <Button
+                        style={{ float: "right" }}
+                        variant="contained"
+                        color="primary"
+                        size="small"
+                        type="submit"
+                      >
+                        Submit
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );}
           })}
         {/* <div>
             <h1
@@ -448,6 +1148,8 @@ export default function FolderTemplete() {
               <p className="mb-4 pb-4">Insert Terminal pdf here</p>
             </div>
           </div> */}
+
+  
         <div>
           <h1
             style={{

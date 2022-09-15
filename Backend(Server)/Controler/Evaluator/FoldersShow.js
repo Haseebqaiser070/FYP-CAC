@@ -61,14 +61,12 @@ const eval = await Evaldoc.findOne({_id:req.params.id}).populate("Folder")
         .populate({path:"Folder",
         populate:{path:"files",populate:{path:"Question.Base64",model:"Base64"}}})
         
-
         .populate({path:"Folder",
         populate:{path:"files",populate:{path:"Solution.Base64",model:"Base64"}}})
         
         .populate({path:"Folder",
         populate:{path:"files",populate:{path:"Awardlist.Base64",model:"Base64"}}})
         
-
         .populate({path:"Folder",
         populate:{path:"files",populate:{path:"Best.Base64",model:"Base64"}}})
         
