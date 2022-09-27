@@ -25,46 +25,11 @@ var ProgramCoursesSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  
   PreRequisites: [
     {
       type: mongoose.Schema.ObjectId,
-      ref: "Course",
+      ref: "Repo",
       default: "none",
-    },
-  ],
-
-  catalogue: {
-    type: String,
-    default:""
-  },
-  objectiveList: {
-    type: [
-      {
-        id: {
-          type: String,
-        },
-        title: {
-          type: String,
-        },
-        default:""
-      },
-    ],
-  },
-  Books: [
-    {
-      id: {
-        type: String,
-      },
-      BookName: {
-        type: String,
-      },
-      BookWriter: {
-        type: String,
-      },
-      BookYear: {
-        type: String,
-      },
     },
   ],
 });

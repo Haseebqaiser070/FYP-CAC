@@ -15,6 +15,7 @@ const ReturnedSyllabus = require("../../../Models/SyallabusModels/ReturnSyllabus
 const Syllabusdoc = require("../../../Models/SyallabusModels/Syllabus");
 const VaersionSyllabus = require("../../../Models/SyallabusModels/SyllabusVersion");
 const genSyllabus = require("../../../Models/SyallabusModels/SyllabusGeneral");
+var SOSPage1 = require("../../../Models/SOSModels/SOSFirstPage");
 
 module.exports.Showall = async (req, res) => {
     try {
@@ -76,11 +77,8 @@ module.exports.Lock = async (req, res) => {
                 Credit: i.Credit,
                 LectureHoursWeek: i.LectureHoursWeek ,
                 LabHoursWeek:i.LabHoursWeek,
-                Category:i.Category,
                 PreRequisites:i.PreRequisites,
-                catalogue: i.catalogue,
-                objectiveList:i.objectiveList ,
-                Books:i.Books})   
+                })   
               return await doc          
            })
            )
@@ -88,10 +86,19 @@ module.exports.Lock = async (req, res) => {
            e.Courses = cors
            return await e
        }))
+       const p1 = SOSPage1.find({Program:obj.Program,Year:obj.Year})
+       await Promise.all(p1.forEach(async(i) => {
+        console.log("i",i)
+        if(obj.Page1!=i._id){
+          var doc = await SOSPage1.deleteOne({_id:i._id})
+          console.log("delete",doc)
+          }
+        })
+        )
        console.log("cats",cats)
        obj.Categories=cats
         console.log(obj)
-        const finalSOS = await SOSdoc.create({Program:obj.Program,Year:obj.Year,Categories:obj.Categories});
+        const finalSOS = await SOSdoc.create({Page1:obj.Page1,Program:obj.Program,Year:obj.Year,Categories:obj.Categories});
         console.log("finalSOS",finalSOS)        
         await Task.deleteOne({_id:req.params.id});
         await ReturnedSOS.deleteOne({Program:task.Program})

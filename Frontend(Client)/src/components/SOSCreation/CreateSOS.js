@@ -78,9 +78,9 @@ export default function CreateSOS() {
     // const data = await res.data;
     // console.log("data",data);
     console.log("CATS", Categories);
-    // if(Content.Categories!=undefined){
-    //   setCategories(Content.Categories)
-    // }
+    if(Content.Categories!=undefined){
+      setCategories(Content.Categories)
+    }
     setCategory([...state.row.CoveredCategories,...state.row.DomainCategories]);
     };
   const getData = async () => {
@@ -97,7 +97,7 @@ export default function CreateSOS() {
     var check = true
     Categories.forEach(e => {
       var r = Category.find(i=>i.Category==e.Category)
-      if(e.Courses.length>r.NoofCourses){
+      if(e.Courses.length!=r.NoofCourses){
         check=false
         alert("In "+cats.Category+" Number of courses is greater")
       }
@@ -106,23 +106,24 @@ export default function CreateSOS() {
         sum = sum + parseInt(e.LectureHoursWeek)
         sum = sum + parseInt(e.LabHoursWeek)
       })
-      if(sum>parseInt(r.NoofCredits)){
+      if(sum!=parseInt(r.NoofCredits)){
         check=false
         alert("In "+cats.Category+" Number of Credit hours is greater")
       }
     });
     if(check){
         console.log("SOS");
-        retnSOSPage1 = await axios.post("http://localhost:4000/SOSpage1/add", {
-          Program,
-          Year,
-          CoveredCategories: state.row.CoveredCategories,
-          DomainCategories: state.row.DomainCategories
-        }
-        )
+        // const retnSOSPage1 = await axios.post("http://localhost:4000/SOSpage1/add", {
+        //   Program,
+        //   Year,
+        //   CoveredCategories: state.row.CoveredCategories,
+        //   DomainCategories: state.row.DomainCategories
+        // }
+        // )
           
         await axios.post("http://localhost:4000/SOSVerison/add", {
-          Page1: retnSOSPage1,  
+          CoveredCategories: state.row.CoveredCategories,
+          DomainCategories: state.row.DomainCategories,
           Program,
           Year,
           Categories,

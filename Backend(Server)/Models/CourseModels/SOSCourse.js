@@ -29,7 +29,7 @@ var SOSCourseSchema = new mongoose.Schema({
   PreRequisites: [
     {
       type: mongoose.Schema.ObjectId,
-      ref: "Course",
+      ref: "Repo",
       default: "none",
     },
   ],

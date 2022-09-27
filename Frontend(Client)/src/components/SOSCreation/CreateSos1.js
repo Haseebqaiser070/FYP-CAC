@@ -41,8 +41,8 @@ export default function CreateSOS1() {
   //------------------------------------------------
   const [CoveredCourseSum, setCoveredCourseSum] = useState(0);
   const [CoveredCreditSum, setCoveredCreditSum] = useState(0);
-  const [DomainCategories, setDomainCategories] = useState([]);
-  const [CoveredCategories, setCoveredCategories] = useState([]);
+  const [DomainCategories, setDomainCategories] = useState(state.row.Content.Page1.DomainCategories);
+  const [CoveredCategories, setCoveredCategories] = useState(state.row.Content.Page1.CoveredCategories);
   const [DomainCourseSum,setDomainCourseSum] = useState(0);
   const [DomainCreditSum,setDomainCreditSum] = useState(0);
   const [Category, setCategory] = useState([]);
