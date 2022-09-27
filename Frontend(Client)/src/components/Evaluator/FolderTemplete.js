@@ -38,7 +38,7 @@ export default function FolderTemplete() {
     <div
       className="container-fluid"
       style={{
-        height: 700,
+        height: 800,
         width: "100%",
 
         overflow: "hidden",
