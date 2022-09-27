@@ -285,14 +285,19 @@ const getDomianSum = ()=>{
 
         <Button fullWidth variant="contained" color="primary" size="medium"
         onClick={() => {
-          state.row.CoveredCategories=CoveredCategories
-          state.row.DomainCategories=DomainCategories
-          navigate(
-            `/CAC/CreateSOS/${Program}/2`,
-            { state:{ row: state.row }},
-            { replace: true }
-          );
-        }}>
+          if((CoveredCourseSum==0&&CoveredCreditSum==0)||(DomainCourseSum==0&&DomainCreditSum==0)){
+            alert("Categories in Complete")
+          }
+          else{
+            state.row.CoveredCategories=CoveredCategories
+            state.row.DomainCategories=DomainCategories
+            navigate(
+                `/CAC/CreateSOS/${Program}/2`,
+                { state:{ row: state.row }},
+                { replace: true }
+              );
+          }}
+        }>
             Next
           </Button>        
       </div>

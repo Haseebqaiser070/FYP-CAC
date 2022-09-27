@@ -1,5 +1,10 @@
 var mongoose = require("mongoose");
 var SOSVersionSchema = new mongoose.Schema({
+    
+    Page1:{
+        type: mongoose.Schema.ObjectId,
+        ref: 'SOSPage1'
+    },
     Program: {
         type: String
     },
@@ -20,7 +25,7 @@ var SOSVersionSchema = new mongoose.Schema({
         },
         Courses:[{
             type: mongoose.Schema.ObjectId,
-            ref: 'SOSCourse',}],
+            ref: 'SOSCourse'}],
         Note:{ 
             type:String,
             default:""
@@ -28,6 +33,7 @@ var SOSVersionSchema = new mongoose.Schema({
         }
     ],
     }
+
 });
 
 module.exports = mongoose.model("SOSVersion", SOSVersionSchema);

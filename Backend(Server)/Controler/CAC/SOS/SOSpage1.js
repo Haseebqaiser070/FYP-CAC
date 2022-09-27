@@ -4,9 +4,9 @@ module.exports.Add = async (req, res) => {
   try {
     if (!req.user) return await res.status(401).json("Timed Out");
     if(!req.user.Roles.includes("Admin")) return res.status(401).json("Unautherized");   
-    const SOSPage1 = await SOSPage1.create(req.body);
-    console.log("SOSPage1 added", SOSPage1);
-    await res.status(201).json(SOSPage1);
+    const retnSOSPage1 = await SOSPage1.create(req.body);
+    console.log("SOSPage1 added", retnSOSPage1);
+    await res.status(201).json(retnSOSPage1);
   } catch (err) {
     console.log(err);
   }

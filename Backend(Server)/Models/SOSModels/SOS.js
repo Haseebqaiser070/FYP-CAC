@@ -1,7 +1,10 @@
 var mongoose = require("mongoose");
 
 var SOSSchema = new mongoose.Schema({
-
+    Page1:{
+        type: mongoose.Schema.ObjectId,
+        ref: 'SOSPage1'
+    },
     Program: {
         type: String,
         required: true,

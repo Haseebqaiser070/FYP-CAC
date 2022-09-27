@@ -1,5 +1,11 @@
 var mongoose = require("mongoose");
 var SOSPage1Schema = new mongoose.Schema({
+    Program:{
+        type: String
+    },
+    Year:{
+        type: String
+    },
     CoveredCategories:{
         type:[
             { Category:{ 

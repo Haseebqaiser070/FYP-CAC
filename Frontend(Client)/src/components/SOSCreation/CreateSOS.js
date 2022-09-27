@@ -57,7 +57,7 @@ export default function CreateSOS() {
 
   const [AssignPrerequisite, setAssignPrerequisite] = useState([]);
   const [opts, setopts] = useState([]);
-console.log("Category",Category)
+  console.log("Category",Category)
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
   const settracks = (clone) => {
@@ -91,20 +91,48 @@ console.log("Category",Category)
       return i }))
     setCourse([...data]);
   };
+  
   const AddSOS = async (e) => {
     e.preventDefault();
-    console.log("SOS");
-
-    await axios.post("http://localhost:4000/SOSVerison/add", {
-      Program,
-      Year,
-      Categories,
+    var check = true
+    Categories.forEach(e => {
+      var r = Category.find(i=>i.Category==e.Category)
+      if(e.Courses.length>r.NoofCourses){
+        check=false
+        alert("In "+cats.Category+" Number of courses is greater")
+      }
+      var sum = 0
+      e.Courses.forEach(e => {
+        sum = sum + parseInt(e.LectureHoursWeek)
+        sum = sum + parseInt(e.LabHoursWeek)
+      })
+      if(sum>parseInt(r.NoofCredits)){
+        check=false
+        alert("In "+cats.Category+" Number of Credit hours is greater")
+      }
     });
-    navigate(
-      `/CAC/SOSCreation/${Program}`,
-      { state: { row: { Program } } },
-      { replace: true }
-    );
+    if(check){
+        console.log("SOS");
+        retnSOSPage1 = await axios.post("http://localhost:4000/SOSpage1/add", {
+          Program,
+          Year,
+          CoveredCategories: state.row.CoveredCategories,
+          DomainCategories: state.row.DomainCategories
+        }
+        )
+          
+        await axios.post("http://localhost:4000/SOSVerison/add", {
+          Page1: retnSOSPage1,  
+          Program,
+          Year,
+          Categories,
+        });
+        navigate(
+          `/CAC/SOSCreation/${Program}`,
+          { state: { row: { Program } } },
+          { replace: true }
+        );
+    }
   };
 
   useEffect(() => {
