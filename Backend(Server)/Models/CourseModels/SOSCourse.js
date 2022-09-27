@@ -34,38 +34,6 @@ var SOSCourseSchema = new mongoose.Schema({
     },
   ],
 
-  catalogue: {
-    type: String,
-  },
-  objectiveList: {
-    type: [
-      {
-        id: {
-          type: String,
-        },
-        title: {
-          type: String,
-        },
-      },
-    ],
-    required: true,
-  },
-  Books: [
-    {
-      id: {
-        type: String,
-      },
-      BookName: {
-        type: String,
-      },
-      BookWriter: {
-        type: String,
-      },
-      BookYear: {
-        type: String,
-      },
-    },
-  ],
 });
 
 module.exports = mongoose.model("SOSCourse", SOSCourseSchema);

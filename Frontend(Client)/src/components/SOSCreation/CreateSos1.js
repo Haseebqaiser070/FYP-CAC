@@ -56,6 +56,8 @@ export default function CreateSOS1() {
   };
   console.log("Content",Content)
 console.log("CoveredCategories",CoveredCategories)
+console.log("DomainCategories",DomainCategories)
+
   useEffect(() => {
     getCategory();
   }, []);
@@ -281,13 +283,10 @@ const getDomianSum = ()=>{
           </tbody>
         </table>
 
-        <Button fullWidth variant="contained" color="primary" size="small"
-        >
-          Save
-        </Button>
-
         <Button fullWidth variant="contained" color="primary" size="medium"
         onClick={() => {
+          state.row.CoveredCategories=CoveredCategories
+          state.row.DomainCategories=DomainCategories
           navigate(
             `/CAC/CreateSOS/${Program}/2`,
             { state:{ row: state.row }},

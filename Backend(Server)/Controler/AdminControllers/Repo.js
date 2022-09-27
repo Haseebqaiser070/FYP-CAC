@@ -25,7 +25,6 @@ module.exports.Add = async (req, res) => {
 module.exports.Showall = async (req, res) => {
   try {
     if (!req.user) return await res.status(401).json("Timed Out");
-    if (!req.user.Roles.includes("Admin")) return await res.status(401).json("UnAutherized");
     const Repos = await Repo.find({});
     console.log("all Repos", Repos);
     await res.json(Repos);

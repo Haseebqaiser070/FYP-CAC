@@ -38,7 +38,7 @@ export default function CreateSOS() {
   const [Year, setYear] = useState(Content.Year);
   //------------------------------------------------
 
-  const [Categories, setCategories] = useState(Content.Categories);
+  const [Categories, setCategories] = useState([]);
   //{Category:"",Optional:"",Track:"",Courses:[],Note:""}
   //------------------------------------------------
   const [Courses, setCourse] = useState([]);
@@ -47,7 +47,9 @@ export default function CreateSOS() {
   const [coursesList, setCoursesList] = useState([]);
 
   console.log("Course", Courses);
-
+  console.log("state.row",state.row);
+  console.log("state.row",state.row.CoveredCategories);
+  console.log("state.row",state.row.DomainCategories);
   console.log("CATS", Categories);
   console.log("Content",Content)
 
@@ -72,14 +74,21 @@ console.log("Category",Category)
     setCategories([...clone]);
   };
   const getCategory = async () => {
-    const res = await axios.get("http://localhost:4000/Category/show");
-    const data = await res.data;
-    console.log("data",data);
-    setCategory([...res.data]);
-  };
+    // const res = await axios.get("http://localhost:4000/Category/show");
+    // const data = await res.data;
+    // console.log("data",data);
+    console.log("CATS", Categories);
+    // if(Content.Categories!=undefined){
+    //   setCategories(Content.Categories)
+    // }
+    setCategory([...state.row.CoveredCategories,...state.row.DomainCategories]);
+    };
   const getData = async () => {
-    const res = await axios.get("http://localhost:4000/Course/show");
-    const data = await res.data;
+    
+    const res = await axios.get("http://localhost:4000/RepoCourse/show");
+    const data = await Promise.all(res.data.map(i=>{
+      i.PreRequisites=[]
+      return i }))
     setCourse([...data]);
   };
   const AddSOS = async (e) => {
@@ -102,7 +111,20 @@ console.log("Category",Category)
     getData();
     getCategory();
   }, []);
-
+  function check(cats){
+    var r = Category.find(i=>i.Category==cats.Category)
+    if(cats.Courses.length>r.NoofCourses){
+      alert("In "+cats.Category+" Number of courses is greater")
+    }
+    var sum = 0
+    cats.Courses.forEach(e => {
+      sum = sum + parseInt(e.LectureHoursWeek)
+      sum = sum + parseInt(e.LabHoursWeek)
+    });
+    if(sum>parseInt(r.NoofCredits)){
+      alert("In "+cats.Category+" Number of Credit hours is greater")
+    }
+  }
   const columns = [
     {
       field: "Code",
@@ -297,7 +319,7 @@ console.log("Category",Category)
               >
                 {Category?.map((a) => {
                   return (
-                    <MenuItem value={a.CategoryName}>{a.CategoryName}</MenuItem>
+                    <MenuItem value={a.Category}>{a.Category}</MenuItem>
                   );
                 })}
               </Select>
@@ -326,7 +348,7 @@ console.log("Category",Category)
                     return i;
                   }
                 });
-                console.log(Categories);
+                console.log("CategoriesCategories",Categories);
                 setCategory(cc);
                 setAssignCategory(["", "", ...AssignCategory]);
               }}
@@ -462,6 +484,7 @@ console.log("Category",Category)
                         const clone = [...Categories];
                         clone[index].Courses = val;
                         setCategories([...clone]);
+                        check(Categories[index])
                       }}
                       renderInput={(params) => (
                         <TextField
@@ -527,8 +550,8 @@ console.log("Category",Category)
                     >
                       {Category.map((a) => {
                         return (
-                          <MenuItem value={a.CategoryName}>
-                            {a.CategoryName}
+                          <MenuItem value={a.Category}>
+                            {a.Category}
                           </MenuItem>
                         );
                       })}
