@@ -38,13 +38,16 @@ export default function CreateSOS1() {
   const { Program, Content } = state.row;
   console.log("state",state)
   //{Category:"",Optional:"",Track:"",Courses:[],Note:""}
+  
+    
+    
   //------------------------------------------------
-  const [CoveredCourseSum, setCoveredCourseSum] = useState(0);
-  const [CoveredCreditSum, setCoveredCreditSum] = useState(0);
+  const [CoveredCourseSum, setCoveredCourseSum] = useState(state.row.CoveredCourseSum);
+  const [CoveredCreditSum, setCoveredCreditSum] = useState(state.row.CoveredCreditSum);
   const [DomainCategories, setDomainCategories] = useState(state.row.Content.Page1.DomainCategories);
   const [CoveredCategories, setCoveredCategories] = useState(state.row.Content.Page1.CoveredCategories);
-  const [DomainCourseSum,setDomainCourseSum] = useState(0);
-  const [DomainCreditSum,setDomainCreditSum] = useState(0);
+  const [DomainCourseSum,setDomainCourseSum] = useState(state.row.DomainCourseSum);
+  const [DomainCreditSum,setDomainCreditSum] = useState(state.row.DomainCreditSum);
   const [Category, setCategory] = useState([]);
   const [Addcat, setAddcat] = useState("");
   const [Addcat2, setAddcat2] = useState("");

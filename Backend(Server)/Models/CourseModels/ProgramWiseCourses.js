@@ -32,6 +32,41 @@ var ProgramCoursesSchema = new mongoose.Schema({
       default: "none",
     },
   ],
+  
+  catalogue: {
+    type: String,
+  },
+  objectiveList: {
+    type: [
+      {
+        id: {
+          type: String,
+        },
+        title: {
+          type: String,
+        },
+      },
+    ],
+    default:[]
+  },
+  Books: {type:[
+      {
+        id: {
+          type: String,
+        },
+        BookName: {
+          type: String,
+        },
+        BookWriter: {
+          type: String,
+        },
+        BookYear: {
+          type: String,
+        },
+      },
+      
+    ],default:[]
+  }
 });
 
 module.exports = mongoose.model("ProgramCourses", ProgramCoursesSchema);

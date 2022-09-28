@@ -64,13 +64,31 @@ export default function SOS() {
     }
   };
   const getContent = async () => {
+    console.log("\nabc")
     const response = await axios.get(
       `http://localhost:4000/SOSVerison/Latest/${Program}`
     );
+    console.log("\nabc222")
     if (response.data != undefined) {
       setContent(response.data);
-      getCoveredsum()
-      getDomianSum()
+      var s =0 
+      var r =0
+      response.data?.Page1?.CoveredCategories.forEach((i)=>{
+      s =s +parseInt(i.NoofCourses)
+      r =r +parseInt(i.NoofCredits)      
+       })
+       console.log("\ns",s,"\nr",r)
+      setCoveredCourseSum(s)
+      setCoveredCreditSum(r)
+      var ss =0
+      var rr =0                
+      response.data?.Page1?.DomainCategories.forEach((i)=>{
+      ss =ss +parseInt(i.NoofCourses)
+      rr =rr +parseInt(i.NoofCredits)
+      })      
+      console.log("\nss",ss,"\nrr",rr)
+      setDomainCourseSum(ss)
+      setDomainCreditSum(rr)
     } else {
       setContent({
         Page1:"",
@@ -80,40 +98,37 @@ export default function SOS() {
       });
     }
   };
-  const getCoveredsum = ()=>{
-    var s =0 
-    var r =0
-    Content?.Page1?.CoveredCategories.forEach((i)=>{
-    s =s +parseInt(i.NoofCourses)
-    r =r +parseInt(i.NoofCredits)      
-     })
-     console.log("\ns",s,"\nr",r)
-    setCoveredCourseSum(s)
-    setCoveredCreditSum(r)     
-  }
-const getDomianSum = ()=>{
-    var ss =0
-    var rr =0                
-    Content?.Page1?.DomainCategories.forEach((i)=>{
-    ss =ss +parseInt(i.NoofCourses)
-    rr =rr +parseInt(i.NoofCredits)                       
-  })      
-  
-  console.log("\nss",ss,"\nrr",rr)
-  setDomainCourseSum(ss)
-  setDomainCreditSum(rr)
-}
   const Edit = () => {
     console.log("Content", Content);
     state.row.Content = Content;
+    state.row.DomainCourseSum=DomainCourseSum
+    state.row.DomainCreditSum=DomainCreditSum
+    state.row.CoveredCourseSum=CoveredCourseSum
+    state.row.CoveredCreditSum=CoveredCreditSum
     console.log("state.row.Content", state.row.Content);
     navigate(`/CAC/CreateSOS/${Program}/1`, { state: { row: state.row } });
   };
   const getCon = async (id) => {
     const response = await axios.get(`http://localhost:4000/SOSVerison/${id}`);
     setContent(response.data);
-    getCoveredsum()
-    getDomianSum()
+    var s =0 
+    var r =0
+    response.data?.Page1?.CoveredCategories.forEach((i)=>{
+    s =s +parseInt(i.NoofCourses)
+    r =r +parseInt(i.NoofCredits)      
+     })
+     console.log("\ns",s,"\nr",r)
+    setCoveredCourseSum(s)
+    setCoveredCreditSum(r)
+    var ss =0
+    var rr =0                
+    response.data?.Page1?.DomainCategories.forEach((i)=>{
+    ss =ss +parseInt(i.NoofCourses)
+    rr =rr +parseInt(i.NoofCredits)
+    })      
+    console.log("\nss",ss,"\nrr",rr)
+    setDomainCourseSum(ss)
+    setDomainCreditSum(rr)
 
   };
   console.log("content", Content);
