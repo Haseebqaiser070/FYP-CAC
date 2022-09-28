@@ -64,7 +64,7 @@ module.exports.Lock = async (req, res) => {
         console.log("Task",task)
         const obj = await ReturnedSOS.findOne({Program:task.Program}).populate({path:"Categories"
         ,populate:{path:"Courses",model:"SOSCourse",
-        populate:{path:'PreRequisites',model:'Course'}}});
+        populate:{path:'PreRequisites',model:'Repo'}}});
         console.log("obj",obj)
         const cats = await Promise.all(obj.Categories.map(async(e) => {
           const cors = await Promise.all(e.Courses.map(async(i) => {
@@ -78,6 +78,9 @@ module.exports.Lock = async (req, res) => {
                 LectureHoursWeek: i.LectureHoursWeek ,
                 LabHoursWeek:i.LabHoursWeek,
                 PreRequisites:i.PreRequisites,
+                catalogue:i.catalogue,
+                objectiveList:i.objectiveList,
+                Books:i.Books
                 })   
               return await doc          
            })
@@ -86,8 +89,8 @@ module.exports.Lock = async (req, res) => {
            e.Courses = cors
            return await e
        }))
-       const p1 = SOSPage1.find({Program:obj.Program,Year:obj.Year})
-       await Promise.all(p1.forEach(async(i) => {
+       const p1 = await SOSPage1.find({Program:obj.Program,Year:obj.Year})
+       await Promise.all(p1.map(async(i) => {
         console.log("i",i)
         if(obj.Page1!=i._id){
           var doc = await SOSPage1.deleteOne({_id:i._id})

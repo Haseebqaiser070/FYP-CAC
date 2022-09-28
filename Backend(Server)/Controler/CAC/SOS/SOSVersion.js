@@ -127,7 +127,7 @@ module.exports.ViewOne= async (req,res)=>{
         const Version = await Versionodoc.findOne({_id:req.params.id}).populate("Page1")
         .populate({path:"Categories",populate:{path:"Courses",model:"SOSCourse"
         ,populate:{path: 'PreRequisites', model: 'Repo'}}})
-        var cats  = await Promise.all(obj.Categories.map(async(x)=>{
+        var cats  = await Promise.all(Version.Categories.map(async(x)=>{
             console.log("lats")
             var Cs =  await Promise.all(x.Courses.map(async(i)=>{
                 console.log("latsasd")
