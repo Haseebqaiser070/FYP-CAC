@@ -25,12 +25,11 @@ export default function FolderTemplete() {
   const { id } = useParams();
   console.log("useParams", location);
   useEffect(() => {
-    getFolderData();
+    getcdf();
   }, []);
   const getcdf = async () => {
-    console.log("ingetcdf");
     const res = await axios.get(
-      `http://localhost:4000/CDF/showOne/${location.i?.Folder.Program}/${location.i?.Folder.Course.Code}`
+      `http://localhost:4000/CDF/showOne/${location.data?.Program}/${location.data?.Course?.Code}`
     );
     console.log("CDF", res.data);
     setcdf(res.data);
@@ -83,19 +82,7 @@ export default function FolderTemplete() {
     Feedback: "",
   });
 
-  console.log("Folder: ", Folder);
-  const getFolderData = async () => {
-    console.log("id is here", id);
-    const res = await axios.get(
-      `http://localhost:4000/EvalFolders/showComp/${id}`
-    );
-    console.log(res.data);
-    setFolder(res.data);
-    getcdf();
-  };
-  const handleClick = () => {
-    setOpen(!open);
-  };
+  
   const addQuiz = (tit) => {
     setquiz((existingValues) => ({
       ...existingValues,
@@ -105,7 +92,7 @@ export default function FolderTemplete() {
     }));
 
     axios.put(
-      `http://localhost:4000/Folders/addEvaluation/${location.i.Folder._id}`,
+      `http://localhost:4000/Folders/addEvaluation/${location.data?._id}`,
       {
         title: tit,
         data: quiz,
@@ -131,7 +118,7 @@ export default function FolderTemplete() {
     }));
 
     axios.put(
-      `http://localhost:4000/Folders/addEvaluation/${location.i.Folder._id}`,
+      `http://localhost:4000/Folders/addEvaluation/${location.data?._id}`,
       {
         title: tit,
         data: assignment,
@@ -157,7 +144,7 @@ export default function FolderTemplete() {
     }));
 
     axios.put(
-      `http://localhost:4000/Folders/addEvaluation/${location.i.Folder._id}`,
+      `http://localhost:4000/Folders/addEvaluation/${location.data?._id}`,
       {
         title: tit,
         data: mid,
@@ -176,7 +163,7 @@ export default function FolderTemplete() {
   };
   const addEvaluationstatus = () => {
     axios.put(
-      `http://localhost:4000/Folders/editEvaluation/${location.i.Folder._id}`,
+      `http://localhost:4000/Folders/editEvaluation/${location.data?._id}`,
       {
         Evaluation: true,
       }
@@ -192,7 +179,7 @@ export default function FolderTemplete() {
     }));
 
     axios.put(
-      `http://localhost:4000/Folders/addEvaluation/${location.i.Folder._id}`,
+      `http://localhost:4000/Folders/addEvaluation/${location.data?._id}`,
       {
         title: tit,
         data: final,
@@ -232,7 +219,7 @@ export default function FolderTemplete() {
           >
             Lecture Delivery Record
           </h1>
-          {Folder.LectureDeliveryRecord == null ? (
+          {location.data.LectureDeliveryRecord == null ? (
             <p>No Lecture Delivery Record</p>
           ) : (
             <div style={{ marginTop: 50 }}>
@@ -247,29 +234,48 @@ export default function FolderTemplete() {
                   className="cardmedia"
                   component="iframe"
                   Height="1056px"
-                  src={Folder.LectureDeliveryRecord.Base64.pdf}
+                  src={location.data.LectureDeliveryRecord.Base64.pdf}
                 />
               </Card>
             </div>
           )}
         </div>
-        {Folder.files.length > 0 &&
-          Folder.files.map((i) => {
+        {location.data.files.length > 0 &&
+          location.data.files.map((i) => {
             var ind;
 
-            if (i.Title.includes("Quiz") && cdf != null) {
+            if (i.Title.includes("Quiz") && cdf!=null) {
               cdf.CLOs.map((val) => {
-                console.log("sdggfsgajgsdk", val);
                 val.Quizzes.find((item, index) => {
                   if (item.title == i.Title) {
                     ind = val;
-                    clo = val;
+                    clo = val.sr;
                     btl = ind.BTL[0].BTL;
                     title = i.Title;
-                    console.log("hello", ind);
                   }
                 });
               });
+              var a=location.data.Evaluation.find((item)=>item.title==i.Title)
+              if(a==undefined){
+                setquiz({
+                  title: i.Title,
+                  clo_no: clo,
+                  clo_correct: true,
+                  btl_no: btl,
+                  btl_correct: true,
+                  Comments: "",
+                  Feedback: "",
+                })}
+                else{
+                setquiz({title:a?.title,
+                  clo_no: a?.clo_no,
+                  clo_correct: a?.clo_correct,
+                  btl_no: a?.btl_no,
+                  btl_correct: a?.btl_correct,
+                  Comments: a?.Comments,
+                  Feedback: a?.Feedback})
+                }
+
               return (
                 <div>
                   <div style={{ marginTop: 50 }}>
@@ -386,17 +392,17 @@ export default function FolderTemplete() {
                             variant="outlined"
                             size="small"
                             fullWidth
-                            value={clo.sr}
+                            value={a.clo_no}
                             defaultValue={(e) => {
                               setquiz((existingValues) => ({
                                 ...existingValues,
-                                clo_no: clo.sr,
+                                clo_no:a.clo_no,
                               }));
                             }}
                             onChange={(e) => {
                               setquiz((existingValues) => ({
                                 ...existingValues,
-                                clo_no: clo.sr,
+                                clo_no: a.clo_no,
                                 title: i.Title,
                               }));
                             }}
@@ -408,7 +414,7 @@ export default function FolderTemplete() {
                             <RadioGroup
                               row
                               aria-labelledby="demo-radio-buttons-group-label"
-                              defaultValue="yes"
+                              defaultValue={a.clo_correct}
                               name="radio-buttons-group"
                               onChange={(e) => {
                                 setquiz((existingValues) => ({
@@ -440,17 +446,17 @@ export default function FolderTemplete() {
                             variant="outlined"
                             size="small"
                             fullWidth
-                            value={btl}
+                            value={a.btl_no}
                             defaultValue={(e) => {
                               setquiz((existingValues) => ({
                                 ...existingValues,
-                                btl_no: btl,
+                                btl_no: a.btl_no,
                               }));
                             }}
                             onChange={(e) => {
                               setquiz((existingValues) => ({
                                 ...existingValues,
-                                btl_no: btl,
+                                btl_no: a.btl_no,
                               }));
                             }}
                           />
@@ -463,7 +469,7 @@ export default function FolderTemplete() {
                             <RadioGroup
                               row
                               aria-labelledby="demo-radio-buttons-group-label"
-                              defaultValue="female"
+                              defaultValue={a.btl_correct}
                               name="radio-buttons-group"
                               onChange={(e) => {
                                 setquiz((existingValues) => ({
@@ -495,7 +501,7 @@ export default function FolderTemplete() {
                           variant="outlined"
                           size="small"
                           fullWidth
-                          value={quiz.Comments}
+                          value={a.Comments}
                           onChange={(e) => {
                             setquiz((existingValues) => ({
                               ...existingValues,
@@ -511,7 +517,7 @@ export default function FolderTemplete() {
                           variant="outlined"
                           size="small"
                           fullWidth
-                          value={quiz.Feedback}
+                          value={a.Feedback}
                           onChange={(e) => {
                             setquiz((existingValues) => ({
                               ...existingValues,
@@ -535,24 +541,44 @@ export default function FolderTemplete() {
                 </div>
               );
             }
-          })}
+          })
+        }
 
-        {Folder.files.length > 0 &&
-          Folder.files.map((i) => {
+        {location.data.files.length > 0 &&
+          location.data.files.map((i) => {
             var ind;
-            if (i.Title.includes("Assignment") && cdf != null) {
+            if (i.Title.includes("Assignment") && cdf!=null ) {
               cdf.CLOs.map((val) => {
-                console.log("sdggfsgajgsdk", val);
                 val.Assignment.find((item, index) => {
                   if (item.title == i.Title) {
                     ind = val;
-                    cloa = val;
+                    cloa = val.sr;
                     btla = ind.BTL[0].BTL;
                     titlea = i.Title;
-                    console.log("hello", ind);
                   }
                 });
               });
+              var a=location.data.Evaluation.find((item)=>item?.title==i.Title)
+              
+              if(a==undefined){
+                setassignment({
+                  title: i.Title,
+                  clo_no: cloa,
+                  clo_correct: true,
+                  btl_no: btla,
+                  btl_correct: true,
+                  Comments: "",
+                  Feedback: "",
+                })}
+                else{
+                setassignment({title:a?.title,
+                  clo_no: a?.clo_no,
+                  clo_correct: a?.clo_correct,
+                  btl_no: a?.btl_no,
+                  btl_correct: a?.btl_correct,
+                  Comments: a?.Comments,
+                  Feedback: a?.Feedback})
+                }
               return (
                 <div>
                   <div style={{ marginTop: 50 }}>
@@ -669,17 +695,17 @@ export default function FolderTemplete() {
                             variant="outlined"
                             size="small"
                             fullWidth
-                            value={cloa.sr}
+                            value={a.clo_no}
                             defaultValue={(e) => {
                               setassignment((existingValues) => ({
                                 ...existingValues,
-                                clo_no: cloa.sr,
+                                clo_no: a.clo_no,
                               }));
                             }}
                             onChange={(e) => {
                               setassignment((existingValues) => ({
                                 ...existingValues,
-                                clo_no: cloa.sr,
+                                clo_no: a.clo_no,
                                 title: i.Title,
                               }));
                             }}
@@ -691,7 +717,7 @@ export default function FolderTemplete() {
                             <RadioGroup
                               row
                               aria-labelledby="demo-radio-buttons-group-label"
-                              defaultValue="female"
+                              defaultValue={a.clo_correct}
                               name="radio-buttons-group"
                               onChange={(e) => {
                                 setassignment((existingValues) => ({
@@ -723,17 +749,17 @@ export default function FolderTemplete() {
                             variant="outlined"
                             size="small"
                             fullWidth
-                            value={btla}
+                            value={a.btl_no}
                             defaultValue={(e) => {
                               setassignment((existingValues) => ({
                                 ...existingValues,
-                                btl_no: btla,
+                                btl_no: a.btl_no,
                               }));
                             }}
                             onChange={(e) => {
                               setassignment((existingValues) => ({
                                 ...existingValues,
-                                btl_no: btla,
+                                btl_no: a.btl_no,
                               }));
                             }}
                           />
@@ -746,7 +772,7 @@ export default function FolderTemplete() {
                             <RadioGroup
                               row
                               aria-labelledby="demo-radio-buttons-group-label"
-                              defaultValue="female"
+                              defaultValue={a.btl_correct}
                               name="radio-buttons-group"
                               onChange={(e) => {
                                 setassignment((existingValues) => ({
@@ -778,7 +804,7 @@ export default function FolderTemplete() {
                           variant="outlined"
                           size="small"
                           fullWidth
-                          value={assignment.Comments}
+                          value={a.Comments}
                           onChange={(e) => {
                             setassignment((existingValues) => ({
                               ...existingValues,
@@ -794,7 +820,7 @@ export default function FolderTemplete() {
                           variant="outlined"
                           size="small"
                           fullWidth
-                          value={assignment.Feedback}
+                          value={a.Feedback}
                           onChange={(e) => {
                             setassignment((existingValues) => ({
                               ...existingValues,
@@ -820,18 +846,40 @@ export default function FolderTemplete() {
             }
           })}
 
-        {Folder.files.length > 0 &&
-          Folder.files.map((i) => {
+        {location.data.files.length > 0 &&
+          location.data.files.map((i) => {
             var ind;
-            if (i.Title.includes("Terminal") && cdf != null) {
+            if (i.Title.includes("Terminal") && cdf!=null) {
               cdf.CLOs.map((val) => {
                 if (val.Final.includes("Final") && cdf != null) {
                   ind = val;
-                  clof = val;
+                  clof = val.sr;
                   btlf = ind.BTL[0].BTL;
                   titlef = i.Title;
                 }
               });
+              var a=location.data.Evaluation.find((item)=>item.title==i.Title)
+              if(a==undefined){
+                setfinal({
+                  title: i.Title,
+                  clo_no: clof,
+                  clo_correct: true,
+                  btl_no:btlf,
+                  btl_correct: true,
+                  Comments: "",
+                  Feedback: "",
+                })
+              }
+              else{
+                setfinal({title:a?.title,
+                  clo_no: a?.clo_no,
+                  clo_correct: a?.clo_correct,
+                  btl_no: a?.btl_no,
+                  btl_correct: a?.btl_correct,
+                  Comments: a?.Comments,
+                  Feedback: a?.Feedback})
+              }
+              
               return (
                 <div>
                   <div style={{ marginTop: 50 }}>
@@ -948,17 +996,17 @@ export default function FolderTemplete() {
                             variant="outlined"
                             size="small"
                             fullWidth
-                            value={clof.sr}
+                            value={a.clo_no}
                             defaultValue={(e) => {
                               setfinal((existingValues) => ({
                                 ...existingValues,
-                                clo_no: clof.sr,
+                                clo_no: a.clo_no,
                               }));
                             }}
                             onChange={(e) => {
                               setfinal((existingValues) => ({
                                 ...existingValues,
-                                clo_no: clof.sr,
+                                clo_no: a.clo_no,
                                 title: i.Title,
                               }));
                             }}
@@ -970,7 +1018,7 @@ export default function FolderTemplete() {
                             <RadioGroup
                               row
                               aria-labelledby="demo-radio-buttons-group-label"
-                              defaultValue="female"
+                              defaultValue={a.clo_correct}
                               name="radio-buttons-group"
                               onChange={(e) => {
                                 setfinal((existingValues) => ({
@@ -1002,17 +1050,17 @@ export default function FolderTemplete() {
                             variant="outlined"
                             size="small"
                             fullWidth
-                            value={btlf}
+                            value={a.btl_no}
                             defaultValue={(e) => {
                               setfinal((existingValues) => ({
                                 ...existingValues,
-                                btl_no: btlf,
+                                btl_no: a.btl_no,
                               }));
                             }}
                             onChange={(e) => {
                               setfinal((existingValues) => ({
                                 ...existingValues,
-                                btl_no: btlf,
+                                btl_no: a.btl_no,
                               }));
                             }}
                           />
@@ -1025,7 +1073,7 @@ export default function FolderTemplete() {
                             <RadioGroup
                               row
                               aria-labelledby="demo-radio-buttons-group-label"
-                              defaultValue="female"
+                              defaultValue={a.btl_correct}
                               name="radio-buttons-group"
                               onChange={(e) => {
                                 setfinal((existingValues) => ({
@@ -1057,7 +1105,7 @@ export default function FolderTemplete() {
                           variant="outlined"
                           size="small"
                           fullWidth
-                          value={final.Comments}
+                          value={a.Comments}
                           onChange={(e) => {
                             setfinal((existingValues) => ({
                               ...existingValues,
@@ -1073,7 +1121,7 @@ export default function FolderTemplete() {
                           variant="outlined"
                           size="small"
                           fullWidth
-                          value={final.Feedback}
+                          value={a.Feedback}
                           onChange={(e) => {
                             setfinal((existingValues) => ({
                               ...existingValues,
@@ -1098,13 +1146,13 @@ export default function FolderTemplete() {
               );
             }
           })}
-        {Folder.files.length > 0 &&
-          Folder.files.map((i) => {
+        {location.data.files.length > 0 &&
+          location.data.files.map((i) => {
             var ind;
             if (
               i.Title.includes("Mid") ||
-              (i.Title.includes("Sessional") && cdf != null)
-            ) {
+              (i.Title.includes("Sessional") && cdf!=null)
+            ){
               cdf?.CLOs?.map((val) => {
                 if (
                   val.Mid.includes("Mid") ||
@@ -1116,6 +1164,26 @@ export default function FolderTemplete() {
                   titlem = i.Title;
                 }
               });
+              var a=location.data.Evaluation.find((item)=>item.title==i.Title)
+              if(a==undefined){
+              setfinal({
+                title: i.Title,
+                clo_no: clom,
+                clo_correct: true,
+                btl_no: btlm,
+                btl_correct: true,
+                Comments: "",
+                Feedback: "",
+              })}
+              else{
+              setmid({title:a?.title,
+                clo_no: a?.clo_no,
+                clo_correct: a?.clo_correct,
+                btl_no: a?.btl_no,
+                btl_correct: a?.btl_correct,
+                Comments: a?.Comments,
+                Feedback: a?.Feedback})
+              }
               return (
                 <div>
                   <div style={{ marginTop: 50 }}>
@@ -1232,17 +1300,17 @@ export default function FolderTemplete() {
                             variant="outlined"
                             size="small"
                             fullWidth
-                            value={clom}
+                            value={a.clo_no}
                             defaultValue={(e) => {
                               setmid((existingValues) => ({
                                 ...existingValues,
-                                clo_no: clom,
+                                clo_no: a.clo_no,
                               }));
                             }}
                             onChange={(e) => {
                               setmid((existingValues) => ({
                                 ...existingValues,
-                                clo_no: clom,
+                                clo_no: a.clo_no,
                                 title: i.Title,
                               }));
                             }}
@@ -1254,7 +1322,7 @@ export default function FolderTemplete() {
                             <RadioGroup
                               row
                               aria-labelledby="demo-radio-buttons-group-label"
-                              defaultValue="female"
+                              defaultValue={a.clo_correct}
                               name="radio-buttons-group"
                               onChange={(e) => {
                                 setmid((existingValues) => ({
@@ -1286,17 +1354,17 @@ export default function FolderTemplete() {
                             variant="outlined"
                             size="small"
                             fullWidth
-                            value={btlm}
+                            value={a.btl_no}
                             defaultValue={(e) => {
                               setmid((existingValues) => ({
                                 ...existingValues,
-                                btl_no: btlm,
+                                btl_no: a.btl_no,
                               }));
                             }}
                             onChange={(e) => {
                               setmid((existingValues) => ({
                                 ...existingValues,
-                                btl_no: btlm,
+                                btl_no: a.btl_no,
                               }));
                             }}
                           />
@@ -1309,7 +1377,7 @@ export default function FolderTemplete() {
                             <RadioGroup
                               row
                               aria-labelledby="demo-radio-buttons-group-label"
-                              defaultValue="female"
+                              defaultValue={a.btl_correct}
                               name="radio-buttons-group"
                               onChange={(e) => {
                                 setmid((existingValues) => ({
@@ -1341,7 +1409,7 @@ export default function FolderTemplete() {
                           variant="outlined"
                           size="small"
                           fullWidth
-                          value={mid.Comments}
+                          value={a.Comments}
                           onChange={(e) => {
                             setmid((existingValues) => ({
                               ...existingValues,
@@ -1357,7 +1425,7 @@ export default function FolderTemplete() {
                           variant="outlined"
                           size="small"
                           fullWidth
-                          value={mid.Feedback}
+                          value={a.Feedback}
                           onChange={(e) => {
                             setmid((existingValues) => ({
                               ...existingValues,
@@ -1395,7 +1463,7 @@ export default function FolderTemplete() {
           >
             Outcome Based Education
           </h1>
-          {Folder.Obe == null ? (
+          {location.data.Obe == null ? (
             <p>no OBE</p>
           ) : (
             <Card sx={{ maxWidth: 824 }}>
@@ -1403,13 +1471,13 @@ export default function FolderTemplete() {
                 className="cardmedia"
                 component="iframe"
                 Height="1056px"
-                src={Folder.Obe.pdf}
+                src={location.data.Obe.pdf}
               />
             </Card>
           )}
           <div style={{ marginTop: 50 }}>
             <h3 className="mb-4 pb-4">ICEF</h3>
-            {Folder.ICEF == null ? (
+            {location.data.ICEF == null ? (
               <p>No ICEF</p>
             ) : (
               <Card sx={{ maxWidth: 824 }}>
@@ -1417,7 +1485,7 @@ export default function FolderTemplete() {
                   className="cardmedia"
                   component="iframe"
                   Height="1056px"
-                  src={Folder.ICEF.pdf}
+                  src={location.data.ICEF.pdf}
                 />
               </Card>
             )}
@@ -1430,7 +1498,7 @@ export default function FolderTemplete() {
               type="submit"
               onClick={() => addEvaluationstatus()}
             >
-              Evaluate
+              Save Changes
             </Button>
           </div>
         </div>

@@ -269,6 +269,16 @@ export default function Navigation() {
                       </div>
                       Pending Deadline Requests
                     </Link>
+                    <Link
+                      class="nav-link sidenavtext "
+                      to="LateSubmissions"
+                      style={{ marginLeft: "12px", fontSize: "14px" }}
+                    >
+                      <div class="sb-nav-link-icon">
+                        <BsFillFolderFill color="#fff" />
+                      </div>
+                      Late Submissions
+                    </Link>
                   </>
                 )}
 

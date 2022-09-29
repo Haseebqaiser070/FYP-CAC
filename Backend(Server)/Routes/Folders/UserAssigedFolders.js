@@ -4,5 +4,4 @@ var UserAssigedFolders = require("../../Controler/AdminControllers/Folders/UserA
 
 router.route("/showAll").get(UserAssigedFolders.Showall);
 router.route("/showAllbyid/:id").get(UserAssigedFolders.ShowId);
-
 module.exports = router;

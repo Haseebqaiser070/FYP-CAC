@@ -29,7 +29,7 @@ var SOSCourseSchema = new mongoose.Schema({
   PreRequisites: [
     {
       type: mongoose.Schema.ObjectId,
-      ref: "Repo",
+      ref: "Course",
       default: "none",
     },
   ],
@@ -48,26 +48,24 @@ var SOSCourseSchema = new mongoose.Schema({
         },
       },
     ],
-    default:[]
+    required: true,
   },
-  Books: {type:[
-      {
-        id: {
-          type: String,
-        },
-        BookName: {
-          type: String,
-        },
-        BookWriter: {
-          type: String,
-        },
-        BookYear: {
-          type: String,
-        },
+  Books: [
+    {
+      id: {
+        type: String,
       },
-      
-    ],default:[]
-  }
+      BookName: {
+        type: String,
+      },
+      BookWriter: {
+        type: String,
+      },
+      BookYear: {
+        type: String,
+      },
+    },
+  ],
 });
 
 module.exports = mongoose.model("SOSCourse", SOSCourseSchema);

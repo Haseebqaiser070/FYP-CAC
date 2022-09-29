@@ -25,7 +25,7 @@ var CourseVersionSchema = new mongoose.Schema({
   PreRequisites: [
     {
       type: mongoose.Schema.ObjectId,
-      ref: "Repo",
+      ref: "Course",
       default: "none",
     },
   ],

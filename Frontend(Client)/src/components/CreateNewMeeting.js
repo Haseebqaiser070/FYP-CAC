@@ -65,8 +65,7 @@ export default function CreateNewMeeting() {
   }, []);
 
   const columns = [
-    /*     { field: "id", headerName: "ID" },
-     */ {
+    {
       field: "task",
       headerName: "Task Title",
       flex: 1,
@@ -96,7 +95,7 @@ export default function CreateNewMeeting() {
       style={{ height: 700, width: "100%", padding: 20 }}
     >
       <h1>All Meetings</h1>
-      <div className="d-flex justify-content-end">
+      <div className="d-flex justify-content-end mb-4">
         <Button
           variant="contained"
           color="primary"
@@ -132,7 +131,8 @@ export default function CreateNewMeeting() {
                   )}
                 />
               </div>
-              <div>
+
+              <div className="mt-4">
                 <label style={{ display: "block" }} for="title">
                   <b>Select Date & Time</b>
                 </label>
@@ -143,6 +143,26 @@ export default function CreateNewMeeting() {
                   type="datetime-local"
                   // value={data.time}
                 ></input>
+              </div>
+
+              <div>
+                <Autocomplete
+                  className="mt-4"
+                  multiple
+                  id="tags-standard"
+                  options={rows}
+                  getOptionLabel={(option) => option.taskType}
+                  onChange={handleChange}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="outlined"
+                      label="Invite Other Members"
+                      placeholder="Invite Other Members"
+                      size="small"
+                    />
+                  )}
+                />
               </div>
 
               <Button
@@ -160,15 +180,16 @@ export default function CreateNewMeeting() {
         </Modal>
       </div>
       <div>
-        {/* <DataGrid
+        <DataGrid
           style={{ height: 400, width: "100%" }}
           columns={columns}
           rows={rows}
+          getRowId={(Rows) => Rows._id}
           pageSize={10}
           rowsPerPageOptions={[5]}
           checkboxSelection
           disableSelectionOnClick
-        /> */}
+        />
       </div>
     </div>
   );

@@ -38,16 +38,13 @@ export default function CreateSOS1() {
   const { Program, Content } = state.row;
   console.log("state",state)
   //{Category:"",Optional:"",Track:"",Courses:[],Note:""}
-  
-    
-    
   //------------------------------------------------
-  const [CoveredCourseSum, setCoveredCourseSum] = useState(state.row.CoveredCourseSum);
-  const [CoveredCreditSum, setCoveredCreditSum] = useState(state.row.CoveredCreditSum);
-  const [DomainCategories, setDomainCategories] = useState(state.row.Content.Page1.DomainCategories);
-  const [CoveredCategories, setCoveredCategories] = useState(state.row.Content.Page1.CoveredCategories);
-  const [DomainCourseSum,setDomainCourseSum] = useState(state.row.DomainCourseSum);
-  const [DomainCreditSum,setDomainCreditSum] = useState(state.row.DomainCreditSum);
+  const [CoveredCourseSum, setCoveredCourseSum] = useState(0);
+  const [CoveredCreditSum, setCoveredCreditSum] = useState(0);
+  const [DomainCategories, setDomainCategories] = useState([]);
+  const [CoveredCategories, setCoveredCategories] = useState([]);
+  const [DomainCourseSum,setDomainCourseSum] = useState(0);
+  const [DomainCreditSum,setDomainCreditSum] = useState(0);
   const [Category, setCategory] = useState([]);
   const [Addcat, setAddcat] = useState("");
   const [Addcat2, setAddcat2] = useState("");
@@ -59,8 +56,6 @@ export default function CreateSOS1() {
   };
   console.log("Content",Content)
 console.log("CoveredCategories",CoveredCategories)
-console.log("DomainCategories",DomainCategories)
-
   useEffect(() => {
     getCategory();
   }, []);
@@ -286,21 +281,19 @@ const getDomianSum = ()=>{
           </tbody>
         </table>
 
+        <Button fullWidth variant="contained" color="primary" size="small"
+        >
+          Save
+        </Button>
+
         <Button fullWidth variant="contained" color="primary" size="medium"
         onClick={() => {
-          if((CoveredCourseSum==0&&CoveredCreditSum==0)||(DomainCourseSum==0&&DomainCreditSum==0)){
-            alert("Categories in Complete")
-          }
-          else{
-            state.row.CoveredCategories=CoveredCategories
-            state.row.DomainCategories=DomainCategories
-            navigate(
-                `/CAC/CreateSOS/${Program}/2`,
-                { state:{ row: state.row }},
-                { replace: true }
-              );
-          }}
-        }>
+          navigate(
+            `/CAC/CreateSOS/${Program}/2`,
+            { state:{ row: state.row }},
+            { replace: true }
+          );
+        }}>
             Next
           </Button>        
       </div>

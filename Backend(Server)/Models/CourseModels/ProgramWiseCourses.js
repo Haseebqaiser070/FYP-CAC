@@ -25,16 +25,18 @@ var ProgramCoursesSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  
   PreRequisites: [
     {
       type: mongoose.Schema.ObjectId,
-      ref: "Repo",
+      ref: "Course",
       default: "none",
     },
   ],
-  
+
   catalogue: {
     type: String,
+    default:""
   },
   objectiveList: {
     type: [
@@ -45,28 +47,26 @@ var ProgramCoursesSchema = new mongoose.Schema({
         title: {
           type: String,
         },
+        default:""
       },
     ],
-    default:[]
   },
-  Books: {type:[
-      {
-        id: {
-          type: String,
-        },
-        BookName: {
-          type: String,
-        },
-        BookWriter: {
-          type: String,
-        },
-        BookYear: {
-          type: String,
-        },
+  Books: [
+    {
+      id: {
+        type: String,
       },
-      
-    ],default:[]
-  }
+      BookName: {
+        type: String,
+      },
+      BookWriter: {
+        type: String,
+      },
+      BookYear: {
+        type: String,
+      },
+    },
+  ],
 });
 
 module.exports = mongoose.model("ProgramCourses", ProgramCoursesSchema);
