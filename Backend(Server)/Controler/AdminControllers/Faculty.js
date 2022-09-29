@@ -1,7 +1,9 @@
 var coursedoc = require("../../Models/CourseModels/Course");
 var facultydoc = require("../../Models/Faculty");
 var bcrypt = require("bcrypt");
-
+var deadlineTheory= require("../../Models/deadlineTheory");
+var deadlineLab= require("../../Models/deadlineLab");
+var User=require("../../Models/User")
 module.exports.Add = async (req, res) => {
   try {
     if (!req.user) return await res.json("Timed Out");
@@ -42,6 +44,31 @@ module.exports.Delete = async (req, res) => {
     const faculty = await facultydoc.deleteOne({ _id: req.params.id });
     console.log("all faulty", faculty);
     await res.json(faculty);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports.TheoryReq = async (req, res) => {
+  try {
+    
+    console.log("hell23e34o")
+    if (!req.user) return await res.status(401).json("Timed Out");
+    const aa = await deadlineTheory.create({Request_id:req.params.id,Round:req.body.Round,Deadline:req.body.Deadline,Type:req.body.Type,pending:true});
+    console.log("aa", aa);
+    await res.status(200).json(aa);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports.LabReq = async (req, res) => {
+  try {
+    console.log("hell23e34o")
+    if (!req.user) return await res.status(401).json("Timed Out");
+    const aa = await deadlineLab.create({Request_id:req.params.id,Round:req.body.Round,Deadline:req.body.Deadline,Type:req.body.Type,pending:true});
+    console.log("aa", aa);
+    await res.status(200).json(aa);
   } catch (err) {
     console.log(err);
   }

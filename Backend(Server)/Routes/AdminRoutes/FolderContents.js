@@ -8,5 +8,8 @@ router.route("/TheoryMidSes").put(Contents.MidSesTheory);
 router.route("/LabMidSes").put(Contents.MidSesLab);
 router.route("/showTheory").get(Contents.ShowTheory);
 router.route("/showLab").get(Contents.ShowLab);
+router.route("/showLabReq").get(Contents.ShowLabReq);
+router.route("/updatedate").put(Contents.updatedate);
+router.route("/adddate").put(Contents.adddate);
 
 module.exports = router;

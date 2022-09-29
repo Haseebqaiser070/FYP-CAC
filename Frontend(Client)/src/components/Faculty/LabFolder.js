@@ -5,6 +5,7 @@ import Popup from "../AuxillaryComponents/PopupFunction";
 import { Box, Card, Modal } from "@mui/material";
 import axios from "axios";
 import { useLocation, useNavigate,useParams } from "react-router-dom";
+import useAuth from "../../MyHooks/useAuth";
 
 const style = {
   position: "absolute",
@@ -37,13 +38,28 @@ export default function LabFolder() {
   const [open2, setOpen2] = useState(false);
   const handleOpen2 = () => setOpen2(true);
   const handleClose2 = () => setOpen2(false);
-  
+  const [date,setdate]=useState(new Date(Date.now()))
+  const userid= JSON.parse(localStorage.getItem('user'))
+  console.log("persists",userid)
   const [folders, setfolders] = useState("");
-
+const [pressed,setpressed]=useState(false)
+const [pressed1,setpressed1]=useState(false)
   useEffect(()=>{
     getLab()
   },[])
- 
+  const getDeadline = async () => {
+    const res = await axios.get(`http://localhost:4000/Content/ShowLab`);
+    console.log("deadlinesdata",res.data);
+    var s=res.data.Round1.Deadline
+    var s1=res.data.Round2.Deadline
+
+    s=new Date(res.data.Round1.Deadline)
+    s1=new Date(res.data.Round2.Deadline)
+    console.log("sdc",s.getYear)
+   setdeadline1(s.getDate()+"/"+s.getMonth()+"/"+s.getFullYear()+" "+s.getHours()+":"+s.getMinutes());
+   setdeadline2(s1.getDate()+"/"+s1.getMonth()+"/"+s1.getFullYear()+" "+s1.getHours()+":"+s1.getMinutes());
+
+  };
   const[Assignments1,setAssignments1]=useState([])
   const[Assignments2,setAssignments2]=useState([])
   
@@ -104,10 +120,24 @@ export default function LabFolder() {
   const [Solution1, setSolution1] = useState("");
   const [ICEF, setICEF] = useState("");
   const [Obe, setObe] = useState("");
-  
+  const [deadline1,setdeadline1]=useState();
+  const [deadline2,setdeadline2]=useState();
+ 
+  const [round1flag,setflag1]=useState(false);
+  const [round2flag,setflag2]=useState(false);
   const [fileBase64String, setFileBase64String] = useState("");
   console.log("fileBase64String",fileBase64String)
-  
+  useEffect(()=>{
+    var a=(date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes())
+    console.log("date",deadline1)
+    if(a>deadline1){
+      console.log("ssds")
+      setflag1(true)
+    }
+    if(a>deadline2){
+      setflag2(true)
+    }
+  },[deadline1,deadline2])
   const encodeFileBase64 = (file,ty) => {
     var reader = new FileReader();
     console.log("\nfile",file)
@@ -179,6 +209,8 @@ console.log("\nDecoded",Decoded)
   };
   useEffect(() => {
     getFolderData();
+    getDeadline()
+
   }, []);
   const [Folder,setFolder]=useState({files:[],ICEF:null,Obe:null})
   
@@ -261,6 +293,42 @@ console.log("\nDecoded",Decoded)
       alert("upload all required files")
     }
   }
+
+  const SubmitE1 = async () => {
+    setpressed(true)
+    console.log("Round1", { Round1: true });
+    const res = await axios.post(
+      `http://localhost:4000/Faculty/LabReq/${userid}`,
+      {
+        Round: "Round1",
+        Deadline:deadline1,
+        Type:"Lab"
+      }
+    );
+    //getFolderData();
+    alert("Extension Request Sent")
+
+  console.log("Rodwew",res );
+
+};
+const SubmitE2 = async () => {
+  setpressed1(true)
+  console.log("Round2", { Round1: true });
+  const res = await axios.post(
+    `http://localhost:4000/Faculty/LabReq/${userid}`,
+    {
+      Round: "Round2",
+      Deadline:deadline2,
+      Type:"Lab"
+
+    }
+  );
+  //getFolderData();
+  alert("Extension Request Sent")
+
+console.log("Rodwew",res );
+
+};
   const SubmitR1  = async() => {
     var Round1 = true
     Quiz1.forEach((i)=>{
@@ -533,7 +601,7 @@ console.log("\nDecoded",Decoded)
                   <h4
                     style={{ color: "red", textAlign: "center", marginTop: 20 }}
                   >
-                    Deadline: 07/13/2022 04:38 PM
+                    Deadline: {deadline1}
                   </h4>
                 </th> 
                   
@@ -611,6 +679,34 @@ console.log("\nDecoded",Decoded)
               </td>
               </>)}
                 <td className="d-grid py-4 px-2">
+                {
+                  round1flag?
+                  <>
+                  <h4
+                  
+                  style={{ color: "red", textAlign: "center", marginTop: 20 }}
+                >
+                  
+                  Submission Closed!!!
+                </h4>
+                {pressed?
+                  <button
+                  class="btn btn-block py-2 btn-primary"
+                  type="button"
+                  style={{backgroundColor:"grey",borderColor:'grey'}}
+                >
+                  Send Extension Request
+                </button>
+                  :
+                    <button
+                    class="btn btn-block py-2 btn-primary"
+                    type="button"
+                    onClick={SubmitE1}
+                  >
+                    Send Extension Request
+                  </button>
+                  }
+                  </>:
                   <button
                     class="btn btn-block py-2 btn-primary"
                     type="button"
@@ -618,6 +714,7 @@ console.log("\nDecoded",Decoded)
                   >
                     Submit
                   </button>
+}
                 </td>
               </tr>
             </div>
@@ -633,7 +730,7 @@ console.log("\nDecoded",Decoded)
                   <h4
                     style={{ color: "red", textAlign: "center", marginTop: 20 }}
                   >
-                    Deadline: 07/13/2022 04:38 PM
+                    Deadline: {deadline2}
                   </h4>
                 </th>
                 {Assignments2.map((i)=>{return(
@@ -709,14 +806,43 @@ console.log("\nDecoded",Decoded)
                   </button>
                 </td>
                 <td className="d-grid py-4 px-2">
+                {
+                  round2flag?
+                  <>
+                  <h4
+                  
+                  style={{ color: "red", textAlign: "center", marginTop: 20 }}
+                >
+                  
+                  Submission Closed!!!
+                </h4>
+                {pressed1?
+                  <button
+                  class="btn btn-block py-2 btn-primary"
+                  type="button"
+                  style={{backgroundColor:"grey",borderColor:'grey'}}
+
+                >
+                  Send Extension Request
+                </button>
+                  :
+                    <button
+                    class="btn btn-block py-2 btn-primary"
+                    type="button"
+                    onClick={SubmitE2}
+                  >
+                    Send Extension Request
+                  </button>
+                  }
+                  </>:
                   <button
                     class="btn btn-block py-2 btn-primary"
-                    id="quiz1"
                     type="button"
                     onClick={SubmitR2}
                   >
                     Submit
                   </button>
+}
                 </td>
               </tr>
             </div>

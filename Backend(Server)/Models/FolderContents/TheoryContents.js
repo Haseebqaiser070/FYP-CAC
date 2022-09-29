@@ -1,25 +1,33 @@
 var mongoose = require('mongoose');
 var TheoryContentsSchema = new mongoose.Schema({
-    Round1:
-        {
+    type:{
+        type: String
+    },
+    Round1:{
         Quiz:{
-            type: String,
-            default:""},
-        Assignment:{
-            type: String,
-            default:""},
-        MidorSessioanls:{
-            type: String,
-            default:""},
+            type:String
         },
+        Assignment:{
+            type:String
+        },
+        Deadline:{
+            type:Date
+        },
+    },
     Round2:{
         Quiz:{
-            type: String,
-            default:""},
+            type:String
+        },
         Assignment:{
-            type: String,
-            default:""}
-        }
+            type:String
+        },
+        Deadline:{
+            type:Date
+        },
+    },
+    Mid:{
+        type:String
+    }
 });
 
 module.exports = mongoose.model('TheoryContents', TheoryContentsSchema);

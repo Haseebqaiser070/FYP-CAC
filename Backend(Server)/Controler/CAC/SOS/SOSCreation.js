@@ -38,7 +38,7 @@ module.exports.showUsers = async (req, res) => {
     console.log("\n\n\n\n\n\n\n\n obj",obj)
 
     //error is here
-    const retrn = await Returned.create({Page1:obj.Page1,Program:obj.Program,Year:obj.Year,Categories:obj.Categories})
+    const retrn = await Returned.create({Program:obj.Program,Year:obj.Year,Categories:obj.Categories})
     console.log("returned \n\n\n\n\n",retrn)
   
     await res.status(200).json("submitted")

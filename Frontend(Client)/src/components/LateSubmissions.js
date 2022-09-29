@@ -116,10 +116,8 @@ export default function PendingDeadlineRequests() {
             console.log("hello",arr)
            arr.map((val, id) => {
                 console.log("idss",id)
-                if(val.pending==true){
-                row[index]={_id:val._id,id: index, FacultyMemberName: val.Request_id.Name, Request: val.Round+" ( "+val.Type+" )", CurrentDeadline:val.Deadline}
-                  index=index+1
-              }
+                row[id]={_id:val._id,id: id, FacultyMemberName: val.Request_id.Name, Request: val.Round+" ( "+val.Type+" )", CurrentDeadline:val.Deadline}
+                
               })
           console.log("uajh",row)
           setRows(row);
@@ -156,7 +154,7 @@ export default function PendingDeadlineRequests() {
   return (
     <div style={{ width: "100%", padding: 20 }}>
       <h1 className="mb-4 py-4">
-        <b>Pending Deadline Requests</b>
+        <b>Late Submission</b>
       </h1>
       <DataGrid
         style={{ height: 400, width: "100%" }}

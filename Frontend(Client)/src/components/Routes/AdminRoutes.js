@@ -41,6 +41,8 @@ import BTLLevel from "../BTLLevel";
 import SO_Level from "../SOAndBTLLevel";
 import CreateSOS1 from "../SOSCreation/CreateSos1";
 import AllCourseFolder from "../AllCourseFolder";
+import Returned from "../ReturnedPage"
+import LateSub from "../LateSubmissions"
 function AdminRoutes() {
   return (
     <Routes>
@@ -51,6 +53,8 @@ function AdminRoutes() {
         <Route path="/AddNewCourse" element={<AddNewCourse />} />
         <Route path="/AllCourses" element={<AllCourses />} />
         <Route path="/CourseView/:id" element={<CourseFinal />} />
+        <Route path="/Returned" element={<Returned />} />
+
         <Route
           path="/CourseReturnedView/:Code"
           element={<CourseReturnedView />}
@@ -105,6 +109,10 @@ function AdminRoutes() {
         <Route
           path="/PendingDeadlineRequests"
           element={<PendingDeadlineRequests />}
+        />
+        <Route
+          path="/LateSubmissions"
+          element={<LateSub/>}
         />
         <Route path="/ReturnedTasks" element={<ReturnedTasks />} />
       </Route>

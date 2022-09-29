@@ -38,7 +38,7 @@ export default function CreateSOS() {
   const [Year, setYear] = useState(Content.Year);
   //------------------------------------------------
 
-  const [Categories, setCategories] = useState([]);
+  const [Categories, setCategories] = useState(Content.Categories);
   //{Category:"",Optional:"",Track:"",Courses:[],Note:""}
   //------------------------------------------------
   const [Courses, setCourse] = useState([]);
@@ -47,9 +47,7 @@ export default function CreateSOS() {
   const [coursesList, setCoursesList] = useState([]);
 
   console.log("Course", Courses);
-  console.log("state.row",state.row);
-  console.log("state.row",state.row.CoveredCategories);
-  console.log("state.row",state.row.DomainCategories);
+
   console.log("CATS", Categories);
   console.log("Content",Content)
 
@@ -57,7 +55,7 @@ export default function CreateSOS() {
 
   const [AssignPrerequisite, setAssignPrerequisite] = useState([]);
   const [opts, setopts] = useState([]);
-  console.log("Category",Category)
+console.log("Category",Category)
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
   const settracks = (clone) => {
@@ -74,86 +72,37 @@ export default function CreateSOS() {
     setCategories([...clone]);
   };
   const getCategory = async () => {
-    // const res = await axios.get("http://localhost:4000/Category/show");
-    // const data = await res.data;
-    // console.log("data",data);
-    console.log("CATS", Categories);
-    if(Content.Categories!=undefined){
-      setCategories(Content.Categories)
-    }
-    setCategory([...state.row.CoveredCategories,...state.row.DomainCategories]);
-    };
+    const res = await axios.get("http://localhost:4000/Category/show");
+    const data = await res.data;
+    console.log("data",data);
+    setCategory([...res.data]);
+  };
   const getData = async () => {
-    
-    const res = await axios.get("http://localhost:4000/RepoCourse/show");
-    const data = await Promise.all(res.data.map(i=>{
-      i.PreRequisites=[]
-      return i }))
+    const res = await axios.get("http://localhost:4000/Course/show");
+    const data = await res.data;
     setCourse([...data]);
   };
-  
   const AddSOS = async (e) => {
     e.preventDefault();
-    var check = true
-    Categories.forEach(e => {
-      var r = Category.find(i=>i.Category==e.Category)
-      if(e.Courses.length!=r.NoofCourses){
-        check=false
-        alert("In "+cats.Category+" Number of courses is greater")
-      }
-      var sum = 0
-      e.Courses.forEach(e => {
-        sum = sum + parseInt(e.LectureHoursWeek)
-        sum = sum + parseInt(e.LabHoursWeek)
-      })
-      if(sum!=parseInt(r.NoofCredits)){
-        check=false
-        alert("In "+cats.Category+" Number of Credit hours is greater")
-      }
+    console.log("SOS");
+
+    await axios.post("http://localhost:4000/SOSVerison/add", {
+      Program,
+      Year,
+      Categories,
     });
-    if(check){
-        console.log("SOS");
-        // const retnSOSPage1 = await axios.post("http://localhost:4000/SOSpage1/add", {
-        //   Program,
-        //   Year,
-        //   CoveredCategories: state.row.CoveredCategories,
-        //   DomainCategories: state.row.DomainCategories
-        // }
-        // )
-          
-        await axios.post("http://localhost:4000/SOSVerison/add", {
-          CoveredCategories: state.row.CoveredCategories,
-          DomainCategories: state.row.DomainCategories,
-          Program,
-          Year,
-          Categories,
-        });
-        navigate(
-          `/CAC/SOSCreation/${Program}`,
-          { state: { row: { Program } } },
-          { replace: true }
-        );
-    }
+    navigate(
+      `/CAC/SOSCreation/${Program}`,
+      { state: { row: { Program } } },
+      { replace: true }
+    );
   };
 
   useEffect(() => {
     getData();
     getCategory();
   }, []);
-  function check(cats){
-    var r = Category.find(i=>i.Category==cats.Category)
-    if(cats.Courses.length>r.NoofCourses){
-      alert("In "+cats.Category+" Number of courses is greater")
-    }
-    var sum = 0
-    cats.Courses.forEach(e => {
-      sum = sum + parseInt(e.LectureHoursWeek)
-      sum = sum + parseInt(e.LabHoursWeek)
-    });
-    if(sum>parseInt(r.NoofCredits)){
-      alert("In "+cats.Category+" Number of Credit hours is greater")
-    }
-  }
+
   const columns = [
     {
       field: "Code",
@@ -348,7 +297,7 @@ export default function CreateSOS() {
               >
                 {Category?.map((a) => {
                   return (
-                    <MenuItem value={a.Category}>{a.Category}</MenuItem>
+                    <MenuItem value={a.CategoryName}>{a.CategoryName}</MenuItem>
                   );
                 })}
               </Select>
@@ -377,7 +326,7 @@ export default function CreateSOS() {
                     return i;
                   }
                 });
-                console.log("CategoriesCategories",Categories);
+                console.log(Categories);
                 setCategory(cc);
                 setAssignCategory(["", "", ...AssignCategory]);
               }}
@@ -513,7 +462,6 @@ export default function CreateSOS() {
                         const clone = [...Categories];
                         clone[index].Courses = val;
                         setCategories([...clone]);
-                        check(Categories[index])
                       }}
                       renderInput={(params) => (
                         <TextField
@@ -579,8 +527,8 @@ export default function CreateSOS() {
                     >
                       {Category.map((a) => {
                         return (
-                          <MenuItem value={a.Category}>
-                            {a.Category}
+                          <MenuItem value={a.CategoryName}>
+                            {a.CategoryName}
                           </MenuItem>
                         );
                       })}

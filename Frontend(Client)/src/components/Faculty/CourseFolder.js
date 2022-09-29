@@ -6,6 +6,8 @@ import { Box, Card, CardMedia, Modal } from "@mui/material";
 import axios from "axios";
 import { Viewer, Worker } from "@react-pdf-viewer/core";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { NestCamWiredStandTwoTone } from "@mui/icons-material";
+import useAuth from "../../MyHooks/useAuth";
 
 const style = {
   position: "absolute",
@@ -23,6 +25,7 @@ const style = {
 export default function CourseFolder() {
   axios.defaults.withCredentials = true;
   const { id } = useParams();
+  const userid= JSON.parse(localStorage.getItem('user'))
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -39,11 +42,12 @@ export default function CourseFolder() {
   const [open3, setOpen3] = useState(false);
   const handleOpen3 = () => setOpen3(true);
   const handleClose3 = () => setOpen3(false);
-
+  const [date,setdate]=useState(new Date(Date.now()))
   const [folders, setfolders] = useState("");
 
   useEffect(() => {
     getTheory();
+    
   }, []);
 
   const [Assignments1, setAssignments1] = useState([]);
@@ -58,7 +62,7 @@ export default function CourseFolder() {
     var assignments1 = [];
     var quiz2 = [];
     var assignments2 = [];
-
+    console.log("setfolfers",folders)
     for (
       var i = 1;
       i <= parseInt(res.data.Round1.Quiz) + parseInt(res.data.Round2.Quiz);
@@ -129,9 +133,25 @@ export default function CourseFolder() {
   const [Solution1, setSolution1] = useState("");
   const [ICEF, setICEF] = useState("");
   const [Obe, setObe] = useState("");
+  const [deadline1,setdeadline1]=useState();
+  const [deadline2,setdeadline2]=useState();
+  const [round1flag,setflag1]=useState(false);
+  const [round2flag,setflag2]=useState(false);
+  const [pressed,setpressed]=useState(false)
+  const [pressed1,setpressed1]=useState(false)
 
   const [fileBase64String, setFileBase64String] = useState("");
-  console.log("fileBase64String", fileBase64String);
+  useEffect(()=>{
+    var a=(date.getDate()+"/"+date.getMonth()+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes())
+    console.log("date",deadline1)
+    if(a>deadline1){
+      console.log("ssds")
+      setflag1(true)
+    }
+    if(a>deadline2){
+      setflag2(true)
+    }
+  },[deadline1,deadline2])
 
   //----------
   const encodeFileBase64 = (file, ty) => {
@@ -142,7 +162,6 @@ export default function CourseFolder() {
     reader.readAsDataURL(file);
     reader.onload = () => {
       var Base64 = reader.result;
-      console.log("Base64", Base64);
       if (ty == "Question") {
         setQuestion1(file.name);
         setQuestion(Base64);
@@ -191,7 +210,6 @@ export default function CourseFolder() {
     // const base64WithoutPrefix = fileBase64String.substr('data:application/pdf;base64,'.length);
 
     const bytes = atob(base64WithoutPrefix);
-    console.log("atob", bytes);
     let length = bytes.length;
     let out = new Uint8Array(length);
 
@@ -209,6 +227,7 @@ export default function CourseFolder() {
   };
   useEffect(() => {
     getFolderData();
+    getDeadline()
   }, []);
   const [Folder, setFolder] = useState({ files: [], ICEF: null, Obe: null });
 
@@ -217,12 +236,27 @@ export default function CourseFolder() {
     console.log(res.data);
     setFolder(res.data);
   };
+  const getDeadline = async () => {
+    const res = await axios.get(`http://localhost:4000/Content/ShowTheory`);
+    console.log("deadlinesdata",res.data);
+    var s=res.data.Round1.Deadline
+    var s1=res.data.Round2.Deadline
+
+    s=new Date(res.data.Round1.Deadline)
+    s1=new Date(res.data.Round2.Deadline)
+    console.log("sdc",s.getYear)
+   setdeadline1(s.getDate()+"/"+s.getMonth()+"/"+s.getFullYear()+" "+s.getHours()+":"+s.getMinutes());
+   setdeadline2(s1.getDate()+"/"+s1.getMonth()+"/"+s1.getFullYear()+" "+s1.getHours()+":"+s1.getMinutes());
+
+  };
 
   const SubmitICEF = async (e) => {
     e.preventDefault();
     const res = await axios.put(`http://localhost:4000/Folders/addICEF/${id}`, {
       ICEF: ICEF,
     });
+    console.log("helloinicef",res)
+
     getFolderData();
     handleClose1();
   };
@@ -231,6 +265,8 @@ export default function CourseFolder() {
     const res = await axios.put(`http://localhost:4000/Folders/addObe/${id}`, {
       Obe: Obe,
     });
+    console.log("helloinobe",res)
+
     getFolderData();
     handleClose2();
   };
@@ -239,8 +275,9 @@ export default function CourseFolder() {
     const res = await axios.put(`http://localhost:4000/Folders/addLec/${id}`, {
       LectureDeliveryRecord : LectureDeliveryRecord,
     });
+    console.log("helloinlec",res)
     getFolderData();
-    handleClose2();
+    handleClose3();
   };
   const Submit1 = async (e) => {
     e.preventDefault();
@@ -298,6 +335,42 @@ export default function CourseFolder() {
       alert("upload all required files");
     }
   };
+  const SubmitE1 = async () => {
+    setpressed(false)
+
+      console.log("Round1", { Round1: true });
+      const res = await axios.post(
+        `http://localhost:4000/Faculty/TheoryReq/${userid}`,
+        {
+          Round: "Round1",
+          Deadline:deadline1,
+          Type:"Theory"
+
+        }
+      );
+      //getFolderData();
+    alert("Extension Request Sent")
+    console.log("Rodwew",res );
+
+  };
+  const SubmitE2 = async () => {
+    setpressed1(false)
+    console.log("Round2", { Round1: true });
+    const res = await axios.post(
+      `http://localhost:4000/Faculty/TheoryReq/${userid}`,
+      {
+        Round: "Round2",
+        Deadline:deadline2,
+        Type:"Theory"
+
+      }
+    );
+    //getFolderData();
+    alert("Extension Request Sent")
+
+  console.log("Rodwew",res );
+
+};
   const SubmitR1 = async () => {
     var Round1 = true;
     Quiz1.forEach((i) => {
@@ -318,7 +391,7 @@ export default function CourseFolder() {
         Round1 = false;
       }
     });
-    if (folders.Round1.MidorSessioanls == "Mid") {
+    if (folders.Mid == "Mid") {
       var res = Folder.files.find((obj) => {
         var t = "Mid";
         obj.Title == t;
@@ -326,7 +399,7 @@ export default function CourseFolder() {
       if (res == undefined) {
         Round1 = false;
       }
-    } else if (folders.Round1.MidorSessioanls == "Sessional") {
+    } else if (folders.Mid == "Sessional") {
       var res = Folder.files.find((obj) => {
         var t = "Sessional 1";
         obj.Title == t;
@@ -463,6 +536,7 @@ export default function CourseFolder() {
                 }}
               />
             </div>
+            
             <div class="d-grid">
               <button
                 class="btn btn-block py-2 btn-primary"
@@ -628,7 +702,7 @@ export default function CourseFolder() {
                   <h4
                     style={{ color: "red", textAlign: "center", marginTop: 20 }}
                   >
-                    Deadline: 07/13/2022 04:38 PM
+                    Deadline: {deadline1}
                   </h4>
                 </th>
                 {Quiz1.map((i) => {
@@ -680,7 +754,7 @@ export default function CourseFolder() {
                     </td>
                   );
                 })}
-                {folders != "" && folders.Round1.MidorSessioanls == "Mid" ? (
+                {folders != "" && folders.Mid == "Mid" ? (
                   <td className="d-grid py-2 px-2">
                     <button
                       class="btn btn-block py-2 btn-primary"
@@ -746,6 +820,35 @@ export default function CourseFolder() {
                   </>
                 )}
                 <td className="d-grid py-4 px-2">
+                  {
+                  round1flag?
+                  <>
+                  <h4
+                  
+                  style={{ color: "red", textAlign: "center", marginTop: 20 }}
+                >
+                  
+                  Submission Closed!!!
+                </h4>
+                {pressed?
+                  <button
+                  class="btn btn-block py-2 btn-primary"
+                  type="button"
+                  style={{backgroundColor:"grey",borderColor:'grey'}}
+
+                >
+                  Send Extension Request
+                </button>
+                  :
+                    <button
+                    class="btn btn-block py-2 btn-primary"
+                    type="button"
+                    onClick={SubmitE1}
+                  >
+                    Send Extension Request
+                  </button>
+                  }
+                  </>:
                   <button
                     class="btn btn-block py-2 btn-primary"
                     type="button"
@@ -753,6 +856,7 @@ export default function CourseFolder() {
                   >
                     Submit
                   </button>
+}
                 </td>
               </tr>
             </div>
@@ -768,7 +872,7 @@ export default function CourseFolder() {
                   <h4
                     style={{ color: "red", textAlign: "center", marginTop: 20 }}
                   >
-                    Deadline: 07/13/2022 04:38 PM
+                    Deadline: {deadline2}
                   </h4>
                 </th>
                 {Quiz2.map((i) => {
@@ -878,14 +982,43 @@ export default function CourseFolder() {
                 </td>
 
                 <td className="d-grid py-4 px-2">
+                {
+                  round2flag?
+                  <>
+                  <h4
+                  
+                  style={{ color: "red", textAlign: "center", marginTop: 20 }}
+                >
+                  
+                  Submission Closed!!!
+                </h4>
+
+                  {pressed1?
+                  <button
+                  class="btn btn-block py-2 btn-primary"
+                  type="button"
+                  style={{backgroundColor:"grey",borderColor:'grey'}}
+
+                >
+                  Send Extension Request
+                </button>
+                  :
+                    <button
+                    class="btn btn-block py-2 btn-primary"
+                    type="button"
+                    onClick={SubmitE2}
+                  >
+                    Send Extension Request
+                  </button>
+                  }</>:
                   <button
                     class="btn btn-block py-2 btn-primary"
-                    id="quiz1"
                     type="button"
                     onClick={SubmitR2}
                   >
                     Submit
                   </button>
+}
                 </td>
               </tr>
             </div>
@@ -915,7 +1048,7 @@ export default function CourseFolder() {
           </Card>
         </>
       ) : (
-        <>NO</>
+        <></>
       )}
     </div>
   );

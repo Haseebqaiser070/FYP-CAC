@@ -17,7 +17,7 @@ import InputLabel from "@mui/material/InputLabel";
 import { AiFillEdit, AiOutlineFieldTime } from "react-icons/ai";
 import axios from "axios";
 import { muibtn } from "./style";
-
+import { useNavigate } from "react-router-dom";
 const modalstyle = {
   position: "absolute",
   top: "50%",
@@ -32,38 +32,70 @@ const modalstyle = {
 };
 
 export default function CourseFolderTheory() {
+const navigate=useNavigate();
   const [Quiz1, setQuiz1] = useState("");
   const [Assignments1, setAssignments1] = useState("");
   const [Quiz2, setQuiz2] = useState("");
   const [Assignments2, setAssignments2] = useState("");
-  const [MidSessional, setMidSessional] = useState("");
+  const [Mid, setMidSessional] = useState("Mid");
+  const [Checked, setChecked] = useState(true);
+
+  const [date,setDate]=useState()
+  const [date1,setDate1]=useState()
+  const [open, setOpen] = useState(false);
+
   const [open1, setOpen1] = useState(false);
   const handleClose1 = () => setOpen1(false);
+  const handleClose = () => setOpen(false);
+
   axios.defaults.withCredentials = true;
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
+    if(Checked==true){
+      setMidSessional("Mid")
+    }
+    else{
+      setMidSessional("Sessional")
+
+    }
+  };
   const onsubmit1 = async (e) => {
     e.preventDefault();
+    navigate('/Admin/Dashboard')
+    onsubmit3()
+
     if (!isNaN(Quiz1) && !isNaN(Assignments1)) {
       const res = await axios.post("http://localhost:4000/Content/Theory", {
         Round: "Round1",
-        obj: {
+        Round1: {
           Quiz: Quiz1,
           Assignment: Assignments1,
+          Deadline:date1
         },
+        Mid:Mid
       });
+     // navigate('/Admin/Dashboard')
+
     } else {
       alert("inValid Input");
     }
   };
   const onsubmit2 = async (e) => {
     e.preventDefault();
+    navigate('/Admin/Dashboard')
+    onsubmit3()
     if (!isNaN(Quiz2) && !isNaN(Assignments2)) {
       const res = await axios.post("http://localhost:4000/Content/Theory", {
         Round: "Round2",
-        obj: {
+        Round2: {
           Quiz: Quiz2,
           Assignment: Assignments2,
+          Deadline:date
         },
+        Mid:Mid
+
       });
+
     } else {
       alert("inValid Input");
     }
@@ -77,21 +109,26 @@ export default function CourseFolderTheory() {
     setQuiz2(res.data.Round2.Quiz);
     setAssignments1(res.data.Round1.Assignment);
     setAssignments2(res.data.Round2.Assignment);
-    setMidSessional(res.data.Round1.MidorSessioanls);
-  };
-  const onsubmit3 = async () => {
-    if (MidSessional == "Mid") {
-      await axios.put("http://localhost:4000/Content/TheoryMidSes", {
-        MidSessional: "Sessional",
-      });
-    } else if (MidSessional == "Sessional") {
-      await axios.put("http://localhost:4000/Content/TheoryMidSes", {
-        MidSessional: "Mid",
-      });
+    setMidSessional(res.data.Mid);
+    setDate1(res.data.Round1.Deadline)
+    setDate(res.data.Round2.Deadline)
+    if(res.data.Mid=="Mid"){
+      setChecked(true)
     }
-    getTheory();
-  };
+    else{
+      setChecked(false)
+    }
 
+  };
+  
+const onsubmit3=async(date,round,type)=>{
+  
+  const res = await axios.put(`http://localhost:4000/Content/adddate`,{
+    date:date,
+    round:round,
+    type:type,
+  });
+}
   return (
     <div
       style={{
@@ -108,10 +145,10 @@ export default function CourseFolderTheory() {
           className="py-4"
           control={
             <Switch
-              checked={MidSessional == "Mid" ? true : false}
-              onChange={async () => {
-                await onsubmit3();
-              }}
+              checked={Checked}
+             // onChangeva
+              onChange={
+              handleChange}
             />
           }
           label="MidTerm"
@@ -157,7 +194,7 @@ export default function CourseFolderTheory() {
             </form>
             <div style={{ marginTop: 30 }}>
               <h4 style={{ color: "red", marginTop: 20 }}>
-                Current Deadline: 07/13/2022 04:38 PM
+                Current Deadline: {date1}
               </h4>
               <div
                 style={{ margin: 0, Padding: 0 }}
@@ -167,15 +204,15 @@ export default function CourseFolderTheory() {
                   variant="contained"
                   color="primary"
                   size="small"
-                  onClick={() => setOpen1(true)}
+                  onClick={() => setOpen(true)}
                 >
                   <AiOutlineFieldTime style={{ marginRight: 10 }} />
                   Add Due Date
                 </Button>
               </div>
               <Modal
-                open={open1}
-                onClose={handleClose1}
+                open={open}
+                onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
               >
@@ -186,10 +223,10 @@ export default function CourseFolderTheory() {
                     </label>
                     <input
                       name="time"
-                      // onChange={handleData}
+                       onChange={(e)=>setDate1(e.target.value)}
                       style={{ width: "100%" }}
                       type="datetime-local"
-                      // value={data.time}
+                      value={date1}
                     ></input>
 
                     <Button
@@ -197,10 +234,10 @@ export default function CourseFolderTheory() {
                       color="primary"
                       size="small"
                       style={{ marginTop: 16 }}
-                      // onClick={}
+                      onClick={()=>onsubmit3(date1,"Round1","Theory")}
                     >
                       <AiOutlineFieldTime style={{ marginRight: 10 }} />
-                      Add Due Date
+                      submit
                     </Button>
                   </div>
                 </Box>
@@ -247,7 +284,7 @@ export default function CourseFolderTheory() {
             </form>
             <div style={{ marginTop: 30 }}>
               <h4 style={{ color: "red", marginTop: 20 }}>
-                Current Deadline: 07/13/2022 04:38 PM
+                Current Deadline: {date}
               </h4>
               <div
                 style={{ margin: 0, Padding: 0 }}
@@ -276,10 +313,10 @@ export default function CourseFolderTheory() {
                     </label>
                     <input
                       name="time"
-                      // onChange={handleData}
+                       onChange={(e)=>setDate(e.target.value)}
                       style={{ width: "100%" }}
                       type="datetime-local"
-                      // value={data.time}
+                      value={date}
                     ></input>
 
                     <Button
@@ -287,7 +324,8 @@ export default function CourseFolderTheory() {
                       color="primary"
                       size="small"
                       style={{ marginTop: 16 }}
-                      // onClick={}
+                      onClick={()=>onsubmit3(date,"Round2","Theory")}
+
                     >
                       <AiOutlineFieldTime style={{ marginRight: 10 }} />
                       Submit
