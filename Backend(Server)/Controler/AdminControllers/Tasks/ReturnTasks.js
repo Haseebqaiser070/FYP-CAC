@@ -89,15 +89,15 @@ module.exports.Lock = async (req, res) => {
            e.Courses = cors
            return await e
        }))
-       const p1 = await SOSPage1.find({Program:obj.Program,Year:obj.Year})
-       await Promise.all(p1.map(async(i) => {
-        console.log("i",i)
-        if(obj.Page1!=i._id){
-          var doc = await SOSPage1.deleteOne({_id:i._id})
-          console.log("delete",doc)
-          }
-        })
-        )
+      //  const p1 = await SOSPage1.find({Program:obj.Program,Year:obj.Year})
+      //  await Promise.all(p1.map(async(i) => {
+      //   console.log("i",i)
+      //   if(obj.Page1!=i._id){
+      //     var doc = await SOSPage1.deleteOne({_id:i._id})
+      //     console.log("delete",doc)
+      //     }
+      //   })
+      //   )
        console.log("cats",cats)
        obj.Categories=cats
         console.log(obj)
