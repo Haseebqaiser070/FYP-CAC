@@ -2,6 +2,12 @@ var uuidv4 = require("uuid").v4
 var Task = require("../../../Models/Tasks");
 var Userdoc = require("../../../Models/User");
 var InitTask = require("../../../Models/InitTask");
+var VersionCDFodoc=require("../../../Models/CDFModels/CDFVersions")
+var CDFgendoc = require("../../Models/CDFModels/CDFGeneral");
+var Syllabusgendoc = require("../../Models/SyallabusModels/SyllabusGeneral");
+var VersionSyllabusdoc=require("../../../Models/SyallabusModels/SyllabusVersion")
+var coursedoc = require("../../Models/CourseModels/Course");
+var VersionCourseodoc=require("../../../Models/CourseModels/CourseVersion")
 
 module.exports.Add = async (req, res) => {
   try {
@@ -9,7 +15,7 @@ module.exports.Add = async (req, res) => {
     if (!req.user.Roles.includes("Admin")) return await res.status(401).json("UnAutherized");
     const Tasks=await Promise.all(req.body.obj.map(async(e)=>{
      try{
-      if(e.taskType=="Create SOS"){
+      if(e.taskType=="Create SOS"||e.taskType=="Update SOS"){
         const task = await Task.create({taskType:e.taskType,User:e.User,Deadline:e.Deadline
         ,Status:e.Status,Program:e.Program})
         console.log("\n\nTASK",task)
@@ -30,23 +36,46 @@ module.exports.Add = async (req, res) => {
     console.log("body",req.body)
     req.body.obj.forEach(async(e)=> {
     console.log("\n\n\n\n\n\n",e)
-    if(e.taskType=="Create Catalog Description"){
+    if(e.taskType=="Create Catalog Description"||e.taskType=="Update Catalog Description"){
         e.User.CourseCreation=[...e.User.CourseCreation,e.Course._id]
+        if(e.taskType=="Update Catalog Description"){
+          const course = await coursedoc.findOne({Code:e.Course.Code}).populate('PreRequisites')
+          delete course._id
+          await VersionCourseodoc.create(course) 
+
+        }
     }
-    else if(e.taskType=="Create SOS"){
+    else if(e.taskType=="Create SOS"||e.taskType=="Update SOS"){
       e.User.SOSCreation=[...e.User.SOSCreation,{Program:e.Program}]
+      if(e.taskType=="Update SOS"){
+
+        // fnction will be made here after an descusion
+        // 
+        // 
+        //
+      }
     }
-    else if(e.taskType=="Create CDF"){
+    else if(e.taskType=="Create CDF"||e.taskType=="Update CDF"){
         e.User.CourseCDF=[...e.User.CourseCDF,e.Course._id]
+        if(e.taskType=="Update CDF"){
+          const CDF = await CDFgendoc.findOne({Code:e.Course.Code}).
+          populate({path:"CLOs",populate:{path:"BTL",model:"BTL"}})
+          .populate({path:"CLOs",populate:{path:"So",model:"SOO"}})           
+          delete CDF._id
+          await VersionCDFodoc.create(CDF)
+        }
     }
-    else if(e.taskType=="Create Syllabus"){
+    else if(e.taskType=="Create Syllabus"||e.taskType=="Update Syllabus"){
         e.User.CourseSyllabus=[...e.User.CourseSyllabus,e.Course._id]
+        if(e.taskType=="Update Syllabus"){
+          const Syllabus = await Syllabusgendoc.findOne({Code:e.Course.Code})
+          delete Syllabus._id
+          await VersionSyllabusdoc.create(Syllabus) 
+        }
     }
     console.log("user obj",e.User)
     const up = await Userdoc.findOneAndUpdate({ _id: e.User._id },e.User);
     console.log("User Updated",up)
-    
-
     });
     const ini = await InitTask.findOne({_id: req.body.id})
     ini.Task =  Tasks
@@ -58,7 +87,7 @@ module.exports.Add = async (req, res) => {
   }
 };
 
-
+//need to remake this later
 module.exports.Update = async (req, res) => {
   console.log("\n\n\n\n UPdate \n\n\n\n")
   try {

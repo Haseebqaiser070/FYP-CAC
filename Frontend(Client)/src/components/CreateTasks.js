@@ -36,20 +36,28 @@ export default function CreateTasks(props) {
     },
   ]);
 
+
   useEffect(() => {
     if (props.pre.taskType == "Create Catalog Description") {
       getRepoCourse();
-    } else if (props.pre.taskType == "Create CDF") {
+    } 
+    else if (props.pre.taskType == "Create CDF"||props.pre.taskType == "Update Catalog Description") {
       getCources();
-    } else if (props.pre.taskType == "Create Syllabus") {
+    } 
+    else if (props.pre.taskType == "Create Syllabus"||props.pre.taskType == "Update CDF") {
       getCDFCources();
+    } 
+    else if (props.pre.taskType == "Update Syllabus") {
+      getSyllabus()
     }
   }, []);
+  const getSyllabus = async () => {
+    const response = await axios.get("http://localhost:4000/RepoCourse/showwithSyllabus");
+    setRepoCourse(response.data);    
+  };
 
   const getCources = async () => {
-    const res = await axios.get(
-      "http://localhost:4000/RepoCourse/showwithecat"
-    );
+    const res = await axios.get("http://localhost:4000/RepoCourse/showwithecat");
     setRepoCourse(res.data);
   };
   const getCDFCources = async () => {
@@ -181,7 +189,10 @@ export default function CreateTasks(props) {
 
               {props.pre.taskType == "Create Catalog Description" ||
               props.pre.taskType == "Create CDF" ||
-              props.pre.taskType == "Create Syllabus" ? (
+              props.pre.taskType == "Create Syllabus"||
+              props.pre.taskType == "Update Catalog Description" ||
+              props.pre.taskType == "Update CDF" ||
+              props.pre.taskType == "Update Syllabus" ? (
                 <div>
                   <FormControl fullWidth size="small">
                     <InputLabel id="taskType">Assign Course</InputLabel>
@@ -246,66 +257,7 @@ export default function CreateTasks(props) {
                     </FormControl>
                   </div>
                 </div>
-              ) : props.pre.taskType == "Update CDF" ? (
-                <div>
-                  <Autocomplete
-                    className="mb-4"
-                    multiple
-                    id="tags-standard"
-                    options={top100Films}
-                    getOptionLabel={(option) => option.title}
-                    defaultValue={[top100Films[13]]}
-                    //   onChange={}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="outlined"
-                        label="Select CDF"
-                        placeholder="Select CDF"
-                      />
-                    )}
-                  />
-                </div>
-              ) : props.pre.taskType == "Update Syllabus" ? (
-                <div>
-                  <Autocomplete
-                    className="mb-4"
-                    multiple
-                    id="tags-standard"
-                    options={top100Films}
-                    getOptionLabel={(option) => option.title}
-                    defaultValue={[top100Films[13]]}
-                    //   onChange={}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="outlined"
-                        label="Select Syllabus"
-                        placeholder="Select Syllabus"
-                      />
-                    )}
-                  />
-                </div>
-              ) : props.pre.taskType == "Update Lab Manual" ? (
-                <div>
-                  <Autocomplete
-                    className="mb-4"
-                    multiple
-                    id="tags-standard"
-                    options={top100Films}
-                    getOptionLabel={(option) => option.title}
-                    defaultValue={[top100Films[13]]}
-                    //   onChange={}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        variant="outlined"
-                        label="Select Lab Manual"
-                        placeholder="Select Lab Manual"
-                      />
-                    )}
-                  />
-                </div>
+              
               ) : (
                 ""
               )}

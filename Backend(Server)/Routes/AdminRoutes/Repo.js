@@ -6,6 +6,7 @@ router.route("/add").post(Repo.Add);
 router.route("/show").get(Repo.Showall);
 router.route("/showwithecat").get(Repo.ShowwithCatalogdesc);
 router.route("/showwithCDF").get(Repo.ShowwithCDF)
+router.route("/showwithSyllabus").get(Repo.ShowwithSyllabus)
 router.route("/:id").delete(Repo.Delete).get(Repo.ShowOne).put(Repo.Update)
 
 module.exports = router;
